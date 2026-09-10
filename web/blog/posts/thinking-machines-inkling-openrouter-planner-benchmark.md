@@ -6,11 +6,11 @@ sortOrder: -120
 date: 2026-07-23
 readTime: 10 min read
 description: >
-  We tested Thinking Machines Inkling through OpenRouter on WebBrain's frozen 100-case browser-planner benchmark, then checked its image and audio understanding.
+  We tested Thinking Machines Inkling through OpenRouter on KavachWeb's frozen 100-case browser-planner benchmark, then checked its image and audio understanding.
 excerpt: >
   Inkling produced 96 valid calls and chose the ideal tool 45 times, while reaching 73% Sonnet alignment. Maximum reasoning did not help—but working image and audio input make this 975B American open-weight release unusually complete.
 titleTag: >
-  Thinking Machines Inkling OpenRouter planner benchmark - WebBrain Blog
+  Thinking Machines Inkling OpenRouter planner benchmark - KavachWeb Blog
 ogTitle: >
   Inkling makes the American open-weight comeback multimodal
 ogDescription: >
@@ -20,7 +20,7 @@ twitterTitle: >
 twitterDescription: >
   96 valid calls, 45 ideal tool choices, and 73% Sonnet alignment. Max reasoning did not improve the result, but Inkling's modality breadth is the real story.
 keywords:
-  - WebBrain
+  - KavachWeb
   - Thinking Machines
   - Inkling
   - OpenRouter
@@ -32,7 +32,7 @@ keywords:
   - tool calling
   - Poolside Laguna
 lede: >
-  **Thinking Machines Inkling** is a different kind of American open-weight release: 975B total parameters, 41B active parameters, a permissive Apache 2.0 license, and native text, image, and audio input. At launch, it appears to be the largest US open-weight model by total parameter count, although that label depends on how "American" and "open" are defined. We ran the OpenRouter route through WebBrain's frozen 100-case first-action benchmark, repeated it with maximum reasoning, and added small image and audio probes. The result is not a new planner-score champion. It is something more interesting: a highly parseable, broad model that usually reaches the right tool family, handles all three advertised input modalities, and makes the recent US open-weight revival feel much less theoretical.
+  **Thinking Machines Inkling** is a different kind of American open-weight release: 975B total parameters, 41B active parameters, a permissive Apache 2.0 license, and native text, image, and audio input. At launch, it appears to be the largest US open-weight model by total parameter count, although that label depends on how "American" and "open" are defined. We ran the OpenRouter route through KavachWeb's frozen 100-case first-action benchmark, repeated it with maximum reasoning, and added small image and audio probes. The result is not a new planner-score champion. It is something more interesting: a highly parseable, broad model that usually reaches the right tool family, handles all three advertised input modalities, and makes the recent US open-weight revival feel much less theoretical.
 ---
 
 ## What Thinking Machines released
@@ -74,7 +74,7 @@ Selected standalone results from the official model card:
 | MMAU audio | 77.2 |
 | VoiceBench | 91.4 |
 
-Those numbers are strong enough to justify an independent agent test, but they should not be confused with our result. Thinking Machines evaluated with `effort=0.99` and `temperature=1.0`; coding trajectories could use up to 256K tokens. WebBrain freezes a much shorter and more deterministic first-action problem.
+Those numbers are strong enough to justify an independent agent test, but they should not be confused with our result. Thinking Machines evaluated with `effort=0.99` and `temperature=1.0`; coding trajectories could use up to 256K tokens. KavachWeb freezes a much shorter and more deterministic first-action problem.
 
 ## What we tested
 
@@ -92,7 +92,7 @@ output:     $4.05 per million tokens
 cache read: $0.17 per million tokens
 ```
 
-The frozen WebBrain replay contains 100 browser instructions, 41 available tools, and the same system prompt used in our recent local-model tests. Every model must select its first action; it does not get a full browsing trajectory in which to recover from a weak opening.
+The frozen KavachWeb replay contains 100 browser instructions, 41 available tools, and the same system prompt used in our recent local-model tests. Every model must select its first action; it does not get a full browsing trajectory in which to recover from a weak opening.
 
 We kept the harness defaults:
 
@@ -105,7 +105,7 @@ freeze:      baseline-2026-05-23.json
 system hash: 5c4fac1387025050
 ```
 
-This is deliberately not a reproduction of Thinking Machines' official scaffold. It answers a narrower product question: **can the hosted model reliably dispatch WebBrain's first browser action?**
+This is deliberately not a reproduction of Thinking Machines' official scaffold. It answers a narrower product question: **can the hosted model reliably dispatch KavachWeb's first browser action?**
 
 ## Frozen result: valid and usually in the right tool family
 
@@ -214,7 +214,7 @@ The pricing is attractive relative to frontier hosted models, but not in Poolsid
 
 Inkling passes the test that matters most for a model this ambitious: its breadth is real.
 
-It completed every request without an API error, produced 96 valid structured calls, selected our ideal tool more often than the two narrow local references, understood a real UI screenshot, and correctly decoded a synthetic audio instruction. Increasing reasoning effort did not help, and its 73% Sonnet alignment does not make it the best WebBrain planner.
+It completed every request without an API error, produced 96 valid structured calls, selected our ideal tool more often than the two narrow local references, understood a real UI screenshot, and correctly decoded a synthetic audio instruction. Increasing reasoning effort did not help, and its 73% Sonnet alignment does not make it the best KavachWeb planner.
 
 That is still a strong launch. The combination of Apache 2.0 weights, 41B active parameters, half-million-token hosted context, vision, audio, and solid tool use is unusual. After Poolside's stronger Laguna releases, Inkling is further evidence that American open-weight AI is no longer absent from the serious-model conversation.
 

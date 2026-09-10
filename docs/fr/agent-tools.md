@@ -1,6 +1,6 @@
 # Outils de l'agent
 
-WebBrain sépare le **niveau du modèle** du **mode de conversation**.
+KavachWeb sépare le **niveau du modèle** du **mode de conversation**.
 
 - **Niveau** (`compact`, `mid`, `full`) est un réglage par fournisseur. Il
   contrôle le nombre d'outils navigateur normaux que le modèle voit.

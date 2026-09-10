@@ -1,26 +1,26 @@
 ---
 title: >
-  Poolside Laguna XS is fast and free, but not a WebBrain planner win
+  Poolside Laguna XS is fast and free, but not a KavachWeb planner win
 slug: poolside-laguna-xs-openrouter-planner-benchmark
 sortOrder: -70
 date: 2026-07-10
 readTime: 6 min read
 description: >
-  We ran poolside/laguna-xs-2.1:free through WebBrain's frozen 100-case browser-agent first-tool benchmark on OpenRouter. It is very fast and free to call, but 65% Sonnet alignment, only 6 exact first actions, and malformed tool names keep it out of the planner shortlist.
+  We ran poolside/laguna-xs-2.1:free through KavachWeb's frozen 100-case browser-agent first-tool benchmark on OpenRouter. It is very fast and free to call, but 65% Sonnet alignment, only 6 exact first actions, and malformed tool names keep it out of the planner shortlist.
 excerpt: >
-  Laguna XS completed WebBrain's frozen planner suite with 92 parsed calls, 89 valid tool names, 65% Sonnet alignment, and a 1.30s median latency. The endpoint is quick; the planner quality is not competitive.
+  Laguna XS completed KavachWeb's frozen planner suite with 92 parsed calls, 89 valid tool names, 65% Sonnet alignment, and a 1.30s median latency. The endpoint is quick; the planner quality is not competitive.
 titleTag: >
-  Poolside Laguna XS OpenRouter WebBrain planner benchmark - WebBrain Blog
+  Poolside Laguna XS OpenRouter KavachWeb planner benchmark - KavachWeb Blog
 ogTitle: >
   Poolside Laguna XS is fast and free, but not a planner win
 ogDescription: >
-  Laguna XS on OpenRouter is quick and free, but its WebBrain planner row lands at 65% Sonnet alignment with weak exact-match behavior and a few malformed tool names.
+  Laguna XS on OpenRouter is quick and free, but its KavachWeb planner row lands at 65% Sonnet alignment with weak exact-match behavior and a few malformed tool names.
 twitterTitle: >
-  Poolside Laguna XS WebBrain planner benchmark
+  Poolside Laguna XS KavachWeb planner benchmark
 twitterDescription: >
   Laguna XS via OpenRouter: 92 parsed calls, 89 valid tool names, 6 exact first actions, 65% Sonnet alignment, and 1.30s median latency.
 keywords:
-  - WebBrain
+  - KavachWeb
   - Poolside
   - Laguna XS
   - OpenRouter
@@ -29,7 +29,7 @@ keywords:
   - tool calling
   - free model
 lede: >
-  `poolside/laguna-xs-2.1:free` is a tempting OpenRouter target for WebBrain because it is free, fast, and exposes native tool calling through the OpenAI-compatible API. We ran it through the same frozen 100-case browser-agent first-tool benchmark used in the recent planner posts. The result is useful, but not flattering: Laguna XS is one of the faster hosted rows we have tested, yet it lands in the 65% Sonnet-alignment band and produces only six strict exact first-call matches.
+  `poolside/laguna-xs-2.1:free` is a tempting OpenRouter target for KavachWeb because it is free, fast, and exposes native tool calling through the OpenAI-compatible API. We ran it through the same frozen 100-case browser-agent first-tool benchmark used in the recent planner posts. The result is useful, but not flattering: Laguna XS is one of the faster hosted rows we have tested, yet it lands in the 65% Sonnet-alignment band and produces only six strict exact first-call matches.
 ---
 
 ## What we ran
@@ -40,7 +40,7 @@ We used OpenRouter's OpenAI-compatible endpoint:
 poolside/laguna-xs-2.1:free
 ```
 
-The run used the same frozen May 23, 2026 WebBrain baseline used by the recent planner posts: Claude Sonnet 4.6's system prompt and 41-tool schema, system hash `5c4fac1387025050`.
+The run used the same frozen May 23, 2026 KavachWeb baseline used by the recent planner posts: Claude Sonnet 4.6's system prompt and 41-tool schema, system hash `5c4fac1387025050`.
 
 ```bash
 OPENROUTER_API_KEY=... node test/llm/run-llamacpp.mjs \
@@ -85,7 +85,7 @@ test/llm/results/2026-07-10-openrouter-laguna-xs_chrome_poolside_laguna-xs-2.1_f
 
 The speed is genuinely good. Median latency was 1.30s, p95 was 3.08s, and the endpoint reported zero cost for this free run. For a hosted model behind OpenRouter, that is a pleasant operational profile.
 
-The planner score is the problem. Laguna XS lands at the same 65% all-case Sonnet alignment as Nex-N2-mini and Nemotron 3 Ultra free, but with much weaker strict exact behavior than both. Six exact first-call matches is not enough for WebBrain's default planner slot.
+The planner score is the problem. Laguna XS lands at the same 65% all-case Sonnet alignment as Nex-N2-mini and Nemotron 3 Ultra free, but with much weaker strict exact behavior than both. Six exact first-call matches is not enough for KavachWeb's default planner slot.
 
 ## The protocol issue
 
@@ -180,7 +180,7 @@ Rows are ranked by all-case Sonnet match, then Sonnet-tooled match.
 | 7 | MiniMax M3 | 85/100 | 17/100 | 32/100 | 75.0% | 73.9% | 3.06s |
 | 8 | Qwen 3.6 27B NVFP4 | 96/100 | 18/100 | 38/100 | 74.0% | 77.2% | 1.76s |
 | 9 | Tencent Hy3 free | 95/100 | 20/100 | 38/100 | 73.0% | 75.0% | 3.68s |
-| 10 | WebBrain Compass 1.0 | 90/100 | 16/100 | 35/100 | 73.0% | 72.8% | 8.77s |
+| 10 | KavachWeb Compass 1.0 | 90/100 | 16/100 | 35/100 | 73.0% | 72.8% | 8.77s |
 | 11 | Ornith-1.0-35B NVFP4 | 88/100 | 21/100 | 36/100 | 71.0% | 70.7% | 2.38s |
 | 12 | Qwen 3.6 35B-A3B | 90/100 | 18/100 | 38/100 | 70.0% | 70.7% | 10.29s |
 | 13 | Nex-N2-mini | 93/100 | 16/100 | 28/100 | 65.0% | 66.3% | 2.23s |
@@ -195,6 +195,6 @@ Poolside Laguna XS is a good reminder that low latency and native tool calling a
 
 For cheap experimentation, the endpoint is nice. It completed the frozen suite after paced retries, reported zero cost, returned quickly, and matched direct-navigation cases cleanly. If all you need is a free OpenRouter endpoint that can usually emit a tool call, it is usable.
 
-For WebBrain's planner shortlist, I would not use this run as a reason to move it forward. The 65% Sonnet score is middle-to-low in the current table, and the `6/100` exact score is the real warning sign. A browser agent needs one valid, dispatchable first action. Laguna XS sometimes gives you that. Sometimes it gives you a tiny action script jammed into a function name. That is fun to read, but not something I want in the driver's seat.
+For KavachWeb's planner shortlist, I would not use this run as a reason to move it forward. The 65% Sonnet score is middle-to-low in the current table, and the `6/100` exact score is the real warning sign. A browser agent needs one valid, dispatchable first action. Laguna XS sometimes gives you that. Sometimes it gives you a tiny action script jammed into a function name. That is fun to read, but not something I want in the driver's seat.
 
-Tags: #Poolside #LagunaXS #OpenRouter #ToolCalling #BrowserAgent #WebBrain
+Tags: #Poolside #LagunaXS #OpenRouter #ToolCalling #BrowserAgent #KavachWeb

@@ -80,7 +80,7 @@ grep -E '(import|export)[^"]*from\s+"[a-zA-Z@]' \
 
 ## Updating
 
-Use a temporary dependency install; WebBrain does not need a runtime npm
+Use a temporary dependency install; KavachWeb does not need a runtime npm
 dependency because the reviewed browser assets are committed directly:
 
 ```bash

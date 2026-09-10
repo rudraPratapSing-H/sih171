@@ -1,6 +1,6 @@
-# Contributing to WebBrain
+# Contributing to KavachWeb
 
-Thanks for thinking about contributing. WebBrain 33.0.0 and later is licensed
+Thanks for thinking about contributing. KavachWeb 33.0.0 and later is licensed
 under GPL-3.0-or-later, runs entirely
 in your browser, and is built by a small group — your help makes a real
 difference.
@@ -14,7 +14,7 @@ one.
 
 ## What we need most: regional site adapters
 
-WebBrain's agent loop is generic — `click`, `type_text`, `scroll`,
+KavachWeb's agent loop is generic — `click`, `type_text`, `scroll`,
 `get_accessibility_tree`, etc. — but real sites have weird-shaped UIs that
 even a frontier model struggles to navigate without prior knowledge. The
 "site adapter" mechanism injects 5-15 lines of hand-written guidance into the
@@ -43,7 +43,7 @@ of the kind of thing we'd love a PR for:
 | **Africa**          | jumia.com, takealot.com, kilimall.com                                                                |
 | **Europe (non-en)** | allegro.pl, leboncoin.fr, bol.com, otto.de, marktplaats.nl, willhaben.at                             |
 
-This list is not exhaustive — if you use a site that WebBrain handles badly,
+This list is not exhaustive — if you use a site that KavachWeb handles badly,
 you're probably the right person to write its adapter. **A PR adding one
 high-quality adapter is more valuable to the project than a PR refactoring
 ten files.**
@@ -142,7 +142,7 @@ the Pull Requests link).
 
 1. Load the unpacked extension (Chrome → `chrome://extensions/` → Developer
    mode → Load unpacked → pick `src/chrome/`).
-2. Open the WebBrain side panel on the target site.
+2. Open the KavachWeb side panel on the target site.
 3. **Settings → Display → Site adapters** must be on (it is by default).
 4. Run a representative task in Act mode — for sahibinden, something like
    _"find me 5 listings under 35,000 TL for X"_. Watch what the agent does.
@@ -170,7 +170,7 @@ In rough priority order:
 
 ### Bug reports with traces
 
-If WebBrain failed on a real task, the most useful thing you can give us is
+If KavachWeb failed on a real task, the most useful thing you can give us is
 the **trace JSON**. Open the Traces page → pick the run → "Export JSON".
 Attach it to a GitHub issue. Strip anything sensitive (API keys, personal
 emails) before uploading — the trace contains your conversation, page
@@ -234,7 +234,7 @@ want a code task.
 ## Code of conduct
 
 Be civil. Disagree with the code, not with the person. We don't have a CLA.
-Unless a file says otherwise, contributions to WebBrain 33.0.0 and later are
+Unless a file says otherwise, contributions to KavachWeb 33.0.0 and later are
 submitted under GPL-3.0-or-later. You retain your copyright and attribution in
 the commit history.
 
@@ -245,7 +245,7 @@ the commit history.
 Open a [GitHub Discussion](https://github.com/webbrain-one/webbrain/discussions)
 or file an issue. Don't email Emre directly with code questions; the
 conversation is more useful in public. For quick help and community discussion,
-join the [WebBrain Discord](https://discord.gg/cgC325ssfw) — see
+join the [KavachWeb Discord](https://discord.gg/cgC325ssfw) — see
 [`docs/community.md`](docs/community.md) for the channel layout and rules.
 Questions that turn into bugs or features should be moved back to a GitHub issue
 so they stay tracked.

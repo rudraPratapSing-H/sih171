@@ -1,10 +1,10 @@
-# WebBrain Architecture
+# KavachWeb Architecture
 
 > Version 25.8.5
 
 ## Overview
 
-WebBrain is a browser extension that gives an LLM control over the user's active browser tab. The user types a natural-language instruction in a side panel, and an autonomous agent loop calls the LLM, executes tool calls (click, type, navigate, read page state, etc.), feeds results back to the LLM, and repeats until the task is done.
+KavachWeb is a browser extension that gives an LLM control over the user's active browser tab. The user types a natural-language instruction in a side panel, and an autonomous agent loop calls the LLM, executes tool calls (click, type, navigate, read page state, etc.), feeds results back to the LLM, and repeats until the task is done.
 
 There are two builds that share almost all code:
 - **Chrome** — Manifest V3, service worker, CDP-backed trusted events
@@ -113,7 +113,7 @@ The central message router. On Chrome it's a service worker (MV3); on Firefox it
 1. **Route messages** between the side panel, content scripts, and the agent
 2. **Manage the agent lifecycle**: `chat` / `chat_stream` / `continue` / `abort` / `clear_conversation`
 3. **Manage provider config**: load, save, test, switch active provider
-4. **Manage side panel visibility**: per-window "WebBrain" tab group controls where the panel is enabled
+4. **Manage side panel visibility**: per-window "KavachWeb" tab group controls where the panel is enabled
 5. **Observe same-tab XHR/fetch requests** with `webRequest` so loop detection can suggest an exact `fetch_url` shortcut when repeated UI clicks trigger the same background request
 6. **Expose Claude OAuth**, tab recording, CAPTCHA, and other sub-features as message handlers
 
@@ -174,7 +174,7 @@ _enrichUserMessageWithCurrentPage(tabId, messages, userMessage)
 
 #### Page context reduction
 
-WebBrain does not send raw HTML or a raw DOM dump to the model by default. The
+KavachWeb does not send raw HTML or a raw DOM dump to the model by default. The
 initial page context is the sanitized URL and title, matching site-adapter
 guidance, and an optional viewport screenshot when vision is available. When a
 task needs page content, the agent requests it on demand as a reduced semantic
@@ -242,10 +242,10 @@ while (steps < maxSteps) {
 ```
 
 When an interactive, tool-capable run exhausts its configured agent steps
-without a terminal answer, the browser loop stays closed and WebBrain performs
+without a terminal answer, the browser loop stays closed and KavachWeb performs
 one context-only handoff with only `done` available. That terminal schema permits
 `partial` or `failed`, never `success`; invalid output falls back to the
-deterministic step-limit summary. This also applies to the selected WebBrain
+deterministic step-limit summary. This also applies to the selected KavachWeb
 Compass provider without changing its advisory in-loop observation checkpoints.
 Structured Cloud API runs keep their separate `done_json` output contract and do
 not enter this handoff.
@@ -268,7 +268,7 @@ Official OpenAI GPT-5.6 and streaming-capable Responses-only GPT-5 Pro variants
 use Responses streaming. Other supported official OpenAI models use Chat
 Completions streaming. Anthropic uses its native Messages event parser, Azure
 OpenAI uses its deployment-based parser, and Gemini, DeepSeek, xAI, Mistral,
-Nvidia NIM, Groq, Together AI, Fireworks, z.ai, OpenRouter, WebBrain Compass,
+Nvidia NIM, Groq, Together AI, Fireworks, z.ai, OpenRouter, KavachWeb Compass,
 Ollama, LM Studio, Jan, vLLM, SGLang, LocalAI, and Unsloth Studio use the OpenAI-compatible
 Chat Completions parser. z.ai streaming tool calls add its documented
 `tool_stream` request flag. llama.cpp uses its dedicated OpenAI-compatible
@@ -361,7 +361,7 @@ trace and diagnostic exports as privacy-sensitive data.
 
 Browser-tab creation, enumeration, activation, and run retargeting are not general model-callable capabilities. To inspect another URL, the agent uses an available URL reader; to interact with it, it navigates the current run tab. Explicit separate-tab requests are surfaced as a limitation rather than silently converted into current-tab navigation. The only private-tab exception is the single OTP-skill-gated reader above: the runtime chooses an already-open supported mailbox without exposing the tab catalog, and any message-opening helper is inactive and disposable. Internal research/helper tabs and normal page-authored `target=_blank` behavior remain separate infrastructure.
 
-Chrome CSS patch records include the top-level `documentId` and a patch-specific CSS marker. Full navigation clears persisted records, and `remove_injected_css` checks the live document before calling `removeCSS`, preventing an old patch ID from removing equivalent CSS on a replacement page. If navigation races either identity check during injection, WebBrain removes that patch's exact uniquely marked CSS from the replacement document before discarding its record. Chrome `execute_js` passes a 15-second timeout to CDP. Dev diagnostic event handlers are registered before either agent-loop variant starts and own their debugger session across turns, so ordinary run cleanup preserves their bounded buffers. Leaving the panel-wide Dev mode drains every tab in the CDP client's active-diagnostics registry, removes the handlers and buffers, and sends `Runtime.disable`, `Log.disable`, and `Network.disable` so Chrome also stops domain-level diagnostic work; conversation and tab cleanup additionally detach the debugger.
+Chrome CSS patch records include the top-level `documentId` and a patch-specific CSS marker. Full navigation clears persisted records, and `remove_injected_css` checks the live document before calling `removeCSS`, preventing an old patch ID from removing equivalent CSS on a replacement page. If navigation races either identity check during injection, KavachWeb removes that patch's exact uniquely marked CSS from the replacement document before discarding its record. Chrome `execute_js` passes a 15-second timeout to CDP. Dev diagnostic event handlers are registered before either agent-loop variant starts and own their debugger session across turns, so ordinary run cleanup preserves their bounded buffers. Leaving the panel-wide Dev mode drains every tab in the CDP client's active-diagnostics registry, removes the handlers and buffers, and sends `Runtime.disable`, `Log.disable`, and `Network.disable` so Chrome also stops domain-level diagnostic work; conversation and tab cleanup additionally detach the debugger.
 
 ### Step 6a: Skills and Dynamic Tool Exposure
 
@@ -482,7 +482,7 @@ The runtime enforces catalog membership, mode/tier eligibility, active-skill
 tool ownership, and tool filters. It cannot independently determine *why* the
 model requested a valid skill ID. The rule against activation from page, email,
 document, or tool-result instructions is therefore a model-policy boundary,
-reinforced by WebBrain's untrusted-content wrappers and the loader description,
+reinforced by KavachWeb's untrusted-content wrappers and the loader description,
 not a deterministic intent classifier. Routing quality also depends on concise,
 distinct summaries; a broad skill such as FreeSkillz deliberately loads one
 instruction bundle for several related capabilities.
@@ -616,7 +616,7 @@ copied nor fingerprinted in request events. Policy revisions are bumped when
 controlled prompt templates or tool-exposure rules change; private request
 content does not affect them.
 
-WebBrain Compass runs also have a separate consent-gated terminal-runtime path.
+KavachWeb Compass runs also have a separate consent-gated terminal-runtime path.
 After an executed tool result is made durable in `chrome.storage.local`, a
 bounded `terminal_runtime` envelope is sent to the Compass improvement endpoint.
 Transient failures remain in the outbox for the next Compass run; acknowledged or
@@ -811,7 +811,7 @@ Wraps `chrome.debugger` API for:
 - **Screenshots** — `Page.captureScreenshot` with clip/scale control
 - **DOM queries** — `Runtime.evaluate` for shadow DOM piercing, `DOM.getDocument` for closed roots
 - **WebMCP** — `WebMCP.enable` maintains a bounded live catalog and
-  `WebMCP.invokeTool` executes a page-registered structured capability. WebBrain
+  `WebMCP.invokeTool` executes a page-registered structured capability. KavachWeb
   exposes opaque `wmcp_*` IDs rather than page-controlled names as call handles.
 
 WebMCP is an experimental Chrome-only fast path that is off by default. The
@@ -928,7 +928,7 @@ Firefox uses `browser.storage.session`.
 | API shortcut observer | `chrome.webRequest` URL/method buffer | `browser.webRequest` URL/method buffer |
 | Slash-driven tab/screen recording | `chrome.tabCapture` / `getDisplayMedia()` + offscreen | Not available |
 | Side panel | `sidePanel` API (MV3) | `sidebar_action` (MV2) |
-| File upload | CDP path or `downloadId` | `downloadId` re-fetch or WebBrain file picker; no arbitrary local path |
+| File upload | CDP path or `downloadId` | `downloadId` re-fetch or KavachWeb file picker; no arbitrary local path |
 
 Apart from the Chromium-only endpoint-free WebGPU provider and vision sidecar,
 the agent loop, tools, adapters, providers, loop detection, context management,

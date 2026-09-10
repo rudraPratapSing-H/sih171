@@ -41,8 +41,8 @@ function accessFailure(hostname, rawUrl, errorCode, detail) {
     restrictedDomain: hostname || null,
     url: String(rawUrl || ''),
     recoveryTool: 'screenshot',
-    error: `${explanation} WebBrain cannot inspect, interact with, or directly fetch this page. Opening the same URL in another tab or retrying another page/fetch tool will not grant access. If the page is the active run tab, use screenshot once for a read-only visual fallback; otherwise leave it open for manual use.`,
-    stopMessage: `Stopped: ${explanation} WebBrain cannot inspect, interact with, or directly fetch this page. Opening another tab or retrying will not grant access. The page remains open for manual use.`,
+    error: `${explanation} KavachWeb cannot inspect, interact with, or directly fetch this page. Opening the same URL in another tab or retrying another page/fetch tool will not grant access. If the page is the active run tab, use screenshot once for a read-only visual fallback; otherwise leave it open for manual use.`,
+    stopMessage: `Stopped: ${explanation} KavachWeb cannot inspect, interact with, or directly fetch this page. Opening another tab or retrying will not grant access. The page remains open for manual use.`,
   };
 }
 

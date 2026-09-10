@@ -1,4 +1,4 @@
-# WebBrain brand assets 2026 — v2
+# KavachWeb brand assets 2026 — v2
 
 A non-destructive, typography-led refresh of the existing social card, store promos,
 and banner set. The original top-level files remain unchanged.

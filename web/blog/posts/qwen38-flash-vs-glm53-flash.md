@@ -6,19 +6,19 @@ sortOrder: -270
 date: 2026-08-27
 readTime: 9 min read
 description: >
-  We tested Qwen3.8 Flash and GLM-5.3 Flash on 400 WebBrain browser-agent cases. Both are huge multimodal MoEs with small active paths, million-token context, and near-identical list pricing. Qwen wins vision; GLM wins cost under a temporary launch discount.
+  We tested Qwen3.8 Flash and GLM-5.3 Flash on 400 KavachWeb browser-agent cases. Both are huge multimodal MoEs with small active paths, million-token context, and near-identical list pricing. Qwen wins vision; GLM wins cost under a temporary launch discount.
 excerpt: >
   Qwen3.8 Flash reaches 79 strict vision passes and a 2.55-second planner median. GLM-5.3 Flash lands at 76 vision passes, follows the canonical first route more often, and costs half as much only while its 50% launch promotion lasts.
 titleTag: >
-  Qwen3.8 Flash vs GLM-5.3 Flash browser benchmark - WebBrain Blog
+  Qwen3.8 Flash vs GLM-5.3 Flash browser benchmark - KavachWeb Blog
 ogTitle: >
   Qwen3.8 Flash vs GLM-5.3 Flash: 400 browser-agent tests
 ogDescription: >
-  Two new multimodal MoEs, 400 WebBrain cases, zero final errors. Qwen wins vision quality and text speed; GLM wins promotional cost and vision latency.
+  Two new multimodal MoEs, 400 KavachWeb cases, zero final errors. Qwen wins vision quality and text speed; GLM wins promotional cost and vision latency.
 twitterTitle: >
   Qwen3.8 Flash vs GLM-5.3 Flash: the budget tier just reset
 twitterDescription: >
-  Qwen: 79/100 vision and 2.55s planner median. GLM: 76/100 vision and a temporary 50% price advantage. Architecture, pricing, and full WebBrain results.
+  Qwen: 79/100 vision and 2.55s planner median. GLM: 76/100 vision and a temporary 50% price advantage. Architecture, pricing, and full KavachWeb results.
 keywords:
   - Qwen3.8 Flash
   - GLM-5.3 Flash
@@ -29,11 +29,11 @@ keywords:
   - vision language model
   - tool calling
   - cheap AI API
-  - WebBrain
+  - KavachWeb
 author: Emre Sokullu
 authorUrl: https://emresokullu.com
 lede: >
-  **Two releases arriving within hours made the old budget multimodal shortlist look ancient.** Qwen3.8 Flash and GLM-5.3 Flash are not tiny models. They are enormous sparse systems that execute only a small fraction of their weights for each token, accept text, images, and video, and expose roughly million-token context windows. On OpenRouter their normal token prices are almost identical. We sent both through WebBrain's 100-case text-planner suite and 100-case production vision suite: **400 final case results, zero errors**. Qwen won vision quality and text speed. GLM followed our canonical first-action hint more often, answered screenshots faster, and was cheaper only because its launch price is temporarily cut in half.
+  **Two releases arriving within hours made the old budget multimodal shortlist look ancient.** Qwen3.8 Flash and GLM-5.3 Flash are not tiny models. They are enormous sparse systems that execute only a small fraction of their weights for each token, accept text, images, and video, and expose roughly million-token context windows. On OpenRouter their normal token prices are almost identical. We sent both through KavachWeb's 100-case text-planner suite and 100-case production vision suite: **400 final case results, zero errors**. Qwen won vision quality and text speed. GLM followed our canonical first-action hint more often, answered screenshots faster, and was cheaper only because its launch price is temporarily cut in half.
 ---
 
 ## The short verdict
@@ -87,15 +87,15 @@ OpenRouter prices per million tokens on August 27:
 
 At list price, GLM input is six percent cheaper and output is six percent more expensive. For most real workloads, that is the same price band. The current two-to-one gap is a launch promotion, not an architectural law; budget decisions made from the discounted column should include an expiry date.
 
-Our runs also show why list rates are not the whole bill. Both text runs reported more than 2.4M cached prompt tokens because the WebBrain system prompt and tool schemas repeat. Qwen emitted fewer text-planner completion tokens, while the two vision runs emitted almost exactly the same number. The exact workload mix decides which nearly identical list price is cheaper.
+Our runs also show why list rates are not the whole bill. Both text runs reported more than 2.4M cached prompt tokens because the KavachWeb system prompt and tool schemas repeat. Qwen emitted fewer text-planner completion tokens, while the two vision runs emitted almost exactly the same number. The exact workload mix decides which nearly identical list price is cheaper.
 
 ## What we ran
 
 Both model IDs were served through the same OpenRouter account on August 27, 2026.
 
-The **regular LLM run** used WebBrain's 100-case Chrome first-action corpus at Full tier: current Act/Ask prompts, native OpenAI-compatible tool schemas, temperature 0.15, and no reasoning-effort override. It captures one response and does not execute the tool. The canonical `idealFirstToolCall` is a deterministic routing hint, not a full end-to-end success grade; a model that safely reads the accessibility tree before clicking can miss the hint and still finish the live task correctly.
+The **regular LLM run** used KavachWeb's 100-case Chrome first-action corpus at Full tier: current Act/Ask prompts, native OpenAI-compatible tool schemas, temperature 0.15, and no reasoning-effort override. It captures one response and does not execute the tool. The canonical `idealFirstToolCall` is a deterministic routing hint, not a full end-to-end success grade; a model that safely reads the accessibility tree before clicking can miss the hint and still finish the live task correctly.
 
-The **vision run** used WebBrain's 100 browser screenshots and exact production vision contract: the shipped six-section prompt, temperature 0, 800-token maximum, weighted fact checks, and critical-fact gating. A strict pass requires both enough weighted evidence and every critical fact.
+The **vision run** used KavachWeb's 100 browser screenshots and exact production vision contract: the shipped six-section prompt, temperature 0, 800-token maximum, weighted fact checks, and critical-fact gating. A strict pass requires both enough weighted evidence and every critical fact.
 
 Two Qwen text requests and two Qwen vision requests hit temporary upstream 429 rate limits. All four succeeded on retry. Every final case file is complete, and no API key was stored in the results.
 
@@ -135,7 +135,7 @@ Qwen's three prose responses were knowledge questions where the expected termina
 
 The low exact totals need the same caution as every first-action article we publish. Many misses are harmless argument differences such as a trailing slash, an explicit read limit, or equivalent URL encoding. More importantly, both models often choose `get_accessibility_tree` where the deterministic hint expects an immediate click. GLM does that 48 times and Qwen 54 times. In a live browser loop, reading before acting is frequently prudent; this harness measures dispatch conformity, not final task completion.
 
-The cleaner operational distinction is speed. Qwen's 2.55-second median is excellent for a 6B-active multimodal model carrying the full WebBrain prompt and tool set. GLM is more than twice as slow on text, even though it is substantially faster on the screenshot route we tested. Provider scheduling, vision preprocessing, cache behavior, and model architecture all contribute; “Flash” is not one universal latency class.
+The cleaner operational distinction is speed. Qwen's 2.55-second median is excellent for a 6B-active multimodal model carrying the full KavachWeb prompt and tool set. GLM is more than twice as slow on text, even though it is substantially faster on the screenshot route we tested. Provider scheduling, vision preprocessing, cache behavior, and model architecture all contribute; “Flash” is not one universal latency class.
 
 ## The old budget Qwen shortlist is obsolete
 
@@ -158,7 +158,7 @@ There is no longer a good reason to reach first for the archaic budget Qwen3-VL 
 - **Best single hosted default:** Qwen3.8 Flash. It wins strict vision quality, has the stronger challenging-case floor, and its text-planner median is less than half GLM's.
 - **Best value during the launch promotion:** GLM-5.3 Flash. It is slightly behind on vision quality but faster on screenshots, emits a tool on every planner case, and currently costs half its intended list rate.
 - **Best post-promotion choice:** treat them as nearly equal on token price. Pick Qwen for vision hit rate and text latency; pick GLM for screenshot latency and slightly better canonical first-route conformity.
-- **Best split WebBrain setup today:** Qwen is the faster text planner; GLM is the faster vision sub-call. WebBrain can configure those roles separately if latency matters more than using one model ID everywhere.
+- **Best split KavachWeb setup today:** Qwen is the faster text planner; GLM is the faster vision sub-call. KavachWeb can configure those roles separately if latency matters more than using one model ID everywhere.
 
 The larger lesson is architectural. The useful small-model metric is no longer the number in the model name. Qwen carries well over a hundred billion main-model parameters while activating six billion. GLM stores 320 billion while activating eighteen. Both can be much more capable than yesterday's 8B and 30B budget checkpoints without making each generated token traverse the whole model.
 
@@ -175,4 +175,4 @@ test/vision/results/2026-08-27-openrouter-full_z-ai_glm-5.3-flash_production
 
 The benchmark harness, screenshots, rubrics, and result files live in [`test/llm`](https://github.com/esokullu/webbrain/tree/main/test/llm) and [`test/vision`](https://github.com/esokullu/webbrain/tree/main/test/vision).
 
-Tags: #Qwen38Flash #GLM53Flash #OpenRouter #MultimodalAI #MixtureOfExperts #VisionLanguageModel #ToolCalling #BrowserAgent #LocalAI #WebBrain
+Tags: #Qwen38Flash #GLM53Flash #OpenRouter #MultimodalAI #MixtureOfExperts #VisionLanguageModel #ToolCalling #BrowserAgent #LocalAI #KavachWeb

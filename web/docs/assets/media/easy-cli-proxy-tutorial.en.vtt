@@ -5,10 +5,10 @@ Hello everyone!
 
 00:00:01.766 --> 00:00:06.066
 In this tutorial, I’ll show you how to connect your
-AI subscriptions to WebBrain.
+AI subscriptions to KavachWeb.
 
 00:00:06.100 --> 00:00:15.166
-Currently, you can use WebBrain with your own API keys or local AI
+Currently, you can use KavachWeb with your own API keys or local AI
 tools like Ollama, llama.cpp, or LM Studio.
 
 00:00:15.200 --> 00:00:22.233
@@ -55,7 +55,7 @@ Simply copy the API URL for the model you want to use, along with the
 authentication key.
 
 00:01:09.733 --> 00:01:15.100
-Next, switch over to WebBrain and open the settings
+Next, switch over to KavachWeb and open the settings
 menu to configure your provider.
 
 00:01:15.100 --> 00:01:20.400
@@ -93,7 +93,7 @@ We'll start with “Ask Mode” on Bluesky to see if
 the model responds correctly.
 
 00:02:01.166 --> 00:02:07.400
-Finally, we'll test “Act Mode” by having WebBrain draft and publish a
+Finally, we'll test “Act Mode” by having KavachWeb draft and publish a
 post automatically.
 
 00:02:17.066 --> 00:02:18.233

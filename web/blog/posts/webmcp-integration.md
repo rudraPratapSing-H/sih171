@@ -8,22 +8,22 @@ readTime: 5 min read
 description: >
   WebMCP lets websites expose structured tools to AI agents. A conversation with Google's Gemini-in-Chrome team is pushing us toward integration, and we couldn't be more excited.
 excerpt: >
-  A new browser standard lets websites hand AI agents a menu of actions instead of forcing them to squint at screenshots. One GitHub issue sparked a conversation that could change how WebBrain works with the web.
+  A new browser standard lets websites hand AI agents a menu of actions instead of forcing them to squint at screenshots. One GitHub issue sparked a conversation that could change how KavachWeb works with the web.
 titleTag: >
-  WebMCP: Websites as Tools for AI Agents - WebBrain Blog
+  WebMCP: Websites as Tools for AI Agents - KavachWeb Blog
 ogTitle: >
   WebMCP: Websites as Tools for AI Agents, and Why We're Excited
 ogDescription: >
   WebMCP lets websites expose structured tools to AI agents. A conversation with Google's Gemini-in-Chrome team is pushing us toward integration.
 twitterTitle: >
-  WebMCP + WebBrain: Excited About the Agentic Web
+  WebMCP + KavachWeb: Excited About the Agentic Web
 twitterDescription: >
-  WebMCP lets websites expose structured tools to AI agents. A GitHub conversation with Google's Gemini-in-Chrome team has us rethinking how WebBrain interacts with the web.
+  WebMCP lets websites expose structured tools to AI agents. A GitHub conversation with Google's Gemini-in-Chrome team has us rethinking how KavachWeb interacts with the web.
 keywords:
   - WebMCP
   - browser agent
   - AI agent tools
-  - WebBrain
+  - KavachWeb
   - Model Context Protocol
   - agentic web
   - W3C standard
@@ -50,17 +50,17 @@ WebMCP shipped in Chrome 146 Canary in early 2026, and as of June 2026 Chrome 14
 
 Early benchmarks show roughly a 67% reduction in computational overhead compared to screenshot-based agent interaction. Token usage drops dramatically — some estimates put it at 89% more efficient than pixel-based approaches. That is not a marginal improvement. That is the difference between a local model that can actually help and one that drowns in context before it clicks a single button.
 
-## Why this matters for WebBrain
+## Why this matters for KavachWeb
 
-WebBrain reads the DOM and the accessibility tree. It does not take screenshots. That already puts us in a better position than pixel-based agents, but we still face a fundamental problem: the page was designed for human eyes, not for a language model trying to figure out which element to interact with.
+KavachWeb reads the DOM and the accessibility tree. It does not take screenshots. That already puts us in a better position than pixel-based agents, but we still face a fundamental problem: the page was designed for human eyes, not for a language model trying to figure out which element to interact with.
 
 WebMCP changes the equation. If a page exposes its capabilities as structured tools, our planner model does not need to interpret ambiguous UI states to act — it just needs to pick the right tool and fill in the parameters. That is faster, cheaper, more reliable, and safer, because the agent operates within a defined surface instead of having free reign over every element on the page.
 
 ## The conversation that started it
 
-On July 8, [Dominic Farolino](https://github.com/domfarolino) — one of the driving forces behind WebMCP and the Gemini-in-Chrome team — opened [issue #305](https://github.com/webbrain-one/webbrain/issues/305) on our repo. The proposition was simple: WebBrain could find WebMCP tools through the Chrome DevTools Protocol and load them into the model's context, giving the agent a structured view of what the page can do before it tries to do anything.
+On July 8, [Dominic Farolino](https://github.com/domfarolino) — one of the driving forces behind WebMCP and the Gemini-in-Chrome team — opened [issue #305](https://github.com/webbrain-one/webbrain/issues/305) on our repo. The proposition was simple: KavachWeb could find WebMCP tools through the Chrome DevTools Protocol and load them into the model's context, giving the agent a structured view of what the page can do before it tries to do anything.
 
-This is exactly the kind of conversation we love. An external team with deep browser platform experience, looking at WebBrain and asking: how do we make this work better? The integration could be straightforward — discover tools via CDP, present them to the planner, let the model choose — but the implications are significant. It means WebBrain could operate on two levels: the general-purpose fallback of reading the DOM when nothing else is available, and the fast path of using declared tools when the page offers them.
+This is exactly the kind of conversation we love. An external team with deep browser platform experience, looking at KavachWeb and asking: how do we make this work better? The integration could be straightforward — discover tools via CDP, present them to the planner, let the model choose — but the implications are significant. It means KavachWeb could operate on two levels: the general-purpose fallback of reading the DOM when nothing else is available, and the fast path of using declared tools when the page offers them.
 
 We are excited about this. Genuinely.
 

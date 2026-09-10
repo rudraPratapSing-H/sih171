@@ -58,18 +58,18 @@
     };
     const modelLabel = String(handoff.model || '').replace(/[\r\n]+/g, ' ').slice(0, 120);
     if (!modelLabel) {
-      setStatus('WebBrain could not configure Ollama because the launch URL is missing a model.', 'error');
+      setStatus('KavachWeb could not configure Ollama because the launch URL is missing a model.', 'error');
       return;
     }
 
     const ok = window.confirm(
-      `Configure WebBrain to use Ollama model "${modelLabel}"?\n\n` +
+      `Configure KavachWeb to use Ollama model "${modelLabel}"?\n\n` +
       `Provider: ${handoff.baseUrl || 'http://127.0.0.1:11434/v1'}\n` +
       `Context window: ${handoff.contextWindow || '65536'} tokens\n\n` +
       'This updates the Ollama provider and makes it active.'
     );
     if (!ok) {
-      setStatus('WebBrain Ollama setup was cancelled.');
+      setStatus('KavachWeb Ollama setup was cancelled.');
       return;
     }
 
@@ -80,11 +80,11 @@
         handoff,
       });
       setStatus(
-        `WebBrain is configured for Ollama model "${response.model}". Open the WebBrain panel to start.`,
+        `KavachWeb is configured for Ollama model "${response.model}". Open the KavachWeb panel to start.`,
         'success'
       );
     } catch (e) {
-      setStatus(`WebBrain could not configure Ollama: ${e.message}`, 'error');
+      setStatus(`KavachWeb could not configure Ollama: ${e.message}`, 'error');
     }
   }
 

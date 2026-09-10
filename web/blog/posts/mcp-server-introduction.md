@@ -1,26 +1,26 @@
 ---
 title: >
-  WebBrain MCP: Give Claude Code, OpenCode, and Codex access to your real browser session
+  KavachWeb MCP: Give Claude Code, OpenCode, and Codex access to your real browser session
 slug: mcp-server-introduction
 sortOrder: 90
 date: 2026-08-08
 readTime: 11 min read
 description: >
-  The WebBrain MCP server lets any MCP-capable coding agent — Claude Code, OpenCode, Codex, Cursor — delegate browser tasks to your real, already-authenticated browser. No headless login dances, no cookie transfers. Just ask your agent to fill out a form, check a dashboard, or read a page behind SSO, and it runs in the browser you actually use.
+  The KavachWeb MCP server lets any MCP-capable coding agent — Claude Code, OpenCode, Codex, Cursor — delegate browser tasks to your real, already-authenticated browser. No headless login dances, no cookie transfers. Just ask your agent to fill out a form, check a dashboard, or read a page behind SSO, and it runs in the browser you actually use.
 excerpt: >
-  The WebBrain MCP server bridges Claude Code, OpenCode, and Codex to your real, already-signed-in browser. No headless login walls. No cookie transfers. Just ask your coding agent to interact with any page you're logged into.
+  The KavachWeb MCP server bridges Claude Code, OpenCode, and Codex to your real, already-signed-in browser. No headless login walls. No cookie transfers. Just ask your coding agent to interact with any page you're logged into.
 titleTag: >
-  WebBrain MCP: Claude Code + OpenCode + Codex in your real browser — WebBrain Blog
+  KavachWeb MCP: Claude Code + OpenCode + Codex in your real browser — KavachWeb Blog
 ogTitle: >
-  WebBrain MCP: Claude Code, OpenCode, Codex in your real browser
+  KavachWeb MCP: Claude Code, OpenCode, Codex in your real browser
 ogDescription: >
-  The WebBrain MCP server lets any MCP-capable agent delegate browser tasks to your real, authenticated Chromium session. No headless login walls.
+  The KavachWeb MCP server lets any MCP-capable agent delegate browser tasks to your real, authenticated Chromium session. No headless login walls.
 twitterTitle: >
-  WebBrain MCP: Claude Code, OpenCode, Codex in your real browser
+  KavachWeb MCP: Claude Code, OpenCode, Codex in your real browser
 twitterDescription: >
   Give your coding agent the ability to interact with any page you're already logged into — Stripe, Gmail, GitHub, banking. Just ask.
 keywords:
-  - WebBrain
+  - KavachWeb
   - MCP
   - Model Context Protocol
   - Claude Code
@@ -35,7 +35,7 @@ keywords:
   - Chrome extension
 html: true
 lede: >
-  We built the WebBrain MCP server so that any MCP-capable coding agent — Claude Code, OpenCode, Codex, Cursor — can delegate browser tasks to the user's real, already-authenticated Chromium session. Instead of spinning up a headless browser that starts logged out of everything, the agent hands a goal to WebBrain running in the browser profile the user already uses, and the extension carries it out in the active tab. This post explains how it works, how it differs from other browser MCP approaches, and how to wire it up to your agent of choice.
+  We built the KavachWeb MCP server so that any MCP-capable coding agent — Claude Code, OpenCode, Codex, Cursor — can delegate browser tasks to the user's real, already-authenticated Chromium session. Instead of spinning up a headless browser that starts logged out of everything, the agent hands a goal to KavachWeb running in the browser profile the user already uses, and the extension carries it out in the active tab. This post explains how it works, how it differs from other browser MCP approaches, and how to wire it up to your agent of choice.
 ---
 
 ```
@@ -57,21 +57,21 @@ lede: >
 
 A headless browser automation tool starts fresh every time. No cookies. No signed-in sessions. No MFA tokens. The first useful page hits you with a login wall, and you either hardcode credentials into a script or manually replay cookies after every restart.
 
-WebBrain is different by design. Its MCP bridge runs inside the Chromium extension — Chrome, Edge, Brave, Opera, or Vivaldi — with an embedded agent loop living inside the user's own browser profile. You are already signed in to GitHub, your banking portal, your Stripe dashboard, your internal admin tools. The extension can reach them with the user's full permissions, exactly as if a human were clicking. The normal Firefox extension still works as a standalone browser agent, but it cannot host this bridge because Firefox has no matching MV3 offscreen-document runtime.
+KavachWeb is different by design. Its MCP bridge runs inside the Chromium extension — Chrome, Edge, Brave, Opera, or Vivaldi — with an embedded agent loop living inside the user's own browser profile. You are already signed in to GitHub, your banking portal, your Stripe dashboard, your internal admin tools. The extension can reach them with the user's full permissions, exactly as if a human were clicking. The normal Firefox extension still works as a standalone browser agent, but it cannot host this bridge because Firefox has no matching MV3 offscreen-document runtime.
 
 The MCP server exposes that capability to any MCP client:
 
 ```
-Claude Code ──stdio──▶ webbrain-mcp ──ws://127.0.0.1:17374──▶ WebBrain extension ──▶ your tabs
+Claude Code ──stdio──▶ webbrain-mcp ──ws://127.0.0.1:17374──▶ KavachWeb extension ──▶ your tabs
 ```
 
-The MCP client (Claude Code, OpenCode, Codex, Cursor) launches `npx -y @webbrain/mcp-server` as a child process. That process hosts a local WebSocket listener on `127.0.0.1:17374`. The WebBrain extension dials **out** to that listener — Manifest V3 extensions can't listen on sockets, so the direction is fixed. Once handshaken, the MCP client sends a task; the extension runs it in the browser; the result flows back through the same channel.
+The MCP client (Claude Code, OpenCode, Codex, Cursor) launches `npx -y @webbrain/mcp-server` as a child process. That process hosts a local WebSocket listener on `127.0.0.1:17374`. The KavachWeb extension dials **out** to that listener — Manifest V3 extensions can't listen on sockets, so the direction is fixed. Once handshaken, the MCP client sends a task; the extension runs it in the browser; the result flows back through the same channel.
 
 ## How it differs from headless browser MCP tools
 
 Other browser MCP servers in the ecosystem typically wrap a **headless Chromium** via Playwright or similar. That approach has tradeoffs:
 
-| | **WebBrain MCP** | **Headless browser MCP** |
+| | **KavachWeb MCP** | **Headless browser MCP** |
 |---|---|---|
 | **Authentication** | Your real browser session — already signed in, MFA passed | Fresh browser — login walls on the first useful page |
 | **Cookie management** | None needed — uses existing session cookies | Manual export/replay, or credential injection in code |
@@ -81,7 +81,7 @@ Other browser MCP servers in the ecosystem typically wrap a **headless Chromium*
 | **Local models** | Full local provider support (llama.cpp, vLLM, Ollama, LM Studio) | Depends on the agent framework wrapping the MCP server |
 | **Cross-origin frames** | Extension injects into iframes directly (Stripe widgets, embedded forms) | Blocked by same-origin policy unless explicitly handled |
 
-The key architectural difference is **trust boundary placement**. Headless tools expose granular browser primitives (`click`, `type`, `navigate`, `screenshot`) through MCP — that's the whole surface area. WebBrain deliberately does **not**. It exposes six **task-level** tools instead:
+The key architectural difference is **trust boundary placement**. Headless tools expose granular browser primitives (`click`, `type`, `navigate`, `screenshot`) through MCP — that's the whole surface area. KavachWeb deliberately does **not**. It exposes six **task-level** tools instead:
 
 | Tool | Purpose |
 |---|---|
@@ -92,7 +92,7 @@ The key architectural difference is **trust boundary placement**. Headless tools
 | `webbrain_abort` | Stop a run. Actions already taken are not undone. |
 | `webbrain_connection` | Report whether the extension is attached, and how to fix it if not. |
 
-This is not a limitation — it's a safety decision. WebBrain's capability × origin permission gate runs inside the extension's agent loop (`_executeToolBatch`), not inside the MCP tool execution path. A headless MCP tool calling `click` directly bypasses every approval prompt the product is built on. Delegating a goal instead keeps the trust boundary in the browser, where the human is.
+This is not a limitation — it's a safety decision. KavachWeb's capability × origin permission gate runs inside the extension's agent loop (`_executeToolBatch`), not inside the MCP tool execution path. A headless MCP tool calling `click` directly bypasses every approval prompt the product is built on. Delegating a goal instead keeps the trust boundary in the browser, where the human is.
 
 ## Setup: register the MCP server
 
@@ -145,13 +145,13 @@ After adding the config, restart the MCP client. On startup, it spawns `npx -y @
 
 ## Connecting the browser extension
 
-The MCP server alone is not enough — you need the WebBrain extension installed and pointed at it:
+The MCP server alone is not enough — you need the KavachWeb extension installed and pointed at it:
 
-1. Install the [WebBrain extension](https://webbrain.one) in Chrome, Edge, Brave, Opera, or Vivaldi and open the browser.
-2. In **WebBrain → Settings → General → Advanced → MCP**, set the URL to `ws://127.0.0.1:17374/extension` and enable it.
+1. Install the [KavachWeb extension](https://webbrain.one) in Chrome, Edge, Brave, Opera, or Vivaldi and open the browser.
+2. In **KavachWeb → Settings → General → Advanced → MCP**, set the URL to `ws://127.0.0.1:17374/extension` and enable it.
 3. Restart your MCP client (or just restart the MCP server process) and ask the client to call `webbrain_connection` to verify.
 
-The extension holds exactly one outbound bridge socket. Pointing it here means it is *not* pointed at WebBrain Cloud (port `17373`) or the LM Studio plugin (port `17375`). Switch it under **Settings → General → Advanced → MCP** when you need to change destinations.
+The extension holds exactly one outbound bridge socket. Pointing it here means it is *not* pointed at KavachWeb Cloud (port `17373`) or the LM Studio plugin (port `17375`). Switch it under **Settings → General → Advanced → MCP** when you need to change destinations.
 
 <div class="callout">
 **Network binding is loopback-only.** The listener binds `127.0.0.1` only. Anything that can reach this port can drive your signed-in browser — never expose it to a network or container bridge. The shipping extension sends no shared secret, so treat the port as trusted-local.
@@ -159,7 +159,7 @@ The extension holds exactly one outbound bridge socket. Pointing it here means i
 
 ## Example usage
 
-Once configured, the MCP client sees the six WebBrain tools in its tool list. You interact with them naturally:
+Once configured, the MCP client sees the six KavachWeb tools in its tool list. You interact with them naturally:
 
 > "Open my Stripe dashboard and list last week's failed payments with amounts and customer emails."
 
@@ -216,9 +216,9 @@ All environment-driven, set these before launching the MCP server if you need no
 | `WEBBRAIN_RUN_TIMEOUT_MS` | `300000` | Default ceiling for `webbrain_run` polling. |
 | `WEBBRAIN_POLL_INTERVAL_MS` | `1000` | Status poll interval. |
 
-## When to use WebBrain MCP
+## When to use KavachWeb MCP
 
-Choose WebBrain MCP when:
+Choose KavachWeb MCP when:
 
 - You need to interact with **sites you're already authenticated to** (banking, SaaS dashboards, admin panels, email)
 - **MFA** is involved and you can't programmatically log in

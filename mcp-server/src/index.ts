@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * WebBrain MCP server.
+ * KavachWeb MCP server.
  *
  * Gives any MCP client — Claude Code, Codex, Cursor, OpenClaw — the ability to
  * delegate a browser task to the user's REAL browser session: already logged
@@ -12,7 +12,7 @@
  * low-level browser primitives, because:
  *   1. the permission gate lives in the extension's agent loop, not in
  *      `executeTool()`, so per-primitive access would bypass every safety
- *      property WebBrain advertises; and
+ *      property KavachWeb advertises; and
  *   2. driving 50 primitives over a socket costs a round trip and a pile of
  *      tokens per click. Delegation is both safer and cheaper.
  *
@@ -53,7 +53,7 @@ server.registerTool(
   {
     title: "Run a browser task in the user's real session",
     description:
-      "Delegate a web task to WebBrain running in the user's actual browser — already " +
+      "Delegate a web task to KavachWeb running in the user's actual browser — already " +
       "signed in, with existing cookies and sessions. Use this when a task needs a page " +
       "the caller cannot reach: an authenticated dashboard, a webmail account, an admin " +
       "panel, a SaaS report behind SSO. Describe the goal in plain language, the way you " +
@@ -90,7 +90,7 @@ server.registerTool(
         .boolean()
         .default(false)
         .describe(
-          "Lift WebBrain's UI-first rule so the agent may issue mutating HTTP requests " +
+          "Lift KavachWeb's UI-first rule so the agent may issue mutating HTTP requests " +
             "directly instead of clicking through the interface. Off by default and rarely " +
             "correct — the UI path is visible and stoppable. Only valid when mode is 'act'.",
         ),
@@ -164,7 +164,7 @@ server.registerTool(
     title: "Extract structured data from the user's real browser",
     description:
       "Read a page in the user's actual signed-in browser and return data that matches a " +
-      "caller-supplied JSON Schema. This tool always uses WebBrain Ask mode, so it cannot " +
+      "caller-supplied JSON Schema. This tool always uses KavachWeb Ask mode, so it cannot " +
       "click, type, navigate or submit. Use it for authenticated reports, tables, account " +
       "details and other page data that should come back as predictable JSON rather than a " +
       "prose summary. Use webbrain_run instead when the task needs interaction.\n\n" +
@@ -258,7 +258,7 @@ server.registerTool(
   {
     title: "Check a browser run",
     description:
-      "Fetch the current state of a WebBrain run, including its result once finished. " +
+      "Fetch the current state of a KavachWeb run, including its result once finished. " +
       "Omit run_id to list every run this browser knows about.",
     inputSchema: {
       run_id: z
@@ -272,7 +272,7 @@ server.registerTool(
       const result = await getStatus(bridge, run_id);
       const runs = (result as { runs?: CloudSnapshot[] }).runs;
       if (runs) {
-        if (!runs.length) return ok("No WebBrain runs on record.");
+        if (!runs.length) return ok("No KavachWeb runs on record.");
         return ok(
           runs
             .map((run) => `${run.runId}  ${run.status.padEnd(16)}  ${run.task ?? ""}`)
@@ -292,10 +292,10 @@ server.registerTool(
     title: "Answer a question from a browser run",
     description:
       "Supply the user's answer to a run sitting at status 'needs_user_input', then keep " +
-      "waiting for it to settle. The answer must come from the user — WebBrain pauses " +
+      "waiting for it to settle. The answer must come from the user — KavachWeb pauses " +
       "precisely because a human decision is required. For an ordinary clarification, pass " +
       "the user's answer verbatim. For a structured permission prompt, map the user's explicit " +
-      "decision to the exact stable value shown by WebBrain: 'once', 'always', or 'deny'. Never " +
+      "decision to the exact stable value shown by KavachWeb: 'once', 'always', or 'deny'. Never " +
       "infer permission, and use 'always' only when the user explicitly requests a persistent grant. " +
       "Any other structured gate (form-submission confirmation, saved-workflow repair) lists its own " +
       "stable values on a 'decisions:' line — send one of those exactly, never a localized label.",
@@ -375,9 +375,9 @@ server.registerTool(
 server.registerTool(
   "webbrain_connection",
   {
-    title: "Check the WebBrain browser connection",
+    title: "Check the KavachWeb browser connection",
     description:
-      "Report whether a WebBrain extension is currently attached. Call this first when a " +
+      "Report whether a KavachWeb extension is currently attached. Call this first when a " +
       "browser tool fails, so you can tell the user what to fix instead of retrying blindly.",
     inputSchema: {},
   },
@@ -392,10 +392,10 @@ server.registerTool(
     return ok(
       `Not connected. Listening on ${bridgeUrl()}, but no extension has dialled in.\n\n` +
         "To connect: open a Chromium browser (Chrome, Edge, Brave), then in " +
-        "WebBrain → Settings → General → Advanced → MCP set the URL to\n" +
+        "KavachWeb → Settings → General → Advanced → MCP set the URL to\n" +
         `  ${bridgeUrl()}\n` +
         "and enable it. The extension holds one bridge socket at a time, so this cannot " +
-        "run at the same time as WebBrain Cloud on port 17373.\n\n" +
+        "run at the same time as KavachWeb Cloud on port 17373.\n\n" +
         "Firefox cannot host the bridge — that build has no offscreen document. If the " +
         "user is on Firefox, say so rather than suggesting settings changes.",
     );

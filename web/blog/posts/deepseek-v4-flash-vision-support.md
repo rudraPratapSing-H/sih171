@@ -6,21 +6,21 @@ sortOrder: -150
 date: 2026-08-04
 readTime: 2 min read
 description: >
-  WebBrain's DeepSeek V4 Flash Vision NVFP4 release adds screenshot and interface understanding to a model that was previously text-only.
+  KavachWeb's DeepSeek V4 Flash Vision NVFP4 release adds screenshot and interface understanding to a model that was previously text-only.
 excerpt: >
   DeepSeek V4 Flash can now inspect screenshots, interfaces, layouts, and other visual browser context—while retaining the strong price-performance profile we saw in our internal tests.
 titleTag: >
-  DeepSeek V4 Flash now has vision support - WebBrain Blog
+  DeepSeek V4 Flash now has vision support - KavachWeb Blog
 ogTitle: >
   DeepSeek V4 Flash now has vision support
 ogDescription: >
-  WebBrain's new DeepSeek V4 Flash Vision NVFP4 release gives the efficient open model the visual context browser agents need.
+  KavachWeb's new DeepSeek V4 Flash Vision NVFP4 release gives the efficient open model the visual context browser agents need.
 twitterTitle: >
   DeepSeek V4 Flash now has vision support
 twitterDescription: >
-  Screenshots, interfaces, layouts, and visual browser context are now supported in WebBrain's DeepSeek V4 Flash Vision NVFP4 release.
+  Screenshots, interfaces, layouts, and visual browser context are now supported in KavachWeb's DeepSeek V4 Flash Vision NVFP4 release.
 keywords:
-  - WebBrain
+  - KavachWeb
   - DeepSeek V4 Flash
   - DeepSeek V4 Flash Vision
   - NVFP4

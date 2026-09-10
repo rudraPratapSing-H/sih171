@@ -6,21 +6,21 @@ sortOrder: 0
 date: 2026-07-07
 readTime: 6 min read
 description: >
-  We ran Tencent Hy3 through WebBrain's frozen 100-case browser-agent planner benchmark on OpenRouter. Hy3 lands in the serious hosted planner tier with 95 parsed tool calls, 20 exact first-action matches, and 73% Sonnet alignment, but the current model is still text-only.
+  We ran Tencent Hy3 through KavachWeb's frozen 100-case browser-agent planner benchmark on OpenRouter. Hy3 lands in the serious hosted planner tier with 95 parsed tool calls, 20 exact first-action matches, and 73% Sonnet alignment, but the current model is still text-only.
 excerpt: >
   Tencent Hy3 reached 95/100 parsed tool calls, 20/100 exact first-action matches, and 73% Sonnet alignment. It is a strong OpenRouter planner row, with multimodality as the missing piece.
 titleTag: >
-  Tencent Hy3 OpenRouter WebBrain planner benchmark - WebBrain Blog
+  Tencent Hy3 OpenRouter KavachWeb planner benchmark - KavachWeb Blog
 ogTitle: >
-  Tencent Hy3 is a strong OpenRouter planner in WebBrain's benchmark
+  Tencent Hy3 is a strong OpenRouter planner in KavachWeb's benchmark
 ogDescription: >
   Hy3 via OpenRouter: 95 parsed calls, 20 exact first actions, 73% Sonnet alignment, and a clear text-only caveat for browser agents.
 twitterTitle: >
-  Tencent Hy3 WebBrain planner benchmark
+  Tencent Hy3 KavachWeb planner benchmark
 twitterDescription: >
   Tencent Hy3 via OpenRouter is a strong text planner: 95 parsed calls, 20 exact matches, and 73% Sonnet alignment.
 keywords:
-  - WebBrain
+  - KavachWeb
   - Tencent Hy3
   - OpenRouter
   - MiniMax M3
@@ -30,12 +30,12 @@ keywords:
   - planner benchmark
   - tool calling
 lede: >
-  We ran **tencent/hy3:free** through WebBrain's frozen 100-case browser-agent first-tool benchmark on OpenRouter. The short version: Hy3 is a very good hosted text planner. It does not beat the top MiniMax M2.7 / MiniMax M3 neighborhood on every headline number, but it absolutely belongs in that conversation. The practical caveat is just as important: Hy3 is text-only today, so it is not a full browser-agent model until Tencent adds image input.
+  We ran **tencent/hy3:free** through KavachWeb's frozen 100-case browser-agent first-tool benchmark on OpenRouter. The short version: Hy3 is a very good hosted text planner. It does not beat the top MiniMax M2.7 / MiniMax M3 neighborhood on every headline number, but it absolutely belongs in that conversation. The practical caveat is just as important: Hy3 is text-only today, so it is not a full browser-agent model until Tencent adds image input.
 ---
 
 ## What we ran
 
-The run used the same frozen May 23, 2026 WebBrain baseline used by the recent planner posts: Claude Sonnet 4.6's system prompt and 41-tool schema, system hash `5c4fac1387025050`.
+The run used the same frozen May 23, 2026 KavachWeb baseline used by the recent planner posts: Claude Sonnet 4.6's system prompt and 41-tool schema, system hash `5c4fac1387025050`.
 
 ```bash
 node test/llm/run-llamacpp.mjs \
@@ -110,10 +110,10 @@ Rows are ranked by all-case Sonnet match, then Sonnet-tooled match.
 | 6 | Qwen 3.6 27B NVFP4 | 96/100 | 18/100 | 38/100 | 74.0% | 77.2% | 1.76s |
 | 7 | Intel Gemma 4 31B int4 AutoRound | 88/100 | 14/100 | 34/100 | 74.0% | 72.8% | 0.63s |
 | 8 | **Tencent Hy3** | **95/100** | **20/100** | **38/100** | **73.0%** | **75.0%** | **3.68s** |
-| 9 | WebBrain Compass 1.0 | 90/100 | 16/100 | 35/100 | 73.0% | 72.8% | 8.77s |
+| 9 | KavachWeb Compass 1.0 | 90/100 | 16/100 | 35/100 | 73.0% | 72.8% | 8.77s |
 | 10 | Qwen 3.5 4B | 82/100 | 12/100 | 33/100 | 73.0% | 71.7% | 5.44s |
 
-This is a good debut. Hy3 does not enter above the top hosted rows, but it does enter the top 10 and wins the 73% tie-breaker against WebBrain Compass 1.0 and Qwen 3.5 4B. It also has the second-best exact-match count in the table.
+This is a good debut. Hy3 does not enter above the top hosted rows, but it does enter the top 10 and wins the 73% tie-breaker against KavachWeb Compass 1.0 and Qwen 3.5 4B. It also has the second-best exact-match count in the table.
 
 ## Where it is strong
 
@@ -168,18 +168,18 @@ This explains the gap between Hy3's strong exact/ideal scores and its lower all-
 
 ## The multimodal gap
 
-For WebBrain, the obvious missing piece is vision. [OpenRouter's Hy3 model page](https://openrouter.ai/tencent/hy3%3Afree) and public model metadata currently expose Hy3 as `text->text`: text input, text output, no image input. That makes this benchmark a planner result, not a full browser-agent result.
+For KavachWeb, the obvious missing piece is vision. [OpenRouter's Hy3 model page](https://openrouter.ai/tencent/hy3%3Afree) and public model metadata currently expose Hy3 as `text->text`: text input, text output, no image input. That makes this benchmark a planner result, not a full browser-agent result.
 
-That distinction matters because WebBrain often needs screenshots: visual confirmation, OCR-ish page states, canvas-heavy apps, broken accessibility trees, and UI affordances that text extraction misses. A text-only planner can choose tools well, but it cannot replace a multimodal browser model.
+That distinction matters because KavachWeb often needs screenshots: visual confirmation, OCR-ish page states, canvas-heavy apps, broken accessibility trees, and UI affordances that text extraction misses. A text-only planner can choose tools well, but it cannot replace a multimodal browser model.
 
 I still expect this gap to close. Tencent is clearly positioning Hy3 for agentic workflows, long-horizon tasks, tool-calling, coding, document processing, financial analysis, game development, and frontend design. In the broader Chinese frontier-model lane, text-first releases have been moving toward visual capabilities quickly; [DeepSeek's V4 release](https://api-docs.deepseek.com/news/news260424) is text/agent/1M-context focused in the public docs, while the surrounding DeepSeek ecosystem has been pushing vision-token and OCR-style work. Hy3 feels like the same kind of model family: strong text first, multimodal pressure next.
 
-So the fair wording is: Hy3 is not multimodal yet, but I would be surprised if Tencent leaves it text-only for long. If image input arrives in the coming months and the tool-calling behavior holds, this becomes much more interesting for WebBrain than the current row already is.
+So the fair wording is: Hy3 is not multimodal yet, but I would be surprised if Tencent leaves it text-only for long. If image input arrives in the coming months and the tool-calling behavior holds, this becomes much more interesting for KavachWeb than the current row already is.
 
 ## Bottom line
 
-Tencent Hy3 is a great hosted text planner in this frozen WebBrain benchmark. It is not the new overall winner, and MiniMax M2.7 still has the stronger all-case Sonnet row. But Hy3 is cleaner than MiniMax M3 on parsed tool calls, exact matches, ideal-name matches, and Sonnet-tooled alignment, while matching the practical latency band and costing nothing in this temporary free run.
+Tencent Hy3 is a great hosted text planner in this frozen KavachWeb benchmark. It is not the new overall winner, and MiniMax M2.7 still has the stronger all-case Sonnet row. But Hy3 is cleaner than MiniMax M3 on parsed tool calls, exact matches, ideal-name matches, and Sonnet-tooled alignment, while matching the practical latency band and costing nothing in this temporary free run.
 
-The caveat is simple: it is text-only today. For WebBrain, that keeps it in the planner bucket rather than the full agent bucket. Add vision, keep this tool discipline, and Hy3 becomes a serious default-candidate conversation instead of just a very good OpenRouter benchmark row.
+The caveat is simple: it is text-only today. For KavachWeb, that keeps it in the planner bucket rather than the full agent bucket. Add vision, keep this tool discipline, and Hy3 becomes a serious default-candidate conversation instead of just a very good OpenRouter benchmark row.
 
-Tags: #TencentHy3 #OpenRouter #MiniMaxM3 #MiniMaxM27 #ToolCalling #BrowserAgent #WebBrain
+Tags: #TencentHy3 #OpenRouter #MiniMaxM3 #MiniMaxM27 #ToolCalling #BrowserAgent #KavachWeb

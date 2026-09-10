@@ -10,7 +10,7 @@ description: >
 excerpt: >
   A 9B int4 Qwen 3.5 on vLLM classifies the email-chip dropdown explicitly — something the 308B MiMo V2.5 at IQ3_S and the larger Qwen 3.6-35B-A3B both missed. Cheapest image tokens after Gemma. The catch: it loses the red-border visual cue and joins the "Unknowns: None" club. Suddenly the most interesting option for ≤8 GB VRAM. Plus an updated routing-policy table by VRAM bracket.
 titleTag: >
-  Round 4: Qwen 3.5-9B-int4 punches above its weight — when 9B int4 beats 308B IQ3_S on affordance — WebBrain Blog
+  Round 4: Qwen 3.5-9B-int4 punches above its weight — when 9B int4 beats 308B IQ3_S on affordance — KavachWeb Blog
 ogTitle: >
   Round 4: Qwen 3.5-9B-int4 punches above its weight — affordance doesn't scale with size
 ogDescription: >

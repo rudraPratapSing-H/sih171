@@ -200,7 +200,7 @@ function socialCard() {
         <div class="social-inner">
           <div class="social-brand">
             <img class="logo" src="${assets.logo}" alt="">
-            <span class="wordmark">WebBrain</span>
+            <span class="wordmark">KavachWeb</span>
           </div>
           <h1 class="headline">${c.headline}</h1>
           <div class="accent"></div>
@@ -256,7 +256,7 @@ function socialCardSmall() {
         <div class="small-inner">
           <div class="small-brand">
             <img class="logo" src="${assets.logo}" alt="">
-            <span class="wordmark">WebBrain</span>
+            <span class="wordmark">KavachWeb</span>
           </div>
           <h1 class="headline">${c.headline}</h1>
           <div class="accent"></div>
@@ -315,7 +315,7 @@ function websiteSocialCard() {
         <div class="website-social-inner">
           <div class="website-social-brand">
             <img class="logo" src="${assets.logo}" alt="">
-            <span class="wordmark">WebBrain</span>
+            <span class="wordmark">KavachWeb</span>
           </div>
           <h1 class="headline">${c.headline}</h1>
           <div class="accent"></div>
@@ -372,7 +372,7 @@ function storeMarquee() {
           <img class="logo" src="${assets.logo}" alt="">
         </div>
         <div class="store-copy">
-          <div class="wordmark">WebBrain</div>
+          <div class="wordmark">KavachWeb</div>
           <h1 class="headline">Open-Source AI Browser Agent</h1>
           <div class="body-copy">Any LLM. Any Page. Your Data.</div>
           <div class="store-pills">
@@ -456,7 +456,7 @@ function storeSmall() {
           <img class="logo" src="${assets.logo}" alt="">
         </div>
         <div class="small-store-copy">
-          <div class="wordmark">WebBrain</div>
+          <div class="wordmark">KavachWeb</div>
           <h1 class="headline">Open-Source AI Browser Agent</h1>
           <div class="body-copy">Any LLM. Any Page. Your Data.</div>
           <div class="mini-rule"></div>
@@ -512,7 +512,7 @@ function banner(locale) {
       <main class="canvas paper banner-wide ${isTurkish ? 'banner-tr' : 'banner-en'}">
         <section class="banner-brand">
           <img class="logo" src="${assets.logo}" alt="">
-          <div class="banner-wordmark wordmark">WebBrain</div>
+          <div class="banner-wordmark wordmark">KavachWeb</div>
           <div class="url">${c.bannerUrl}</div>
         </section>
         <div class="banner-divider"></div>
@@ -584,7 +584,7 @@ function bannerVertical() {
       <main class="canvas paper banner-vertical">
         <header class="vertical-brand">
           <img class="logo" src="${assets.logo}" alt="">
-          <span class="wordmark">WebBrain</span>
+          <span class="wordmark">KavachWeb</span>
         </header>
         <section class="vertical-message">
           <div class="vertical-kicker">OPEN SOURCE · ANY LLM</div>

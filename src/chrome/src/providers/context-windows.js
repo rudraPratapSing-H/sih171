@@ -305,7 +305,7 @@ export function inferContextWindow(config = {}) {
   if (model.includes('gpt-oss')) return K128;
   if (provider === 'groq' && /(?:llama-3\.[13]|compound|qwen3\.6)/.test(model)) return K128;
 
-  // NVIDIA NIM defaults in WebBrain.
+  // NVIDIA NIM defaults in KavachWeb.
   if (/(?:nemotron.*49b|llama-3[._-]3-nemotron|llama-3\.1-8b|nemotron-3)/.test(model)) return K128;
 
   // MiniMax direct and OpenRouter slugs.

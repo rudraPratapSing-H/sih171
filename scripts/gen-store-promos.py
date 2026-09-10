@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Regenerate Chrome / Firefox Web Store promo tiles from the canonical
-store-icon-128.png + the WebBrain brand colors. Produces:
+store-icon-128.png + the KavachWeb brand colors. Produces:
 
   assets/store-promo-440x280.png   — Small promo tile (Chrome & Firefox)
   assets/store-promo-1400x560.png  — Marquee promo tile (Chrome)
@@ -137,7 +137,7 @@ def render_small_tile(icon: Image.Image) -> Image.Image:
     sub_f = get_font(16, "regular")
     tag_f = get_font(15, "regular")
 
-    draw.text((text_x, 100), "WebBrain", font=title_f, fill=TEXT)
+    draw.text((text_x, 100), "KavachWeb", font=title_f, fill=TEXT)
     draw.text(
         (text_x, 152),
         "Open-Source AI Browser Agent",
@@ -193,7 +193,7 @@ def render_marquee_tile(icon: Image.Image) -> Image.Image:
     tag_f = get_font(30, "regular")
     pill_f = get_font(20, "bold")
 
-    draw.text((text_x, 160), "WebBrain", font=title_f, fill=TEXT)
+    draw.text((text_x, 160), "KavachWeb", font=title_f, fill=TEXT)
     draw.text(
         (text_x, 296),
         "Open-Source AI Browser Agent",

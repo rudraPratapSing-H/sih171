@@ -123,9 +123,9 @@ export async function fetchPdfBytes(url, { timeoutMs = 60000 } = {}) {
     } catch (error) {
       if (normalizedUrl.startsWith('file:')) {
         throw new Error(
-          'Cannot fetch local PDF from a file:// URL. WebBrain needs ' +
+          'Cannot fetch local PDF from a file:// URL. KavachWeb needs ' +
           'file-URL access in Chrome: open chrome://extensions, find ' +
-          'WebBrain, click "Details", and enable "Allow access to file URLs". ' +
+          'KavachWeb, click "Details", and enable "Allow access to file URLs". ' +
           'Then reload the PDF tab and try read_pdf again.'
         );
       }

@@ -1,5 +1,5 @@
 /**
- * Markdown link sanitizer for the WebBrain sidepanel.
+ * Markdown link sanitizer for the KavachWeb sidepanel.
  *
  * Extracted from sidepanel.js so the security-critical sanitization logic
  * can be unit-tested in isolation. KEEP THIS FILE PURE JS — no chrome.* /

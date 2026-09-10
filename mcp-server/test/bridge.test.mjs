@@ -132,7 +132,7 @@ test("no extension attached produces an actionable message", async () => {
     () => bridge.request("cloud_status", {}),
     (error) => {
       assert.ok(error instanceof BridgeError);
-      assert.match(error.message, /No WebBrain extension is connected/);
+      assert.match(error.message, /No KavachWeb extension is connected/);
       assert.match(error.message, /MCP/);
       return true;
     },
@@ -206,7 +206,7 @@ test("a new socket cannot inherit an earlier extension handshake", async () => {
   assert.equal(bridge.isConnected(), false, "the replacement socket has not sent hello");
   await assert.rejects(
     () => bridge.request("cloud_run", { task: "private task", mode: "ask" }),
-    /No WebBrain extension is connected/,
+    /No KavachWeb extension is connected/,
   );
   assert.equal(receivedCommands, 0, "an unverified socket must not receive task frames");
 

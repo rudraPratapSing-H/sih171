@@ -270,7 +270,7 @@ export function buildUserMemoryExtractionMessages({ userText, assistantText, mem
     {
       role: 'system',
       content: [
-        'Extract stable user preferences for WebBrain memory.',
+        'Extract stable user preferences for KavachWeb memory.',
         'Return strict JSON only: {"memories":[{"op":"add|update|archive|none","id":"existing id when updating/archive","text":"memory text","kind":"preference|profile_hint|workflow_preference","confidence":0.0}]}',
         'Save only durable user-stated preferences, stable profile hints, or workflow preferences.',
         'When a new user-stated preference clearly changes or contradicts an existing memory, emit an update operation with the existing memory id instead of adding a second conflicting record.',

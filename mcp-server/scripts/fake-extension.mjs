@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// Stands in for the WebBrain extension so the MCP server can be driven without
+// Stands in for the KavachWeb extension so the MCP server can be driven without
 // Chrome. Speaks the same frames as src/chrome/src/offscreen/cloud-bridge.js:
 // the `hello` handshake, then canned replies to cloud_run / cloud_status /
 // cloud_respond / cloud_abort. Anything else comes back as an error, which is

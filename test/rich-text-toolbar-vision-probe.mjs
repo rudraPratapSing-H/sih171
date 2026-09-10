@@ -6,7 +6,7 @@
 // proposed target rect, send only that annotated image, normalize the
 // controlled JSON, apply local value-shape rules, and compare models.
 //
-// Trace mode is preferred because an exported WebBrain trace can provide the
+// Trace mode is preferred because an exported KavachWeb trace can provide the
 // exact set_field/type_ax rect, CSS viewport, attempted value, and redacted
 // auto-screenshot. The task and attempted value stay local.
 
@@ -63,11 +63,11 @@ Manual image example (rect is in image pixels unless --viewport is supplied):
   node test/rich-text-toolbar-vision-probe.mjs \\
     --image ./toolbar.png --rect 996,790,44,32 \\
     --task "Fill question 07 with a project description" \\
-    --value "WebBrain is an open-source browser agent..." \\
+    --value "KavachWeb is an open-source browser agent..." \\
     --model qwen-vl
 
 Options:
-  --trace <path>             Extract the case from an exported WebBrain trace
+  --trace <path>             Extract the case from an exported KavachWeb trace
   --image <path>             Use this image instead of a trace screenshot
   --attempt <n>              1-based compact/unlabelled input attempt (default: 1)
   --event-index <n>          Select an exact trace events[] index

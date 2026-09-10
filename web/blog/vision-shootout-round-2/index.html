@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Round 2: Nemotron Omni 30B vs Qwen 3.6 — does cheaper image tokens beat calibrated uncertainty? — WebBrain Blog</title>
+  <title>Round 2: Nemotron Omni 30B vs Qwen 3.6 — does cheaper image tokens beat calibrated uncertainty? — KavachWeb Blog</title>
   <meta name="description" content="A second round of vision-model benchmarking for browser agents. NVIDIA&#39;s Nemotron Omni 30B-A3B-Reasoning and the dense Qwen 3.6-27B both enter — and one of them is 17% cheaper per image. We measure what changes for a real browser-agent workload, and what doesn&#39;t.">
   <meta name="keywords" content="Nemotron Omni 30B, Qwen 3.6 35B, Qwen 3.6 27B, vision model benchmark, browser agent, MoE vision model, calibrated uncertainty, vision encoder cost, NVFP4, llama.cpp, vLLM, A3B reasoning model">
   <meta property="og:title" content="Round 2: Nemotron Omni 30B vs Qwen 3.6 — vision shootout for browser agents">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Round 2: Nemotron Omni 30B vs Qwen 3.6 vision shootout">
   <meta name="twitter:description" content="Cheaper image tokens vs calibrated uncertainty — and a multilingual gotcha that decides the winner.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/vision-shootout-round-2">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -527,7 +527,7 @@
     <h1>Round 2: Nemotron Omni 30B vs Qwen 3.6 — does cheaper image tokens beat calibrated uncertainty?</h1>
     <p class="lede">Last week we ran a <a href="/blog/vision-model-shootout">four-way vision-model shootout</a> and Qwen 3.6 35B-A3B walked away with the round. Two new contenders showed up since: NVIDIA's <strong>Nemotron Omni 30B-A3B-Reasoning</strong>, and the dense <strong>Qwen 3.6-27B</strong> for an apples-to-MoE comparison within the same model family. Nemotron has two genuine wins over Qwen — and a third axis where it loses badly. Plus a multilingual gotcha that decides the round for most readers without us touching a benchmark.</p>
 <h2 id="the-setup-again">The setup, again</h2>
-<p>Same probe (<code>test/vision-probe.mjs</code> in the repo), same prompt (the 6-section structured caption WebBrain's vision sub-call uses), same image (the Google sign-in screen with a focused password field, red error border, and a small email chip with a dropdown affordance). The probe sends the exact system prompt, user message, and parameters our extension's vision sub-call sends, against any OpenAI-compatible endpoint.</p>
+<p>Same probe (<code>test/vision-probe.mjs</code> in the repo), same prompt (the 6-section structured caption KavachWeb's vision sub-call uses), same image (the Google sign-in screen with a focused password field, red error border, and a small email chip with a dropdown affordance). The probe sends the exact system prompt, user message, and parameters our extension's vision sub-call sends, against any OpenAI-compatible endpoint.</p>
 <p>If you missed round 1: we tested Gemma 4-E2B, Gemma 4-31B, Qwen 3.5-27B, and Qwen 3.6-35B-A3B. Headline finding was that Qwen 3.6's MoE variant beat the dense 27B on every axis — same VRAM, better quality, lower latency. <a href="/blog/vision-model-shootout">Round 1 here</a>. This post adds two models on top.</p>
 <h2 id="a-reasoningsuppression-detour-then-the-numbers">A reasoning-suppression detour, then the numbers</h2>
 <p>First test on Nemotron: <strong>18.4 seconds</strong>. For a 30B-A3B with 195 completion tokens, that's wrong. The probe sets <code>chat_template_kwargs.enable_thinking: false</code> — the Qwen-style gate — but Nemotron uses <code>think: false</code> instead, so our flag was being ignored. The model was reasoning silently before emitting the structured caption.</p>
@@ -560,7 +560,7 @@
 <p>So even though Nemotron has cheaper image tokens AND better affordance classification, it loses on the one axis a browser agent values most. Two wins, one loss — but the loss is structural, the wins are nice-to-haves.</p>
 <h2 id="the-nemotron-downside-that-decides-the-round-for-most-readers">The Nemotron downside that decides the round for most readers</h2>
 <p><strong>Nemotron Omni 30B is English-only.</strong></p>
-<p>WebBrain users on Spanish, French, Turkish, Chinese, German, Arabic, Japanese, Korean, Russian — anyone running the agent on pages in their own language — will get unusable captions out of Nemotron. The page text comes back garbled, half-translated, or transliterated. The Qwen 3.x family is multilingual by design and handles non-English page text natively.</p>
+<p>KavachWeb users on Spanish, French, Turkish, Chinese, German, Arabic, Japanese, Korean, Russian — anyone running the agent on pages in their own language — will get unusable captions out of Nemotron. The page text comes back garbled, half-translated, or transliterated. The Qwen 3.x family is multilingual by design and handles non-English page text natively.</p>
 <p>For an English-language agent on English-language pages with a paid vision endpoint, Nemotron's 17% token discount is a real argument. For everyone else, it isn't a real option, regardless of how cheap it is per image.</p>
 <h2 id="the-full-table">The full table</h2>
 <div class="table-wrap"><table><thead><tr><th></th><th>Gemma 4-E2B</th><th>Gemma 4-31B</th><th>Qwen 3.6-27B dense</th><th>Qwen 3.6-35B-A3B</th><th>Nemotron Omni 30B-A3B</th></tr></thead><tbody><tr><td>Architecture</td><td>Dense, ~2B effective</td><td>Dense 31B</td><td>Dense 27B</td><td>MoE 35B / ~3B active</td><td>MoE 30B / ~3B active, reasoning</td></tr><tr><td>Engine tested</td><td>llama.cpp</td><td>llama.cpp</td><td>vLLM (Intel int4 AutoRound)</td><td>llama.cpp</td><td>vLLM (NVFP4)</td></tr><tr><td>Latency</td><td><span class="win">1.5s</span></td><td>4.6s</td><td>5.9s</td><td><span class="win">5.3s</span></td><td><span class="lose">12.0s</span> (after reasoning fix)</td></tr><tr><td>Prompt tokens (image)</td><td><span class="win">574</span></td><td><span class="win">574</span></td><td><span class="lose">5570</span></td><td>4374</td><td><span class="win">3636</span></td></tr><tr><td>Email chip OCR</td><td><span class="lose">❌</span></td><td><span class="lose">❌</span> (<code>esokullullu</code>)</td><td><span class="win">✓</span></td><td><span class="win">✓</span></td><td><span class="win">✓</span></td></tr><tr><td>All 12 visible strings</td><td><span class="lose">5 of 12</span></td><td><span class="win">12</span></td><td><span class="win">12</span></td><td><span class="win">12</span></td><td><span class="meh">11 in §2 (email moved to §3 as input)</span></td></tr><tr><td>Affordance classification (email chip = dropdown)</td><td><span class="lose">missed</span></td><td><span class="lose">missed</span></td><td><span class="lose">missed</span></td><td><span class="meh">noted as parenthetical</span></td><td><span class="win">explicit <code>Type: dropdown</code></span></td></tr><tr><td>Red error state surfaced</td><td><span class="lose">missed</span></td><td>text only</td><td><span class="win">border + icon + text</span></td><td><span class="win">border + icon + text + ambiguity flag</span></td><td><span class="win">border + icon + text</span></td></tr><tr><td>Inferred semantic blocker</td><td><span class="lose">no</span></td><td>no</td><td><span class="win">yes</span></td><td><span class="win">yes</span></td><td><span class="win">yes</span></td></tr><tr><td>Honest "Unknowns" section</td><td><span class="lose">no</span></td><td><span class="lose">no</span></td><td><span class="lose">no</span></td><td><span class="win">YES — only model that did</span></td><td><span class="lose">no</span></td></tr><tr><td>Multilingual</td><td>weak</td><td>partial</td><td><span class="win">native</span></td><td><span class="win">native</span></td><td><span class="lose">English-only</span></td></tr></tbody></table></div>
@@ -569,7 +569,7 @@
 <div class="table-wrap"><table><thead><tr><th>Axis</th><th>Qwen 3.6-35B-A3B</th><th>Nemotron Omni 30B-A3B</th></tr></thead><tbody><tr><td>OCR fidelity (email, etc.)</td><td>tie</td><td>tie — both correct</td></tr><tr><td>State extraction (red border, error, focus)</td><td>tie</td><td>tie</td></tr><tr><td>Affordance classification (email chip = dropdown?)</td><td>parenthetical annotation</td><td><span class="win">explicit <code>Type: dropdown</code> in §3 ← Nemotron ahead</span></td></tr><tr><td>Calibrated uncertainty (§6 Unknowns)</td><td><span class="win">✓ flagged red-border ambiguity ← Qwen ahead</span></td><td>❌ "None"</td></tr><tr><td>Image token cost</td><td>4374</td><td><span class="win">3636 (-17%) ← Nemotron ahead</span></td></tr><tr><td>Latency (after reasoning fix)</td><td><span class="win">5.3s ← Qwen ahead</span></td><td>12.0s</td></tr><tr><td>Multilingual page text</td><td><span class="win">native ← Qwen ahead</span></td><td>English-only</td></tr></tbody></table></div>
 <h2 id="verdict-for-consumer-devices">Verdict for consumer devices</h2>
 <p><strong>Qwen 3.6-35B-A3B is still the pick</strong>, and round 2 makes the case stronger, not weaker:</p>
-<ul><li><strong>It's faster.</strong> 5.3s vs Nemotron's 12s, even after fixing Nemotron's reasoning gate.</li><li><strong>It's faster than its own dense sibling.</strong> Qwen 3.6-27B dense is 5.9s — slower than the larger 35B-A3B by virtue of MoE activating only ~3B params per token. Same VRAM bracket when both are quantized comparably, but the MoE wins on inference cost.</li><li><strong>It's the only model that flags uncertainty</strong>, which a browser agent values more than any of Nemotron's nice-to-haves.</li><li><strong>It's multilingual.</strong> WebBrain has users in Spanish, Turkish, French, Chinese — Nemotron's English-only ceiling rules it out for any of them, regardless of how cheap it is per image.</li></ul>
+<ul><li><strong>It's faster.</strong> 5.3s vs Nemotron's 12s, even after fixing Nemotron's reasoning gate.</li><li><strong>It's faster than its own dense sibling.</strong> Qwen 3.6-27B dense is 5.9s — slower than the larger 35B-A3B by virtue of MoE activating only ~3B params per token. Same VRAM bracket when both are quantized comparably, but the MoE wins on inference cost.</li><li><strong>It's the only model that flags uncertainty</strong>, which a browser agent values more than any of Nemotron's nice-to-haves.</li><li><strong>It's multilingual.</strong> KavachWeb has users in Spanish, Turkish, French, Chinese — Nemotron's English-only ceiling rules it out for any of them, regardless of how cheap it is per image.</li></ul>
 <p>Reasoning + visual + faster than the dense 27B + multilingual is a remarkable combination on a single 35B-A3B that fits on consumer hardware. The 5090 we tested on can run this comfortably; so can a 4090 with the right quant. For self-hosted browser-agent vision, this is the model to beat.</p>
 <h3 id="where-nemotron-makes-sense-anyway">Where Nemotron makes sense anyway</h3>
 <p>If you tick all of these:</p>
@@ -590,12 +590,12 @@ node test/vision-probe.mjs ./shot.png http://localhost:11434/v1  llava:13b</code
 </div>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

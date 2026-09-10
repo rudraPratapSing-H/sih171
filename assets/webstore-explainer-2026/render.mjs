@@ -138,7 +138,7 @@ function hero(light = false) {
     body: `
       <div style="height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
         <div style="font-family:var(--mono); font-size:16px; font-weight:650; letter-spacing:0.2em;
-          text-transform:uppercase; color:var(--muted);">WebBrain</div>
+          text-transform:uppercase; color:var(--muted);">KavachWeb</div>
         <h1 style="margin-top:26px; font-size:78px; line-height:1.03; max-width:960px;">Your open-source<br>AI browser agent</h1>
         <div class="sub" style="font-size:29px; font-weight:600; color:var(--ink); margin-top:24px;">
           <span style="color:var(--accent);">Ask.</span>
@@ -236,7 +236,7 @@ function actScene(onboarding = false) {
         <div style="background:#171827; border:1px solid rgba(255,255,255,0.12); border-radius:20px; padding:20px;
           color:#fff; box-shadow:0 24px 60px rgba(0,0,0,0.28);">
           <div style="font-family:var(--mono); font-size:13px; font-weight:650; color:#aeb4c9;
-            text-transform:uppercase; letter-spacing:0.07em; margin-bottom:16px;">WebBrain is acting</div>
+            text-transform:uppercase; letter-spacing:0.07em; margin-bottom:16px;">KavachWeb is acting</div>
           <div style="display:grid; gap:11px;">
             ${steps.map(([state, label]) => `
               <div style="display:grid; grid-template-columns:26px 1fr; gap:10px; align-items:center; font-size:15.5px; font-weight:640; color:${state === 'live' ? '#ffffff' : '#c9d0e0'};">
@@ -381,7 +381,7 @@ function offerScene() {
     theme: 'dark',
     body: `
       <div style="height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;">
-        <h1 style="font-size:60px;">WebBrain Compass launch pricing</h1>
+        <h1 style="font-size:60px;">KavachWeb Compass launch pricing</h1>
         <div style="display:flex; align-items:baseline; gap:28px; margin-top:30px;">
           <!-- Bricolage sets line-through low on heavy figures, so the strike is drawn manually. -->
           <span class="num" style="position:relative; font-size:60px; line-height:1; color:var(--muted);">$8
@@ -500,7 +500,7 @@ function apocalypseScene({ nuke = false, onboarding = false } = {}) {
             <span style="font-family:var(--mono); font-size:15px; font-weight:650; color:var(--accent);
               text-transform:uppercase; letter-spacing:0.14em;">${nuke ? '<span style="font-size:52px; font-family:\'Apple Color Emoji\',\'Segoe UI Emoji\',sans-serif; vertical-align:-6px;">\u2622</span> ' : ''}Apocalypse Mode</span>
           </div>
-          <h1 style="font-size:62px; line-height:1.05; max-width:440px;">WebBrain, ready when the internet isn't.</h1>
+          <h1 style="font-size:62px; line-height:1.05; max-width:440px;">KavachWeb, ready when the internet isn't.</h1>
           <div class="sub" style="font-size:25px; margin-top:24px; color:var(--muted); max-width:420px;">
             Offline knowledge, under your control. Download the essentials while you still can.
           </div>

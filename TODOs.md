@@ -1,4 +1,4 @@
-# WebBrain — Engineering TODOs
+# KavachWeb — Engineering TODOs
 
 Living list of things we know we want to do but haven't done yet. Each item
 should explain *why* it matters, not just *what* to change, so that future
@@ -156,10 +156,10 @@ work is staging/optionality and in-product explanations.
 
 ---
 
-## 7. Lock down the WebBrain Compass auth handoff
+## 7. Lock down the KavachWeb Compass auth handoff
 
 `src/chrome/src/ui/settings.js` accepts `WB_AUTH_TOKEN` from `window.message`
-and writes the token into extension storage, then auto-configures the WebBrain
+and writes the token into extension storage, then auto-configures the KavachWeb
 Cloud provider. The handler should validate the sender before trusting the
 payload.
 

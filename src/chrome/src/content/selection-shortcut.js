@@ -1,5 +1,5 @@
 /**
- * Floating WebBrain shortcut for selected page text.
+ * Floating KavachWeb shortcut for selected page text.
  *
  * Runs only in the top frame. The UI is isolated in a closed Shadow DOM;
  * the background owns prompt construction and untrusted-content wrapping.
@@ -285,10 +285,10 @@ host.lang = localization.locale;
         @media (prefers-reduced-motion:reduce) { .shortcut { transition:none; } }
       </style>
       <div class="selection-highlights" aria-hidden="true"></div>
-      <button class="shortcut" type="button" aria-label="Ask WebBrain about this" title="Ask WebBrain about this" hidden>
+      <button class="shortcut" type="button" aria-label="Ask KavachWeb about this" title="Ask KavachWeb about this" hidden>
         <span class="shortcut-icon" aria-hidden="true">?</span>
       </button>
-      <div class="popup" role="dialog" aria-label="Ask WebBrain about this" hidden>
+      <div class="popup" role="dialog" aria-label="Ask KavachWeb about this" hidden>
         <div class="main-view">
           <div class="actions">
             <button class="action" type="button" data-action="summarize">
@@ -331,7 +331,7 @@ host.lang = localization.locale;
             </button>
           </div>
           <div class="question-wrap">
-            <textarea maxlength="2000" rows="3" aria-label="Ask WebBrain a question" placeholder="Ask WebBrain…"></textarea>
+            <textarea maxlength="2000" rows="3" aria-label="Ask KavachWeb a question" placeholder="Ask KavachWeb…"></textarea>
             <button class="send" type="button" aria-label="Send question" disabled>
               <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 6l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
@@ -538,9 +538,9 @@ host.lang = localization.locale;
     try {
       const response = await api.runtime.sendMessage(request);
       if (!response?.ok) throw new Error(response?.error || 'Selection request was not accepted.');
-      if (response.requiresManualOpen) showToast(localization?.strings.sentManual || 'Sent to WebBrain. Open the sidebar if it does not start.');
+      if (response.requiresManualOpen) showToast(localization?.strings.sentManual || 'Sent to KavachWeb. Open the sidebar if it does not start.');
     } catch {
-      showToast(localization?.strings.sendFailed || 'Could not send to WebBrain. Try the right-click menu instead.');
+      showToast(localization?.strings.sendFailed || 'Could not send to KavachWeb. Try the right-click menu instead.');
     } finally {
       submitting = false;
     }

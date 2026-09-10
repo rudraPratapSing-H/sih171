@@ -1,26 +1,26 @@
 ---
 title: >
-  Nex-N2-mini is cheap and fast, but not a WebBrain planner win
+  Nex-N2-mini is cheap and fast, but not a KavachWeb planner win
 slug: nex-n2-mini-openrouter-planner-benchmark
 sortOrder: -50
 date: 2026-07-08
 readTime: 6 min read
 description: >
-  We ran nex-agi/nex-n2-mini through WebBrain's frozen 100-case browser-agent first-tool benchmark on OpenRouter. The 35B MoE endpoint is fast and extremely cheap, but its planner quality lands well below the current shortlist.
+  We ran nex-agi/nex-n2-mini through KavachWeb's frozen 100-case browser-agent first-tool benchmark on OpenRouter. The 35B MoE endpoint is fast and extremely cheap, but its planner quality lands well below the current shortlist.
 excerpt: >
-  Nex-N2-mini completed WebBrain's frozen planner suite with 93 parsed tool calls, a 2.23s median latency, and about $0.045 reported OpenRouter cost, but only 65% Sonnet alignment.
+  Nex-N2-mini completed KavachWeb's frozen planner suite with 93 parsed tool calls, a 2.23s median latency, and about $0.045 reported OpenRouter cost, but only 65% Sonnet alignment.
 titleTag: >
-  Nex-N2-mini OpenRouter WebBrain planner benchmark - WebBrain Blog
+  Nex-N2-mini OpenRouter KavachWeb planner benchmark - KavachWeb Blog
 ogTitle: >
   Nex-N2-mini is fast and cheap, but not a planner win
 ogDescription: >
   Nex-N2-mini's OpenRouter endpoint is operationally excellent, but 65% Sonnet alignment and a low ideal tool-name score keep it behind Qwen 3.7 Plus, Hy3, and Agents-A1.
 twitterTitle: >
-  Nex-N2-mini WebBrain planner benchmark
+  Nex-N2-mini KavachWeb planner benchmark
 twitterDescription: >
   Nex-N2-mini via OpenRouter: 93 parsed calls, 16 exact first actions, 65% Sonnet alignment, 2.23s median latency, and about $0.045 cost.
 keywords:
-  - WebBrain
+  - KavachWeb
   - Nex-N2-mini
   - Nex AGI
   - OpenRouter
@@ -31,7 +31,7 @@ keywords:
   - Agents-A1
   - Tencent Hy3
 lede: >
-  Nex AGI's **Nex-N2-mini** is exactly the kind of model that should be interesting for WebBrain: open source, 35B parameters, built on `Qwen3.5-35B-A3B-Base`, pitched at coding, tool use, deep research, and long-horizon agentic workflows, and available on OpenRouter at a very low list price. We ran `nex-agi/nex-n2-mini` through the same frozen 100-case browser-agent planner benchmark to see whether that cheap 35B agentic profile turns into a strong WebBrain first-tool planner. The operational result is excellent. The planner-quality result is not.
+  Nex AGI's **Nex-N2-mini** is exactly the kind of model that should be interesting for KavachWeb: open source, 35B parameters, built on `Qwen3.5-35B-A3B-Base`, pitched at coding, tool use, deep research, and long-horizon agentic workflows, and available on OpenRouter at a very low list price. We ran `nex-agi/nex-n2-mini` through the same frozen 100-case browser-agent planner benchmark to see whether that cheap 35B agentic profile turns into a strong KavachWeb first-tool planner. The operational result is excellent. The planner-quality result is not.
 ---
 
 ## The claim
@@ -48,7 +48,7 @@ That table is promising for agentic tasks. Nex-N2-mini is reported at 74.1 on Br
 
 [OpenRouter's model page](https://openrouter.ai/nex-agi/nex-n2-mini) makes the hosting case even more tempting: text and image input, 262K context, native reasoning support, one provider, and list pricing of **$0.025 input / $0.10 output per 1M tokens**. That is very cheap for a 35B-class agentic model.
 
-WebBrain's harness is narrower than those public benchmarks. It asks one concrete question: given the current browser state, a user instruction, and WebBrain's frozen 41-tool browser-control schema, what is the model's first tool call?
+KavachWeb's harness is narrower than those public benchmarks. It asks one concrete question: given the current browser state, a user instruction, and KavachWeb's frozen 41-tool browser-control schema, what is the model's first tool call?
 
 ## What we ran
 
@@ -58,7 +58,7 @@ We used OpenRouter's OpenAI-compatible endpoint:
 nex-agi/nex-n2-mini
 ```
 
-The run used the same frozen May 23, 2026 WebBrain baseline used by the recent planner posts: Claude Sonnet 4.6's system prompt and 41-tool schema, system hash `5c4fac1387025050`.
+The run used the same frozen May 23, 2026 KavachWeb baseline used by the recent planner posts: Claude Sonnet 4.6's system prompt and 41-tool schema, system hash `5c4fac1387025050`.
 
 ```bash
 OPENROUTER_API_KEY=... node test/llm/run-llamacpp.mjs \
@@ -119,7 +119,7 @@ If the question is "is this endpoint convenient to run?", the answer is yes.
 
 Nex-N2-mini is dramatically nicer than Nemotron 3 Ultra as an endpoint: more parsed calls, better Sonnet-tooled alignment, far lower latency, and a tiny reported cost. It also beats the old local Qwen 3.6 35B-A3B row on latency and parsed-call count.
 
-But those are not enough to make it a WebBrain planner replacement. Qwen 3.6 35B-A3B still beats it on exact match, ideal tool-name match, and Sonnet alignment. The hosted Qwen 3.7 Plus and Hy3 rows are much stronger on planner quality. Agents-A1 is also clearly ahead on the headline WebBrain metric.
+But those are not enough to make it a KavachWeb planner replacement. Qwen 3.6 35B-A3B still beats it on exact match, ideal tool-name match, and Sonnet alignment. The hosted Qwen 3.7 Plus and Hy3 rows are much stronger on planner quality. Agents-A1 is also clearly ahead on the headline KavachWeb metric.
 
 So the cheapness is real. The model is not failing operationally. It just does not yet have the first-tool routing quality I would want as the default planner.
 
@@ -187,11 +187,11 @@ That is the real profile: Nex-N2-mini is a valid-tool emitter, but it is too pag
 
 ## Against the public agentic claim
 
-The public Nex-N2 table is not wrong just because this WebBrain row is weak. WebBrain is a narrow first-tool benchmark. It does not measure long-horizon coding, Terminal-Bench, SWE-Bench Verified, DeepSWE, BrowseComp, or WideSearch directly.
+The public Nex-N2 table is not wrong just because this KavachWeb row is weak. KavachWeb is a narrow first-tool benchmark. It does not measure long-horizon coding, Terminal-Bench, SWE-Bench Verified, DeepSWE, BrowseComp, or WideSearch directly.
 
-But the transfer is weaker than I hoped. A model can score well on broad agentic tasks and still be mediocre at the first turn of a browser-control loop. For WebBrain, the first turn matters because it sets the whole trajectory: direct navigation when the page is irrelevant, `clarify` when the intent is under-specified, confirmation when the action is sensitive, and specialized download/tab tools when the user asks for them.
+But the transfer is weaker than I hoped. A model can score well on broad agentic tasks and still be mediocre at the first turn of a browser-control loop. For KavachWeb, the first turn matters because it sets the whole trajectory: direct navigation when the page is irrelevant, `clarify` when the intent is under-specified, confirmation when the action is sensitive, and specialized download/tab tools when the user asks for them.
 
-Nex-N2-mini's result says: the model understands the tool schema and can be run cheaply, but it does not yet route the first action like the stronger WebBrain planner rows.
+Nex-N2-mini's result says: the model understands the tool schema and can be run cheaply, but it does not yet route the first action like the stronger KavachWeb planner rows.
 
 ## Updated context
 
@@ -207,7 +207,7 @@ Rows are ranked by all-case Sonnet match, then Sonnet-tooled match.
 | 6 | MiniMax M3 | 85/100 | 17/100 | 32/100 | 75.0% | 73.9% | 3.1s |
 | 7 | Qwen 3.6 27B NVFP4 | 96/100 | 18/100 | 38/100 | 74.0% | 77.2% | 1.76s |
 | 8 | Tencent Hy3 free | 95/100 | 20/100 | 38/100 | 73.0% | 75.0% | 3.68s |
-| 9 | WebBrain Compass 1.0 | 90/100 | 16/100 | 35/100 | 73.0% | 72.8% | 8.8s |
+| 9 | KavachWeb Compass 1.0 | 90/100 | 16/100 | 35/100 | 73.0% | 72.8% | 8.8s |
 | 10 | Qwen 3.6 35B-A3B | 90/100 | 18/100 | 38/100 | 70.0% | 70.7% | 10.3s |
 | 11 | Nex-N2-mini | 93/100 | 16/100 | 28/100 | 65.0% | 66.3% | 2.23s |
 | 12 | Nemotron 3 Ultra free | 81/100 | 17/100 | 33/100 | 65.0% | 64.1% | 5.89s |
@@ -216,12 +216,12 @@ The table makes the decision pretty clear. Nex-N2-mini is far more pleasant to c
 
 ## Bottom line
 
-Nex-N2-mini is a great cheap endpoint and a disappointing WebBrain planner result.
+Nex-N2-mini is a great cheap endpoint and a disappointing KavachWeb planner result.
 
 For cost-sensitive experimentation, I like it. It completed the full frozen run, produced 93 valid tool calls, kept p95 latency under 5 seconds, and reported only about $0.045 for the whole 100-case replay. That is excellent for an OpenRouter-hosted 35B-class model.
 
-For WebBrain's actual planner shortlist, I would still pick Qwen 3.7 Plus, Tencent Hy3, Agents-A1, Gemma 4 31B, or the older Qwen 3.6 rows before this. Nex-N2-mini's public agentic benchmarks are interesting, and the hosting economics are very good, but this first-tool browser-agent harness exposes a routing problem: too much inspection, too little decisive first action, and weak boundary handling.
+For KavachWeb's actual planner shortlist, I would still pick Qwen 3.7 Plus, Tencent Hy3, Agents-A1, Gemma 4 31B, or the older Qwen 3.6 rows before this. Nex-N2-mini's public agentic benchmarks are interesting, and the hosting economics are very good, but this first-tool browser-agent harness exposes a routing problem: too much inspection, too little decisive first action, and weak boundary handling.
 
-So the practical answer is: Nex-N2-mini is worth keeping around as a cheap fallback or evaluation target, but not as the default WebBrain planner from this run.
+So the practical answer is: Nex-N2-mini is worth keeping around as a cheap fallback or evaluation target, but not as the default KavachWeb planner from this run.
 
-Tags: #NexN2Mini #NexAGI #OpenRouter #Qwen35 #Qwen37 #AgentsA1 #TencentHy3 #ToolCalling #BrowserAgent #WebBrain
+Tags: #NexN2Mini #NexAGI #OpenRouter #Qwen35 #Qwen37 #AgentsA1 #TencentHy3 #ToolCalling #BrowserAgent #KavachWeb

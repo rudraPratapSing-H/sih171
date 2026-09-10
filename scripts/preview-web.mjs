@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Preview the WebBrain marketing site locally.
+ * Preview the KavachWeb marketing site locally.
  *
  * 1. Compiles the site for ALL languages (runs web/build/build.mjs, which
  *    renders web/index.html + web/<locale>/index.html + FAQ pages from

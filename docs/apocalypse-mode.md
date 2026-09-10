@@ -1,6 +1,6 @@
 # Apocalypse Mode
 
-Apocalypse Mode is WebBrain's optional offline knowledge layer. It reads
+Apocalypse Mode is KavachWeb's optional offline knowledge layer. It reads
 Wikipedia archives in the openZIM format used by Kiwix. It does **not** make the
 configured LLM available offline: generating an answer still requires a local
 model or a reachable model provider.
@@ -12,7 +12,7 @@ not enable Apocalypse Mode, query the Kiwix catalog, or store article text.
 Open the **☢ Apocalypse Mode** link beside **Support** in the Settings header to
 opt in.
 
-On supported Chromium browsers, WebBrain VL 2 450M is an optional local vision fallback.
+On supported Chromium browsers, KavachWeb VL 2 450M is an optional local vision fallback.
 Apocalypse Mode never enables or downloads it. The dedicated **Use local
 fallback** control in **Settings → Multimodal → Vision** checks WebGPU support,
 records explicit consent, and starts caching the approximately 810 MB model
@@ -24,7 +24,7 @@ Mode is enabled. Bonsai 27B is an opt-in second preset (about 3.8 GB, 16 GB+
 RAM/VRAM recommended) and is never auto-downloaded. Disabling local vision
 preserves its cache and any configured remote vision provider.
 
-Archive language is selected independently from WebBrain's interface language.
+Archive language is selected independently from KavachWeb's interface language.
 The management page reads Kiwix's current OPDS catalog and offers a language plus
 one of two editions: **Text only**, which resolves to the complete `nopic`
 edition, and **With images**, which resolves to the complete `maxi` edition.
@@ -38,12 +38,12 @@ The required first download is separate and fixed: Simple English, complete, and
 Because both selectable editions are complete `_all_` archives, both carry the
 Kiwix full-text index: `nopic` omits images, not the index.
 
-Before an install, WebBrain resolves the archive's Metalink and shows its exact byte size,
+Before an install, KavachWeb resolves the archive's Metalink and shows its exact byte size,
 archive date, catalog publisher/source and license notice, integrity-piece
 count, and the browser's reported free extension storage. The archive is
 downloaded only after that confirmation. Existing `.zim` files are validated
 and their embedded date/language/source/license metadata is shown before import.
-When the current catalog or archive omits a license field, WebBrain says that it
+When the current catalog or archive omits a license field, KavachWeb says that it
 was not declared instead of presenting the general Wikipedia notice as an exact
 publisher declaration.
 
@@ -59,7 +59,7 @@ current entry.
 - Archive bodies are kept in the extension's Origin Private File System (OPFS),
   not as multi-gigabyte IndexedDB values. Chromium browsers exposing the File
   System Access API can instead use a user-selected file target. Removing that
-  archive from WebBrain retains the user-owned file; Firefox uses OPFS.
+  archive from KavachWeb retains the user-owned file; Firefox uses OPFS.
 - Downloads use Metalink piece boundaries and verify each piece before writing
   it. The persisted cursor makes background-worker restarts resumable.
 - A lease prevents two extension contexts from claiming the same piece.
@@ -72,10 +72,10 @@ current entry.
   closed. Reopen Apocalypse Mode to inspect progress or pause the download.
 - The Chromium-only local vision model uses the browser's Transformers cache.
   After its explicitly requested download completes, its GPU allocations are
-  released until WebBrain actually needs local screenshot analysis.
+  released until KavachWeb actually needs local screenshot analysis.
 - An installed archive that later becomes unreadable because of corruption,
   eviction, or a revoked file grant moves from ready to an actionable error;
-  WebBrain reports the read failure instead of misreporting an empty search.
+  KavachWeb reports the read failure instead of misreporting an empty search.
 - Update checks can be manual or automatic. The automatic policy performs a
   daily catalog network check, but installing a discovered replacement still
   requires confirmation. A newer archive never silently overwrites an older
@@ -102,7 +102,7 @@ query terms, and returns the resolved canonical Wikipedia URL plus embedded
 archive language/date/source/license metadata. Local archive text uses the same
 untrusted-result boundary as live third-party content.
 
-WebBrain reads the documented openZIM structures directly, using the MIT-licensed
+KavachWeb reads the documented openZIM structures directly, using the MIT-licensed
 `fzstd` decoder, and that reader stays the only path used for reading articles.
 
 Full-text search over a ZIM's Xapian index uses the GPL worker vendored under

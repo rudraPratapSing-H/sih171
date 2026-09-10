@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nanbeige 4.2 3B BF16 WebBrain planner benchmark - WebBrain Blog</title>
-  <meta name="description" content="We tested Nanbeige4.2-3B in BF16 on an RTX 5090. Its official agent benchmarks beat Qwen 3.5 9B and Gemma 4 12B, but WebBrain&#39;s frozen browser-planner replay did not reproduce that lead.">
-  <meta name="keywords" content="WebBrain, Nanbeige, Nanbeige 4.2 3B, Qwen 3.5 9B, Gemma 4 12B, Gemma 4 E4B, vLLM, BF16, local LLM, browser agent, tool calling">
+  <title>Nanbeige 4.2 3B BF16 KavachWeb planner benchmark - KavachWeb Blog</title>
+  <meta name="description" content="We tested Nanbeige4.2-3B in BF16 on an RTX 5090. Its official agent benchmarks beat Qwen 3.5 9B and Gemma 4 12B, but KavachWeb&#39;s frozen browser-planner replay did not reproduce that lead.">
+  <meta name="keywords" content="KavachWeb, Nanbeige, Nanbeige 4.2 3B, Qwen 3.5 9B, Gemma 4 12B, Gemma 4 E4B, vLLM, BF16, local LLM, browser agent, tool calling">
   <meta property="og:title" content="Nanbeige 4.2 3B is strong for its size, but does not beat Qwen 3.5 9B here">
   <meta property="og:description" content="The new 4B-total / 3B-non-embedding model claims wins over Qwen 3.5 9B and Gemma 4 12B. Our frozen browser-agent test finds a smaller, still useful result.">
   <meta property="og:type" content="article">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Nanbeige 4.2 3B BF16 browser-planner benchmark">
-  <meta name="twitter:description" content="90 parsed calls, 67% Sonnet alignment, 11 exact actions, and a 1.49s c=1 median. Excellent size efficiency; no Qwen 3.5 9B upset in WebBrain.">
+  <meta name="twitter:description" content="90 parsed calls, 67% Sonnet alignment, 11 exact actions, and a 1.49s c=1 median. Excellent size efficiency; no Qwen 3.5 9B upset in KavachWeb.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/nanbeige-42-3b-bf16-planner-benchmark">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -475,7 +475,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "Nanbeige 4.2 3B punches above its size, but Qwen 3.5 9B still wins our frozen planner test",
-  "description": "We tested Nanbeige4.2-3B in BF16 on an RTX 5090. Its official agent benchmarks beat Qwen 3.5 9B and Gemma 4 12B, but WebBrain's frozen browser-planner replay did not reproduce that lead.",
+  "description": "We tested Nanbeige4.2-3B in BF16 on an RTX 5090. Its official agent benchmarks beat Qwen 3.5 9B and Gemma 4 12B, but KavachWeb's frozen browser-planner replay did not reproduce that lead.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -525,7 +525,7 @@
   <article>
     <div class="meta">July 22, 2026 &middot; 8 min read &middot; <a href="/blog">&larr; All posts</a></div>
     <h1>Nanbeige 4.2 3B punches above its size, but Qwen 3.5 9B still wins our frozen planner test</h1>
-    <p class="lede"><strong>Nanbeige4.2-3B</strong> makes one of the boldest small-model claims we have seen recently. Its official card reports wins over Qwen 3.5 9B, Gemma 4 12B, and Gemma 4 E4B across a long list of agent and reasoning benchmarks. The naming is slightly confusing but defensible: it has about 4B total parameters and 3B non-embedding parameters. We loaded the full BF16 checkpoint on an RTX 5090 and ran WebBrain&#39;s frozen 100-case first-tool benchmark. It is genuinely capable for its size, highly parseable, and reasonably fast in single-request use. It did not reproduce the claimed ordering here: the clean c=1 run reached 67% Claude Sonnet 4.6 tool-name alignment, below Qwen 3.5 9B at 70% and Gemma 4 E4B at 68%, while strict exact and ideal-tool scores also trailed all three comparison models.</p>
+    <p class="lede"><strong>Nanbeige4.2-3B</strong> makes one of the boldest small-model claims we have seen recently. Its official card reports wins over Qwen 3.5 9B, Gemma 4 12B, and Gemma 4 E4B across a long list of agent and reasoning benchmarks. The naming is slightly confusing but defensible: it has about 4B total parameters and 3B non-embedding parameters. We loaded the full BF16 checkpoint on an RTX 5090 and ran KavachWeb&#39;s frozen 100-case first-tool benchmark. It is genuinely capable for its size, highly parseable, and reasonably fast in single-request use. It did not reproduce the claimed ordering here: the clean c=1 run reached 67% Claude Sonnet 4.6 tool-name alignment, below Qwen 3.5 9B at 70% and Gemma 4 E4B at 68%, while strict exact and ideal-tool scores also trailed all three comparison models.</p>
 <h2 id="why-the-official-numbers-are-exciting">Why the official numbers are exciting</h2>
 <p><a href="https://huggingface.co/Nanbeige/Nanbeige4.2-3B" target="_blank" rel="noopener">Nanbeige&#39;s official model card</a> describes 4.2-3B as a compact agentic model built around a <strong>Looped Transformer</strong>. The architecture feeds hidden states through reused transformer layers, aiming to increase effective capacity without adding another conventional stack of parameters.</p>
 <p>That is why both &quot;3B&quot; and &quot;4B&quot; appear around the same checkpoint:</p>
@@ -534,7 +534,7 @@
 <div class="table-wrap"><table><thead><tr><th>Official benchmark</th><th>Nanbeige 4.2 3B</th><th>Qwen 3.5 9B</th><th>Gemma 4 12B</th><th>Gemma 4 E4B</th></tr></thead><tbody><tr><td>GDPval rubrics</td><td>74.3</td><td>61.9</td><td>68.5</td><td>31.5</td></tr><tr><td>Pinch-Bench V2</td><td>74.7</td><td>68.2</td><td>53.8</td><td>33.3</td></tr><tr><td>Claw-Gym</td><td>65.0</td><td>56.1</td><td>40.8</td><td>16.4</td></tr><tr><td>MCP-Atlas</td><td>57.8</td><td>47.4</td><td>30.5</td><td>15.0</td></tr><tr><td>SWE-Bench Verified</td><td>63.6</td><td>53.1</td><td>44.2</td><td>14.0</td></tr><tr><td>Terminal-Bench 2.0</td><td>44.1</td><td>29.2</td><td>21.1</td><td>12.4</td></tr></tbody></table></div>
 <p>Those are exactly the results that motivated this test. A 4B-total local model beating 10B-total Qwen and 12B Gemma would be a significant efficiency result, especially for personal agents.</p>
 <p>The methodology notes matter, however. Nanbeige says all of its evaluations use thinking mode with <code>preserve_thinking=true</code>. Several agent rows use the team&#39;s own scaffold; the quickstart recommends <code>temperature=1.0</code>, as many as 65,536 new tokens for tool tasks, preserved thinking in multi-turn agents, and <code>tool_call_format=&quot;xml&quot;</code> for best tool-calling performance.</p>
-<p>WebBrain&#39;s frozen replay asks a different and deliberately narrower question: given one browser instruction, the same system prompt, and the same 41 tools, what is the model&#39;s <strong>first action</strong>?</p>
+<p>KavachWeb&#39;s frozen replay asks a different and deliberately narrower question: given one browser instruction, the same system prompt, and the same 41 tools, what is the model&#39;s <strong>first action</strong>?</p>
 <h2 id="what-we-ran">What we ran</h2>
 <p>The local vLLM endpoint reported:</p>
 <pre><code class="language-text">model id: nanbeige4.2-3b
@@ -556,12 +556,12 @@ GPU: NVIDIA GeForce RTX 5090, 32 GB</code></pre>
   --timeout 180000 \
   --no-save-request \
   --freeze test/llm/freeze/baseline-2026-05-23.json</code></pre>
-<p>That pins the May 23 Claude Sonnet 4.6 WebBrain prompt, its 41-tool schema, and system hash <code>5c4fac1387025050</code>. It sends native OpenAI-style structured tools, uses Act mode&#39;s fixed temperature of 0.15, and allows 4,096 output tokens. We did not force Nanbeige&#39;s XML compatibility format or add <code>preserve_thinking=true</code> to the template.</p>
+<p>That pins the May 23 Claude Sonnet 4.6 KavachWeb prompt, its 41-tool schema, and system hash <code>5c4fac1387025050</code>. It sends native OpenAI-style structured tools, uses Act mode&#39;s fixed temperature of 0.15, and allows 4,096 output tokens. We did not force Nanbeige&#39;s XML compatibility format or add <code>preserve_thinking=true</code> to the template.</p>
 <p>This is the right configuration for our historical first-action comparison. It is not a reproduction of Nanbeige&#39;s own benchmark recipe.</p>
 <h2 id="the-clean-singlerequest-result">The clean single-request result</h2>
 <div class="table-wrap"><table><thead><tr><th>Metric</th><th>Nanbeige 4.2 3B BF16, c=1</th></tr></thead><tbody><tr><td>Completed cases</td><td>100/100</td></tr><tr><td>Transport errors</td><td>0</td></tr><tr><td>Parsed calls</td><td>90/100</td></tr><tr><td>Valid tool names</td><td>89/100</td></tr><tr><td>Exact first-call match</td><td>11/100</td></tr><tr><td>Ideal tool-name match</td><td>30/100</td></tr><tr><td>Sonnet match, all cases</td><td>67/100</td></tr><tr><td>Sonnet match when Sonnet tooled</td><td>62/92 (67.4%)</td></tr><tr><td>Mean latency</td><td>2.07s</td></tr><tr><td>Median latency</td><td>1.49s</td></tr><tr><td>p95 latency</td><td>5.38s</td></tr><tr><td>Slowest case</td><td>11.11s</td></tr><tr><td>Benchmark wall time</td><td>206.7s</td></tr></tbody></table></div>
 <p>The operational result is respectable. Ninety calls parsed natively, and only one used a nonexistent tool name: <code>scratchpad_read</code>. The model also handled the no-tool knowledge cases fairly well, matching Sonnet on four of five.</p>
-<p>The quality miss is action selection. Nanbeige chose <code>get_accessibility_tree</code> <strong>49 times</strong>. Qwen 3.5 9B did so 39 times, Gemma 4 12B QAT 43 times, and Gemma 4 E4B 42 times. Reading the page is often a safe first move, but WebBrain&#39;s direct commands frequently have a more specific action available.</p>
+<p>The quality miss is action selection. Nanbeige chose <code>get_accessibility_tree</code> <strong>49 times</strong>. Qwen 3.5 9B did so 39 times, Gemma 4 12B QAT 43 times, and Gemma 4 E4B 42 times. Reading the page is often a safe first move, but KavachWeb&#39;s direct commands frequently have a more specific action available.</p>
 <p>Some category results were strong:</p>
 <ul><li>direct navigation: 10/10 Sonnet matches;</li><li>forms: 8/8;</li><li>email: 5/6;</li><li>shopping: 4/4;</li><li>scroll and inspection: 4/4.</li></ul>
 <p>The weaker groups explain the overall gap:</p>
@@ -579,24 +579,24 @@ GPU: NVIDIA GeForce RTX 5090, 32 GB</code></pre>
 <p>Quality also moved by four Sonnet points between the clean c=1 and c=8 runs. The frozen harness uses temperature 0.15 rather than zero, so some sampling variance is expected; batching may also change numerical execution. The c=1 result is our headline quality row, and the c=8 result is the capacity measurement.</p>
 <h2 id="the-practical-downside-no-vision">The practical downside: no vision</h2>
 <p>This checkpoint is a text model. Unlike the Qwen 3.5 9B and Gemma 4 checkpoints in this comparison, it cannot inspect a screenshot, read a canvas application, recover from a broken accessibility tree visually, or perform UI OCR by itself.</p>
-<p>That matters for WebBrain. A compact text planner can still operate over accessibility trees and extracted page content, but it is not a complete replacement for a multimodal local model. Nanbeige&#39;s agent efficiency is impressive; its modality coverage is narrower.</p>
+<p>That matters for KavachWeb. A compact text planner can still operate over accessibility trees and extracted page content, but it is not a complete replacement for a multimodal local model. Nanbeige&#39;s agent efficiency is impressive; its modality coverage is narrower.</p>
 <h2 id="verdict">Verdict</h2>
 <p>Nanbeige 4.2 3B is not hype-free, but it is also not a disappointment. A 4B-total / 3B-non-embedding model producing 90 structured calls, matching Sonnet&#39;s first tool 67% of the time, and serving at a 1.49-second median is a strong small-model result.</p>
-<p>The stronger claim did not transfer. In WebBrain&#39;s frozen browser-planner test, it did <strong>not</strong> beat Qwen 3.5 9B, and it did not beat Gemma 4 E4B. It tied the quantized Gemma 4 12B QAT run on Sonnet alignment while losing on strict ideal-action scores.</p>
-<p>The fairest conclusion is scope, not contradiction. Nanbeige&#39;s published wins come from long-horizon agent, office, code, and reasoning evaluations under its recommended thinking-oriented scaffolds. Our test isolates one first browser action under a fixed historical prompt. The official results may be correct in their environments; they are not a guarantee that this smaller model will route WebBrain&#39;s first tool better.</p>
-<p>For a text-only local assistant with long tasks and a Nanbeige-aware scaffold, this release deserves more testing. For WebBrain&#39;s current low-latency browser planner, <strong>Qwen 3.5 9B remains the stronger small local default</strong>, while Gemma&#39;s multimodality remains a practical advantage.</p>
+<p>The stronger claim did not transfer. In KavachWeb&#39;s frozen browser-planner test, it did <strong>not</strong> beat Qwen 3.5 9B, and it did not beat Gemma 4 E4B. It tied the quantized Gemma 4 12B QAT run on Sonnet alignment while losing on strict ideal-action scores.</p>
+<p>The fairest conclusion is scope, not contradiction. Nanbeige&#39;s published wins come from long-horizon agent, office, code, and reasoning evaluations under its recommended thinking-oriented scaffolds. Our test isolates one first browser action under a fixed historical prompt. The official results may be correct in their environments; they are not a guarantee that this smaller model will route KavachWeb&#39;s first tool better.</p>
+<p>For a text-only local assistant with long tasks and a Nanbeige-aware scaffold, this release deserves more testing. For KavachWeb&#39;s current low-latency browser planner, <strong>Qwen 3.5 9B remains the stronger small local default</strong>, while Gemma&#39;s multimodality remains a practical advantage.</p>
 <p>Saved results:</p>
 <pre><code class="language-text">test/llm/results/2026-07-22-nanbeige42-3b-bf16-c1_chrome_nanbeige4.2-3b_frozen
 test/llm/results/2026-07-22-nanbeige42-3b-bf16-c8_chrome_nanbeige4.2-3b_frozen
 test/llm/results/2026-07-22-nanbeige42-3b-bf16-c16_chrome_nanbeige4.2-3b_frozen</code></pre>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

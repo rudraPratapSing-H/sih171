@@ -140,7 +140,7 @@
     indicator.id = INDICATOR_ID;
     indicator.setAttribute('role', 'status');
     indicator.setAttribute('aria-live', 'polite');
-    indicator.textContent = `● WebBrain Teach${sessionName ? ` · ${sessionName}` : ''}`;
+    indicator.textContent = `● KavachWeb Teach${sessionName ? ` · ${sessionName}` : ''}`;
     Object.assign(indicator.style, {
       position: 'fixed', left: '12px', bottom: '12px', zIndex: '2147483647',
       padding: '7px 10px', borderRadius: '999px', background: '#241b3d',

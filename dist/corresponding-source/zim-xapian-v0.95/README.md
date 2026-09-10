@@ -1,7 +1,7 @@
 # Xapian/libzim WebAssembly corresponding source
 
 This directory contains the source archives, license texts, build inputs, and
-the exact WebBrain driver used to produce the bundled runtime. The build pins
+the exact KavachWeb driver used to produce the bundled runtime. The build pins
 javascript-libzim v0.95 at commit
 `470b36920fba421a4c1a83b326e66d8aa0533870` and Emscripten 3.1.41.
 
@@ -29,7 +29,7 @@ allow the upstream/dependency download fallback:
 node scripts/build-zim-xapian.mjs --work .build/zim-xapian --download-source
 ```
 
-Inside a full WebBrain checkout, `npm run build:zim-xapian` invokes the same
+Inside a full KavachWeb checkout, `npm run build:zim-xapian` invokes the same
 driver. The source archives in this directory are the immutable default inputs
 retained with the release; their sizes and SHA-256 hashes are recorded in
 `sbom.json`.

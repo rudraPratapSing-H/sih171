@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * WebBrain marketing-site build.
+ * KavachWeb marketing-site build.
  *
  * Reads web/build/template.html, web/build/faq-template.html, and
  * web/build/locales/*.json and writes:
@@ -390,7 +390,7 @@ function buildSoftwareJsonLd(dict, locale) {
   const payload = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: 'WebBrain',
+    name: 'KavachWeb',
     applicationCategory: 'BrowserApplication',
     operatingSystem: 'Chrome, Edge, Firefox',
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
@@ -414,7 +414,7 @@ function buildSubscribeHtml() {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebBrain Compass Subscribe</title>
+  <title>KavachWeb Compass Subscribe</title>
   <meta name="robots" content="noindex, follow">
   <link rel="canonical" href="${SITE_ORIGIN}/subscribe/">
   <style>
@@ -467,7 +467,7 @@ function buildSubscribeHtml() {
 </head>
 <body>
   <main>
-    <div class="brand">WebBrain Compass</div>
+    <div class="brand">KavachWeb Compass</div>
     <h1 id="subscribe-title">Redirecting to Stripe</h1>
     <p id="subscribe-copy">The payment page will open in a few seconds.</p>
     <p id="checkout-row">If redirect does not work, <a id="checkout-link" href="${STRIPE_SUBSCRIBE_URL}">open Stripe checkout</a>.</p>
@@ -483,8 +483,8 @@ function buildSubscribeHtml() {
         window.location.href = checkoutUrl.toString();
       }, 3500);
     } else {
-      document.getElementById('subscribe-title').textContent = 'Open this link from WebBrain';
-      document.getElementById('subscribe-copy').textContent = 'You may be using an outdated version of the WebBrain plugin on your browser, please update.';
+      document.getElementById('subscribe-title').textContent = 'Open this link from KavachWeb';
+      document.getElementById('subscribe-copy').textContent = 'You may be using an outdated version of the KavachWeb plugin on your browser, please update.';
       document.getElementById('checkout-row').style.display = 'none';
     }
   </script>

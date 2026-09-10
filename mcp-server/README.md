@@ -1,11 +1,11 @@
-# WebBrain MCP Server
+# KavachWeb MCP Server
 
 Give any MCP client — Claude Code, Codex, Cursor, OpenClaw — the ability to run tasks in **your real browser session**: already signed in, cookies present, MFA already passed.
 
-That session is the whole point. A headless automation framework starts logged out of everything and hits a login wall on the first useful page. WebBrain is already inside the browser you use.
+That session is the whole point. A headless automation framework starts logged out of everything and hits a login wall on the first useful page. KavachWeb is already inside the browser you use.
 
 ```
-Claude Code ──stdio──▶ webbrain-mcp ──ws://127.0.0.1:17374──▶ WebBrain extension ──▶ your tabs
+Claude Code ──stdio──▶ webbrain-mcp ──ws://127.0.0.1:17374──▶ KavachWeb extension ──▶ your tabs
 ```
 
 ## Install
@@ -26,11 +26,11 @@ cd mcp-server && npm install && npm run build
 
 The MCP server hosts the listener; the extension dials out to it. A Manifest V3 extension cannot listen on a socket, so the direction is fixed.
 
-1. Install the [WebBrain extension](https://webbrain.one) and open your browser.
-2. In **WebBrain → Settings → General → Advanced → MCP**, set the URL to `ws://127.0.0.1:17374/extension` and enable it.
+1. Install the [KavachWeb extension](https://webbrain.one) and open your browser.
+2. In **KavachWeb → Settings → General → Advanced → MCP**, set the URL to `ws://127.0.0.1:17374/extension` and enable it.
 3. Ask your MCP client to call `webbrain_connection` to confirm.
 
-> **One bridge at a time.** The extension holds exactly one outbound bridge socket. Pointing it here means it is *not* pointed at WebBrain Cloud (`17373`) or the LM Studio plugin (`17375`). Switch it under **Settings → General → Advanced → MCP**.
+> **One bridge at a time.** The extension holds exactly one outbound bridge socket. Pointing it here means it is *not* pointed at KavachWeb Cloud (`17373`) or the LM Studio plugin (`17375`). Switch it under **Settings → General → Advanced → MCP**.
 
 ## Register with a client
 
@@ -55,7 +55,7 @@ claude mcp add --transport stdio webbrain -- npx -y @webbrain/mcp-server
 
 The MCP client launches this command as a child process when it starts the
 configured server; you do not need to keep a second copy running in a terminal.
-After adding the configuration, restart or reconnect the MCP client if WebBrain
+After adding the configuration, restart or reconnect the MCP client if KavachWeb
 does not appear in its tool list.
 
 ## Launch manually
@@ -79,14 +79,14 @@ npm run build
 npm start
 ```
 
-After it is running, enable `ws://127.0.0.1:17374/extension` under **WebBrain →
+After it is running, enable `ws://127.0.0.1:17374/extension` under **KavachWeb →
 Settings → General → Advanced → MCP**. Ask the MCP client to call
 `webbrain_connection` to verify the complete connection.
 
 ## Troubleshooting
 
 **Connection error: WebSocket error** normally means that no process is
-listening at the URL selected in WebBrain. Confirm the MCP server is still
+listening at the URL selected in KavachWeb. Confirm the MCP server is still
 running and that Settings uses port `17374`, then check the listener:
 
 ```bash
@@ -95,7 +95,7 @@ lsof -nP -iTCP:17374 -sTCP:LISTEN
 
 No output means the MCP server is not listening. If it is listening but the
 extension does not connect, make sure another bridge destination is not selected:
-WebBrain Cloud uses `17373`, this MCP server uses `17374`, and the LM Studio
+KavachWeb Cloud uses `17373`, this MCP server uses `17374`, and the LM Studio
 plugin uses `17375`. Only one can be selected at a time. The bridge is available
 in Chromium browsers only, not Firefox.
 
@@ -165,9 +165,9 @@ permission boundary; it is not a direct page-scraping primitive.
 
 ## Why six task-level tools and not 50 browser primitives
 
-WebBrain exposes roughly fifty primitives internally — `click_ax`, `type_ax`, `extract_data`, `iframe_read` and so on. This server deliberately does **not** surface them.
+KavachWeb exposes roughly fifty primitives internally — `click_ax`, `type_ax`, `extract_data`, `iframe_read` and so on. This server deliberately does **not** surface them.
 
-**Safety.** WebBrain's capability × origin permission gate runs in the agent loop (`_executeToolBatch`), not inside `executeTool()`. An MCP layer calling primitives directly would sit *below* the gate and bypass every approval prompt the product is built on. Delegating a goal keeps the trust boundary in the browser, where the human is.
+**Safety.** KavachWeb's capability × origin permission gate runs in the agent loop (`_executeToolBatch`), not inside `executeTool()`. An MCP layer calling primitives directly would sit *below* the gate and bypass every approval prompt the product is built on. Delegating a goal keeps the trust boundary in the browser, where the human is.
 
 **Cost.** Driving a UI one primitive at a time over a socket costs a round trip and a slab of tokens per click. Handing over a goal costs one call.
 
@@ -186,7 +186,7 @@ WebBrain exposes roughly fifty primitives internally — `click_ax`, `type_ax`, 
 - The listener binds `127.0.0.1` only. Anything that can reach this port can drive your signed-in browser — never expose it to a network or a container bridge.
 - Connections from HTTP(S) pages and other non-extension browser origins are rejected before they can replace the extension socket. Accepted connections must also present the extension's `hello` frame with `client: "webbrain-extension"`; anything else is closed. This is **not** authentication. The shipping extension sends no shared secret, so a local process could impersonate it. Treat the port as trusted-local, and see [`docs/security-model.md`](../docs/security-model.md).
 - A `webbrain_run` timeout does **not** abort the run. A task that already submitted a form should not be silently killed — the browser keeps going and `webbrain_status` picks it back up.
-- `allow_api_mutations` lifts WebBrain's UI-first rule and is off by default. It is accepted only with `mode: "act"`; Ask runs remain read-only. The UI path is visible and stoppable; direct API mutations are neither.
+- `allow_api_mutations` lifts KavachWeb's UI-first rule and is off by default. It is accepted only with `mode: "act"`; Ask runs remain read-only. The UI path is visible and stoppable; direct API mutations are neither.
 
 ## Tests
 

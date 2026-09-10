@@ -1,4 +1,4 @@
-/** Default wait for small WebBrain-initiated saves (screenshots, crops, run captures). */
+/** Default wait for small KavachWeb-initiated saves (screenshots, crops, run captures). */
 export const DEFAULT_DOWNLOAD_TIMEOUT_MS = 30_000;
 /**
  * Longer budget for large tab recordings / transcript text writes. A 2-hour

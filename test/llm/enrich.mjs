@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Enrich a synthetic user message into the exact LLM request payload
-// WebBrain would send. Two modes:
+// KavachWeb would send. Two modes:
 //
 //   node test/llm/enrich.mjs --id 042
 //   node test/llm/enrich.mjs --user "go to gmail" --url "about:home" --title "New Tab" [--mode act|ask|dev]

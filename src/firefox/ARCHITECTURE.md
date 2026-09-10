@@ -1,4 +1,4 @@
-# WebBrain Firefox Extension — Architecture
+# KavachWeb Firefox Extension — Architecture
 
 > Version 34.1.6 · Manifest V2 · Background Page
 
@@ -7,7 +7,7 @@
 Firefox uses Manifest V2 (background page, not service worker) and has **no access to the Chrome DevTools Protocol (CDP)**. Starting with v3.6.x, the Firefox build has been brought to functional parity with Chrome for the accessibility-tree (AX) subsystem — the same tree builder, the same four AX tools (`get_accessibility_tree`, `click_ax`, `type_ax`, `set_field`), and the same ref_id registry. What Firefox still lacks:
 
 - **No trusted events** — clicks and key presses are synthetic (`el.click()`, `new KeyboardEvent()`), and some sites reject `event.isTrusted === false`. All AX-tool click/type paths use synthetic dispatch in Firefox; the CDP-backed trusted-event path in Chrome has no Firefox equivalent.
-- **No pixel-perfect / full-page screenshots** — uses `browser.tabs.captureTab()` instead of CDP `Page.captureScreenshot`; it can capture the run tab while that tab is inactive. Firefox has exposed `tabs.captureTab()` since Firefox 59, before WebBrain's current minimum, and the manifest declares the required `<all_urls>` permission.
+- **No pixel-perfect / full-page screenshots** — uses `browser.tabs.captureTab()` instead of CDP `Page.captureScreenshot`; it can capture the run tab while that tab is inactive. Firefox has exposed `tabs.captureTab()` since Firefox 59, before KavachWeb's current minimum, and the manifest declares the required `<all_urls>` permission.
 - **No shadow DOM piercing** — content script can read open shadow roots via `element.shadowRoot`, but cannot pierce closed roots.
 - **No offscreen document** — no HTTP fetch proxy for localhost LLM servers with Private Network Access / CORS issues. User must ensure their local LLM server sends permissive CORS headers.
 - **Some Chrome-only tools/features remain absent** — no CDP full-page screenshot, CDP upload automation, tab recording, offscreen fetch proxy, Chrome-only `shadow_dom_query`, or closed-shadow-root traversal.
@@ -17,7 +17,7 @@ Everything else — the agent loop, LLM providers, site adapters, Ask/Act/Dev mo
 PDF handling is an intentional platform exception: Firefox has no equivalent
 to Chrome's global `mime_types_handler`/`chrome.mimeHandler` route in this
 extension. Firefox therefore keeps its native PDF viewer as the default and
-uses an explicit WebBrain PDF viewer context-menu entry when the user chooses
+uses an explicit KavachWeb PDF viewer context-menu entry when the user chooses
 it. The Chrome-only automatic PDF viewer opt-in setting does not apply to
 Firefox; the explicit Firefox entry remains available independently.
 
@@ -463,7 +463,7 @@ Plus the legacy handlers: `read_page`, `click`, `type_text`, `press_keys`, `scro
 ## Provider System
 
 Identical to Chrome at the provider-class and configuration layer:
-WebBrain Compass, nine local endpoints, Azure OpenAI, AWS Bedrock, Anthropic, and
+KavachWeb Compass, nine local endpoints, Azure OpenAI, AWS Bedrock, Anthropic, and
 the current direct-cloud/router OpenAI-compatible configs use the same message
 format and conversion logic. The canonical current ID and default-model table
 is maintained in
@@ -588,7 +588,7 @@ request authorizes an external message.
 | No trusted keyboard events | `press_keys` may not land on all sites | Dispatched to both activeElement and document |
 | No full-page screenshot | Only visible viewport | Scroll + multiple captures |
 | No shadow-root piercing (closed) | Can't read closed shadow roots | Dev-mode `execute_js` with manual traversal |
-| No arbitrary-path/CDP upload | Cannot attach an arbitrary local path silently | Use a prior `downloadId` re-fetch or WebBrain's user file picker |
+| No arbitrary-path/CDP upload | Cannot attach an arbitrary local path silently | Use a prior `downloadId` re-fetch or KavachWeb's user file picker |
 | No ambiguous-click CDP enrichment | Overlapping hit-target ambiguity resolved by ref_id only | Prompting / adapter guidance |
 | MV2 background page | Less efficient than MV3 service worker | `persistent: false` helps |
 

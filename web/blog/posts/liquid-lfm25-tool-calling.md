@@ -10,7 +10,7 @@ description: >
 excerpt: >
   Liquid AI's just-shipped LFM 2.5-8B-A1B (8.3B total / 1.5B active sparse MoE) joins our browser-agent benchmark. It beats both small Qwens and runs within reach of Gemma 4-E2B against Claude Sonnet 4.6 — but for the small-model distillation slot, plain Apache 2.0 still wins over LFM's $10M-revenue-cliff license. Also: a tool-schema drift bug we caught and the freeze fix we shipped.
 titleTag: >
-  Liquid LFM 2.5-8B-A1B on browser tool calling: an on-device MoE meets WebBrain — WebBrain Blog
+  Liquid LFM 2.5-8B-A1B on browser tool calling: an on-device MoE meets KavachWeb — KavachWeb Blog
 ogTitle: >
   Liquid LFM 2.5-8B-A1B on browser tool calling: where it fits
 ogDescription: >
@@ -28,12 +28,12 @@ keywords:
   - tool calling
   - browser agent
   - Claude Sonnet 4.6
-  - WebBrain
+  - KavachWeb
   - Liquid Foundation Model
   - sparse mixture of experts
 html: true
 lede: >
-  We added Liquid AI’s **LFM 2.5-8B-A1B** — their just-released on-device sparse Mixture-of-Experts model — to our browser-agent tool-calling benchmark. Against Claude Sonnet 4.6 it beats both small Qwens (0.8B and 2B) and lands within reach of Gemma 4-E2B, despite activating only 1.5B parameters per token. The same run also surfaced a methodology bug that retroactively changes how we score every future benchmark: when the WebBrain tool schema drifts between runs, the “vs Sonnet” score becomes unfair. We fixed it by freezing the schema.
+  We added Liquid AI’s **LFM 2.5-8B-A1B** — their just-released on-device sparse Mixture-of-Experts model — to our browser-agent tool-calling benchmark. Against Claude Sonnet 4.6 it beats both small Qwens (0.8B and 2B) and lands within reach of Gemma 4-E2B, despite activating only 1.5B parameters per token. The same run also surfaced a methodology bug that retroactively changes how we score every future benchmark: when the KavachWeb tool schema drifts between runs, the “vs Sonnet” score becomes unfair. We fixed it by freezing the schema.
 ---
 
 ## What is LFM 2.5-8B-A1B?
@@ -42,13 +42,13 @@ Liquid AI shipped [LFM 2.5-8B-A1B](https://www.liquid.ai/blog/lfm2-5-8b-a1b) on 
 
 The lab spun out of MIT’s liquid-neural-networks research and has built the LFM series around efficiency at the edge — phones, laptops, NPUs — rather than chasing frontier-scale accuracy. The 8B-A1B variant is also explicitly a *reasoning* model: it produces an explicit chain of thought before its final answer. That detail turns out to be important for how the model behaves on browser tasks. Open weights are on [Hugging Face](https://huggingface.co/LiquidAI). We tested through the `maternion/lfm2.5` Ollama package on `localhost:11434` — same harness as the rest of our benchmark.
 
-What caught our attention: Liquid AI claims the 2.5 line leads peer small models on IFEval and IFBench, and they highlighted tool use as a first-class RL training objective. Browser tool calling is a stricter test — the model has to pick the right tool from a large schema and pass valid arguments. We wanted to see whether the tool-use training claim holds up when the schema is real WebBrain tools.
+What caught our attention: Liquid AI claims the 2.5 line leads peer small models on IFEval and IFBench, and they highlighted tool use as a first-class RL training objective. Browser tool calling is a stricter test — the model has to pick the right tool from a large schema and pass valid arguments. We wanted to see whether the tool-use training claim holds up when the schema is real KavachWeb tools.
 
 ## The bug we caught (and what we changed)
 
 The first LFM 2.5 run looked terrible — 34% match with Sonnet, ranked dead last among 14 models. We were about to write that up when we noticed something suspicious: the system prompt and tool list that LFM 2.5 saw were not the same ones Sonnet had seen a week earlier.
 
-WebBrain’s tool schema lives in `src/chrome/src/agent/tools.js` and evolves between releases. Between the May 23 baseline run (which Sonnet defined) and the May 30 LFM run, two tools had been removed (`execute_js`, `download_file`) and three added (`drag_drop`, `hover`, `wait_for_stable`). The system prompt had also changed. So 8 of Sonnet’s 100 picks were tools LFM 2.5 didn’t even have access to. Scoring “match with Sonnet” against a different schema is invalid.
+KavachWeb’s tool schema lives in `src/chrome/src/agent/tools.js` and evolves between releases. Between the May 23 baseline run (which Sonnet defined) and the May 30 LFM run, two tools had been removed (`execute_js`, `download_file`) and three added (`drag_drop`, `hover`, `wait_for_stable`). The system prompt had also changed. So 8 of Sonnet’s 100 picks were tools LFM 2.5 didn’t even have access to. Scoring “match with Sonnet” against a different schema is invalid.
 
 We fixed this by adding a **frozen baseline** mode to the benchmark runner: a snapshot of the system prompt and tools array from Sonnet’s run, replayed verbatim for every comparison. The runner now accepts `--freeze freeze/baseline-2026-05-23.json` and pins the schema. Re-running LFM 2.5 under the frozen baseline:
 
@@ -111,13 +111,13 @@ Looking at the per-task breakdown, the divergence is systematic, not random. LFM
 
 This reads less like “the model can’t reason about browser actions” and more like “the model has a different theory of what to do first.” Its instinct is to read content before acting on it; Sonnet’s instinct is to inspect the page structure first. Both are coherent strategies. They are just different.
 
-## Where LFM 2.5 fits for WebBrain
+## Where LFM 2.5 fits for KavachWeb
 
-With 1.5B active parameters per token, LFM 2.5-8B-A1B sits in a useful niche for on-device inference: comparable runtime cost to Gemma 4-E2B (2.3B effective), open weights, designed from day one for laptops and NPUs, and tuned for tool use. We have [written before](/blog/llm-tool-calling-benchmark) about wanting to ship in-browser inference in upcoming WebBrain releases via WebGPU, and the model-selection problem for that path is fundamentally different from the “best model on a beefy GPU” question. You want something whose *per-token compute* stays low, fits in available browser memory budgets, and degrades gracefully when the user’s machine is under load. By that lens, an MoE that activates only 1.5B at a time is exactly the architecture you want — you pay a one-time weight-load cost, then run cheap.
+With 1.5B active parameters per token, LFM 2.5-8B-A1B sits in a useful niche for on-device inference: comparable runtime cost to Gemma 4-E2B (2.3B effective), open weights, designed from day one for laptops and NPUs, and tuned for tool use. We have [written before](/blog/llm-tool-calling-benchmark) about wanting to ship in-browser inference in upcoming KavachWeb releases via WebGPU, and the model-selection problem for that path is fundamentally different from the “best model on a beefy GPU” question. You want something whose *per-token compute* stays low, fits in available browser memory budgets, and degrades gracefully when the user’s machine is under load. By that lens, an MoE that activates only 1.5B at a time is exactly the architecture you want — you pay a one-time weight-load cost, then run cheap.
 
-For pure tool routing on browser tasks today, Gemma 4-E2B is still the small-model pick at 63%. LFM 2.5 is the runner-up in its compute class at 40%, and the model is brand new — this is the first WebBrain measurement we have on it. Liquid AI’s focus on on-device deployment also means the inference story (quantization, mobile NPU paths, deterministic latency) is taken more seriously by them than by labs targeting cloud-scale serving. That matters for our use case.
+For pure tool routing on browser tasks today, Gemma 4-E2B is still the small-model pick at 63%. LFM 2.5 is the runner-up in its compute class at 40%, and the model is brand new — this is the first KavachWeb measurement we have on it. Liquid AI’s focus on on-device deployment also means the inference story (quantization, mobile NPU paths, deterministic latency) is taken more seriously by them than by labs targeting cloud-scale serving. That matters for our use case.
 
-Two concrete things we will try next: (1) adjust the WebBrain system prompt to nudge tool selection toward inspect-first rather than read-first — that change alone might recover several points without retraining anything; (2) re-run with a multi-turn agent loop instead of single-shot scoring, since a CoT-reasoning model is probably under-credited by “first-tool-call” evaluation.
+Two concrete things we will try next: (1) adjust the KavachWeb system prompt to nudge tool selection toward inspect-first rather than read-first — that change alone might recover several points without retraining anything; (2) re-run with a multi-turn agent loop instead of single-shot scoring, since a CoT-reasoning model is probably under-credited by “first-tool-call” evaluation.
 
 ## Bottom line: still Gemma 4-E2B for distillation
 
@@ -129,7 +129,7 @@ LFM 2.5 ships under the [LFM Open License v1.0](https://www.liquid.ai/lfm-licens
 
 But if you’re a startup or an open-source project deciding which model to distill onto your own hardware target, that $10M cliff is a future-self problem worth thinking about. If your project succeeds and crosses the threshold three years from now, you will be in the position of either re-negotiating mid-flight or rewriting your stack onto a different base. Gemma 4 has none of that risk — the license you start with is the license you keep.
 
-So: LFM 2.5 is an interesting on-device architecture from a lab worth watching, and we will retest the line as it evolves. For WebBrain’s small-model slot today, we’re sticking with Gemma 4-E2B.
+So: LFM 2.5 is an interesting on-device architecture from a lab worth watching, and we will retest the line as it evolves. For KavachWeb’s small-model slot today, we’re sticking with Gemma 4-E2B.
 
 ## Reproducibility
 

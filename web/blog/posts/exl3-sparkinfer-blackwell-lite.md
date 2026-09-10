@@ -12,7 +12,7 @@ excerpt: >
 cardTitle: >
   EXL3 is the best quantization schema for local AI right now
 titleTag: >
-  EXL3: Best Quantization for Local AI on Blackwell Lite — WebBrain Blog
+  EXL3: Best Quantization for Local AI on Blackwell Lite — KavachWeb Blog
 ogTitle: >
   EXL3 is the best quantization schema for local AI right now
 ogDescription: >
@@ -95,7 +95,7 @@ Turboderp's [Hugging Face account](https://huggingface.co/turboderp) now hosts *
 |---|---|
 | [Qwen3.6-27B-exl3](https://huggingface.co/turboderp/Qwen3.6-27B-exl3) | The community workhorse (~574 downloads). At 4.15 bpw it's turbocharged by DFlash speculative decoding — 177+ tok/s on coding traces, single PRO 6000. |
 | [DeepSeek-V4-Flash-0731-exl3](https://huggingface.co/turboderp/DeepSeek-V4-Flash-0731-exl3) | 284B / 216 experts at ~3 bpw. Fits a DGX Spark; the card includes the Spark profiles. |
-| [Laguna-XS-2.1-exl3](https://huggingface.co/turboderp/Laguna-XS-2.1-exl3) | The small thinking model done right — what we run on WebBrain's local path for cheap agentic tasks. |
+| [Laguna-XS-2.1-exl3](https://huggingface.co/turboderp/Laguna-XS-2.1-exl3) | The small thinking model done right — what we run on KavachWeb's local path for cheap agentic tasks. |
 | [Laguna-S-2.1-exl3](https://huggingface.co/turboderp/Laguna-S-2.1-exl3) | Sibling of the above, more capacity per VRAM. |
 | [gpt-oss-120b-exl3](https://huggingface.co/turboderp/gpt-oss-120b-exl3) | OpenAI's open MoE, ~3 bpw; 120B in the double-digit GB range. |
 | [Mistral-Small-4-119B-2603-exl3](https://huggingface.co/turboderp/Mistral-Small-4-119B-2603-exl3) | Same weight class, different trade-offs; good for 3×24GB rigs. |

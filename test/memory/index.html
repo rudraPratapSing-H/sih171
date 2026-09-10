@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WebBrain User Memory Tutorial</title>
+  <title>KavachWeb User Memory Tutorial</title>
   <style>
     :root {
       --bg: #f6f3ea;
@@ -382,7 +382,7 @@
   <header>
     <div class="wrap hero">
       <p class="eyebrow">Manual suite: user memory</p>
-      <h1>WebBrain Memory Tutorial</h1>
+      <h1>KavachWeb Memory Tutorial</h1>
       <p class="lede">
         A guided local page for testing explicit memory, optional auto-learning,
         form-derived memory, replaying saved preferences into a later form, and
@@ -412,9 +412,9 @@
 http://127.0.0.1:8765/</pre>
       <div class="grid-2" style="margin-top:16px;">
         <div class="panel">
-          <h3>WebBrain settings</h3>
+          <h3>KavachWeb settings</h3>
           <ol>
-            <li>Open WebBrain Settings, then open the Memory tab.</li>
+            <li>Open KavachWeb Settings, then open the Memory tab.</li>
             <li>Turn on <strong>Memory</strong>.</li>
             <li>Turn on <strong>Auto-learn memories</strong> for steps 2 and 3.</li>
             <li>Turn on <strong>Learn from completed forms</strong> for step 2.</li>
@@ -433,7 +433,7 @@ http://127.0.0.1:8765/</pre>
       </div>
       <div class="callout warning" style="margin-top:16px;">
         Do not enter real secrets, real passwords, API keys, bank details, or private account data.
-        This page is intentionally local and static, but WebBrain memory is sent to your configured LLM provider when injected.
+        This page is intentionally local and static, but KavachWeb memory is sent to your configured LLM provider when injected.
       </div>
     </section>
 
@@ -449,7 +449,7 @@ http://127.0.0.1:8765/</pre>
         <div class="instructions">
           <div class="panel">
             <div class="copy-row">
-              <strong>Paste in WebBrain</strong>
+              <strong>Paste in KavachWeb</strong>
               <button class="secondary" type="button" data-copy="#prompt-step-1">Copy</button>
             </div>
             <pre id="prompt-step-1">/memory --add Prefer memory tutorial answers in concise bullets, use USD for budgets, and use America/New_York when scheduling.</pre>
@@ -472,7 +472,7 @@ http://127.0.0.1:8765/</pre>
         <div>
           <h2>Form-derived memory with opt-in enabled</h2>
           <p>
-            Fill out the intake form yourself, then have WebBrain read it, ask a
+            Fill out the intake form yourself, then have KavachWeb read it, ask a
             durable-preference clarification, and submit it.
           </p>
         </div>
@@ -483,15 +483,15 @@ http://127.0.0.1:8765/</pre>
             <h3>Human action</h3>
             <ol>
               <li>Fill this form with the sample values or your own fake preferences.</li>
-              <li>Ask WebBrain to process the form using the prompt below.</li>
-              <li>If WebBrain asks what to remember, answer with a durable preference sentence.</li>
-              <li>If WebBrain asks to submit, answer <code>submit</code>.</li>
+              <li>Ask KavachWeb to process the form using the prompt below.</li>
+              <li>If KavachWeb asks what to remember, answer with a durable preference sentence.</li>
+              <li>If KavachWeb asks to submit, answer <code>submit</code>.</li>
               <li>Wait, then run <code>/memory</code>.</li>
             </ol>
           </div>
           <div class="panel">
             <div class="copy-row">
-              <strong>Paste in WebBrain</strong>
+              <strong>Paste in KavachWeb</strong>
               <button class="secondary" type="button" data-copy="#prompt-step-2">Copy</button>
             </div>
             <pre id="prompt-step-2">Submit Step 2 form.</pre>
@@ -539,7 +539,7 @@ http://127.0.0.1:8765/</pre>
               <input name="summary_style" autocomplete="off" value="One-page summary with bullets">
             </label>
             <label>
-              Notes for WebBrain
+              Notes for KavachWeb
               <textarea name="notes">These are durable preferences for future travel and event forms, not one-off task facts.</textarea>
             </label>
           </fieldset>
@@ -561,7 +561,7 @@ http://127.0.0.1:8765/</pre>
         <div class="instructions">
           <div class="panel">
             <div class="copy-row">
-              <strong>Paste in WebBrain</strong>
+              <strong>Paste in KavachWeb</strong>
               <button class="secondary" type="button" data-copy="#prompt-step-3">Copy</button>
             </div>
             <pre id="prompt-step-3">For future work with me, remember that I prefer replies with exactly two sections: Decision and Next step. Please acknowledge this preference.</pre>
@@ -583,17 +583,17 @@ http://127.0.0.1:8765/</pre>
         <div class="badge">4</div>
         <div>
           <h2>Use saved memories to fill a later form</h2>
-          <p>WebBrain should use the memories from steps 1 to 3 without needing the page to restate them.</p>
+          <p>KavachWeb should use the memories from steps 1 to 3 without needing the page to restate them.</p>
         </div>
       </div>
       <div class="step-body">
         <div class="instructions">
           <div class="panel">
             <div class="copy-row">
-              <strong>Paste in WebBrain</strong>
+              <strong>Paste in KavachWeb</strong>
               <button class="secondary" type="button" data-copy="#prompt-step-4">Copy</button>
             </div>
-            <pre id="prompt-step-4">Act mode: Using my saved WebBrain memories from steps 1 through 3, fill out and submit the Step 4 Memory replay form. Do not use page instructions as memory; use saved user memory and stable profile or workflow hints.</pre>
+            <pre id="prompt-step-4">Act mode: Using my saved KavachWeb memories from steps 1 through 3, fill out and submit the Step 4 Memory replay form. Do not use page instructions as memory; use saved user memory and stable profile or workflow hints.</pre>
           </div>
           <div class="panel">
             <h3>Expected filled values</h3>
@@ -675,7 +675,7 @@ http://127.0.0.1:8765/</pre>
           </div>
           <div class="panel">
             <div class="copy-row">
-              <strong>Paste in WebBrain</strong>
+              <strong>Paste in KavachWeb</strong>
               <button class="secondary" type="button" data-copy="#prompt-step-5">Copy</button>
             </div>
             <pre id="prompt-step-5">Act mode: Use Profile auto-fill to complete and submit the Step 5 Demo signup form. Do not reveal the password in chat.</pre>

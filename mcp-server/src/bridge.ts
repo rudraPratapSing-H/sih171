@@ -1,5 +1,5 @@
 /**
- * Bridge server — the local endpoint the WebBrain extension connects OUT to.
+ * Bridge server — the local endpoint the KavachWeb extension connects OUT to.
  *
  * Direction matters: a Manifest V3 extension cannot listen on a socket, so
  * `src/chrome/src/offscreen/cloud-bridge.js` dials out from an offscreen
@@ -138,7 +138,7 @@ export class WebBrainBridge {
       if (this.socket) {
         this.failAllPending(
           new BridgeError(
-            "WebBrain extension connection was superseded mid-command.",
+            "KavachWeb extension connection was superseded mid-command.",
             undefined,
             "COMMAND_INTERRUPTED",
           ),
@@ -167,7 +167,7 @@ export class WebBrainBridge {
         log("extension disconnected");
         this.failAllPending(
           new BridgeError(
-            "WebBrain extension disconnected mid-command.",
+            "KavachWeb extension disconnected mid-command.",
             undefined,
             "COMMAND_INTERRUPTED",
           ),
@@ -280,8 +280,8 @@ export class WebBrainBridge {
     const socket = this.socket;
     if (!socket || !this.isConnected()) {
       throw new BridgeError(
-        "No WebBrain extension is connected. Open the browser, then set " +
-          "WebBrain → Settings → General → Advanced → MCP to " +
+        "No KavachWeb extension is connected. Open the browser, then set " +
+          "KavachWeb → Settings → General → Advanced → MCP to " +
           `ws://127.0.0.1:${config.bridgePort}${config.bridgePath} and enable it.`,
       );
     }
@@ -295,7 +295,7 @@ export class WebBrainBridge {
         this.pending.delete(id);
         reject(
           new BridgeError(
-            `WebBrain did not answer '${action}' within ${responseTimeoutMs}ms.`,
+            `KavachWeb did not answer '${action}' within ${responseTimeoutMs}ms.`,
             undefined,
             "COMMAND_TIMEOUT",
           ),

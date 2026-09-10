@@ -17,7 +17,7 @@ export const CONFIG_SCHEMA = 'webbrain-config/1';
 export const MAX_CONFIG_IMPORT_CHARS = 10_000_000;
 
 // This is intentionally an allowlist of user-controlled Settings state. It
-// excludes conversations, traces, schedules, usage counters, the WebBrain
+// excludes conversations, traces, schedules, usage counters, the KavachWeb
 // Cloud device ID, and Cloud Sync session/token metadata.
 export const DEFAULT_CONFIG_SETTINGS = Object.freeze({
   wbLocale: 'en',
@@ -26,7 +26,7 @@ export const DEFAULT_CONFIG_SETTINGS = Object.freeze({
   verboseMode: false,
   selectionShortcutEnabled: true,
   [AUTO_GROUP_TABS_KEY]: true,
-  helpImproveWebBrain: true,
+  helpImproveKavachWeb: true,
   screenshotFallback: true,
   maxAgentSteps: 130,
   requestTimeoutMs: 120_000,
@@ -85,7 +85,7 @@ const BOOLEAN_KEYS = new Set([
   'verboseMode',
   'selectionShortcutEnabled',
   AUTO_GROUP_TABS_KEY,
-  'helpImproveWebBrain',
+  'helpImproveKavachWeb',
   'screenshotFallback',
   'clarifyTimeoutSemanticsV2',
   'useSiteAdapters',
@@ -287,7 +287,7 @@ export function mergeConfigPatchSettings(current = {}, patch = {}) {
   const patchProviders = isPlainObject(merged.providers) ? merged.providers : {};
   // Cloud provisioning owns this provider's credentials, endpoint and device
   // identity. A portable export may contain a stale copy, so never let it
-  // replace the runtime's current WebBrain Compass configuration.
+  // replace the runtime's current KavachWeb Compass configuration.
   delete patchProviders.webbrain_cloud;
   merged.providers = { ...currentProviders, ...patchProviders };
   return merged;

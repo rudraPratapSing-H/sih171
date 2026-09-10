@@ -1,4 +1,4 @@
-// Theme helper for the WebBrain extension UI (sidepanel + settings + traces).
+// Theme helper for the KavachWeb extension UI (sidepanel + settings + traces).
 //
 // Three modes:
 //   - 'system' (default) — follows prefers-color-scheme, updates live if the

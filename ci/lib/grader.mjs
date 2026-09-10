@@ -363,7 +363,7 @@ export function gradeScenario({
 export function renderSummary(results, metadata = {}) {
   const passed = results.filter((result) => result.grade.passed).length;
   const lines = [
-    '# WebBrain Cloud E2E report',
+    '# KavachWeb Cloud E2E report',
     '',
     `- Started: ${metadata.startedAt || 'unknown'}`,
     `- Finished: ${metadata.finishedAt || 'unknown'}`,

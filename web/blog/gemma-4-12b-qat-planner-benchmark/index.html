@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gemma 4 12B QAT WebBrain planner benchmark - WebBrain Blog</title>
-  <meta name="description" content="We tested google/gemma-4-12B-it-qat-w4a16-ct through vLLM against WebBrain&#39;s frozen first-tool-call browser-agent harness at concurrency 8, then ran the same vision probe used in earlier local-model posts.">
-  <meta name="keywords" content="WebBrain, Gemma 4, Gemma 4 12B, QAT, vLLM, local LLM, browser agent, tool calling, Qwen 3.5 9B">
-  <meta property="og:title" content="Gemma 4 12B QAT is a fast local WebBrain planner">
+  <title>Gemma 4 12B QAT KavachWeb planner benchmark - KavachWeb Blog</title>
+  <meta name="description" content="We tested google/gemma-4-12B-it-qat-w4a16-ct through vLLM against KavachWeb&#39;s frozen first-tool-call browser-agent harness at concurrency 8, then ran the same vision probe used in earlier local-model posts.">
+  <meta name="keywords" content="KavachWeb, Gemma 4, Gemma 4 12B, QAT, vLLM, local LLM, browser agent, tool calling, Qwen 3.5 9B">
+  <meta property="og:title" content="Gemma 4 12B QAT is a fast local KavachWeb planner">
   <meta property="og:description" content="The 12B QAT Gemma run beats the older Gemma 4 12B Coder Fable5 Composer 2.5 result, but Qwen 3.5 9B still has a small routing-quality lead.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://webbrain.one/blog/gemma-4-12b-qat-planner-benchmark">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Gemma 4 12B QAT WebBrain planner benchmark">
+  <meta name="twitter:title" content="Gemma 4 12B QAT KavachWeb planner benchmark">
   <meta name="twitter:description" content="92 parsed calls, 14 exact first-actions, 0.43s median, and a mixed vision probe for Gemma 4 12B QAT on vLLM.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/gemma-4-12b-qat-planner-benchmark">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -474,8 +474,8 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Gemma 4 12B QAT is fast enough for WebBrain, but Qwen 3.5 9B still routes a little better",
-  "description": "We tested google/gemma-4-12B-it-qat-w4a16-ct through vLLM against WebBrain's frozen first-tool-call browser-agent harness at concurrency 8, then ran the same vision probe used in earlier local-model posts.",
+  "headline": "Gemma 4 12B QAT is fast enough for KavachWeb, but Qwen 3.5 9B still routes a little better",
+  "description": "We tested google/gemma-4-12B-it-qat-w4a16-ct through vLLM against KavachWeb's frozen first-tool-call browser-agent harness at concurrency 8, then ran the same vision probe used in earlier local-model posts.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -524,8 +524,8 @@
 
   <article>
     <div class="meta">June 20, 2026 &middot; 6 min read &middot; <a href="/blog">&larr; All posts</a></div>
-    <h1>Gemma 4 12B QAT is fast enough for WebBrain, but Qwen 3.5 9B still routes a little better</h1>
-    <p class="lede">We ran <strong>google/gemma-4-12B-it-qat-w4a16-ct</strong> through WebBrain&#39;s frozen first-tool-call planner harness on the currently running local vLLM server at port 8000. The result is a useful middle tier: much faster than the older Gemma 4 12B Coder Fable5 Composer 2.5 run and stronger on routing, but still a small step behind Qwen 3.5 9B on strict first-action quality.</p>
+    <h1>Gemma 4 12B QAT is fast enough for KavachWeb, but Qwen 3.5 9B still routes a little better</h1>
+    <p class="lede">We ran <strong>google/gemma-4-12B-it-qat-w4a16-ct</strong> through KavachWeb&#39;s frozen first-tool-call planner harness on the currently running local vLLM server at port 8000. The result is a useful middle tier: much faster than the older Gemma 4 12B Coder Fable5 Composer 2.5 run and stronger on routing, but still a small step behind Qwen 3.5 9B on strict first-action quality.</p>
 <h2 id="what-we-ran">What we ran</h2>
 <p>The live vLLM server reported:</p>
 <pre><code class="language-text">model id: gemma-4-12b
@@ -541,7 +541,7 @@ max context reported by vLLM: 65536</code></pre>
   --no-save-request \
   --freeze test/llm/freeze/baseline-2026-05-23.json \
   --chat-template-compat alternating</code></pre>
-<p>That means 100 single-turn browser-agent prompts, the May 23 Claude Sonnet 4.6 WebBrain system prompt and 41-tool schema, legacy text-call compatibility, no native OpenAI <code>tools</code> field, and up to eight active requests at a time.</p>
+<p>That means 100 single-turn browser-agent prompts, the May 23 Claude Sonnet 4.6 KavachWeb system prompt and 41-tool schema, legacy text-call compatibility, no native OpenAI <code>tools</code> field, and up to eight active requests at a time.</p>
 <p>The clean rerun completed all 100 cases without transport errors in 7.7 seconds of wall time. The latency numbers below are still per-case response latencies, not wall time divided by 100.</p>
 <p>Result files:</p>
 <pre><code class="language-text">test/llm/results/2026-06-20-vllm-12b-qat_chrome_gemma-4-12b_frozen</code></pre>
@@ -555,7 +555,7 @@ max context reported by vLLM: 65536</code></pre>
 <ul><li>Against <strong>Qwen 3.5 9B</strong>, Gemma 4 12B QAT is faster and has two more parsed calls, but Qwen still wins strict action quality by a small margin: +1 exact match, +2 tool-name matches, and +3 Sonnet-reference points.</li><li>Against <strong>Gemma 4 12B Coder Fable5 Composer 2.5</strong>, the QAT model is the better browser-agent planner: +5 exact matches, +7 tool-name matches, +6 Sonnet-reference points, and about 4.4x lower median latency.</li><li>Against <strong>Gemma 4 31B QAT</strong>, the 12B model is clearly the smaller tier. It is faster in this concurrency-8 run, but the 31B model still has a real quality lead: +5 exact matches, +4 tool-name matches, and +10 Sonnet-reference points.</li></ul>
 <p>So the 12B QAT checkpoint is not the new local routing leader. It is the better small Gemma planner.</p>
 <h2 id="what-concurrency-8-changes">What concurrency 8 changes</h2>
-<p>The run was intentionally saturated. With <code>--concurrency 8</code>, the harness keeps up to eight chat-completion requests in flight, which is why the whole 100-case replay finished in 7.7 seconds and why GPU utilization looks higher than a normal WebBrain browser loop.</p>
+<p>The run was intentionally saturated. With <code>--concurrency 8</code>, the harness keeps up to eight chat-completion requests in flight, which is why the whole 100-case replay finished in 7.7 seconds and why GPU utilization looks higher than a normal KavachWeb browser loop.</p>
 <p>That is useful for throughput testing, but it is not how one interactive extension tab usually behaves. For product feel, the median per-case latency matters more: 0.43s here is comfortably interactive. For server sizing, the wall time matters: vLLM can chew through the frozen replay very quickly when batching parallel prompts.</p>
 <h2 id="vision-probe">Vision probe</h2>
 <p>The same fixed Google password-verification screenshot was sent through <code>test/vision-probe.mjs</code>:</p>
@@ -575,12 +575,12 @@ max context reported by vLLM: 65536</code></pre>
 <p>It does not displace Qwen 3.5 9B as the small local planner with the cleaner routing profile. Qwen still makes slightly better first-tool choices in this saved replay. The reason to pick Gemma 4 12B QAT is speed, Gemma-family consistency, and a working low-token vision path. The reason to pick Qwen 3.5 9B is better affordance/OCR behavior and a small but real edge in first-action quality.</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

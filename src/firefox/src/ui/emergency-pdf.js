@@ -234,7 +234,7 @@ async function initialize() {
   file = await storage.open(record.storageKey || record.id);
   elements['document-title'].textContent = record.title || file.name || t('ep.document');
   elements['offline-badge'].hidden = false;
-  document.title = `${record.title || t('ep.document')} — WebBrain`;
+  document.title = `${record.title || t('ep.document')} — KavachWeb`;
   const sourceUrl = safeExternalUrl(record.sourceUrl);
   if (sourceUrl) {
     elements['document-source'].href = sourceUrl;

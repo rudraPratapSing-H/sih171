@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * WebBrain blog build.
+ * KavachWeb blog build.
  *
  * Reads Markdown files from web/blog/posts/*.md and writes:
  *   web/blog/index.html
@@ -593,7 +593,7 @@ async function buildPost(filePath, args) {
     ledeHtml,
     bodyHtml,
     urlPath: `/blog/${slug}`,
-    titleTag: String(meta.titleTag || meta.title_tag || `${title} - WebBrain Blog`),
+    titleTag: String(meta.titleTag || meta.title_tag || `${title} - KavachWeb Blog`),
     ogTitle: String(meta.ogTitle || meta.og_title || title),
     ogDescription: String(meta.ogDescription || meta.og_description || description),
     twitterTitle: String(meta.twitterTitle || meta.twitter_title || meta.ogTitle || meta.og_title || title),
@@ -1467,7 +1467,7 @@ function navHtml() {
 
   return `<nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -1517,12 +1517,12 @@ function sharedHead({ title, description, canonical, ogType = 'website', ogTitle
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="${SOCIAL_IMAGE_WIDTH}">
   <meta property="og:image:height" content="${SOCIAL_IMAGE_HEIGHT}">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escAttr(twitterTitle || ogTitle || title)}">
   <meta name="twitter:description" content="${escAttr(twitterDescription || ogDescription || description)}">
   <meta name="twitter:image" content="${escAttr(twitterImageUrl)}">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="${escAttr(canonical)}">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -1553,7 +1553,7 @@ function renderPostPage(post, args) {
     image: socialImageUrl,
     publisher: {
       '@type': 'Organization',
-      name: 'WebBrain',
+      name: 'KavachWeb',
       logo: {
         '@type': 'ImageObject',
         url: `${args.site}/logo-github.png`,
@@ -1590,7 +1590,7 @@ ${sharedHead({
 ${post.bodyHtml}
 
     <div class="author-box">
-      Written by <a href="${escAttr(post.authorUrl)}" target="_blank" rel="noopener">${escHtml(post.author)}</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="${escAttr(post.authorUrl)}" target="_blank" rel="noopener">${escHtml(post.author)}</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
@@ -1605,7 +1605,7 @@ ${post.bodyHtml}
 function renderIndexPage(posts, args) {
   const canonical = `${args.site}/blog`;
   const socialImageUrl = `${args.site}${SOCIAL_IMAGE_PATH}`;
-  const description = 'Engineering notes from WebBrain - the open-source AI browser agent.';
+  const description = 'Engineering notes from KavachWeb - the open-source AI browser agent.';
   const cards = posts.map((post) => {
     const searchText = [
       post.title,
@@ -1626,7 +1626,7 @@ function renderIndexPage(posts, args) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: 'WebBrain Blog',
+    name: 'KavachWeb Blog',
     description,
     url: canonical,
     image: socialImageUrl,
@@ -1643,13 +1643,13 @@ function renderIndexPage(posts, args) {
   return `<!DOCTYPE html>
 <html lang="en">
 ${sharedHead({
-    title: 'WebBrain Blog',
+    title: 'KavachWeb Blog',
     description,
     canonical,
-    ogTitle: 'WebBrain Blog',
+    ogTitle: 'KavachWeb Blog',
     ogDescription: description,
-    twitterTitle: 'WebBrain Blog',
-    twitterDescription: 'Engineering notes from WebBrain.',
+    twitterTitle: 'KavachWeb Blog',
+    twitterDescription: 'Engineering notes from KavachWeb.',
     jsonLd,
     extraHead: blogIndexStyle(),
   }, args.site)}
@@ -1658,7 +1658,7 @@ ${sharedHead({
   ${navHtml()}
 
   <main>
-    <h1 class="sr-only">WebBrain Blog</h1>
+    <h1 class="sr-only">KavachWeb Blog</h1>
 
     <section class="blog-tools" id="blog-tools" aria-label="Search the blog archive">
       <label class="archive-search-label" for="blog-search">Search the archive</label>
@@ -1706,7 +1706,7 @@ ${sharedHead({
 
 function footerHtml() {
   return `<footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>`;
 }

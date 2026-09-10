@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Anonymous-site end-to-end scenarios.
 //
-// Launches Chromium with the WebBrain Chrome extension loaded into a
+// Launches Chromium with the KavachWeb Chrome extension loaded into a
 // persistent profile, opens each scenario's URL, fires a chat message at
 // the extension's background service worker, waits for the agent's final
 // response, and runs the scenario's `check`.

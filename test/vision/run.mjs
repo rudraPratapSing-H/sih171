@@ -45,7 +45,7 @@ Selection:
   --category NAME            Run one category slug
 
 Run:
-  --prompt-mode production|question  Production uses WebBrain's exact fixed user text (default)
+  --prompt-mode production|question  Production uses KavachWeb's exact fixed user text (default)
   --concurrency N            Parallel requests (default: 2)
   --timeout MS               Inactivity timeout per request (default: 300000; 0 disables)
   --tag NAME                 Results tag (default: timestamp)

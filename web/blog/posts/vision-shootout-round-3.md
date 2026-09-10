@@ -10,7 +10,7 @@ description: >
 excerpt: >
   The empirical follow-up to last week's MiMo speculation post. Same probe, same Google sign-in screen, same prompt. MiMo at IQ3_S nails OCR and state extraction in the Qwen 3.6 tier — but joins Nemotron and Gemma in writing "Unknowns: None" instead of flagging the red-border ambiguity. Token cost ties the most expensive bucket; latency is in a different class. Plus a probe upgrade so big reasoning models stop tripping the default fetch headers timeout.
 titleTag: >
-  Round 3: Xiaomi MiMo V2.5 enters the vision shootout — and joins the "Unknowns: None" club — WebBrain Blog
+  Round 3: Xiaomi MiMo V2.5 enters the vision shootout — and joins the "Unknowns: None" club — KavachWeb Blog
 ogTitle: >
   Round 3: Xiaomi MiMo V2.5 vs the vision shootout — does the omni-modal flagship dethrone Qwen 3.6?
 ogDescription: >
@@ -35,12 +35,12 @@ keywords:
   - vision probe
 html: true
 lede: >
-  A week ago we wrote a [research note about Xiaomi's MiMo V2.5](/blog/mimo-v25-pro-vs-flash) calling it a promising candidate for WebBrain — multimodal by design, long context, strong vendor benchmarks. This post is the empirical follow-up: same probe as [round 2](/blog/vision-shootout-round-2), same Google sign-in screen, same prompt. The speculation held up on most axes. On the one axis a browser agent values most, MiMo joined the wrong club.
+  A week ago we wrote a [research note about Xiaomi's MiMo V2.5](/blog/mimo-v25-pro-vs-flash) calling it a promising candidate for KavachWeb — multimodal by design, long context, strong vendor benchmarks. This post is the empirical follow-up: same probe as [round 2](/blog/vision-shootout-round-2), same Google sign-in screen, same prompt. The speculation held up on most axes. On the one axis a browser agent values most, MiMo joined the wrong club.
 ---
 
 ## The setup, again
 
-Same `test/vision-probe.mjs` from the repo, same 6-section structured caption prompt that WebBrain's vision sub-call ships with, same image (Google sign-in with focused password field, red error border, and the email chip with a dropdown chevron). MiMo-V2.5 was loaded at **IQ3_S** on `llama.cpp` (`localhost:8080`), 308B total params at ~3.0 bpw — the smallest sane quant that fits on the box we tested on. Run with `chat_template_kwargs.enable_thinking: false` AND `think: false` AND `thinking: false`; MiMo respected one of them and did not emit reasoning tokens during the vision call.
+Same `test/vision-probe.mjs` from the repo, same 6-section structured caption prompt that KavachWeb's vision sub-call ships with, same image (Google sign-in with focused password field, red error border, and the email chip with a dropdown chevron). MiMo-V2.5 was loaded at **IQ3_S** on `llama.cpp` (`localhost:8080`), 308B total params at ~3.0 bpw — the smallest sane quant that fits on the box we tested on. Run with `chat_template_kwargs.enable_thinking: false` AND `think: false` AND `thinking: false`; MiMo respected one of them and did not emit reasoning tokens during the vision call.
 
 ## A probe upgrade detour
 
@@ -109,7 +109,7 @@ So MiMo joins Nemotron, Qwen 27B-dense, Gemma 4-E2B, and Gemma 4-31B in the "wro
 
 ## The speculation, revisited
 
-The [Pro vs Flash post](/blog/mimo-v25-pro-vs-flash) was a research note: vendor benchmarks looked strong, omni-modal positioning matched WebBrain's screenshot-heavy loop, the recommendation was to add MiMo behind an opt-in routing flag and let the eval harness decide. Empirically:
+The [Pro vs Flash post](/blog/mimo-v25-pro-vs-flash) was a research note: vendor benchmarks looked strong, omni-modal positioning matched KavachWeb's screenshot-heavy loop, the recommendation was to add MiMo behind an opt-in routing flag and let the eval harness decide. Empirically:
 
 - **Multimodal by design held up.** OCR and state extraction are real, not theoretical.
 - **Long-context claims are untested by this probe** — it's a single-screenshot benchmark, not an agent-trace replay. We'll get to that.
@@ -156,7 +156,7 @@ For the dedicated single-screenshot vision sub-call inside a browser-agent loop,
 
 - **Quant ladder for MiMo.** IQ3_S → Q4_K_M → Q6_K → Q8_0. Does §6 calibration recover at any point, or is this a model-level behavior rather than a quant artifact?
 - **Same ladder for Qwen 3.6-35B-A3B.** Round 2's open question — at what bpw does the calibrated-uncertainty behavior collapse back to "None"? Knowing the floor is useful for anyone trying to fit the model on tighter VRAM budgets.
-- **Multilingual screenshots.** MiMo is multilingual on paper; we haven't tested it on Turkish, Spanish, or Chinese pages. Round 2 ruled Nemotron out on this axis without WebBrain users seeing a benchmark; MiMo might recover here.
+- **Multilingual screenshots.** MiMo is multilingual on paper; we haven't tested it on Turkish, Spanish, or Chinese pages. Round 2 ruled Nemotron out on this axis without KavachWeb users seeing a benchmark; MiMo might recover here.
 - **Cold-start with proper measurement.** The cold multimodal latency on this hardware is a real number we should publish, not extrapolate.
 
 The probe stays where it is — three lines, mirror parity with the extension's actual sub-call:

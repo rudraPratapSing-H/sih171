@@ -10,7 +10,7 @@ description: >
 excerpt: >
   A second round of vision-model benchmarking for browser agents. NVIDIA's Nemotron Omni 30B-A3B-Reasoning is 17% cheaper per image and classifies inputs better than Qwen 3.6-35B-A3B — but loses on calibrated uncertainty, and is English-only. Plus a head-to-head with the dense Qwen 3.6-27B that explains why MoE is the right architecture for self-hosted vision.
 titleTag: >
-  Round 2: Nemotron Omni 30B vs Qwen 3.6 — does cheaper image tokens beat calibrated uncertainty? — WebBrain Blog
+  Round 2: Nemotron Omni 30B vs Qwen 3.6 — does cheaper image tokens beat calibrated uncertainty? — KavachWeb Blog
 ogTitle: >
   Round 2: Nemotron Omni 30B vs Qwen 3.6 — vision shootout for browser agents
 ogDescription: >
@@ -39,7 +39,7 @@ lede: >
 
 ## The setup, again
 
-Same probe (`test/vision-probe.mjs` in the repo), same prompt (the 6-section structured caption WebBrain's vision sub-call uses), same image (the Google sign-in screen with a focused password field, red error border, and a small email chip with a dropdown affordance). The probe sends the exact system prompt, user message, and parameters our extension's vision sub-call sends, against any OpenAI-compatible endpoint.
+Same probe (`test/vision-probe.mjs` in the repo), same prompt (the 6-section structured caption KavachWeb's vision sub-call uses), same image (the Google sign-in screen with a focused password field, red error border, and a small email chip with a dropdown affordance). The probe sends the exact system prompt, user message, and parameters our extension's vision sub-call sends, against any OpenAI-compatible endpoint.
 
 If you missed round 1: we tested Gemma 4-E2B, Gemma 4-31B, Qwen 3.5-27B, and Qwen 3.6-35B-A3B. Headline finding was that Qwen 3.6's MoE variant beat the dense 27B on every axis — same VRAM, better quality, lower latency. [Round 1 here](/blog/vision-model-shootout). This post adds two models on top.
 
@@ -107,7 +107,7 @@ So even though Nemotron has cheaper image tokens AND better affordance classific
 
 **Nemotron Omni 30B is English-only.**
 
-WebBrain users on Spanish, French, Turkish, Chinese, German, Arabic, Japanese, Korean, Russian — anyone running the agent on pages in their own language — will get unusable captions out of Nemotron. The page text comes back garbled, half-translated, or transliterated. The Qwen 3.x family is multilingual by design and handles non-English page text natively.
+KavachWeb users on Spanish, French, Turkish, Chinese, German, Arabic, Japanese, Korean, Russian — anyone running the agent on pages in their own language — will get unusable captions out of Nemotron. The page text comes back garbled, half-translated, or transliterated. The Qwen 3.x family is multilingual by design and handles non-English page text natively.
 
 For an English-language agent on English-language pages with a paid vision endpoint, Nemotron's 17% token discount is a real argument. For everyone else, it isn't a real option, regardless of how cheap it is per image.
 
@@ -148,7 +148,7 @@ For the two A3B MoEs that are realistically competing for the dedicated-vision-m
 - **It's faster.** 5.3s vs Nemotron's 12s, even after fixing Nemotron's reasoning gate.
 - **It's faster than its own dense sibling.** Qwen 3.6-27B dense is 5.9s — slower than the larger 35B-A3B by virtue of MoE activating only ~3B params per token. Same VRAM bracket when both are quantized comparably, but the MoE wins on inference cost.
 - **It's the only model that flags uncertainty**, which a browser agent values more than any of Nemotron's nice-to-haves.
-- **It's multilingual.** WebBrain has users in Spanish, Turkish, French, Chinese — Nemotron's English-only ceiling rules it out for any of them, regardless of how cheap it is per image.
+- **It's multilingual.** KavachWeb has users in Spanish, Turkish, French, Chinese — Nemotron's English-only ceiling rules it out for any of them, regardless of how cheap it is per image.
 
 Reasoning + visual + faster than the dense 27B + multilingual is a remarkable combination on a single 35B-A3B that fits on consumer hardware. The 5090 we tested on can run this comfortably; so can a 4090 with the right quant. For self-hosted browser-agent vision, this is the model to beat.
 

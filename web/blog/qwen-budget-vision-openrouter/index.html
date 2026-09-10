@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Six Budget Qwen Vision Models Compared on OpenRouter - WebBrain Blog</title>
-  <meta name="description" content="We ran every current sub-dollar Qwen vision model on OpenRouter through WebBrain&#39;s 100-case browser-vision benchmark. Qwen3-VL-32B Instruct won on quality, the MoE 30B-A3B matched it at twice the speed, and the thinking variants billed four to five times the output tokens for little or no gain.">
-  <meta name="keywords" content="Qwen3-VL, OpenRouter, vision model benchmark, browser agent, qwen3.5-35b-a3b, Qwen3-VL-32B Instruct, Qwen3-VL-30B-A3B, reasoning models, vision language model, WebBrain">
+  <title>Six Budget Qwen Vision Models Compared on OpenRouter - KavachWeb Blog</title>
+  <meta name="description" content="We ran every current sub-dollar Qwen vision model on OpenRouter through KavachWeb&#39;s 100-case browser-vision benchmark. Qwen3-VL-32B Instruct won on quality, the MoE 30B-A3B matched it at twice the speed, and the thinking variants billed four to five times the output tokens for little or no gain.">
+  <meta name="keywords" content="Qwen3-VL, OpenRouter, vision model benchmark, browser agent, qwen3.5-35b-a3b, Qwen3-VL-32B Instruct, Qwen3-VL-30B-A3B, reasoning models, vision language model, KavachWeb">
   <meta property="og:title" content="Six budget Qwen vision models compared on OpenRouter">
   <meta property="og:description" content="600 image requests, zero errors, 54 cents total. Where Qwen&#39;s cheap vision models actually differ: latency, output-token burn, and a hard cliff below 30B.">
   <meta property="og:type" content="article">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Six budget Qwen vision models compared on OpenRouter">
   <meta name="twitter:description" content="Qwen3-VL-32B Instruct wins our 100-case browser benchmark at $0.02 per full run. Thinking variants bill 4-5x the tokens. Full tables inside.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/qwen-budget-vision-openrouter">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -475,7 +475,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "Six budget Qwen vision models, compared: 600 requests, 54 cents on OpenRouter",
-  "description": "We ran every current sub-dollar Qwen vision model on OpenRouter through WebBrain's 100-case browser-vision benchmark. Qwen3-VL-32B Instruct won on quality, the MoE 30B-A3B matched it at twice the speed, and the thinking variants billed four to five times the output tokens for little or no gain.",
+  "description": "We ran every current sub-dollar Qwen vision model on OpenRouter through KavachWeb's 100-case browser-vision benchmark. Qwen3-VL-32B Instruct won on quality, the MoE 30B-A3B matched it at twice the speed, and the thinking variants billed four to five times the output tokens for little or no gain.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -525,13 +525,13 @@
   <article>
     <div class="meta">August 22, 2026 &middot; 7 min read &middot; <a href="/blog">&larr; All posts</a></div>
     <h1>Six budget Qwen vision models, compared: 600 requests, 54 cents on OpenRouter</h1>
-    <p class="lede"><strong>You don&#39;t need an expensive API to give a browser agent eyes.</strong> We pushed all six of Qwen&#39;s current sub-dollar vision-capable models on OpenRouter through our <a href="https://github.com/esokullu/webbrain/tree/main/test/vision" target="_blank" rel="noopener">100-case browser-vision benchmark</a> — same screenshots, same production six-section prompt, same strict rubric we use to evaluate WebBrain&#39;s own vision subsystem. All 600 requests completed without a single error, and the entire sweep cost <strong>$0.53</strong>. The dense Qwen3-VL-32B Instruct won on quality. Its MoE sibling matched it at twice the speed. And the two &quot;thinking&quot; variants billed four to five times the output tokens for a gain you can count on one hand.</p>
+    <p class="lede"><strong>You don&#39;t need an expensive API to give a browser agent eyes.</strong> We pushed all six of Qwen&#39;s current sub-dollar vision-capable models on OpenRouter through our <a href="https://github.com/esokullu/webbrain/tree/main/test/vision" target="_blank" rel="noopener">100-case browser-vision benchmark</a> — same screenshots, same production six-section prompt, same strict rubric we use to evaluate KavachWeb&#39;s own vision subsystem. All 600 requests completed without a single error, and the entire sweep cost <strong>$0.53</strong>. The dense Qwen3-VL-32B Instruct won on quality. Its MoE sibling matched it at twice the speed. And the two &quot;thinking&quot; variants billed four to five times the output tokens for a gain you can count on one hand.</p>
 <h2 id="the-lineup">The lineup</h2>
 <p>Six model IDs, all served through the same OpenRouter account on August 22, 2026. Prices are OpenRouter list price per million tokens:</p>
 <div class="table-wrap"><table><thead><tr><th>Model</th><th>Architecture</th><th>In / 1M tok</th><th>Out / 1M tok</th></tr></thead><tbody><tr><td><code>qwen/qwen3-vl-8b-instruct</code></td><td>dense VL, 8B</td><td>$0.117</td><td>$0.455</td></tr><tr><td><code>qwen/qwen3-vl-8b-thinking</code></td><td>dense VL, 8B + reasoning</td><td>$0.18</td><td>$2.10</td></tr><tr><td><code>qwen/qwen3-vl-30b-a3b-instruct</code></td><td>MoE VL, ~3B active</td><td>$0.13</td><td>$0.52</td></tr><tr><td><code>qwen/qwen3-vl-30b-a3b-thinking</code></td><td>MoE VL, ~3B active + reasoning</td><td>$0.20</td><td>$2.40</td></tr><tr><td><code>qwen/qwen3-vl-32b-instruct</code></td><td>dense VL, 32B</td><td>$0.104</td><td>$0.416</td></tr><tr><td><code>qwen/qwen3.5-35b-a3b</code></td><td>MoE generalist (text+image+video)</td><td>$0.25</td><td>$1.25</td></tr></tbody></table></div>
 <p>Note what&#39;s missing from that table: any expensive model. The priciest row costs a quarter of a cent per 1K input tokens. This is the budget tier, and the question is how much capability survives down here.</p>
 <h2 id="results">Results</h2>
-<p>Every model saw all 100 cases with WebBrain&#39;s production screenshot contract: temperature 0, max 800 tokens, six required sections, strict rubric scoring against expected facts. A strict pass means the complete contract plus the case&#39;s weighted facts recovered without critical contradiction.</p>
+<p>Every model saw all 100 cases with KavachWeb&#39;s production screenshot contract: temperature 0, max 800 tokens, six required sections, strict rubric scoring against expected facts. A strict pass means the complete contract plus the case&#39;s weighted facts recovered without critical contradiction.</p>
 <div class="table-wrap"><table><thead><tr><th>Model</th><th>Strict passes</th><th>Mean rubric</th><th>Mean latency</th><th>Output tokens</th><th>Cost / 100-case run</th></tr></thead><tbody><tr><td><strong>Qwen3-VL-32B Instruct</strong></td><td><strong>69</strong></td><td><strong>91.9%</strong></td><td>4.6 s</td><td>22.2K</td><td><strong>$0.022</strong></td></tr><tr><td>Qwen3-VL-30B-A3B Instruct</td><td>68</td><td>91.3%</td><td><strong>2.2 s</strong></td><td>17.1K</td><td>$0.024</td></tr><tr><td>Qwen3.5-35B-A3B</td><td>67</td><td>90.8%</td><td>5.2 s</td><td>55.4K</td><td>$0.099</td></tr><tr><td>Qwen3-VL-30B-A3B Thinking</td><td>62</td><td>88.9%</td><td>6.3 s</td><td>68.5K</td><td>$0.188</td></tr><tr><td>Qwen3-VL-8B Thinking</td><td>61</td><td>86.7%</td><td>6.4 s</td><td>75.5K</td><td>$0.180</td></tr><tr><td>Qwen3-VL-8B Instruct</td><td>48</td><td>84.0%</td><td>2.1 s</td><td>14.9K</td><td>$0.021</td></tr></tbody></table></div>
 <p>Three things jump out.</p>
 <p><strong>First place is a tie in disguise.</strong> The dense 32B scores one strict pass and half a point of rubric above the MoE 30B-A3B. But the MoE answers in 2.2 seconds where the dense model needs 4.6. For an interactive browser agent watching its own screenshots, latency compounds across every step of a task; we&#39;d pick the MoE for production loops and the dense model when you want maximum accuracy per request.</p>
@@ -557,12 +557,12 @@
 <p>The complete harness — screenshots, expected facts, scoring code, and all six committed result directories — lives in <a href="https://github.com/esokullu/webbrain/tree/main/test/vision" target="_blank" rel="noopener"><code>test/vision</code></a> on GitHub.</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

@@ -459,7 +459,7 @@ export function readCompletenessLimitation(state, mode = 'ask') {
     || state.treeCoverageComplete !== true
     || state.expansionConfirmed === true
   ) return null;
-  return 'I could not verify the complete Gmail conversation because one or more messages may still be collapsed, and Ask mode cannot expand them. Expand all messages in Gmail and retry, or switch to Act mode so WebBrain can expand the conversation before reading it.';
+  return 'I could not verify the complete Gmail conversation because one or more messages may still be collapsed, and Ask mode cannot expand them. Expand all messages in Gmail and retry, or switch to Act mode so KavachWeb can expand the conversation before reading it.';
 }
 
 export function readCompletenessBlock(state, treePageChars = STANDARD_TREE_PAGE_CHARS, options = {}) {

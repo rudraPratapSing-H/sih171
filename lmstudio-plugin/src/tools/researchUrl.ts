@@ -210,7 +210,7 @@ export async function researchUrl(args: ResearchUrlArgs): Promise<ResearchUrlRes
         // Some sites gate on User-Agent. Pretend to be a recent
         // desktop Firefox — same MO as curl/wget defaults.
         "User-Agent":
-          "Mozilla/5.0 (LMStudio WebBrain Tools) Gecko/20100101 Firefox/142.0",
+          "Mozilla/5.0 (LMStudio KavachWeb Tools) Gecko/20100101 Firefox/142.0",
       },
     });
     if (!res.ok) {

@@ -166,7 +166,7 @@ async function testPdfResponseStreamingStopsAtTheByteLimit() {
   };
   await assert.rejects(
     readPdfResponseBytes(oversizedResponse, { maxBytes: 5 }),
-    /larger than the WebBrain viewer limit/,
+    /larger than the KavachWeb viewer limit/,
   );
   assert.equal(cancelled, true, 'the response stream should be cancelled as soon as it exceeds the limit');
 

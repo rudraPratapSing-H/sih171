@@ -1662,7 +1662,7 @@ export class CDPClient {
     state.network.length = 0;
     state.networkByRequestId.clear();
     this.devDiagnostics.delete(tabId);
-    // Removing WebBrain's handlers stops local buffering, but the browser
+    // Removing KavachWeb's handlers stops local buffering, but the browser
     // continues producing domain events until the matching CDP domains are
     // disabled. Issue the commands after local teardown so late events cannot
     // repopulate the cleared buffers while shutdown is in flight. Other CDP

@@ -111,14 +111,14 @@ export function getStoreUrl(browserKey = 'chrome') {
 }
 
 export function buildFeedbackUrl({ rating, comment = '' } = {}) {
-  const title = encodeURIComponent(`WebBrain feedback (${rating}/5)`);
+  const title = encodeURIComponent(`KavachWeb feedback (${rating}/5)`);
   const bodyParts = [
     `**Rating:** ${rating}/5`,
     '',
     String(comment || '').trim() || '_No additional comments provided._',
     '',
     '---',
-    '_Submitted from the WebBrain side panel feedback prompt._',
+    '_Submitted from the KavachWeb side panel feedback prompt._',
   ];
   const body = encodeURIComponent(bodyParts.join('\n'));
   return `${FEEDBACK_ISSUES_URL}?title=${title}&body=${body}`;

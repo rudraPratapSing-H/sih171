@@ -1,5 +1,5 @@
 /**
- * WebBrain — adversarial prompt-injection corpus
+ * KavachWeb — adversarial prompt-injection corpus
  * ================================================
  *
  *   node test/security/injection-corpus.mjs            # run, human output

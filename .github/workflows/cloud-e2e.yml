@@ -1,4 +1,4 @@
-name: WebBrain Cloud E2E
+name: KavachWeb Cloud E2E
 
 on:
   workflow_dispatch:

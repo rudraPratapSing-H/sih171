@@ -1,6 +1,6 @@
 # Agent Notes
 
-WebBrain is an open-source AI browser agent for Chrome and Firefox. The goal is
+KavachWeb is an open-source AI browser agent for Chrome and Firefox. The goal is
 reliable, user-visible browser automation with strong safety boundaries, good
 local-model behavior, and practical Chrome/Firefox parity. Keep the extension
 vanilla JS/CSS unless there is a very strong reason to add a framework.

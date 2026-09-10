@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gemma 4 31B QAT WebBrain planner benchmark - WebBrain Blog</title>
-  <meta name="description" content="We tested google/gemma-4-31B-it-qat-w4a16-ct through vLLM against WebBrain&#39;s frozen first-tool-call browser-agent harness. It improves over the older Gemma 4 31B int4 run and narrowly edges Qwen 3.6 27B on strict first-action quality while running much faster.">
-  <meta name="keywords" content="WebBrain, Gemma 4, Gemma 4 31B, QAT, vLLM, local LLM, browser agent, tool calling, Qwen 3.6 27B">
+  <title>Gemma 4 31B QAT KavachWeb planner benchmark - KavachWeb Blog</title>
+  <meta name="description" content="We tested google/gemma-4-31B-it-qat-w4a16-ct through vLLM against KavachWeb&#39;s frozen first-tool-call browser-agent harness. It improves over the older Gemma 4 31B int4 run and narrowly edges Qwen 3.6 27B on strict first-action quality while running much faster.">
+  <meta name="keywords" content="KavachWeb, Gemma 4, Gemma 4 31B, QAT, vLLM, local LLM, browser agent, tool calling, Qwen 3.6 27B">
   <meta property="og:title" content="Gemma 4 31B QAT becomes the best local Gemma planner we have tested">
   <meta property="og:description" content="The QAT w4a16 Gemma 4 31B run improves over the older Gemma 31B int4 result and narrowly beats Qwen 3.6 27B on strict first-action quality.">
   <meta property="og:type" content="article">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Gemma 4 31B QAT WebBrain planner benchmark">
+  <meta name="twitter:title" content="Gemma 4 31B QAT KavachWeb planner benchmark">
   <meta name="twitter:description" content="QAT turns Gemma 4 31B into a stronger and faster local browser-agent planner.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/gemma-4-31b-qat-planner-benchmark">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -475,7 +475,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "Gemma 4 31B QAT quietly becomes the best local Gemma planner we have tested",
-  "description": "We tested google/gemma-4-31B-it-qat-w4a16-ct through vLLM against WebBrain's frozen first-tool-call browser-agent harness. It improves over the older Gemma 4 31B int4 run and narrowly edges Qwen 3.6 27B on strict first-action quality while running much faster.",
+  "description": "We tested google/gemma-4-31B-it-qat-w4a16-ct through vLLM against KavachWeb's frozen first-tool-call browser-agent harness. It improves over the older Gemma 4 31B int4 run and narrowly edges Qwen 3.6 27B on strict first-action quality while running much faster.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -525,7 +525,7 @@
   <article>
     <div class="meta">June 20, 2026 &middot; 7 min read &middot; <a href="/blog">&larr; All posts</a></div>
     <h1>Gemma 4 31B QAT quietly becomes the best local Gemma planner we have tested</h1>
-    <p class="lede">We ran <strong>google/gemma-4-31B-it-qat-w4a16-ct</strong> through the same frozen WebBrain first-tool-call harness we use for local planner comparisons. The result is small on branding and big in practice: the QAT build improves over the older Gemma 4 31B int4 result, narrowly edges Qwen 3.6 27B on strict first-action quality, and does it with sub-second median latency.</p>
+    <p class="lede">We ran <strong>google/gemma-4-31B-it-qat-w4a16-ct</strong> through the same frozen KavachWeb first-tool-call harness we use for local planner comparisons. The result is small on branding and big in practice: the QAT build improves over the older Gemma 4 31B int4 result, narrowly edges Qwen 3.6 27B on strict first-action quality, and does it with sub-second median latency.</p>
 <h2 id="what-we-ran">What we ran</h2>
 <p>The endpoint was a local vLLM server exposing:</p>
 <pre><code class="language-text">model id: gemma-4-31b
@@ -541,7 +541,7 @@ max context reported by vLLM: 65536</code></pre>
   --no-save-request \
   --freeze test/llm/freeze/baseline-2026-05-23.json \
   --chat-template-compat alternating</code></pre>
-<p>That means 100 single-turn browser-agent prompts, the May 23 Claude Sonnet 4.6 WebBrain system prompt and 41-tool schema, legacy text-call compatibility, no native OpenAI <code>tools</code> field, and one active request at a time.</p>
+<p>That means 100 single-turn browser-agent prompts, the May 23 Claude Sonnet 4.6 KavachWeb system prompt and 41-tool schema, legacy text-call compatibility, no native OpenAI <code>tools</code> field, and one active request at a time.</p>
 <p>The result files are in:</p>
 <pre><code class="language-text">test/llm/results/2026-06-20-vllm-legacy_chrome_gemma-4-31b_frozen</code></pre>
 <h2 id="the-result">The result</h2>
@@ -556,9 +556,9 @@ max context reported by vLLM: 65536</code></pre>
 <p>So yes: in this strict first-action replay, Gemma 4 31B QAT narrowly beats Qwen 3.6 27B on quality. It is not a blowout. It is +3 parsed calls, +1 exact point, and a tied tool-name score. But the latency difference is not narrow at all: 0.55s median versus 10.2s.</p>
 <p>That gives it a very different profile from the usual &quot;larger local model is smarter but slower&quot; tradeoff. Here, the QAT Gemma run is both slightly better and dramatically faster in this vLLM setup.</p>
 <p>The naming is also refreshingly literal. This feels like the kind of improvement people might have called &quot;Gemma 4.1 31B&quot; if it had shipped as a conventional checkpoint refresh. Google named the mechanism instead: QAT. That is probably more honest. The model is not claiming to be a new generation; it is a quantization-aware serving-oriented variant that behaves like a real planner upgrade.</p>
-<p>The analogy to the Qwen 3.5 to Qwen 3.6 jump is useful, but with one caveat: we do not have a saved Qwen 3.5 27B run in this WebBrain result set. So this is not a measured Qwen-style before/after. It is a behavioral analogy: the same base family suddenly feels more useful for agent routing because the deployed variant changed the practical quality-speed frontier.</p>
+<p>The analogy to the Qwen 3.5 to Qwen 3.6 jump is useful, but with one caveat: we do not have a saved Qwen 3.5 27B run in this KavachWeb result set. So this is not a measured Qwen-style before/after. It is a behavioral analogy: the same base family suddenly feels more useful for agent routing because the deployed variant changed the practical quality-speed frontier.</p>
 <h2 id="sonnet-4-6-as-the-reference">Sonnet 4.6 as the reference</h2>
-<p>The strict ideal-first-call replay is useful, but the older WebBrain benchmark used a different reference: treat Claude Sonnet 4.6 as the truth and ask how often each model picked the same first tool.</p>
+<p>The strict ideal-first-call replay is useful, but the older KavachWeb benchmark used a different reference: treat Claude Sonnet 4.6 as the truth and ask how often each model picked the same first tool.</p>
 <p>Here is that view updated with the newer runs. The original May rows come from the published Sonnet export. The newer rows were scored against the same 100 Sonnet tool-name picks from that export, so this table is about first-tool alignment, not argument equality.</p>
 <div class="table-wrap"><table><thead><tr><th>#</th><th>Model</th><th>Match all</th><th>Match when Sonnet tooled</th><th>Tool-call rate</th><th>Valid-name rate</th><th>Median</th></tr></thead><tbody><tr><td>ref</td><td>Claude Sonnet 4.6</td><td>100%</td><td>100%</td><td>92%</td><td>92%</td><td>2.8s</td></tr><tr><td>1</td><td>Gemma 4 31B QAT w4a16</td><td>77.0%</td><td>78.3%</td><td>95%</td><td>95%</td><td>0.55s</td></tr><tr><td>2</td><td>Qwen 3.6 27B</td><td>77.0%</td><td>77.2%</td><td>92%</td><td>92%</td><td>10.2s</td></tr><tr><td>3</td><td>MiniMax M2.7</td><td>77.0%</td><td>76.1%</td><td>88%</td><td>88%</td><td>3.1s</td></tr><tr><td>4</td><td>Intel Gemma 4 31B int4 AutoRound</td><td>74.0%</td><td>72.8%</td><td>88%</td><td>87%</td><td>0.63s</td></tr><tr><td>5</td><td>Qwen 3.5 4B</td><td>73.0%</td><td>71.7%</td><td>82%</td><td>82%</td><td>5.5s</td></tr><tr><td>6</td><td>Gemma 4 26B-A4B</td><td>71.0%</td><td>70.7%</td><td>87%</td><td>87%</td><td>1.4s</td></tr><tr><td>7</td><td>Qwen 3.6 35B-A3B</td><td>70.0%</td><td>70.7%</td><td>90%</td><td>90%</td><td>10.3s</td></tr><tr><td>8</td><td>Qwen 3.5 9B</td><td>70.0%</td><td>69.6%</td><td>90%</td><td>89%</td><td>0.91s</td></tr><tr><td>9</td><td>Gemma 4 E4B</td><td>68.0%</td><td>68.5%</td><td>87%</td><td>87%</td><td>4.5s</td></tr><tr><td>10</td><td>Nemotron Omni 30B</td><td>67.0%</td><td>68.5%</td><td>93%</td><td>93%</td><td>2.6s</td></tr><tr><td>11</td><td>DiffusionGemma 26B-A4B</td><td>67.0%</td><td>64.1%</td><td>79%</td><td>79%</td><td>0.35s</td></tr><tr><td>12</td><td>Gemma 4 E2B</td><td>63.0%</td><td>60.9%</td><td>76%</td><td>75%</td><td>4.0s</td></tr><tr><td>13</td><td>Gemma 4 12B Coder Fable5 Composer 2.5</td><td>61.0%</td><td>62.0%</td><td>94%</td><td>94%</td><td>1.9s</td></tr><tr><td>14</td><td>Cohere North-Mini-Code 1.0</td><td>59.0%</td><td>58.7%</td><td>93%</td><td>93%</td><td>3.2s</td></tr><tr><td>15</td><td>Browser-Use Qwen 30B-A3B Q4</td><td>43.0%</td><td>45.7%</td><td>93%</td><td>93%</td><td>0.48s</td></tr><tr><td>16</td><td>LFM 2.5</td><td>40.0%</td><td>38.0%</td><td>83%</td><td>83%</td><td>5.9s</td></tr><tr><td>17</td><td>Qwen 3.5 0.8B</td><td>37.0%</td><td>34.8%</td><td>90%</td><td>90%</td><td>0.45s</td></tr><tr><td>18</td><td>Qwen 3.5 2B</td><td>36.0%</td><td>34.8%</td><td>89%</td><td>89%</td><td>0.78s</td></tr><tr><td>19</td><td>VibeThinker 3B BF16</td><td>33.0%</td><td>32.6%</td><td>84%</td><td>81%</td><td>5.0s</td></tr><tr><td>20</td><td>Molmo2 8B</td><td>8.0%</td><td>0.0%</td><td>2%</td><td>1%</td><td>1.7s</td></tr></tbody></table></div>
 <p>This is the strongest version of the QAT result. In the Sonnet-reference table, Gemma 4 31B QAT ties the best all-case score from the earlier benchmark and takes the tiebreaker on the 92 prompts where Sonnet actually called a tool. It is only a small quality lead, but it comes with a huge latency gap: 0.55s median for QAT versus 10.2s for Qwen 3.6 27B.</p>
@@ -569,19 +569,19 @@ max context reported by vLLM: 65536</code></pre>
 <ul><li>the Google account password verification page,</li><li>the visible account text,</li><li>the password field and empty value,</li><li>the &quot;Show password&quot; checkbox,</li><li>the &quot;Enter a password&quot; error state.</li></ul>
 <p>Timing was also solid:</p>
 <div class="table-wrap"><table><thead><tr><th>Vision probe metric</th><th>Value</th></tr></thead><tbody><tr><td>TTFT</td><td>1.31s</td></tr><tr><td>Total time</td><td>3.50s</td></tr><tr><td>Prompt tokens</td><td>595</td></tr><tr><td>Completion tokens</td><td>152</td></tr></tbody></table></div>
-<p>One small miss: the model listed &quot;Blockers: None&quot; even though an authentication prompt is obviously a blocker for continuing. For WebBrain, that is the kind of detail a follow-up prompt tweak can usually tighten. The important part is that the endpoint accepted image input and produced a structured caption usable by the planner.</p>
+<p>One small miss: the model listed &quot;Blockers: None&quot; even though an authentication prompt is obviously a blocker for continuing. For KavachWeb, that is the kind of detail a follow-up prompt tweak can usually tighten. The important part is that the endpoint accepted image input and produced a structured caption usable by the planner.</p>
 <h2 id="what-this-changes">What this changes</h2>
-<p>For the current WebBrain local planner table, Gemma 4 31B QAT now belongs above the older Gemma 31B int4 run and just above Qwen 3.6 27B on strict first-action quality.</p>
+<p>For the current KavachWeb local planner table, Gemma 4 31B QAT now belongs above the older Gemma 31B int4 run and just above Qwen 3.6 27B on strict first-action quality.</p>
 <p>The broader leaderboard still has stronger action routers. MiniMax M2.7, Sonnet 4.6, and Qwen 3.6 35B-A3B still beat it on exact or name-only matching in the saved runs. But Gemma 4 31B QAT has the best balance we have seen from a local Gemma: high parseability, competitive first-action selection, working vision, and latency that keeps the browser loop feeling interactive.</p>
 <p>The clean takeaway: this is not just a smaller file or a faster serving trick. In this harness, QAT made Gemma 4 31B a better browser-agent planner.</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

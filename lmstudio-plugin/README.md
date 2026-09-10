@@ -1,4 +1,4 @@
-# WebBrain Web Tools — LM Studio plugin
+# KavachWeb Web Tools — LM Studio plugin
 
 > Listing on LM Studio Hub: `webbrain/web-tools` (owner `webbrain`, name `web-tools`,
 > public) — https://lmstudio.ai/webbrain/web-tools
@@ -35,11 +35,11 @@ have the browser extension, to act inside your own signed-in session.
   `<article>`, drops header/nav/footer/aside before stripping tags.
   Best for news, blog posts, READMEs, Wikipedia, docs.
 
-**Adds real browser access when the [WebBrain extension](https://webbrain.one)
+**Adds real browser access when the [KavachWeb extension](https://webbrain.one)
 is installed on a Chromium browser** (Chrome, Edge, Brave, Opera, Vivaldi —
 [not Firefox](#why-not-firefox)):
 
-- **`browser_task`** — hand a goal to WebBrain running in the browser
+- **`browser_task`** — hand a goal to KavachWeb running in the browser
   you are already logged into. Reaches the authenticated dashboards,
   webmail and client-rendered apps that plain HTTP cannot see.
   `mode='ask'` is read-only; `mode='act'` can click and type, gated by
@@ -67,7 +67,7 @@ budget (`fetch_url`: 8k text / 16k JSON by default, hard-capped at 50k;
 `research_url`: 16k by default, hard-capped at 60k).
 
 Pure Node — no Puppeteer, no Playwright, no headless Chromium.
-Same fetching logic the [WebBrain](https://webbrain.one) browser
+Same fetching logic the [KavachWeb](https://webbrain.one) browser
 extension ships, ported off `chrome.*` onto Node `fetch`.
 
 ![Bitcoin price answered live via fetch_url in LM Studio](docs/demo.png)
@@ -98,7 +98,7 @@ headlines.
 
 ## Connect your browser (optional)
 
-`browser_task` needs the [WebBrain extension](https://webbrain.one) on a
+`browser_task` needs the [KavachWeb extension](https://webbrain.one) on a
 **Chromium browser** — Chrome, Edge, Brave, Opera or Vivaldi. The extension
 dials out to this plugin; a Manifest V3 extension cannot listen on a socket,
 so the plugin hosts the listener.
@@ -112,12 +112,12 @@ Firefox, `browser_task` will always return the not-connected response.
 `fetch_url` and `research_url` are unaffected and work everywhere.
 
 1. Install the extension and open your browser.
-2. In **WebBrain → Settings → General → Advanced → MCP**, set the URL to
+2. In **KavachWeb → Settings → General → Advanced → MCP**, set the URL to
    `ws://127.0.0.1:17375/extension` and enable it.
 3. Ask the model to call `browser_status` to confirm.
 
 > **One bridge at a time.** The extension holds exactly one outbound bridge
-> socket. Pointing it here means it is *not* pointed at WebBrain Cloud
+> socket. Pointing it here means it is *not* pointed at KavachWeb Cloud
 > (`17373`) or the MCP server (`17374`). Override the port with
 > `WEBBRAIN_BRIDGE_PORT`.
 
@@ -202,13 +202,13 @@ Everything below concerns `fetch_url` / `research_url`. For `browser_task`:
   `client: "webbrain-extension"`; anything else is closed. This is **not**
   authentication — the shipping extension sends no shared secret, so a local
   process could impersonate it. Treat the port as trusted-local.
-- `browser_task` delegates a *goal*, never individual clicks. WebBrain's
+- `browser_task` delegates a *goal*, never individual clicks. KavachWeb's
   capability × origin permission gate runs inside its own agent loop, so
   every approval prompt a human would see still fires. That is why this
   plugin does not expose the low-level browser primitives.
 - A `timeout` does **not** cancel the run. A task that already submitted a
   form should not be silently killed; the browser keeps going and the result
-  stays visible in the WebBrain side panel.
+  stays visible in the KavachWeb side panel.
 
 - **URL guard, structural (sync).** Requests to RFC1918 (`10.*`,
   `172.16-31.*`, `192.168.*`), loopback (`127.*`, `::1`), link-local

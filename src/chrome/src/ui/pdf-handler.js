@@ -490,7 +490,7 @@ async function ocrCurrentPage() {
     const textLayer = pageView.querySelector('.pdf-text-layer');
     const rendered = renderPdfOcrTextLayer(textLayer, result.lines, pageView.clientWidth, pageView.clientHeight);
     if (!wasCached && rendered) state.ocrTextLayerCount += 1;
-    setStatus(`OCR added ${rendered} text lines on page ${pageNumber}. Select the text to use WebBrain actions.`, 'success');
+    setStatus(`OCR added ${rendered} text lines on page ${pageNumber}. Select the text to use KavachWeb actions.`, 'success');
   } catch (error) {
     if (state.ocrRequestId === requestId) {
       setStatus(`OCR failed on page ${pageNumber}: ${error?.message || String(error)}`, 'error');
@@ -616,22 +616,22 @@ elements['page-number'].addEventListener('change', event => scrollToPage(event.t
 elements['zoom-out'].addEventListener('click', () => {
   state.fitWidth = false;
   state.scale = clampScale(state.scale - SCALE_STEP);
-  rerender().catch(error => fallbackToNative(`WebBrain could not zoom this PDF: ${error?.message || String(error)}`));
+  rerender().catch(error => fallbackToNative(`KavachWeb could not zoom this PDF: ${error?.message || String(error)}`));
 });
 elements['zoom-in'].addEventListener('click', () => {
   state.fitWidth = false;
   state.scale = clampScale(state.scale + SCALE_STEP);
-  rerender().catch(error => fallbackToNative(`WebBrain could not zoom this PDF: ${error?.message || String(error)}`));
+  rerender().catch(error => fallbackToNative(`KavachWeb could not zoom this PDF: ${error?.message || String(error)}`));
 });
 elements['fit-width'].addEventListener('click', () => {
   state.fitWidth = true;
-  rerender().catch(error => fallbackToNative(`WebBrain could not fit this PDF: ${error?.message || String(error)}`));
+  rerender().catch(error => fallbackToNative(`KavachWeb could not fit this PDF: ${error?.message || String(error)}`));
 });
 elements['rotate-page'].addEventListener('click', () => {
   cancelOcrRequest();
   state.rotation = (state.rotation + 90) % 360;
   state.ocrCache.clear();
-  rerender().catch(error => fallbackToNative(`WebBrain could not rotate this PDF: ${error?.message || String(error)}`));
+  rerender().catch(error => fallbackToNative(`KavachWeb could not rotate this PDF: ${error?.message || String(error)}`));
 });
 elements['search-form'].addEventListener('submit', event => {
   event.preventDefault();
@@ -641,7 +641,7 @@ elements['download-pdf'].addEventListener('click', () => {
   downloadPdf().catch(error => setStatus(`Download failed: ${error?.message || String(error)}`, 'error'));
 });
 elements['print-pdf'].addEventListener('click', () => {
-  printPdf().catch(error => fallbackToNative(`WebBrain could not print this PDF: ${error?.message || String(error)}`));
+  printPdf().catch(error => fallbackToNative(`KavachWeb could not print this PDF: ${error?.message || String(error)}`));
 });
 elements['ocr-page'].addEventListener('click', () => ocrCurrentPage());
 elements['cancel-ocr-page'].addEventListener('click', () => cancelOcrRequest());
@@ -650,7 +650,7 @@ globalThis.addEventListener('resize', () => {
   if (!state.pdf || !state.fitWidth || state.printing) return;
   clearTimeout(state.resizeTimer);
   state.resizeTimer = setTimeout(() => {
-    rerender().catch(error => fallbackToNative(`WebBrain could not resize this PDF: ${error?.message || String(error)}`));
+    rerender().catch(error => fallbackToNative(`KavachWeb could not resize this PDF: ${error?.message || String(error)}`));
   }, 120);
 });
 globalThis.addEventListener('keydown', event => {
@@ -676,7 +676,7 @@ async function initialize() {
   const explicitViewer = Boolean(explicitUrl && Number.isInteger(explicitTabId) && explicitTabId >= 0);
   const hasMimeHandler = typeof api?.mimeHandler?.getStreamInfo === 'function';
   if (!explicitViewer && !hasMimeHandler) {
-    throw new Error('Chrome PDF MIME handler API is unavailable. Use the explicit WebBrain PDF viewer entry instead.');
+    throw new Error('Chrome PDF MIME handler API is unavailable. Use the explicit KavachWeb PDF viewer entry instead.');
   }
   if (!explicitViewer) {
     const stored = await api.storage.local.get({ [PDF_VIEWER_ENABLED_KEY]: false });
@@ -689,11 +689,11 @@ async function initialize() {
     ? { streamUrl: explicitUrl, tabId: explicitTabId, originalUrl: explicitUrl, embedded: false }
     : await api.mimeHandler.getStreamInfo();
   if (!streamInfo?.streamUrl || !Number.isInteger(streamInfo.tabId)) {
-    throw new Error('No readable PDF stream was provided. Open an online PDF or use the explicit WebBrain PDF viewer link.');
+    throw new Error('No readable PDF stream was provided. Open an online PDF or use the explicit KavachWeb PDF viewer link.');
   }
   state.streamInfo = streamInfo;
   if (streamInfo.embedded === true) document.body.dataset.embedded = 'true';
-  elements['pdf-title'].textContent = String(streamInfo.originalUrl || 'WebBrain PDF');
+  elements['pdf-title'].textContent = String(streamInfo.originalUrl || 'KavachWeb PDF');
   globalThis.__webbrainSelectionShortcutConfig = {
     submitMessage: 'WB_PDF_SELECTION_SHORTCUT_SUBMIT',
     submitFields: {
@@ -723,5 +723,5 @@ async function initialize() {
 }
 
 initialize().catch(error => {
-  fallbackToNative(`WebBrain could not render this PDF: ${error?.message || String(error)}`);
+  fallbackToNative(`KavachWeb could not render this PDF: ${error?.message || String(error)}`);
 });

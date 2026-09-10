@@ -1,5 +1,5 @@
 /**
- * Deterministic capability × origin permission gate for the WebBrain agent.
+ * Deterministic capability × origin permission gate for the KavachWeb agent.
  *
  * KEEP THIS FILE PURE JS — no chrome.* / browser.* / DOM imports — so
  * test/run.js can load it under Node (same convention as markdown-link.js).
@@ -33,7 +33,7 @@ export const Capability = {
   SCHEDULE: 'schedule',          // schedule_resume / schedule_task persistent future work
 };
 
-// Human-readable verb for the permission prompt: "WebBrain wants to <label> <host>".
+// Human-readable verb for the permission prompt: "KavachWeb wants to <label> <host>".
 export const CAPABILITY_LABEL = {
   [Capability.NAVIGATE]: 'navigate to',
   [Capability.CLICK]: 'click / submit on',

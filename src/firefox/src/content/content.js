@@ -1,5 +1,5 @@
 /**
- * WebBrain Content Script
+ * KavachWeb Content Script
  * Injected into every page — handles page reading and DOM actions.
  */
 
@@ -1378,7 +1378,7 @@
   /**
    * Run one synthetic agent click while suppressing any immediate or deferred
    * <input type=file>.click() it triggers. upload_file attaches a downloaded
-   * file directly (or presents WebBrain's own picker when no downloadId is
+   * file directly (or presents KavachWeb's own picker when no downloadId is
    * available); clicking the page control first only opens a stale OS dialog.
    */
   function uniqueFileInputSelector(input) {
@@ -1551,7 +1551,7 @@
       ? blocked.selector
       : null;
     const guidance = selector
-      ? `Call upload_file({selector: ${JSON.stringify(selector)}, downloadId: N}) directly; it attaches the downloaded file without opening an OS dialog. If there is no downloadId, call upload_file({selector: ${JSON.stringify(selector)}}) to use WebBrain's own picker.`
+      ? `Call upload_file({selector: ${JSON.stringify(selector)}, downloadId: N}) directly; it attaches the downloaded file without opening an OS dialog. If there is no downloadId, call upload_file({selector: ${JSON.stringify(selector)}}) to use KavachWeb's own picker.`
       : 'Re-inspect the page to find an exact, unique <input type=file> selector, then call upload_file directly. Do not use a generic input[type="file"] selector when the page has multiple file inputs.';
     return {
       success: false,
@@ -2449,7 +2449,7 @@
         ...(rect ? { rect } : {}),
         warning: verified
           ? 'Only this match is selected. This call replaced any previous page selection, and it did not open the browser Find UI. Do not claim earlier find_text matches remain highlighted.'
-          : 'window.find reported a match, but WebBrain could not verify a visible current selection in the top document (for example, the active match may be inside a frame while an older top-document selection remains). Do not claim it is visibly highlighted. The browser Find UI was not opened.',
+          : 'window.find reported a match, but KavachWeb could not verify a visible current selection in the top document (for example, the active match may be inside a frame while an older top-document selection remains). Do not claim it is visibly highlighted. The browser Find UI was not opened.',
       };
     } catch (error) {
       return { success: false, found: false, dispatched: false, noDispatch: true, error: `find_text failed: ${error.message || error}` };

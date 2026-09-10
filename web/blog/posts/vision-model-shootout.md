@@ -6,17 +6,17 @@ sortOrder: 80
 date: 2026-04-21
 readTime: 7 min read
 description: >
-  We benchmarked Gemma 4-E2B, Gemma 4-31B, Qwen3.5-27B, and Qwen3.6-35B-A3B on the same browser screenshot using WebBrain's exact vision-sub-call prompt. Here's what the numbers look like and why one model changed our default recommendation.
+  We benchmarked Gemma 4-E2B, Gemma 4-31B, Qwen3.5-27B, and Qwen3.6-35B-A3B on the same browser screenshot using KavachWeb's exact vision-sub-call prompt. Here's what the numbers look like and why one model changed our default recommendation.
 excerpt: >
-  We fed the same Google sign-in page through Gemma 4-E2B, Gemma 4-31B, Qwen3.5-27B, and Qwen3.6-35B-A3B using the exact system prompt WebBrain's vision sub-call ships with. The spread on OCR accuracy, latency, and token cost is wider than you'd expect — and one model quietly changed our mind about which architecture to reach for.
+  We fed the same Google sign-in page through Gemma 4-E2B, Gemma 4-31B, Qwen3.5-27B, and Qwen3.6-35B-A3B using the exact system prompt KavachWeb's vision sub-call ships with. The spread on OCR accuracy, latency, and token cost is wider than you'd expect — and one model quietly changed our mind about which architecture to reach for.
 titleTag: >
-  Four vision models, one screenshot — WebBrain Blog
+  Four vision models, one screenshot — KavachWeb Blog
 ogTitle: >
-  Four vision models, one screenshot — WebBrain benchmark
+  Four vision models, one screenshot — KavachWeb benchmark
 ogDescription: >
   Gemma 4-E2B vs Gemma 4-31B vs Qwen3.5-27B vs Qwen3.6-35B-A3B on the same browser screenshot, same prompt. OCR, latency, and token cost — what actually matters for a browser agent.
 twitterTitle: >
-  Four vision models, one screenshot — WebBrain benchmark
+  Four vision models, one screenshot — KavachWeb benchmark
 twitterDescription: >
   Gemma 4 vs Qwen3.5 vs Qwen3.6-A3B on a browser agent's vision prompt.
 keywords:
@@ -30,12 +30,12 @@ keywords:
   - browser automation OCR
 html: true
 lede: >
-  We fed the same Google sign-in page through four open-weight vision models using the exact system prompt WebBrain's vision sub-call ships with. The spread on OCR accuracy, latency, and token cost is wider than you'd expect — and one model quietly changed our mind about which architecture to reach for.
+  We fed the same Google sign-in page through four open-weight vision models using the exact system prompt KavachWeb's vision sub-call ships with. The spread on OCR accuracy, latency, and token cost is wider than you'd expect — and one model quietly changed our mind about which architecture to reach for.
 ---
 
 ## Why this matters (and what we're actually measuring)
 
-WebBrain runs entirely inside your browser and supports a *split-provider* vision setup: your fast planner (GPT-4o-mini, Sonnet, a local Qwen, whatever) handles tool calls, and a separate vision model reads screenshots into terse structured text that gets threaded back into the planner's context. That's cheaper, lower-latency, and — importantly — lets you run vision locally on your own hardware while keeping the planner on a smarter cloud model.
+KavachWeb runs entirely inside your browser and supports a *split-provider* vision setup: your fast planner (GPT-4o-mini, Sonnet, a local Qwen, whatever) handles tool calls, and a separate vision model reads screenshots into terse structured text that gets threaded back into the planner's context. That's cheaper, lower-latency, and — importantly — lets you run vision locally on your own hardware while keeping the planner on a smarter cloud model.
 
 But it only works if the vision model can actually *see* the page. For a browser agent, that means three things, in order of importance:
 
@@ -99,9 +99,9 @@ That third point matters more than it sounds. "Honest uncertainty" is the bullet
 
 If you've been picking vision models by dense parameter count — "27B is smaller than 35B, so it'll be cheaper to run" — this shootout is a reminder that MoE upends that heuristic. For roughly the same VRAM (same-family 4-bit quants land in the 18–22 GB range for both), the A3B variant outperforms the dense 27B on *every* axis: latency, caption quality, and calibrated uncertainty. You pay for 35B of parameters at load time and get ~3B-worth of latency per token at inference.
 
-Browser-agent screenshots fire frequently — once after every state-changing tool call in WebBrain's `state_change` mode — so per-image latency compounds fast. Five seconds per auto-screenshot vs eight is a meaningful UX difference over a 10-step task.
+Browser-agent screenshots fire frequently — once after every state-changing tool call in KavachWeb's `state_change` mode — so per-image latency compounds fast. Five seconds per auto-screenshot vs eight is a meaningful UX difference over a 10-step task.
 
-## What this changes in WebBrain
+## What this changes in KavachWeb
 
 Nothing in the code, but something in the recommended configuration. If you're setting up the dedicated vision model in **Settings → Vision Model**:
 

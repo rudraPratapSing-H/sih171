@@ -1,6 +1,6 @@
 const RUNTIME_MODE_RE = /\bAuthoritative execution state:\s*runtime_mode=(ask|act|dev);\s*mutation_tools_enabled=(true|false)\b/i;
 
-// These revisions describe controlled WebBrain policy, never request content.
+// These revisions describe controlled KavachWeb policy, never request content.
 // Bump them when the corresponding prompt or tool-exposure policy changes.
 export const PROMPT_POLICY_REVISION = 1;
 export const TOOL_POLICY_REVISION = 1;
@@ -19,21 +19,21 @@ function messageContentChars(content) {
 
 function systemPromptVariant(prompt) {
   const text = String(prompt || '');
-  if (text.startsWith("You are WebBrain's private on-device chat assistant")) return 'standalone_webgpu';
-  if (text.startsWith("You are WebBrain's standalone chat assistant")) return 'standalone_chat';
-  if (text.startsWith('You are WebBrain, a helpful AI browser assistant running in Ask mode.')) return 'ask';
+  if (text.startsWith("You are KavachWeb's private on-device chat assistant")) return 'standalone_webgpu';
+  if (text.startsWith("You are KavachWeb's standalone chat assistant")) return 'standalone_chat';
+  if (text.startsWith('You are KavachWeb, a helpful AI browser assistant running in Ask mode.')) return 'ask';
 
   let actTier = '';
-  if (text.startsWith('You are WebBrain, an AI browser agent running in Act mode. You can read web pages')) actTier = 'full';
-  else if (text.startsWith('You are WebBrain, an AI browser agent running in Act mode. You read web pages')) actTier = 'mid';
-  else if (text.startsWith('You are WebBrain, an AI browser agent. You control web pages through tools.')) actTier = 'compact';
+  if (text.startsWith('You are KavachWeb, an AI browser agent running in Act mode. You can read web pages')) actTier = 'full';
+  else if (text.startsWith('You are KavachWeb, an AI browser agent running in Act mode. You read web pages')) actTier = 'mid';
+  else if (text.startsWith('You are KavachWeb, an AI browser agent. You control web pages through tools.')) actTier = 'compact';
   if (actTier) return text.includes('\nDEV MODE APPENDIX:\n') ? `dev_${actTier}` : `act_${actTier}`;
 
-  if (text.startsWith('You are the planning subsystem for WebBrain')) return 'planner';
-  if (text.startsWith('You are the intent and compact planning subsystem for WebBrain')) return 'planner_intent';
-  if (text.startsWith('You classify how much of the active communication thread WebBrain must read')) return 'read_scope';
-  if (text.startsWith('You are WebBrain producing a tool-free chat response')) return 'context_only';
-  if (text.startsWith('You are WebBrain on a forced terminal delivery turn')) return 'delivery_recovery';
+  if (text.startsWith('You are the planning subsystem for KavachWeb')) return 'planner';
+  if (text.startsWith('You are the intent and compact planning subsystem for KavachWeb')) return 'planner_intent';
+  if (text.startsWith('You classify how much of the active communication thread KavachWeb must read')) return 'read_scope';
+  if (text.startsWith('You are KavachWeb producing a tool-free chat response')) return 'context_only';
+  if (text.startsWith('You are KavachWeb on a forced terminal delivery turn')) return 'delivery_recovery';
   return text ? 'unknown' : 'missing';
 }
 

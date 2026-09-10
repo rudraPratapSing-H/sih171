@@ -6,21 +6,21 @@ sortOrder: 0
 date: 2026-06-20
 readTime: 7 min read
 description: >
-  We tested google/gemma-4-31B-it-qat-w4a16-ct through vLLM against WebBrain's frozen first-tool-call browser-agent harness. It improves over the older Gemma 4 31B int4 run and narrowly edges Qwen 3.6 27B on strict first-action quality while running much faster.
+  We tested google/gemma-4-31B-it-qat-w4a16-ct through vLLM against KavachWeb's frozen first-tool-call browser-agent harness. It improves over the older Gemma 4 31B int4 run and narrowly edges Qwen 3.6 27B on strict first-action quality while running much faster.
 excerpt: >
-  Gemma 4 31B QAT is not branded like a new generation, but in WebBrain's local planner bench it behaves like a meaningful upgrade: 95/100 parsed calls, 19% exact, 37% tool-name match, and 0.55s median latency.
+  Gemma 4 31B QAT is not branded like a new generation, but in KavachWeb's local planner bench it behaves like a meaningful upgrade: 95/100 parsed calls, 19% exact, 37% tool-name match, and 0.55s median latency.
 titleTag: >
-  Gemma 4 31B QAT WebBrain planner benchmark - WebBrain Blog
+  Gemma 4 31B QAT KavachWeb planner benchmark - KavachWeb Blog
 ogTitle: >
   Gemma 4 31B QAT becomes the best local Gemma planner we have tested
 ogDescription: >
   The QAT w4a16 Gemma 4 31B run improves over the older Gemma 31B int4 result and narrowly beats Qwen 3.6 27B on strict first-action quality.
 twitterTitle: >
-  Gemma 4 31B QAT WebBrain planner benchmark
+  Gemma 4 31B QAT KavachWeb planner benchmark
 twitterDescription: >
   QAT turns Gemma 4 31B into a stronger and faster local browser-agent planner.
 keywords:
-  - WebBrain
+  - KavachWeb
   - Gemma 4
   - Gemma 4 31B
   - QAT
@@ -30,7 +30,7 @@ keywords:
   - tool calling
   - Qwen 3.6 27B
 lede: >
-  We ran **google/gemma-4-31B-it-qat-w4a16-ct** through the same frozen WebBrain first-tool-call harness we use for local planner comparisons. The result is small on branding and big in practice: the QAT build improves over the older Gemma 4 31B int4 result, narrowly edges Qwen 3.6 27B on strict first-action quality, and does it with sub-second median latency.
+  We ran **google/gemma-4-31B-it-qat-w4a16-ct** through the same frozen KavachWeb first-tool-call harness we use for local planner comparisons. The result is small on branding and big in practice: the QAT build improves over the older Gemma 4 31B int4 result, narrowly edges Qwen 3.6 27B on strict first-action quality, and does it with sub-second median latency.
 ---
 
 ## What we ran
@@ -57,7 +57,7 @@ node test/llm/run-llamacpp.mjs \
   --chat-template-compat alternating
 ```
 
-That means 100 single-turn browser-agent prompts, the May 23 Claude Sonnet 4.6 WebBrain system prompt and 41-tool schema, legacy text-call compatibility, no native OpenAI `tools` field, and one active request at a time.
+That means 100 single-turn browser-agent prompts, the May 23 Claude Sonnet 4.6 KavachWeb system prompt and 41-tool schema, legacy text-call compatibility, no native OpenAI `tools` field, and one active request at a time.
 
 The result files are in:
 
@@ -106,11 +106,11 @@ That gives it a very different profile from the usual "larger local model is sma
 
 The naming is also refreshingly literal. This feels like the kind of improvement people might have called "Gemma 4.1 31B" if it had shipped as a conventional checkpoint refresh. Google named the mechanism instead: QAT. That is probably more honest. The model is not claiming to be a new generation; it is a quantization-aware serving-oriented variant that behaves like a real planner upgrade.
 
-The analogy to the Qwen 3.5 to Qwen 3.6 jump is useful, but with one caveat: we do not have a saved Qwen 3.5 27B run in this WebBrain result set. So this is not a measured Qwen-style before/after. It is a behavioral analogy: the same base family suddenly feels more useful for agent routing because the deployed variant changed the practical quality-speed frontier.
+The analogy to the Qwen 3.5 to Qwen 3.6 jump is useful, but with one caveat: we do not have a saved Qwen 3.5 27B run in this KavachWeb result set. So this is not a measured Qwen-style before/after. It is a behavioral analogy: the same base family suddenly feels more useful for agent routing because the deployed variant changed the practical quality-speed frontier.
 
 ## Sonnet 4.6 as the reference
 
-The strict ideal-first-call replay is useful, but the older WebBrain benchmark used a different reference: treat Claude Sonnet 4.6 as the truth and ask how often each model picked the same first tool.
+The strict ideal-first-call replay is useful, but the older KavachWeb benchmark used a different reference: treat Claude Sonnet 4.6 as the truth and ask how often each model picked the same first tool.
 
 Here is that view updated with the newer runs. The original May rows come from the published Sonnet export. The newer rows were scored against the same 100 Sonnet tool-name picks from that export, so this table is about first-tool alignment, not argument equality.
 
@@ -163,11 +163,11 @@ Timing was also solid:
 | Prompt tokens | 595 |
 | Completion tokens | 152 |
 
-One small miss: the model listed "Blockers: None" even though an authentication prompt is obviously a blocker for continuing. For WebBrain, that is the kind of detail a follow-up prompt tweak can usually tighten. The important part is that the endpoint accepted image input and produced a structured caption usable by the planner.
+One small miss: the model listed "Blockers: None" even though an authentication prompt is obviously a blocker for continuing. For KavachWeb, that is the kind of detail a follow-up prompt tweak can usually tighten. The important part is that the endpoint accepted image input and produced a structured caption usable by the planner.
 
 ## What this changes
 
-For the current WebBrain local planner table, Gemma 4 31B QAT now belongs above the older Gemma 31B int4 run and just above Qwen 3.6 27B on strict first-action quality.
+For the current KavachWeb local planner table, Gemma 4 31B QAT now belongs above the older Gemma 31B int4 run and just above Qwen 3.6 27B on strict first-action quality.
 
 The broader leaderboard still has stronger action routers. MiniMax M2.7, Sonnet 4.6, and Qwen 3.6 35B-A3B still beat it on exact or name-only matching in the saved runs. But Gemma 4 31B QAT has the best balance we have seen from a local Gemma: high parseability, competitive first-action selection, working vision, and latency that keeps the browser loop feeling interactive.
 

@@ -5,15 +5,15 @@ sortOrder: -260
 date: 2026-08-25
 readTime: 12 min read
 description: >
-  Meta's open 30B Muse Glimmer beats every budget Qwen model in WebBrain's browser-vision benchmark, then lands above GPT-5.6 Luna on comparable first-action planner metrics—at the cost of much slower hosted inference.
+  Meta's open 30B Muse Glimmer beats every budget Qwen model in KavachWeb's browser-vision benchmark, then lands above GPT-5.6 Luna on comparable first-action planner metrics—at the cost of much slower hosted inference.
 excerpt: >
   Muse Glimmer reaches 73 strict vision passes and a 93.3% mean rubric score, ahead of the budget Qwen field. In text planning it emits 95 schema-valid tool calls, chooses 34 ideal tools, and sits above GPT-5.6 Luna on the common deterministic measures—but its 8.67-second median leaves a lot of speed on the table.
 titleTag: >
-  Muse Glimmer 30B vision and browser-agent benchmark - WebBrain Blog
+  Muse Glimmer 30B vision and browser-agent benchmark - KavachWeb Blog
 ogTitle: >
   Muse Glimmer: Meta's 30B model tested on browser vision and tool use
 ogDescription: >
-  300 WebBrain cases across screenshots, first actions, and multi-turn recovery. Muse beats budget Qwen vision and lands above GPT-5.6 Luna on common planner metrics.
+  300 KavachWeb cases across screenshots, first actions, and multi-turn recovery. Muse beats budget Qwen vision and lands above GPT-5.6 Luna on common planner metrics.
 twitterTitle: >
   Muse Glimmer: 73/100 browser vision, above Luna on planner dispatch
 twitterDescription: >
@@ -29,11 +29,11 @@ keywords:
   - tool calling
   - open-weight AI
   - local multimodal model
-  - WebBrain
+  - KavachWeb
 author: Emre Sokullu
 authorUrl: https://emresokullu.com
 lede: >
-  **Meta's Muse Glimmer is the first model in this price and hardware class that looks genuinely strong in both halves of WebBrain's job.** On our 100-case browser-vision suite, the open 30B model scored 73 strict passes and a 93.3% mean rubric score—better than every model in our recent budget Qwen sweep. On the 100-case text planner, it returned 95 schema-valid tool calls and beat GPT-5.6 Luna on both ideal-tool and exact-ideal counts. The tradeoff is speed: OpenRouter took 16.1 seconds per screenshot on average and 8.67 seconds at the median for first actions. Muse Glimmer is capable, inexpensive, open-weight, and unusually complete. It is not fast on the route we tested.
+  **Meta's Muse Glimmer is the first model in this price and hardware class that looks genuinely strong in both halves of KavachWeb's job.** On our 100-case browser-vision suite, the open 30B model scored 73 strict passes and a 93.3% mean rubric score—better than every model in our recent budget Qwen sweep. On the 100-case text planner, it returned 95 schema-valid tool calls and beat GPT-5.6 Luna on both ideal-tool and exact-ideal counts. The tradeoff is speed: OpenRouter took 16.1 seconds per screenshot on average and 8.67 seconds at the median for first actions. Muse Glimmer is capable, inexpensive, open-weight, and unusually complete. It is not fast on the route we tested.
 ---
 
 ## The short verdict
@@ -59,15 +59,15 @@ This is a much better result than “one model that can technically accept both 
 
 [Meta's model card](https://huggingface.co/meta-models/Muse-Glimmer-30B) describes Muse Glimmer as a dense, 30-billion-parameter causal model with a dedicated perception encoder, distilled from Muse Spark and designed for autonomous agents on consumer hardware. The weights are released under Apache 2.0, with official BF16, [GGUF](https://huggingface.co/meta-models/Muse-Glimmer-30B-GGUF), and ExecuTorch variants.
 
-That positioning is unusually aligned with WebBrain's workload: multimodal understanding, structured tool use, multi-step reasoning, and failure recovery in one locally deployable model. The OpenRouter route exposes a 131,072-token context. At test time its lowest listed route price was **$0.30 per million input tokens and $1.10 per million output tokens**; provider-specific prices can be higher.
+That positioning is unusually aligned with KavachWeb's workload: multimodal understanding, structured tool use, multi-step reasoning, and failure recovery in one locally deployable model. The OpenRouter route exposes a 131,072-token context. At test time its lowest listed route price was **$0.30 per million input tokens and $1.10 per million output tokens**; provider-specific prices can be higher.
 
 The model is dense, so “30B” means something different from Qwen's 30B-A3B MoE. Muse executes its language backbone rather than activating roughly 3B routed parameters per token. That helps explain why a Qwen MoE can be dramatically faster even when the names imply similar scale. It also means Muse's official quantized local path is central to the product story: the hosted route is convenient, but not necessarily the deployment that shows the model at its best.
 
 ## What we ran
 
-The vision run used WebBrain's production screenshot contract: the same 100 browser screenshots, fixed six-section system prompt, temperature 0, 800-token maximum, deterministic weighted checks, and critical-fact gating used in our [budget Qwen comparison](/blog/qwen-budget-vision-openrouter).
+The vision run used KavachWeb's production screenshot contract: the same 100 browser screenshots, fixed six-section system prompt, temperature 0, 800-token maximum, deterministic weighted checks, and critical-fact gating used in our [budget Qwen comparison](/blog/qwen-budget-vision-openrouter).
 
-The text run used the current WebBrain Chrome planner payload at full tier: 100 first-action cases, native structured tools, Act temperature 0.15, and no reasoning-effort override. One request failed in transport on the original pass; its isolated retry returned a valid tool call. We substitute that retry in the measurements below.
+The text run used the current KavachWeb Chrome planner payload at full tier: 100 first-action cases, native structured tools, Act temperature 0.15, and no reasoning-effort override. One request failed in transport on the original pass; its isolated retry returned a valid tool call. We substitute that retry in the measurements below.
 
 The scenario run used 100 seeded multi-turn histories covering bad-URL loops, tool errors, CSP failures, truncation, counter polarity, stale references, mode boundaries, cross-lingual interaction, and prompt injection. Three transport failures and one empty response all returned valid results on isolated retry. The consolidated figures substitute those four retry results while preserving the original run directories.
 
@@ -153,7 +153,7 @@ Muse is also cautious. It requests a fresh accessibility tree on 51 cases even t
 
 ## Text comparison: Muse is above Luna
 
-Our [thirteen-model American-Chinese frontier benchmark](/blog/american-chinese-open-model-frontier-gap-benchmark) ranked models primarily by leave-one-out peer consensus. Muse was run later, after WebBrain's prompt and tool schema had grown, so inserting it into that exact consensus ranking would pretend the payloads were identical. We do not do that.
+Our [thirteen-model American-Chinese frontier benchmark](/blog/american-chinese-open-model-frontier-gap-benchmark) ranked models primarily by leave-one-out peer consensus. Muse was run later, after KavachWeb's prompt and tool schema had grown, so inserting it into that exact consensus ranking would pretend the payloads were identical. We do not do that.
 
 The 100 questions and deterministic expected actions did not change between the pinned `7182c21f` comparison checkout and the Muse run. That lets us compare the common ideal-tool and exact-ideal measures honestly. The table below is sorted by ideal tool-name count, not by the earlier article's consensus rank:
 
@@ -216,7 +216,7 @@ Muse Glimmer occupies a useful space that did not have a clean representative in
 - It is **above GPT-5.6 Luna on common deterministic first-action quality**, with nearly the same observed replay cost.
 - It is **too slow on the tested OpenRouter route** to displace Qwen3-VL-30B-A3B for a latency-sensitive screenshot loop.
 
-For a hosted WebBrain deployment today, we would still choose Qwen's 30B-A3B Instruct when every screenshot sits on the critical path. We would choose Muse when one open model must cover screenshot understanding, structured browser planning, and local/private deployment without splitting the job between a VLM and a text specialist.
+For a hosted KavachWeb deployment today, we would still choose Qwen's 30B-A3B Instruct when every screenshot sits on the critical path. We would choose Muse when one open model must cover screenshot understanding, structured browser planning, and local/private deployment without splitting the job between a VLM and a text specialist.
 
 The most interesting next test is local. Meta ships official GGUF quantizations, a perception projector, and a DFlash drafter. A single-GPU Muse run would remove OpenRouter scheduling and network time, reveal whether speculative decoding fixes the latency problem, and compare the dense 30B model with Qwen's dense 32B and 3B-active MoE on the hardware the model was built to target.
 
@@ -226,7 +226,7 @@ Muse Glimmer is the new quality leader in our budget browser-vision table: **73 
 
 On text planning, the answer to the question we cared about is unambiguous: **Muse Glimmer sits above GPT-5.6 Luna on the common deterministic dispatch measures.** Muse reaches 34 ideal tool choices and 11 exact ideals; Luna reaches 32 and 3. Muse also emits more calls with perfect saved-schema validity. Luna remains faster.
 
-The combined result makes Muse more interesting than either table alone. It is not the best text planner and not the fastest VLM. It is a 30B open model that can plausibly do both jobs well, recover stale state unusually reliably, and run on hardware an individual can own. That is a strong foundation. Now it needs a local WebBrain run to show whether Meta's consumer-hardware story can turn a 16-second hosted screenshot response into an interactive agent loop.
+The combined result makes Muse more interesting than either table alone. It is not the best text planner and not the fastest VLM. It is a 30B open model that can plausibly do both jobs well, recover stale state unusually reliably, and run on hardware an individual can own. That is a strong foundation. Now it needs a local KavachWeb run to show whether Meta's consumer-hardware story can turn a 16-second hosted screenshot response into an interactive agent loop.
 
 ## Raw results
 
@@ -238,4 +238,4 @@ test/llm/results-scenarios/openrouter-muse-glimmer-30b-scenarios-20260825_chrome
 test/llm/results-scenarios/openrouter-muse-glimmer-30b-retry-scenarios-20260825_chrome_meta_muse-glimmer-30b
 ```
 
-Tags: #MuseGlimmer #MetaAI #OpenWeights #OpenRouter #Qwen3VL #GPT56 #Luna #VisionLanguageModel #ToolCalling #BrowserAgent #LocalAI #WebBrain
+Tags: #MuseGlimmer #MetaAI #OpenWeights #OpenRouter #Qwen3VL #GPT56 #Luna #VisionLanguageModel #ToolCalling #BrowserAgent #LocalAI #KavachWeb

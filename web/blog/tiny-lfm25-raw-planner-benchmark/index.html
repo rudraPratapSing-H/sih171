@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tiny raw LFM 2.5 planner benchmark - WebBrain Blog</title>
-  <meta name="description" content="We ran two tiny raw Liquid LFM 2.5 checkpoints, 230M and 350M, through WebBrain&#39;s frozen 100-case browser-agent first-tool benchmark on a local OpenAI-compatible endpoint.">
-  <meta name="keywords" content="WebBrain, LFM 2.5, Liquid AI, tiny language model, browser agent, tool calling, planner benchmark, Qwen 3.5">
-  <meta property="og:title" content="Tiny raw LFM 2.5 checkpoints in WebBrain&#39;s planner benchmark">
-  <meta property="og:description" content="LFM 2.5 230M and 350M on WebBrain&#39;s frozen browser-agent first-tool harness: clean API runs, weak planner routing, useful fine-tuning signal.">
+  <title>Tiny raw LFM 2.5 planner benchmark - KavachWeb Blog</title>
+  <meta name="description" content="We ran two tiny raw Liquid LFM 2.5 checkpoints, 230M and 350M, through KavachWeb&#39;s frozen 100-case browser-agent first-tool benchmark on a local OpenAI-compatible endpoint.">
+  <meta name="keywords" content="KavachWeb, LFM 2.5, Liquid AI, tiny language model, browser agent, tool calling, planner benchmark, Qwen 3.5">
+  <meta property="og:title" content="Tiny raw LFM 2.5 checkpoints in KavachWeb&#39;s planner benchmark">
+  <meta property="og:description" content="LFM 2.5 230M and 350M on KavachWeb&#39;s frozen browser-agent first-tool harness: clean API runs, weak planner routing, useful fine-tuning signal.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://webbrain.one/blog/tiny-lfm25-raw-planner-benchmark">
   <meta property="og:image" content="https://webbrain.one/og-image.png">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Tiny raw LFM 2.5 planner benchmark">
-  <meta name="twitter:description" content="Two raw tiny LFM 2.5 checkpoints completed WebBrain&#39;s frozen 100-case tool-calling run. The numbers are small, and that is mostly the point.">
+  <meta name="twitter:description" content="Two raw tiny LFM 2.5 checkpoints completed KavachWeb&#39;s frozen 100-case tool-calling run. The numbers are small, and that is mostly the point.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/tiny-lfm25-raw-planner-benchmark">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -474,8 +474,8 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Tiny raw LFM 2.5 checkpoints in WebBrain's frozen planner benchmark",
-  "description": "We ran two tiny raw Liquid LFM 2.5 checkpoints, 230M and 350M, through WebBrain's frozen 100-case browser-agent first-tool benchmark on a local OpenAI-compatible endpoint.",
+  "headline": "Tiny raw LFM 2.5 checkpoints in KavachWeb's frozen planner benchmark",
+  "description": "We ran two tiny raw Liquid LFM 2.5 checkpoints, 230M and 350M, through KavachWeb's frozen 100-case browser-agent first-tool benchmark on a local OpenAI-compatible endpoint.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -524,10 +524,10 @@
 
   <article>
     <div class="meta">June 26, 2026 &middot; 5 min read &middot; <a href="/blog">&larr; All posts</a></div>
-    <h1>Tiny raw LFM 2.5 checkpoints in WebBrain&#39;s frozen planner benchmark</h1>
-    <p class="lede">We ran two tiny raw Liquid LFM 2.5 checkpoints through WebBrain&#39;s frozen browser-agent first-tool benchmark: <strong>lfm2.5-230m</strong> and <strong>lfm2.5-350m</strong> served locally from <code>http://localhost:8000</code>. Both runs completed all 100 cases without transport errors. The quality numbers are low, but that is not a surprise: these are tiny raw checkpoints, not WebBrain-tuned browser planners. The useful result is the shape of the mistakes.</p>
+    <h1>Tiny raw LFM 2.5 checkpoints in KavachWeb&#39;s frozen planner benchmark</h1>
+    <p class="lede">We ran two tiny raw Liquid LFM 2.5 checkpoints through KavachWeb&#39;s frozen browser-agent first-tool benchmark: <strong>lfm2.5-230m</strong> and <strong>lfm2.5-350m</strong> served locally from <code>http://localhost:8000</code>. Both runs completed all 100 cases without transport errors. The quality numbers are low, but that is not a surprise: these are tiny raw checkpoints, not KavachWeb-tuned browser planners. The useful result is the shape of the mistakes.</p>
 <h2 id="what-we-ran">What we ran</h2>
-<p>Both runs used the same frozen May 23, 2026 WebBrain baseline used by the published planner table: Claude Sonnet 4.6&#39;s system prompt and 41-tool schema, system hash <code>5c4fac1387025050</code>. The endpoint was a local OpenAI-compatible server at <code>http://localhost:8000</code>.</p>
+<p>Both runs used the same frozen May 23, 2026 KavachWeb baseline used by the published planner table: Claude Sonnet 4.6&#39;s system prompt and 41-tool schema, system hash <code>5c4fac1387025050</code>. The endpoint was a local OpenAI-compatible server at <code>http://localhost:8000</code>.</p>
 <pre><code class="language-bash">node test/llm/run-llamacpp.mjs \
   --base http://localhost:8000 \
   --model lfm2.5-230m \
@@ -566,20 +566,20 @@ test/llm/results/2026-06-26-lfm25-350m-localhost8000_chrome_lfm2.5-350m_frozen</
 <p>The earlier LFM 2.5-8B-A1B run is still the better Liquid comparison point for actual planner use. It matched Sonnet on 40% of all cases and had 23 ideal tool-name matches. The tiny raw checkpoints do not reach that tier.</p>
 <p>Qwen 3.5 0.8B is the sharper tiny baseline. Even with fewer than one billion parameters, it keeps higher valid-tool discipline and materially better Sonnet alignment than either raw tiny LFM run. That does not make the tiny LFMs uninteresting. It does show that raw scale at 230M or 350M is not enough for browser planning without task-specific post-training.</p>
 <h2 id="what-this-means">What this means</h2>
-<p>These runs should not be read as &quot;LFM is bad at tools.&quot; They are closer to a pre-fine-tuning diagnostic. WebBrain&#39;s benchmark asks a very specific first-turn planning question: given a browser state, a user instruction, and 41 available tools, choose the first tool and arguments. Tiny raw models are not expected to have that policy baked in.</p>
+<p>These runs should not be read as &quot;LFM is bad at tools.&quot; They are closer to a pre-fine-tuning diagnostic. KavachWeb&#39;s benchmark asks a very specific first-turn planning question: given a browser state, a user instruction, and 41 available tools, choose the first tool and arguments. Tiny raw models are not expected to have that policy baked in.</p>
 <p>What they do show is encouraging in a narrower way:</p>
-<ul><li>The local serving path works cleanly with WebBrain&#39;s OpenAI-compatible runner.</li><li>The 230M model strongly learned the &quot;emit a tool call&quot; behavior, even if it overuses inspection.</li><li>The 350M model has a broader action vocabulary and better Sonnet alignment, but needs schema control.</li><li>Both runs are small enough that fine-tuning experiments should be cheap and fast.</li></ul>
-<p>For WebBrain, the next interesting experiment is not to keep benchmarking these raw checkpoints as-is. It is to tune them on browser-planner traces and rerun the same frozen harness. If a 230M or 350M model can be trained out of the <code>get_accessibility_tree</code> default and into reliable schema-following, it becomes a much more interesting on-device planner candidate.</p>
+<ul><li>The local serving path works cleanly with KavachWeb&#39;s OpenAI-compatible runner.</li><li>The 230M model strongly learned the &quot;emit a tool call&quot; behavior, even if it overuses inspection.</li><li>The 350M model has a broader action vocabulary and better Sonnet alignment, but needs schema control.</li><li>Both runs are small enough that fine-tuning experiments should be cheap and fast.</li></ul>
+<p>For KavachWeb, the next interesting experiment is not to keep benchmarking these raw checkpoints as-is. It is to tune them on browser-planner traces and rerun the same frozen harness. If a 230M or 350M model can be trained out of the <code>get_accessibility_tree</code> default and into reliable schema-following, it becomes a much more interesting on-device planner candidate.</p>
 <p>The bottom line: raw tiny LFMs are not ready browser planners. That is fine. They are the kind of models you fine-tune into a planner, and this run gives us a compact before-picture. Liquid&#39;s new <a href="https://www.liquid.ai/blog/lfm2-5-230m" target="_blank" rel="noopener">LFM2.5-230M</a> strengthens that case: if a 230M model can perform as well as the 350M checkpoint while being roughly 33% smaller, it should become the default tiny LFM target for fine-tuning experiments. For no-fine-tuning, raw tiny-model use, though, Qwen 3.5 0.8B remains the de facto standard to beat.</p>
-<p>Tags: #LFM25 #LiquidAI #TinyLanguageModels #ToolCalling #BrowserAgent #WebBrain</p>
+<p>Tags: #LFM25 #LiquidAI #TinyLanguageModels #ToolCalling #BrowserAgent #KavachWeb</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

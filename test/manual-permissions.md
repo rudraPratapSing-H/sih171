@@ -26,7 +26,7 @@ simple page with a visible clickable button.
 
 ### 1a. Card renders correctly
 1. Tell the agent: *"click the <some visible button>"*.
-2. **Expect** a card: **"WebBrain wants to click / submit on \<host\>. Allow it?"**
+2. **Expect** a card: **"KavachWeb wants to click / submit on \<host\>. Allow it?"**
    with **three** buttons: `Allow once` · `Always allow on <host>` · `Don't allow`,
    and **NO free-text input** (permission cards are structured — the buttons
    return `once`/`always`/`deny`, not typed text).

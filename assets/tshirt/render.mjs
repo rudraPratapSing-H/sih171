@@ -71,7 +71,7 @@ function lockup(color) {
         align-items:center; justify-content:center;">
         <img src="${logoMark}" alt="" style="width:1180px; height:1180px; object-fit:contain;">
         <div style="margin-top:-40px; font-family:var(--ui); font-weight:700; letter-spacing:-0.055em;
-          font-size:230px; line-height:1; color:${ink};">WebBrain</div>
+          font-size:230px; line-height:1; color:${ink};">KavachWeb</div>
       </main>`,
   };
 }

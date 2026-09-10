@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to WebBrain are documented in this file.
+All notable changes to KavachWeb are documented in this file.
 
 This changelog was generated from the repository Git history and release tags. Versions without a Git tag are inferred from version-bump commits and the current `package.json` / browser manifest versions.
 
@@ -13,7 +13,7 @@ This changelog was generated from the repository Git history and release tags. V
 - Removed model-callable browser tab creation, listing, and activation from every prompt tier. URL readers and current-tab navigation remain available; internal research/helper tabs and normal `target=_blank` behavior are unchanged.
 
 ### Fixed
-- Added a final max-step handoff for tool-capable interactive runs, including WebBrain Compass: after the normal loop exhausts its configured steps, one context-only turn exposes only `done(outcome: "partial" | "failed")` so collected evidence reaches the user. Invalid terminal output falls back to a visible deterministic blocker. The existing advisory 4/8 observation checkpoints for Compass and the structured Cloud `done_json` contract are unchanged.
+- Added a final max-step handoff for tool-capable interactive runs, including KavachWeb Compass: after the normal loop exhausts its configured steps, one context-only turn exposes only `done(outcome: "partial" | "failed")` so collected evidence reaches the user. Invalid terminal output falls back to a visible deterministic blocker. The existing advisory 4/8 observation checkpoints for Compass and the structured Cloud `done_json` contract are unchanged.
 - Reserved the retired tab-tool names, so an enabled custom skill can no longer re-declare `new_tab`, `list_tabs`, or `activate_tab` and hand the model back a capability the prompts say it does not have.
 - Gave Ask mode its own wording for the browser-tab limitation. The shared text offered current-tab navigation, which read-only Ask cannot perform; it now offers to read the URL or to switch to Act.
 - Retuned the LLM benchmark goldens that still expected retired tools, so a model running against the current schemas is no longer scored wrong for answers it cannot give. `test/run.js` now fails when any golden or seeded turn names a tool its own mode does not offer.
@@ -63,7 +63,7 @@ This changelog was generated from the repository Git history and release tags. V
 - 34.0.0
 - fix: migrate stored Compass provider label
 - fix: keep Compass name unlocalized
-- feat: rename managed provider to WebBrain Compass
+- feat: rename managed provider to KavachWeb Compass
 - feat(sidepanel): refine empty conversation state
 - feat(sidepanel): consolidate conversation controls
 - fix(opencode): scope Zen migrations and model normalization
@@ -143,7 +143,7 @@ This changelog was generated from the repository Git history and release tags. V
 - Keep clarification answers bound to tasks
 - fix: close iframe inventory gaps
 - fix: bind workflow completion to exact outcomes
-- Keep WebBrain Cloud observation checkpoints advisory
+- Keep KavachWeb Cloud observation checkpoints advisory
 - Harden execution task authority
 - fix: enforce complete workflow reconciliation
 - fix: bind workflow targets to exact evidence
@@ -396,7 +396,7 @@ This changelog was generated from the repository Git history and release tags. V
 - dist: rebuild submission zips for v33.1.1
 - chore: release v33.1.1
 - 33.1.0
-- Add WebBrain VL 2 benchmark blog posts
+- Add KavachWeb VL 2 benchmark blog posts
 - webbrain-vl-2-450m
 - fix(trace): gate lossless eviction on a cached total and scan all runs
 - fix(trace): redact recovery_code in JSON exports and refresh lossless tier pins
@@ -407,8 +407,8 @@ This changelog was generated from the repository Git history and release tags. V
 - fix(trace): evict oldest lossless runs within budget
 - fix(trace): redact lossless JSON exports and serialize recovery
 - Count the Emergency Box among the Apocalypse Mode essentials
-- Sign the Apocalypse Mode pages with the WebBrain mark
-- Add the WebBrain logo to the Traces header
+- Sign the Apocalypse Mode pages with the KavachWeb mark
+- Add the KavachWeb logo to the Traces header
 - added logo to settings and history.html
 - Restore the Apocalypse Mode nuclear emoji at its source and fix two broken tests
 - footer tightened
@@ -470,12 +470,12 @@ This changelog was generated from the repository Git history and release tags. V
 - fix(offline): skip disabled Wikipedia translation and disambiguate shared scripts
 - Keep Clarify open while typing
 - fix(offline): detect Wikipedia translation language from the resolved query
-- Handle streamed WebBrain quota limits
+- Handle streamed KavachWeb quota limits
 - fix(offline): disambiguate Han queries and reject non-string translations
-- Address WebBrain Plus review feedback
+- Address KavachWeb Plus review feedback
 - fix(offline): tighten multilingual Wikipedia retrieval routing
-- web: add an Apocalypse Mode video popup under Install WebBrain
-- Add WebBrain Plus upgrade prompt
+- web: add an Apocalypse Mode video popup under Install KavachWeb
+- Add KavachWeb Plus upgrade prompt
 - fix(offline): restore script-based query language hints
 - dist: rebuild submission zips for v33.0.1
 - chore: release v33.0.1
@@ -502,7 +502,7 @@ This changelog was generated from the repository Git history and release tags. V
 - Refined the sidepanel empty conversation state and consolidated conversation controls.
 
 ### Changed
-- Renamed the managed provider to **WebBrain Compass** (branding update).
+- Renamed the managed provider to **KavachWeb Compass** (branding update).
 - Updated Compass provider label migration to match the new Compass naming.
 - Kept Compass name unlocalized to preserve consistent display across locales.
 
@@ -738,7 +738,7 @@ This changelog was generated from the repository Git history and release tags. V
 ### Changed
 - Reconcile planner expected-item placeholders with classifier and concrete progress rows, preserving one ordered canonical row per repeated-task target across Chrome, Firefox, and restored sessions.
 - 33.1.0
-- Add WebBrain VL 2 benchmark blog posts
+- Add KavachWeb VL 2 benchmark blog posts
 - webbrain-vl-2-450m
 - fix(trace): gate lossless eviction on a cached total and scan all runs
 - fix(trace): redact recovery_code in JSON exports and refresh lossless tier pins
@@ -749,8 +749,8 @@ This changelog was generated from the repository Git history and release tags. V
 - fix(trace): evict oldest lossless runs within budget
 - fix(trace): redact lossless JSON exports and serialize recovery
 - Count the Emergency Box among the Apocalypse Mode essentials
-- Sign the Apocalypse Mode pages with the WebBrain mark
-- Add the WebBrain logo to the Traces header
+- Sign the Apocalypse Mode pages with the KavachWeb mark
+- Add the KavachWeb logo to the Traces header
 - added logo to settings and history.html
 - Restore the Apocalypse Mode nuclear emoji at its source and fix two broken tests
 - footer tightened
@@ -774,13 +774,13 @@ This changelog was generated from the repository Git history and release tags. V
 ## [33.1.0] - 2026-08-22
 
 ### Changed
-- Switched to WebBrain VL 2 450M as the local vision fallback.
+- Switched to KavachWeb VL 2 450M as the local vision fallback.
 
 ## [33.0.8] - 2026-08-20
 
 ### Changed
 - Changed the Chrome local vision fallback to the fine-tuned `webbrain-one/webbrain-vl-2-450M-onnx` release, with renewed opt-in consent and a versioned ready marker so older caches cannot be mistaken for the new model.
-- Added a consent-gated, durable WebBrain Compass terminal-runtime outbox so executed terminal tool results survive provider-trace export gaps and can be joined through stable de-identified references.
+- Added a consent-gated, durable KavachWeb Compass terminal-runtime outbox so executed terminal tool results survive provider-trace export gaps and can be joined through stable de-identified references.
 - fix: resume vision downloads and organize settings
 - fix: require vision cache marker and isolate queued worker deadlines
 - fix: verify local vision cache and abort timed-out remote vision
@@ -839,10 +839,10 @@ This changelog was generated from the repository Git history and release tags. V
 
 ### Changed
 - Keep Clarify open while typing
-- Handle streamed WebBrain quota limits
-- Address WebBrain Plus review feedback
-- web: add an Apocalypse Mode video popup under Install WebBrain
-- Add WebBrain Plus upgrade prompt
+- Handle streamed KavachWeb quota limits
+- Address KavachWeb Plus review feedback
+- web: add an Apocalypse Mode video popup under Install KavachWeb
+- Add KavachWeb Plus upgrade prompt
 
 ## [33.0.1] - 2026-08-20
 
@@ -858,7 +858,7 @@ This changelog was generated from the repository Git history and release tags. V
 - fix(apocalypse): deduplicate corpus download starts
 - dist: rebuild submission zips for v33.0.0
 - fix(offline-rag): keep emergency text pack status stable during extraction
-- release: prepare WebBrain 33.0.0
+- release: prepare KavachWeb 33.0.0
 - fix(chrome): preserve CDP lifecycle ownership
 - fix(oauth): deduplicate subscription token refreshes
 - build(release): package Bonsai resume fix
@@ -884,7 +884,7 @@ This changelog was generated from the repository Git history and release tags. V
 - fix(chrome): address Bonsai download review feedback
 - fix(onboarding): await privacy choice before skip
 - fix(browser): clean up capture resource lifecycles
-- feat(onboarding): showcase WebBrain features on install
+- feat(onboarding): showcase KavachWeb features on install
 - docs: resolve Chinese offline RAG conflict
 - Run Apocalypse archive downloads offscreen
 - fix(release): publish GPL corresponding source
@@ -921,7 +921,7 @@ This changelog was generated from the repository Git history and release tags. V
 ## [33.0.0] - 2026-08-20
 
 ### Changed
-- License WebBrain 33.0.0 and later under GPL-3.0-or-later because the distributed extension bundles and integrates the GPL-licensed Xapian/libzim WebAssembly runtime; releases before 33.0.0 remain MIT-licensed.
+- License KavachWeb 33.0.0 and later under GPL-3.0-or-later because the distributed extension bundles and integrates the GPL-licensed Xapian/libzim WebAssembly runtime; releases before 33.0.0 remain MIT-licensed.
 - Remove baked-in copy from onboarding-only screenshots so localized HTML captions do not overlap the artwork; Chrome Web Store screenshots remain separate and unchanged.
 - Increase the size and contrast of the `Alt+Shift+W` onboarding shortcut hint.
 
@@ -1123,7 +1123,7 @@ This changelog was generated from the repository Git history and release tags. V
 - Keep the explicit translation exception in the brief rendering
 - Trim the response-language policy prompt cost
 - Anchor fallback language on continuation
-- blog: show shipped WebGPU vision in WebBrain 31
+- blog: show shipped WebGPU vision in KavachWeb 31
 - Persist continuation language policy
 - Preserve language across continuations
 - Reject empty deliverable language policies
@@ -1144,7 +1144,7 @@ This changelog was generated from the repository Git history and release tags. V
 ## [32.2.0] - 2026-08-18
 
 ### Added
-- Added a "Ask WebBrain a Question" bubble with improved opacity and lifecycle handling.
+- Added a "Ask KavachWeb a Question" bubble with improved opacity and lifecycle handling.
 - Added markdown table rendering for assistant responses, preserving tables after headings and across conversation history.
 - Added Apocalypse Mode basic and full kit downloads with a built-in communication reader, size estimates, and i18n translations.
 
@@ -1173,7 +1173,7 @@ This changelog was generated from the repository Git history and release tags. V
 
 ### Added
 - Added offline RAG support with emergency corpus, SQLite FTS5 search, multilingual semantic reranking, and local text citation readers.
-- Added selection quote follow-up action for Ask WebBrain.
+- Added selection quote follow-up action for Ask KavachWeb.
 
 ### Fixed
 - Fixed offline RAG lifecycle recovery, SQLite SAH pool database cleanup on cancellation, and multilingual emergency query routing.
@@ -1574,11 +1574,11 @@ This changelog was generated from the repository Git history and release tags. V
 - Added a value-free teacher mode (`/teach --start <name>` / `/teach --end`) that records a user's demonstrated clicks, field completions, checkbox/radio toggles, Enter submissions, and navigations into a tab-scoped session. The capture code never reads field values — only semantic identity — and every field action becomes a runtime parameter at the capture boundary. The session persists across navigation and compiles into the same `webbrain-workflow/1` format as successful runs. Automated runs are blocked while a teacher session is active for a tab.
 - Added an interactive saved workflow manager (`/workflow`) to list, run, rename, export, and delete saved workflows in Chrome and Firefox.
 - Added user-approved workflow locator healing: when a saved workflow target no longer matches uniquely, up to five independently replayable semantic candidates are presented for explicit single-selection. Approved replacements are applied atomically against the workflow's previous `updatedAt` value, so a concurrent edit wins instead of being overwritten; concurrent edits, unattended answers, and duplicate candidates can never authorize a healing.
-- Added a WebBrain MCP server introduction blog post covering setup for Claude Code, OpenCode, Codex, and Cursor, the loopback security model, and how WebBrain MCP differs from headless browser tools.
+- Added a KavachWeb MCP server introduction blog post covering setup for Claude Code, OpenCode, Codex, and Cursor, the loopback security model, and how KavachWeb MCP differs from headless browser tools.
 
 ### Changed
-- Excluded WebBrain Compass from per-run cost limits and metered dedicated vision provider costs separately, so vision-heavy WebBrain Compass work does not count against the local/router cost allowance (Chrome and Firefox parity).
-- Merged Cloud Bridge (MCP/LM Studio browser delegation) settings into Settings → General → Advanced → Cloud bridge, with synchronized setup guidance and the three bridge ports (MCP `17374`, LM Studio `17375`, WebBrain Cloud `17373`).
+- Excluded KavachWeb Compass from per-run cost limits and metered dedicated vision provider costs separately, so vision-heavy KavachWeb Compass work does not count against the local/router cost allowance (Chrome and Firefox parity).
+- Merged Cloud Bridge (MCP/LM Studio browser delegation) settings into Settings → General → Advanced → Cloud bridge, with synchronized setup guidance and the three bridge ports (MCP `17374`, LM Studio `17375`, KavachWeb Cloud `17373`).
 - Hardened screenshot and attachment handling: staged screenshots persist durably until delivery is confirmed at every call site, the per-turn screenshot budget charges only when a model actually receives the capture (vision description or attachment), redaction binds to capture time and scopes to rendered frames, and a child frame URL that cannot identify exactly one descriptor fails closed instead of risking mis-paired redaction regions.
 - Did not stage a full-page screenshot when the capture-time privacy scan cannot prepare redaction geometry; the capture now reports `redactionUnavailable`, explains the blocker, and skips staging while still rendering the preview and save button (Chrome only).
 - Removed the sticky API mutation badge from the Chrome and Firefox side panels. The `/allow-api` override now confirms once in the transcript instead of as a persistent composer badge.
@@ -1598,15 +1598,15 @@ This changelog was generated from the repository Git history and release tags. V
 ### Tests
 - Added mirrored Chrome/Firefox coverage for teacher mode: value-free demonstration capture, session store normalization, automated-run rejection, Enter-as-submit semantics, and cross-browser slash-command wiring.
 - Added mirrored coverage for the saved workflow manager, user-approved locator healing, atomic healing persistence with concurrent-update rejection, and workflow run-claim lifecycle.
-- Added mirrored coverage for screenshot redaction fail-closed behavior, staged attachment recovery, viewport budget charging, full-page capture refusals, Cloud Bridge settings placement, and the WebBrain Compass cost-limit exclusion.
+- Added mirrored coverage for screenshot redaction fail-closed behavior, staged attachment recovery, viewport budget charging, full-page capture refusals, Cloud Bridge settings placement, and the KavachWeb Compass cost-limit exclusion.
 - Updated `test/run.js` with the API badge removal assertions and the sidepanel authorization state checks.
 
 ## [27.0.0] - 2026-08-07
 
 ### Added
-- Added the WebBrain MCP server so Claude Code, Codex, Cursor, OpenClaw, and other MCP clients can delegate Ask or Act tasks to an already-authenticated Chromium session through the local browser bridge, with tools for connection checks, status polling, clarification responses, and aborting runs.
+- Added the KavachWeb MCP server so Claude Code, Codex, Cursor, OpenClaw, and other MCP clients can delegate Ask or Act tasks to an already-authenticated Chromium session through the local browser bridge, with tools for connection checks, status polling, clarification responses, and aborting runs.
 - Updated the LM Studio plugin with the same authenticated-browser delegation through `browser_task`, `browser_status`, `browser_respond`, and `browser_abort`, while retaining its standalone `fetch_url` and `research_url` tools.
-- Added a default-off persistent setting for API mutations and strict JSON Schema output support for WebBrain Cloud runs.
+- Added a default-off persistent setting for API mutations and strict JSON Schema output support for KavachWeb Cloud runs.
 
 ### Changed
 - Hardened local bridge task handling across MCP and LM Studio with bounded command and run deadlines, resumable status polling, disconnect recovery, explicit run aborts, and actionable connection diagnostics.
@@ -1614,12 +1614,12 @@ This changelog was generated from the repository Git history and release tags. V
 
 ### Fixed
 - Kept Ask-mode bridge runs read-only, rejected web-page WebSocket origins, preserved active runs across bridge disconnects, and prevented temporary API authorization or timeout state from leaking into later requests.
-- Tightened WebBrain Cloud structured-output validation, secret redaction, public-URL handling, scheduled-job scoping, and run-ID generation without discarding valid schema-shaped results.
+- Tightened KavachWeb Cloud structured-output validation, secret redaction, public-URL handling, scheduled-job scoping, and run-ID generation without discarding valid schema-shaped results.
 - Made iframe form automation fail closed on ambiguous targets and improved promoted-frame navigation, submission, and persisted-value verification in Chrome and Firefox.
 
 ### Tests
 - Added MCP and LM Studio bridge suites covering connection handshakes, concurrent commands, polling, timeouts, clarification, aborts, disconnect recovery, and clean shutdown.
-- Expanded WebBrain Cloud smoke scenarios and mirrored Chrome/Firefox regressions for structured output, privacy boundaries, iframe recovery, Act follow-ups, and localized completion states.
+- Expanded KavachWeb Cloud smoke scenarios and mirrored Chrome/Firefox regressions for structured output, privacy boundaries, iframe recovery, Act follow-ups, and localized completion states.
 
 ## [26.2.0] - 2026-08-06
 
@@ -1733,7 +1733,7 @@ This changelog was generated from the repository Git history and release tags. V
 - Centralized text sanitization and shared UI utilities and standardized provider message logic across Chrome and Firefox, including a Firefox utils dedup follow-up.
 - Hardened interactive Ask streaming: traced the streaming run lifecycle, preserved trace ordering, redacted JSON-shaped streaming secrets, and fixed duplicate normalized streamed answers.
 - Hardened chat/run clearing and cancellation: kept the composer locked while clearing, bounded unavailable stop-state probes, waited for stopped/local/direct run followers before clearing, suppressed updates from cleared runs, guarded the Stop fallback and stopped runs until a terminal state, scoped New Chat aborts to their originating tab, discarded queued prompts before clearing, stopped active runs before starting new chats, and cancelled schedules once active runs settle.
-- Added WebBrain Compass interface strings and microphone permission messages to all locales, refreshed the evroc provider icon and provider counts, and updated Discord links and added a Chinese community section to the docs sidebars.
+- Added KavachWeb Compass interface strings and microphone permission messages to all locales, refreshed the evroc provider icon and provider counts, and updated Discord links and added a Chinese community section to the docs sidebars.
 - Disabled the mode-pill animation for `prefers-reduced-motion`.
 
 ### Fixed
@@ -1772,7 +1772,7 @@ This changelog was generated from the repository Git history and release tags. V
 ### Changed
 - Expanded interactive Ask streaming from GPT-5.6 to documented streaming- and function-calling-capable official OpenAI models, while keeping GPT-5.5 Pro and other unsupported variants non-streaming.
 - Routed Responses-only GPT-5 Pro variants through the Responses API and retained Chat Completions streaming for other supported OpenAI models.
-- Enabled interactive Ask streaming for Anthropic, Azure OpenAI, Gemini, DeepSeek, xAI, Mistral, Nvidia NIM, Groq, Together AI, Fireworks, z.ai, OpenRouter, WebBrain Compass, llama.cpp, Ollama, LM Studio, Jan, vLLM, SGLang, and LocalAI with provider-specific terminal-event validation.
+- Enabled interactive Ask streaming for Anthropic, Azure OpenAI, Gemini, DeepSeek, xAI, Mistral, Nvidia NIM, Groq, Together AI, Fireworks, z.ai, OpenRouter, KavachWeb Compass, llama.cpp, Ollama, LM Studio, Jan, vLLM, SGLang, and LocalAI with provider-specific terminal-event validation.
 - Generalized the Advanced streaming control and made safe transport/protocol fallback silent: the affected generation retries non-streaming once, then streaming stays disabled for the rest of that run.
 
 ### Fixed
@@ -1946,11 +1946,11 @@ This changelog was generated from the repository Git history and release tags. V
 ## [25.3.0] - 2026-07-21
 
 ### Added
-- Added initial release note scaffolding for WebBrain.
+- Added initial release note scaffolding for KavachWeb.
 
 ### Changed
 - Updated OpenAI model usage to **gpt-5.4-nano-2026-03-17** and switched to `max_completion_tokens` for completion limits.
-- Switched WebBrain Compass provider integration from **GitHub Models** to direct **OpenAI API** calls (using `OPENAI_SECRET` via curl), improving consistency across providers.
+- Switched KavachWeb Compass provider integration from **GitHub Models** to direct **OpenAI API** calls (using `OPENAI_SECRET` via curl), improving consistency across providers.
 - Updated Chrome and Firefox builds to reflect the provider/model changes and associated configuration/UI updates.
 
 ### Fixed
@@ -1978,7 +1978,7 @@ This changelog was generated from the repository Git history and release tags. V
 ### Added
 - Added runtime completion invariants in Chrome and Firefox that track consequential actions, require a fresh successful observation before accepting a success claim, and preserve verification obligations across batched calls, trusted continuations, restored runs, and scheduled tasks.
 - Added localized permission education after repeated action prompts, with an onboarding note and a safe action that inserts `/dangerously-skip-permissions` for the specific pending prompt without overwriting an existing draft.
-- Added a permanent, fully localized **Tweet about WebBrain** recommended action that opens X's visible composer, publishes reviewed language-specific copy without asking the model to write or translate it, then verifies and reports the post URL when available.
+- Added a permanent, fully localized **Tweet about KavachWeb** recommended action that opens X's visible composer, publishes reviewed language-specific copy without asking the model to write or translate it, then verifies and reports the post URL when available.
 
 ### Changed
 - Action runs now reject plan-only, empty-step, promise-only, and premature terminal replies and continue into execution; explicitly requested plans and Markdown plus honest structured blockers remain valid results.
@@ -1992,7 +1992,7 @@ This changelog was generated from the repository Git history and release tags. V
 - Corrected false completion blocks for denied, skipped, or pre-dispatch actions; pre-existing targets; input and CAPTCHA preflight failures; screenshots not visible to the model; observed non-success outcomes; and self-verified scheduled tasks.
 
 ### Tests
-- Expanded mirrored Chrome and Firefox regression coverage for plan-to-execution handoffs, completion-invariant state and recovery, permission education and tab scoping, assistant-text repair, accessibility refs and field verification, and exact localized WebBrain post copy.
+- Expanded mirrored Chrome and Firefox regression coverage for plan-to-execution handoffs, completion-invariant state and recovery, permission education and tab scoping, assistant-text repair, accessibility refs and field verification, and exact localized KavachWeb post copy.
 
 ## [24.4.0] - 2026-07-18
 
@@ -2018,13 +2018,13 @@ This changelog was generated from the repository Git history and release tags. V
 - Replaced the first-install fake toolbar walkthrough with a real **Open Side Panel** action in Chromium and **Open Sidebar** action in Firefox.
 - Added an accessible Chromium first-open coachmark that points to the browser's actual side-panel pin, mirrors its arrow for left-side layouts such as Vivaldi, and clearly distinguishes that pin from the toolbar icon it adds.
 - Kept Firefox guidance aligned with its native Extensions menu and refreshed the install flow across all 16 supported locales.
-- Report the browser-resolved absolute path after WebBrain screenshots, recordings, transcripts, and run captures finish saving, including configured subfolders and uniquified filenames.
+- Report the browser-resolved absolute path after KavachWeb screenshots, recordings, transcripts, and run captures finish saving, including configured subfolders and uniquified filenames.
 
 ### Fixed
 - Removed non-interactive toolbar and extension-menu illustrations that looked clickable but could not complete setup.
 - Sequenced the Chromium pin coachmark before the existing model and safety onboarding so first-time setup has one clear action at a time.
 - Kept keyboard focus inside the pin coachmark while it is open and added an explicit **Skip this step** exit so first-run setup cannot strand the user.
-- Prevented early install-page clicks from disappearing, kept first-open tabs in the normal WebBrain panel group, and replaced premature success styling with browser-specific recovery guidance.
+- Prevented early install-page clicks from disappearing, kept first-open tabs in the normal KavachWeb panel group, and replaced premature success styling with browser-specific recovery guidance.
 
 ### Tests
 - Added Chrome and Firefox coverage for real panel opening, first-install coachmark state, modal focus handling, explicit dismissal paths, left/right arrow layout, native Firefox wording, responsive behavior, reduced motion, and locale parity.
@@ -2088,11 +2088,11 @@ This changelog was generated from the repository Git history and release tags. V
 ## [23.3.6] - 2026-07-15
 
 ### Added
-- Added a default-on **Help Improve WebBrain** control at the bottom of the visible Settings → General area in Chrome and Firefox. WebBrain Compass requests now send the current choice as `X-WebBrain-Help-Improve: 1` or `0`; local-model and bring-your-own API requests never receive that header.
+- Added a default-on **Help Improve KavachWeb** control at the bottom of the visible Settings → General area in Chrome and Firefox. KavachWeb Compass requests now send the current choice as `X-WebBrain-Help-Improve: 1` or `0`; local-model and bring-your-own API requests never receive that header.
 
 ### Changed
-- Updated the public privacy policy and developer data-flow documentation to disclose selected WebBrain Compass interaction retention and model-improvement use, the future-interaction opt-out, a 12-month raw-data limit, and a five-year limit for de-identified datasets.
-- Added opaque per-conversation WebBrain Compass session grouping across main, planner, compaction, intent, memory, and vision generations, with permanent opt-out tainting and no collection metadata on local or bring-your-own providers.
+- Updated the public privacy policy and developer data-flow documentation to disclose selected KavachWeb Compass interaction retention and model-improvement use, the future-interaction opt-out, a 12-month raw-data limit, and a five-year limit for de-identified datasets.
+- Added opaque per-conversation KavachWeb Compass session grouping across main, planner, compaction, intent, memory, and vision generations, with permanent opt-out tainting and no collection metadata on local or bring-your-own providers.
 - Added encrypted, compressed, text-and-tool-only Cloud improvement storage with image omission, authenticated session browsing, de-identified JSONL export, 12-month pruning, and isolated OpenRouter logging/no-logging key routing.
 
 ### Tests
@@ -2127,7 +2127,7 @@ This changelog was generated from the repository Git history and release tags. V
 ### Changed
 - Added bounded canonical semantic intents to the shared on-demand skill catalog so the planner and `load_skill` can route multilingual requests without literal keyword matching or an extra embedding call.
 - Let approved Act plans activate validated skill IDs before execution, with Dev inheriting Act-compatible skills, Ask limited to explicitly compatible skills, and Compact remaining skill-free.
-- Added recording and exporting WebBrain versions to new traces, conversation Markdown, trace Markdown, and Traces-page JSON while labeling legacy recording versions unavailable.
+- Added recording and exporting KavachWeb versions to new traces, conversation Markdown, trace Markdown, and Traces-page JSON while labeling legacy recording versions unavailable.
 
 ### Fixed
 - Redirected single-media browser download attempts to an eligible inactive FreeSkillz skill, including exact-permalink discovery on feeds and profiles, while preserving browser fallback only after a real server failure or unavailable skill.
@@ -2225,8 +2225,8 @@ This changelog was generated from the repository Git history and release tags. V
 ## [23.0.2] - 2026-07-13
 
 ### Added
-- Added `upload_file` tool support for Firefox WebBrain extension, including sidepanel-based user file picker flow and `downloadId` re-fetch flow with 25MB file size limit.
-- Added a selection shortcut for Chrome and Firefox with Summarize, Explain, Quiz me, Proofread, Translate, and custom WebBrain prompts.
+- Added `upload_file` tool support for Firefox KavachWeb extension, including sidepanel-based user file picker flow and `downloadId` re-fetch flow with 25MB file size limit.
+- Added a selection shortcut for Chrome and Firefox with Summarize, Explain, Quiz me, Proofread, Translate, and custom KavachWeb prompts.
 - Expanded the native selection context menu with matching preset actions, translation languages, and direct side-panel access.
 - Added a persistent setting to hide or restore the floating selection shortcut.
 - Added the managed cloud-browser bridge for API-driven run, status, abort, active-tab control, and validated structured results.
@@ -2264,7 +2264,7 @@ This changelog was generated from the repository Git history and release tags. V
 - Added Azure OpenAI and AWS Bedrock (Converse) providers in Chrome and Firefox, including Settings fields, provider manager wiring, docs, and regression coverage.
 - Added encrypted profile sync for providers, profile settings, memory, and auxiliary providers, with email auth, local password unlock, merge recovery, reset, and change-password controls.
 - Added Hebrew app localization and refreshed localized app and website copy.
-- Added GitHub funding metadata and refreshed the WebBrain logo, store listing, banner, favicon, social-card, and website image assets.
+- Added GitHub funding metadata and refreshed the KavachWeb logo, store listing, banner, favicon, social-card, and website image assets.
 
 ### Changed
 - Updated local model setup guidance and provider context-window detection for llama.cpp, Ollama, and LM Studio so live runtime windows can replace defaults while respecting manual overrides.
@@ -2387,7 +2387,7 @@ This changelog was generated from the repository Git history and release tags. V
 ### Added
 - Added `/dangerously-skip-permissions` in Chrome and Firefox so users can disable permission prompts directly from the side panel without opening Settings.
 - Kept `/dangerously-skip-permissions` available during active runs and have it resolve any pending permission prompt for the initiating tab with a one-time allow so the blocked run can continue immediately.
-- Added the Star History embed to the website so visitors can inspect WebBrain repository star growth from the homepage.
+- Added the Star History embed to the website so visitors can inspect KavachWeb repository star growth from the homepage.
 
 ### Changed
 - Updated slash-command help, autocomplete, busy-run notices, and localized warning copy for the new permission-skipping command.
@@ -2399,18 +2399,18 @@ This changelog was generated from the repository Git history and release tags. V
 ## [20.1.0] - 2026-07-03
 
 ### Changed
-- Raised the built-in WebBrain Compass provider context window to 1,000,000 tokens in Chrome and Firefox, while migrating stored legacy 256k configs forward without dropping saved API keys.
+- Raised the built-in KavachWeb Compass provider context window to 1,000,000 tokens in Chrome and Firefox, while migrating stored legacy 256k configs forward without dropping saved API keys.
 - Scaled the agent's soft context character and message budgets from the active provider token budget, so 1M-context providers no longer compact at the legacy 80k-character or 50-message limits.
 - Updated release metadata, Settings subtitle versions, Chrome / Firefox manifests, package versions, and browser architecture docs for 20.1.0.
 
 ### Tests
-- Added Chrome and Firefox regression coverage for the WebBrain Compass 1M default, legacy context-window migration, adaptive character/message context budgets, and large-window conversations avoiding premature compaction.
+- Added Chrome and Firefox regression coverage for the KavachWeb Compass 1M default, legacy context-window migration, adaptive character/message context budgets, and large-window conversations avoiding premature compaction.
 
 ## [20.0.0] - 2026-07-03
 
 ### Added
-- Added Chrome-only `/record-full-screen` as a slash-only screen/window recording flow that uses the offscreen recorder's `getDisplayMedia()` picker and records without the live WebBrain recording banner.
-- Added double-Escape recording stop handling on Chrome WebBrain/browser surfaces, with hidden recordings covered by a background-owned 2-hour safety cap.
+- Added Chrome-only `/record-full-screen` as a slash-only screen/window recording flow that uses the offscreen recorder's `getDisplayMedia()` picker and records without the live KavachWeb recording banner.
+- Added double-Escape recording stop handling on Chrome KavachWeb/browser surfaces, with hidden recordings covered by a background-owned 2-hour safety cap.
 - Added `--transcribe` for `/record` and `/record-full-screen` so user-driven recordings can still save a Whisper transcript after stop.
 
 ### Changed
@@ -2442,7 +2442,7 @@ This changelog was generated from the repository Git history and release tags. V
 ## [19.2.0] - 2026-07-02
 
 ### Added
-- Added a Chrome and Firefox side-panel message queue so normal composer messages sent while WebBrain is busy are kept per tab, shown above the composer, and can be edited or deleted before they run.
+- Added a Chrome and Firefox side-panel message queue so normal composer messages sent while KavachWeb is busy are kept per tab, shown above the composer, and can be edited or deleted before they run.
 
 ### Changed
 - Kept `/help`, `/show-scratchpad`, `/list-schedules`, `/screenshot`, `/export`, and `/verbose` available as immediate slash commands during active runs while other slash commands show the queued-message busy notice.
@@ -2603,7 +2603,7 @@ This changelog was generated from the repository Git history and release tags. V
 
 ### Added
 - Added a copy button to `/show-scratchpad` output in the Chrome and Firefox side panels so users can copy just the scratchpad contents.
-- Added WebBrain blog coverage and benchmark result files for raw LFM 2.5 230M and 350M on the frozen 100-case browser-agent planner harness.
+- Added KavachWeb blog coverage and benchmark result files for raw LFM 2.5 230M and 350M on the frozen 100-case browser-agent planner harness.
 
 ### Changed
 - Updated the tiny LFM benchmark conclusion and refreshed release metadata, Settings subtitle versions, architecture docs, Chrome / Firefox manifests, and package versions for 17.6.0.
@@ -2611,7 +2611,7 @@ This changelog was generated from the repository Git history and release tags. V
 ## [17.5.0] - 2026-06-26
 
 ### Added
-- Added async out-of-band slash-command handling in the Chrome and Firefox side panels, allowing `/help`, `/show-scratchpad`, `/list-schedules`, `/screenshot`, `/export`, and `/verbose` to run while WebBrain is busy.
+- Added async out-of-band slash-command handling in the Chrome and Firefox side panels, allowing `/help`, `/show-scratchpad`, `/list-schedules`, `/screenshot`, `/export`, and `/verbose` to run while KavachWeb is busy.
 
 ### Changed
 - Updated release metadata, Settings subtitle versions, architecture docs, Chrome / Firefox manifests, and package versions for 17.5.0.
@@ -2636,17 +2636,17 @@ This changelog was generated from the repository Git history and release tags. V
 
 ### Added
 - Added XML-style raw tool-call parsing for Chrome and Firefox so local/chat-template models that emit `<tool_call><function=...><parameter=...>` output can execute tools instead of returning raw markup.
-- Added a WebBrain Compass billing panel in Chrome and Firefox settings with device-bound Stripe account links, localized account copy, and expanded WebBrain Compass provider notes for subscription, billing, and privacy links.
+- Added a KavachWeb Compass billing panel in Chrome and Firefox settings with device-bound Stripe account links, localized account copy, and expanded KavachWeb Compass provider notes for subscription, billing, and privacy links.
 - Added Polish UI locale support for the Chrome and Firefox settings/payment flows.
 
 ### Changed
-- Updated WebBrain Compass `/subscribe` URLs and 402 allowance messages to include the device GUID as Stripe `client_reference_id`, and made the subscribe page require a device-bound link before redirecting to checkout.
+- Updated KavachWeb Compass `/subscribe` URLs and 402 allowance messages to include the device GUID as Stripe `client_reference_id`, and made the subscribe page require a device-bound link before redirecting to checkout.
 - Reworded the subscribe fallback page to tell users with outdated extension links to update the browser plugin.
 - Documented the newer slash commands in the English, French, and Chinese README files.
 - Updated release metadata, Settings subtitle versions, architecture docs, Chrome / Firefox manifests, and package versions for 17.2.0.
 
 ### Fixed
-- Purged legacy `auth.webbrain.one` token, email, and default-model storage during settings startup now that WebBrain Compass billing is device-GUID based.
+- Purged legacy `auth.webbrain.one` token, email, and default-model storage during settings startup now that KavachWeb Compass billing is device-GUID based.
 - Firefox side-panel message bubbles now expose copy buttons on user messages, with styling that remains legible on accent-colored bubbles.
 - Suppressed streamed raw tool-call text before rendered tool steps, so fallback tool calls do not linger as assistant text.
 
@@ -2656,7 +2656,7 @@ This changelog was generated from the repository Git history and release tags. V
 ## [17.1.0] - 2026-06-24
 
 ### Added
-- Introduced a better payment UI for WebBrain Compass: the quota-exceeded error now surfaces a Subscribe button that links users directly to upgrade their plan, with the button persisting and rebinding across chat restores.
+- Introduced a better payment UI for KavachWeb Compass: the quota-exceeded error now surfaces a Subscribe button that links users directly to upgrade their plan, with the button persisting and rebinding across chat restores.
 
 ### Changed
 - Translated the Subscribe button strings into all supported locales.
@@ -2687,7 +2687,7 @@ This changelog was generated from the repository Git history and release tags. V
 ## [16.0.0] - 2026-06-23
 
 ### Added
-- Added Chrome and Firefox context-menu integration: right-click selected page text and choose "Ask WebBrain about this" to open the WebBrain panel and submit the selection as untrusted page content.
+- Added Chrome and Firefox context-menu integration: right-click selected page text and choose "Ask KavachWeb about this" to open the KavachWeb panel and submit the selection as untrusted page content.
 
 ### Changed
 - Marked keyboard shortcuts and context menu integration as completed in the README roadmap.
@@ -2721,7 +2721,7 @@ This changelog was generated from the repository Git history and release tags. V
 ## [15.4.0] - 2026-06-23
 
 ### Added
-- Chrome now registers `Alt+Shift+W` as the default extension keyboard shortcut for opening the WebBrain panel.
+- Chrome now registers `Alt+Shift+W` as the default extension keyboard shortcut for opening the KavachWeb panel.
 
 ### Changed
 - Updated release metadata, Settings subtitle versions, architecture docs, Chrome / Firefox manifests, and package versions for 15.4.0.
@@ -2779,7 +2779,7 @@ This changelog was generated from the repository Git history and release tags. V
 
 ### Changed
 - Updated release metadata, Settings subtitle versions, architecture docs, Chrome / Firefox manifests, and package versions for 15.1.0.
-- Updated README and architecture docs to describe WebBrain Compass 1.0 as the default managed cloud option and document the scheduled-task system.
+- Updated README and architecture docs to describe KavachWeb Compass 1.0 as the default managed cloud option and document the scheduled-task system.
 - Refreshed release artwork and regenerated packaged Chrome / Firefox submission archives.
 
 ### Fixed
@@ -2836,7 +2836,7 @@ This changelog was generated from the repository Git history and release tags. V
 - Added a `schedule` permission-gate capability so scheduled future work is treated as a consequential action, with unattended scheduled runs defaulting to confirmation before clicks, typing, navigation, downloads, uploads, recording, or other gated actions.
 
 ### Changed
-- Full and mid Act-mode prompts now describe the scheduling tools and when they may be used; compact Act mode still forbids scheduling and tells the agent to ask the user to re-invoke WebBrain for external waits.
+- Full and mid Act-mode prompts now describe the scheduling tools and when they may be used; compact Act mode still forbids scheduling and tells the agent to ask the user to re-invoke KavachWeb for external waits.
 - Updated release metadata, Settings subtitle versions, architecture docs, Chrome / Firefox manifests, and required `alarms` permissions for 14.1.0.
 
 ### Fixed
@@ -2866,7 +2866,7 @@ This changelog was generated from the repository Git history and release tags. V
 ## [14.0.0] - 2026-06-18
 
 ### Changed
-- WebBrain Compass is now the default provider for new WebBrain configurations.
+- KavachWeb Compass is now the default provider for new KavachWeb configurations.
 - Updated release metadata, Settings subtitle versions, architecture docs, and Chrome / Firefox manifests for 14.0.0.
 
 ### Fixed
@@ -3057,7 +3057,7 @@ This changelog was generated from the repository Git history and release tags. V
 ## [8.1.0] - 2026-05-26
 
 ### Added
-- Added first-launch onboarding wizard: a 3-step walkthrough covering what WebBrain does, Act mode safety warnings, and LLM provider setup.
+- Added first-launch onboarding wizard: a 3-step walkthrough covering what KavachWeb does, Act mode safety warnings, and LLM provider setup.
 - Added MiniMax and Alibaba Cloud (Qwen) as new cloud providers.
 - Added model suggestion dropdowns for all cloud providers with a "Custom..." option for free-form entry.
 
@@ -3235,7 +3235,7 @@ This changelog was generated from the repository Git history and release tags. V
 - Added cross-platform extension zip build tooling.
 
 ### Changed
-- Scoped Chrome sidebar visibility to a per-window WebBrain tab group.
+- Scoped Chrome sidebar visibility to a per-window KavachWeb tab group.
 - Stopped adopting user-owned tab groups.
 - Lowered Act mode temperature.
 - Refreshed documentation for the 5.x release line.
@@ -3312,7 +3312,7 @@ This changelog was generated from the repository Git history and release tags. V
 ### Added
 - Added optional dedicated vision model support for screenshot reads.
 - Added vision model connection testing.
-- Added tab grouping to keep WebBrain tabs near the current context.
+- Added tab grouping to keep KavachWeb tabs near the current context.
 
 ### Changed
 - Stripped chain-of-thought output from vision model responses.

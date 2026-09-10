@@ -1,6 +1,6 @@
-# WebBrain Test Scenarios
+# KavachWeb Test Scenarios
 
-A dozen end-to-end tasks for evaluating the WebBrain browser agent across a spread of difficulty and UI-pattern coverage. Each scenario lists the site, the prompt to paste into the side panel, and the observable pass criterion.
+A dozen end-to-end tasks for evaluating the KavachWeb browser agent across a spread of difficulty and UI-pattern coverage. Each scenario lists the site, the prompt to paste into the side panel, and the observable pass criterion.
 
 ## Scenarios
 
@@ -21,7 +21,7 @@ A dozen end-to-end tasks for evaluating the WebBrain browser agent across a spre
 
 ### 4. GitHub issue filing — Medium
 - **Site:** github.com (your own test repo)
-- **Task:** "Open a new issue titled 'Test from WebBrain' with body 'ignore this' on github.com/&lt;you&gt;/&lt;repo&gt;."
+- **Task:** "Open a new issue titled 'Test from KavachWeb' with body 'ignore this' on github.com/&lt;you&gt;/&lt;repo&gt;."
 - **Expected:** Agent navigates to `/issues/new`, fills title + body, clicks Submit. Tests contenteditable body editor and duplicate-label "Submit new issue" button.
 
 ### 5. Gmail compose draft — Medium

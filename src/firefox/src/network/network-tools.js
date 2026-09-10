@@ -2,7 +2,7 @@ import { firefoxRestrictedDomainFailure } from '../firefox-restricted-domains.js
 import { filenameInConfiguredDownloadDirectory } from '../download-directory.js';
 
 /**
- * Network & download tools for the WebBrain agent (Firefox).
+ * Network & download tools for the KavachWeb agent (Firefox).
  *
  * Same surface as the chrome version but uses browser.* APIs and
  * browser.tabs.executeScript instead of chrome.scripting.executeScript.

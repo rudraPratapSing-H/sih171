@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Poolside Laguna XS OpenRouter WebBrain planner benchmark - WebBrain Blog</title>
-  <meta name="description" content="We ran poolside/laguna-xs-2.1:free through WebBrain&#39;s frozen 100-case browser-agent first-tool benchmark on OpenRouter. It is very fast and free to call, but 65% Sonnet alignment, only 6 exact first actions, and malformed tool names keep it out of the planner shortlist.">
-  <meta name="keywords" content="WebBrain, Poolside, Laguna XS, OpenRouter, browser agent, planner benchmark, tool calling, free model">
+  <title>Poolside Laguna XS OpenRouter KavachWeb planner benchmark - KavachWeb Blog</title>
+  <meta name="description" content="We ran poolside/laguna-xs-2.1:free through KavachWeb&#39;s frozen 100-case browser-agent first-tool benchmark on OpenRouter. It is very fast and free to call, but 65% Sonnet alignment, only 6 exact first actions, and malformed tool names keep it out of the planner shortlist.">
+  <meta name="keywords" content="KavachWeb, Poolside, Laguna XS, OpenRouter, browser agent, planner benchmark, tool calling, free model">
   <meta property="og:title" content="Poolside Laguna XS is fast and free, but not a planner win">
-  <meta property="og:description" content="Laguna XS on OpenRouter is quick and free, but its WebBrain planner row lands at 65% Sonnet alignment with weak exact-match behavior and a few malformed tool names.">
+  <meta property="og:description" content="Laguna XS on OpenRouter is quick and free, but its KavachWeb planner row lands at 65% Sonnet alignment with weak exact-match behavior and a few malformed tool names.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://webbrain.one/blog/poolside-laguna-xs-openrouter-planner-benchmark">
   <meta property="og:image" content="https://webbrain.one/og-image.png">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Poolside Laguna XS WebBrain planner benchmark">
+  <meta name="twitter:title" content="Poolside Laguna XS KavachWeb planner benchmark">
   <meta name="twitter:description" content="Laguna XS via OpenRouter: 92 parsed calls, 89 valid tool names, 6 exact first actions, 65% Sonnet alignment, and 1.30s median latency.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/poolside-laguna-xs-openrouter-planner-benchmark">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -474,8 +474,8 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Poolside Laguna XS is fast and free, but not a WebBrain planner win",
-  "description": "We ran poolside/laguna-xs-2.1:free through WebBrain's frozen 100-case browser-agent first-tool benchmark on OpenRouter. It is very fast and free to call, but 65% Sonnet alignment, only 6 exact first actions, and malformed tool names keep it out of the planner shortlist.",
+  "headline": "Poolside Laguna XS is fast and free, but not a KavachWeb planner win",
+  "description": "We ran poolside/laguna-xs-2.1:free through KavachWeb's frozen 100-case browser-agent first-tool benchmark on OpenRouter. It is very fast and free to call, but 65% Sonnet alignment, only 6 exact first actions, and malformed tool names keep it out of the planner shortlist.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -524,12 +524,12 @@
 
   <article>
     <div class="meta">July 10, 2026 &middot; 6 min read &middot; <a href="/blog">&larr; All posts</a></div>
-    <h1>Poolside Laguna XS is fast and free, but not a WebBrain planner win</h1>
-    <p class="lede"><code>poolside/laguna-xs-2.1:free</code> is a tempting OpenRouter target for WebBrain because it is free, fast, and exposes native tool calling through the OpenAI-compatible API. We ran it through the same frozen 100-case browser-agent first-tool benchmark used in the recent planner posts. The result is useful, but not flattering: Laguna XS is one of the faster hosted rows we have tested, yet it lands in the 65% Sonnet-alignment band and produces only six strict exact first-call matches.</p>
+    <h1>Poolside Laguna XS is fast and free, but not a KavachWeb planner win</h1>
+    <p class="lede"><code>poolside/laguna-xs-2.1:free</code> is a tempting OpenRouter target for KavachWeb because it is free, fast, and exposes native tool calling through the OpenAI-compatible API. We ran it through the same frozen 100-case browser-agent first-tool benchmark used in the recent planner posts. The result is useful, but not flattering: Laguna XS is one of the faster hosted rows we have tested, yet it lands in the 65% Sonnet-alignment band and produces only six strict exact first-call matches.</p>
 <h2 id="what-we-ran">What we ran</h2>
 <p>We used OpenRouter&#39;s OpenAI-compatible endpoint:</p>
 <pre><code class="language-text">poolside/laguna-xs-2.1:free</code></pre>
-<p>The run used the same frozen May 23, 2026 WebBrain baseline used by the recent planner posts: Claude Sonnet 4.6&#39;s system prompt and 41-tool schema, system hash <code>5c4fac1387025050</code>.</p>
+<p>The run used the same frozen May 23, 2026 KavachWeb baseline used by the recent planner posts: Claude Sonnet 4.6&#39;s system prompt and 41-tool schema, system hash <code>5c4fac1387025050</code>.</p>
 <pre><code class="language-bash">OPENROUTER_API_KEY=... node test/llm/run-llamacpp.mjs \
   --base https://openrouter.ai/api/v1 \
   --model poolside/laguna-xs-2.1:free \
@@ -545,7 +545,7 @@
 <h2 id="headline-result">Headline result</h2>
 <div class="table-wrap"><table><thead><tr><th>Metric</th><th>Poolside Laguna XS via OpenRouter</th></tr></thead><tbody><tr><td>Completed cases</td><td>100/100</td></tr><tr><td>Transport errors after paced retry</td><td>0</td></tr><tr><td>Parsed tool calls</td><td>92/100</td></tr><tr><td>Valid frozen-schema tool names</td><td>89/100</td></tr><tr><td>Malformed tool names</td><td>3</td></tr><tr><td>Strict exact first-call match</td><td>6/100</td></tr><tr><td>Ideal tool-name match</td><td>27/100</td></tr><tr><td>Sonnet match, all cases</td><td>65.0%</td></tr><tr><td>Sonnet match, when Sonnet tooled</td><td>65.2%</td></tr><tr><td>Sonnet no-tool decisions matched</td><td>5/8</td></tr><tr><td>Average latency</td><td>1.62s</td></tr><tr><td>Median latency</td><td>1.30s</td></tr><tr><td>p95 latency</td><td>3.08s</td></tr><tr><td>Slowest case</td><td>16.32s</td></tr><tr><td>OpenRouter reported cost</td><td>$0.00</td></tr></tbody></table></div>
 <p>The speed is genuinely good. Median latency was 1.30s, p95 was 3.08s, and the endpoint reported zero cost for this free run. For a hosted model behind OpenRouter, that is a pleasant operational profile.</p>
-<p>The planner score is the problem. Laguna XS lands at the same 65% all-case Sonnet alignment as Nex-N2-mini and Nemotron 3 Ultra free, but with much weaker strict exact behavior than both. Six exact first-call matches is not enough for WebBrain&#39;s default planner slot.</p>
+<p>The planner score is the problem. Laguna XS lands at the same 65% all-case Sonnet alignment as Nex-N2-mini and Nemotron 3 Ultra free, but with much weaker strict exact behavior than both. Six exact first-call matches is not enough for KavachWeb&#39;s default planner slot.</p>
 <h2 id="the-protocol-issue">The protocol issue</h2>
 <p>Laguna XS emitted native OpenAI <code>tool_calls</code>, but three of those calls had malformed tool names. Instead of choosing one function from the 41-tool schema, it packed tool-like text into the function name itself:</p>
 <div class="table-wrap"><table><thead><tr><th>Case</th><th>Malformed tool name</th></tr></thead><tbody><tr><td>018</td><td><code>click(...)&lt;tool_call&gt;click(...)&lt;tool_call&gt;wait_for_element</code></td></tr><tr><td>060</td><td><code>click(...)&lt;tool_call&gt;click(...)&lt;tool_call&gt;type_text(...)&lt;tool_call&gt;press_keys(...)</code></td></tr><tr><td>071</td><td><code>get_accessibility_tree&lt;filter: &quot;visible&quot;</code></td></tr></tbody></table></div>
@@ -572,21 +572,21 @@
 <p>The completion side is heavier than the best local rows. Laguna used 11,221 completion tokens, compared with 7,348 for the patched ThinkingCap run and 7,720 for the older Qwen 3.6 27B row. Some of that is visible in the malformed tool-name cases, where it tries to squeeze a mini-plan into one tool call.</p>
 <h2 id="updated-context">Updated context</h2>
 <p>Rows are ranked by all-case Sonnet match, then Sonnet-tooled match.</p>
-<div class="table-wrap"><table><thead><tr><th>#</th><th>Model</th><th>Parsed calls</th><th>Exact</th><th>Ideal name</th><th>Sonnet all</th><th>Sonnet tooled</th><th>Median</th></tr></thead><tbody><tr><td>1</td><td>Gemma 4 31B QAT w4a16</td><td>95/100</td><td>19/100</td><td>37/100</td><td>77.0%</td><td>78.3%</td><td>0.55s</td></tr><tr><td>2</td><td>Qwen 3.6 27B</td><td>92/100</td><td>18/100</td><td>37/100</td><td>77.0%</td><td>77.2%</td><td>10.18s</td></tr><tr><td>3</td><td>MiniMax M2.7</td><td>88/100</td><td>23/100</td><td>36/100</td><td>77.0%</td><td>76.1%</td><td>3.05s</td></tr><tr><td>4</td><td>ThinkingCap 27B INT4</td><td>91/100</td><td>19/100</td><td>35/100</td><td>77.0%</td><td>76.1%</td><td>2.25s</td></tr><tr><td>5</td><td>Qwen 3.7 Plus</td><td>95/100</td><td>19/100</td><td>41/100</td><td>75.0%</td><td>77.2%</td><td>3.74s</td></tr><tr><td>6</td><td>Agents-A1 AWQ INT4</td><td>88/100</td><td>15/100</td><td>33/100</td><td>75.0%</td><td>75.0%</td><td>1.66s</td></tr><tr><td>7</td><td>MiniMax M3</td><td>85/100</td><td>17/100</td><td>32/100</td><td>75.0%</td><td>73.9%</td><td>3.06s</td></tr><tr><td>8</td><td>Qwen 3.6 27B NVFP4</td><td>96/100</td><td>18/100</td><td>38/100</td><td>74.0%</td><td>77.2%</td><td>1.76s</td></tr><tr><td>9</td><td>Tencent Hy3 free</td><td>95/100</td><td>20/100</td><td>38/100</td><td>73.0%</td><td>75.0%</td><td>3.68s</td></tr><tr><td>10</td><td>WebBrain Compass 1.0</td><td>90/100</td><td>16/100</td><td>35/100</td><td>73.0%</td><td>72.8%</td><td>8.77s</td></tr><tr><td>11</td><td>Ornith-1.0-35B NVFP4</td><td>88/100</td><td>21/100</td><td>36/100</td><td>71.0%</td><td>70.7%</td><td>2.38s</td></tr><tr><td>12</td><td>Qwen 3.6 35B-A3B</td><td>90/100</td><td>18/100</td><td>38/100</td><td>70.0%</td><td>70.7%</td><td>10.29s</td></tr><tr><td>13</td><td>Nex-N2-mini</td><td>93/100</td><td>16/100</td><td>28/100</td><td>65.0%</td><td>66.3%</td><td>2.23s</td></tr><tr><td>14</td><td>Laguna XS free</td><td>92/100</td><td>6/100</td><td>27/100</td><td>65.0%</td><td>65.2%</td><td>1.30s</td></tr><tr><td>15</td><td>Nemotron 3 Ultra free</td><td>81/100</td><td>17/100</td><td>33/100</td><td>65.0%</td><td>64.1%</td><td>5.89s</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Model</th><th>Parsed calls</th><th>Exact</th><th>Ideal name</th><th>Sonnet all</th><th>Sonnet tooled</th><th>Median</th></tr></thead><tbody><tr><td>1</td><td>Gemma 4 31B QAT w4a16</td><td>95/100</td><td>19/100</td><td>37/100</td><td>77.0%</td><td>78.3%</td><td>0.55s</td></tr><tr><td>2</td><td>Qwen 3.6 27B</td><td>92/100</td><td>18/100</td><td>37/100</td><td>77.0%</td><td>77.2%</td><td>10.18s</td></tr><tr><td>3</td><td>MiniMax M2.7</td><td>88/100</td><td>23/100</td><td>36/100</td><td>77.0%</td><td>76.1%</td><td>3.05s</td></tr><tr><td>4</td><td>ThinkingCap 27B INT4</td><td>91/100</td><td>19/100</td><td>35/100</td><td>77.0%</td><td>76.1%</td><td>2.25s</td></tr><tr><td>5</td><td>Qwen 3.7 Plus</td><td>95/100</td><td>19/100</td><td>41/100</td><td>75.0%</td><td>77.2%</td><td>3.74s</td></tr><tr><td>6</td><td>Agents-A1 AWQ INT4</td><td>88/100</td><td>15/100</td><td>33/100</td><td>75.0%</td><td>75.0%</td><td>1.66s</td></tr><tr><td>7</td><td>MiniMax M3</td><td>85/100</td><td>17/100</td><td>32/100</td><td>75.0%</td><td>73.9%</td><td>3.06s</td></tr><tr><td>8</td><td>Qwen 3.6 27B NVFP4</td><td>96/100</td><td>18/100</td><td>38/100</td><td>74.0%</td><td>77.2%</td><td>1.76s</td></tr><tr><td>9</td><td>Tencent Hy3 free</td><td>95/100</td><td>20/100</td><td>38/100</td><td>73.0%</td><td>75.0%</td><td>3.68s</td></tr><tr><td>10</td><td>KavachWeb Compass 1.0</td><td>90/100</td><td>16/100</td><td>35/100</td><td>73.0%</td><td>72.8%</td><td>8.77s</td></tr><tr><td>11</td><td>Ornith-1.0-35B NVFP4</td><td>88/100</td><td>21/100</td><td>36/100</td><td>71.0%</td><td>70.7%</td><td>2.38s</td></tr><tr><td>12</td><td>Qwen 3.6 35B-A3B</td><td>90/100</td><td>18/100</td><td>38/100</td><td>70.0%</td><td>70.7%</td><td>10.29s</td></tr><tr><td>13</td><td>Nex-N2-mini</td><td>93/100</td><td>16/100</td><td>28/100</td><td>65.0%</td><td>66.3%</td><td>2.23s</td></tr><tr><td>14</td><td>Laguna XS free</td><td>92/100</td><td>6/100</td><td>27/100</td><td>65.0%</td><td>65.2%</td><td>1.30s</td></tr><tr><td>15</td><td>Nemotron 3 Ultra free</td><td>81/100</td><td>17/100</td><td>33/100</td><td>65.0%</td><td>64.1%</td><td>5.89s</td></tr></tbody></table></div>
 <p>This is not a shortlist row. Laguna XS is fast enough to be pleasant, but it sits below the real planner candidates on exactness, ideal-name score, and tool-call contract discipline.</p>
 <h2 id="bottom-line">Bottom line</h2>
 <p>Poolside Laguna XS is a good reminder that low latency and native tool calling are necessary, not sufficient.</p>
 <p>For cheap experimentation, the endpoint is nice. It completed the frozen suite after paced retries, reported zero cost, returned quickly, and matched direct-navigation cases cleanly. If all you need is a free OpenRouter endpoint that can usually emit a tool call, it is usable.</p>
-<p>For WebBrain&#39;s planner shortlist, I would not use this run as a reason to move it forward. The 65% Sonnet score is middle-to-low in the current table, and the <code>6/100</code> exact score is the real warning sign. A browser agent needs one valid, dispatchable first action. Laguna XS sometimes gives you that. Sometimes it gives you a tiny action script jammed into a function name. That is fun to read, but not something I want in the driver&#39;s seat.</p>
-<p>Tags: #Poolside #LagunaXS #OpenRouter #ToolCalling #BrowserAgent #WebBrain</p>
+<p>For KavachWeb&#39;s planner shortlist, I would not use this run as a reason to move it forward. The 65% Sonnet score is middle-to-low in the current table, and the <code>6/100</code> exact score is the real warning sign. A browser agent needs one valid, dispatchable first action. Laguna XS sometimes gives you that. Sometimes it gives you a tiny action script jammed into a function name. That is fun to read, but not something I want in the driver&#39;s seat.</p>
+<p>Tags: #Poolside #LagunaXS #OpenRouter #ToolCalling #BrowserAgent #KavachWeb</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

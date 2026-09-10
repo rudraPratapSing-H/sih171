@@ -10,7 +10,7 @@ description: >
 excerpt: >
   We benchmarked 13 local and API models on 100 real browser-agent tool-calling tasks against both consensus voting and Claude Sonnet 4.6. The consensus winner (Qwen 3.6-35B-A3B at 94%) isn't the Sonnet-match winner (Qwen 3.6-27B at 77%) — and that gap tells you something useful about what "correct" means for tool calling.
 titleTag: >
-  13 LLMs, 100 Browser Tasks, Two Baselines: Which Model Actually Picks the Right Tool? — WebBrain Blog
+  13 LLMs, 100 Browser Tasks, Two Baselines: Which Model Actually Picks the Right Tool? — KavachWeb Blog
 ogTitle: >
   13 LLMs, 100 Browser Tasks: Which Model Picks the Right Tool?
 ogDescription: >
@@ -26,18 +26,18 @@ keywords:
   - Qwen 3.6
   - Claude Sonnet
   - consensus voting
-  - WebBrain
+  - KavachWeb
   - self-hosted LLM
   - MoE
   - Gemma 4
 html: true
 lede: >
-  Our previous blog posts focused on vision — which model reads a screenshot best. This one is about the other half of a browser agent: **tool use and reasoning**. We ran 13 models through 100 real WebBrain prompts and scored them two ways: against majority-vote consensus and against Claude Sonnet 4.6. The consensus winner is not the Sonnet-match winner — and that gap tells you something useful about what “correct” means for tool calling.
+  Our previous blog posts focused on vision — which model reads a screenshot best. This one is about the other half of a browser agent: **tool use and reasoning**. We ran 13 models through 100 real KavachWeb prompts and scored them two ways: against majority-vote consensus and against Claude Sonnet 4.6. The consensus winner is not the Sonnet-match winner — and that gap tells you something useful about what “correct” means for tool calling.
 ---
 
 ## The setup
 
-WebBrain routes browser automation through tool calls — `click`, `type`, `scroll`, `navigate`, and so on. The planner LLM sees a page description and a user prompt, then picks a tool and its arguments. We collected 100 representative prompts from real sessions and ran them through 13 models, most self-hosted on local hardware via llama.cpp and vLLM, plus one API model (MiniMax M2.7 through OpenRouter).
+KavachWeb routes browser automation through tool calls — `click`, `type`, `scroll`, `navigate`, and so on. The planner LLM sees a page description and a user prompt, then picks a tool and its arguments. We collected 100 representative prompts from real sessions and ran them through 13 models, most self-hosted on local hardware via llama.cpp and vLLM, plus one API model (MiniMax M2.7 through OpenRouter).
 
 Each model got the same system prompt, the same page context, and the same user instruction. We recorded the first tool pick, latency, token counts, and cost.
 
@@ -140,7 +140,7 @@ Files included:
 
 ## What we’re doing with this
 
-WebBrain already uses Qwen 3.6-35B-A3B as the default planner for self-hosted deployments. This benchmark confirms that choice for consensus-safe routing. We are also exploring a hybrid approach: use the MoE for fast routing on clear-cut prompts, and fall back to the dense 27B (or an API call to Sonnet) for ambiguous cases where frontier judgment matters more than speed.
+KavachWeb already uses Qwen 3.6-35B-A3B as the default planner for self-hosted deployments. This benchmark confirms that choice for consensus-safe routing. We are also exploring a hybrid approach: use the MoE for fast routing on clear-cut prompts, and fall back to the dense 27B (or an API call to Sonnet) for ambiguous cases where frontier judgment matters more than speed.
 
 The per-task data also revealed specific prompt categories where all local models diverge from Sonnet — these are candidates for improved system prompts or few-shot examples in the tool-calling pipeline.
 

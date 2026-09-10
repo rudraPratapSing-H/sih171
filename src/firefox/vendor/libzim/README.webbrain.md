@@ -1,7 +1,7 @@
 # Vendored Xapian/libzim WebAssembly runtime
 
 Built from source by `scripts/build-zim-xapian.mjs`. Do not hand-copy an
-upstream release asset here: WebBrain cannot provide corresponding source for a
+upstream release asset here: KavachWeb cannot provide corresponding source for a
 binary it did not build. See `docs/offline-rag-licensing.md`.
 
 - Upstream: https://github.com/openzim/javascript-libzim.git `v0.95` (`470b36920fba421a4c1a83b326e66d8aa0533870`)

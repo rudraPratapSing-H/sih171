@@ -1,5 +1,5 @@
 /**
- * Network & download tools for the WebBrain agent.
+ * Network & download tools for the KavachWeb agent.
  *
  * These run in the background service worker context, so they have access
  * to fetch() (with the user's cookies via credentials:'include'), the

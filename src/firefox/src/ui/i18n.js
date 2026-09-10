@@ -1,4 +1,4 @@
-// Minimal i18n for WebBrain extension pages (sidepanel, settings, traces).
+// Minimal i18n for KavachWeb extension pages (sidepanel, settings, traces).
 // Sync reads from localStorage so translations apply before first paint.
 // Works identically in Chrome MV3 and Firefox MV2.
 

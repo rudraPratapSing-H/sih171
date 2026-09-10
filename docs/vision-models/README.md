@@ -1,6 +1,6 @@
 # DeepSeek V4 Flash Vision and Laguna XS 2.1 Vision
 
-This directory is the reproducibility record for two WebBrain experiments that add a
+This directory is the reproducibility record for two KavachWeb experiments that add a
 frozen MoonViT image tower and a trained patch-merger projector to frozen mixture-of-experts
 language models.
 

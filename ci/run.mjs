@@ -228,7 +228,7 @@ async function executeScenario({ scenario, suiteDir, cloud, gnippets, video }) {
         capture: 'none',
       });
       const preloadId = resolveCloudRunId(preload);
-      if (!preloadId) throw new Error('WebBrain Cloud did not return a preload run id.');
+      if (!preloadId) throw new Error('KavachWeb Cloud did not return a preload run id.');
       const preloaded = await cloud.waitForRun(browser.id, preloadId, { timeoutMs: scenario.timeout_ms + 120_000 });
       if (preloaded.status !== 'completed') throw new Error(`Page preload ended with ${preloaded.status}.`);
       tabId = preloaded.tab_id ?? preloaded.tabId;
@@ -243,7 +243,7 @@ async function executeScenario({ scenario, suiteDir, cloud, gnippets, video }) {
       apiMutationsAllowed: scenario.api_mutations_allowed === true,
     });
     const runId = resolveCloudRunId(started);
-    if (!runId) throw new Error('WebBrain Cloud did not return a run id.');
+    if (!runId) throw new Error('KavachWeb Cloud did not return a run id.');
     reachedRunStart = true;
     run = await waitForRunWithClarifications({ cloud, sessionId: browser.id, runId, scenario });
     await writeJson(path.join(scenarioDir, 'run.json'), sensitive ? sanitizeRun(run) : run);

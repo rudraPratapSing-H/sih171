@@ -1,5 +1,5 @@
 /**
- * WebBrain — in-page accessibility tree builder.
+ * KavachWeb — in-page accessibility tree builder.
  *
  * This is a port of the approach used by Claude for Chrome
  * (claudeplugin/assets/accessibility-tree.js). The original ships minified;
@@ -1377,7 +1377,7 @@
 
   function generateAccessibilityTree(filter, maxDepth, maxChars, refId, page, expectedTreeRevision) {
     try {
-      console.log("[WebBrain AX] accessibility-tree.js loaded");
+      console.log("[KavachWeb AX] accessibility-tree.js loaded");
       ensureRefScope();
       const effFilter = filter || 'all';
       const conversationRoot = detectGmailConversationRoot();

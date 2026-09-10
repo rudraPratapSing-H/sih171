@@ -1,16 +1,16 @@
 ---
-FIREFOX ADD-ONS (AMO) LISTING - WebBrain v0.9.0
+FIREFOX ADD-ONS (AMO) LISTING - KavachWeb v0.9.0
 ---
 
-NAME: WebBrain — Open-Source AI Browser Agent
+NAME: KavachWeb — Open-Source AI Browser Agent
 
 SUMMARY (up to 250 chars):
 Open-source AI browser agent for Firefox. Use any LLM (OpenAI, Gemini, Anthropic, local models) to read, analyze, and automate web pages via the Firefox sidebar.
 
 DESCRIPTION (up to 8,000 chars):
-WebBrain is an open-source Firefox add-on that turns any LLM into a powerful browser agent — integrated seamlessly into your Firefox sidebar.
+KavachWeb is an open-source Firefox add-on that turns any LLM into a powerful browser agent — integrated seamlessly into your Firefox sidebar.
 
-Unlike proprietary alternatives, WebBrain is provider-agnostic: use OpenAI, Google Gemini, Anthropic Claude, or local models via OpenRouter. Your choice, your API key, your data.
+Unlike proprietary alternatives, KavachWeb is provider-agnostic: use OpenAI, Google Gemini, Anthropic Claude, or local models via OpenRouter. Your choice, your API key, your data.
 
 TWO MODES:
 
@@ -30,7 +30,7 @@ Full browser automation with your permission. Let the AI agent interact with pag
 • Execute multi-step workflows
 
 FIREFOX INTEGRATION:
-• Native sidebar integration — access WebBrain anytime with Ctrl+Shift+E (customizable)
+• Native sidebar integration — access KavachWeb anytime with Ctrl+Shift+E (customizable)
 • Works with Firefox's sidebar_action API
 • Persistent sidebar across tabs and windows
 • Full keyboard shortcuts support
@@ -54,7 +54,7 @@ KEY FEATURES:
 • Open source (GPL-3.0-or-later for version 33.0.0 and later)
 
 PRIVACY & SECURITY:
-WebBrain runs entirely in your browser. Your API keys are stored locally and never sent to any third-party server. All communication goes directly between your Firefox browser and your chosen AI provider. The full source code is available on GitHub for audit.
+KavachWeb runs entirely in your browser. Your API keys are stored locally and never sent to any third-party server. All communication goes directly between your Firefox browser and your chosen AI provider. The full source code is available on GitHub for audit.
 
 Website: https://webbrain.one
 GitHub: https://github.com/webbrain-one/webbrain

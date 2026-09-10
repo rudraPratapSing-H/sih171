@@ -8,7 +8,7 @@
 - `sqlite3.wasm` SHA-256: `02d7e48164395fa68f81c6ec33e9da5461be397dc57602ac0cd89b4bbba1d312`
 - License: Apache-2.0 (see `LICENSE`); the underlying SQLite core is public domain
 
-WebBrain initializes the `opfs-sahpool` VFS in a dedicated module worker. That
+KavachWeb initializes the `opfs-sahpool` VFS in a dedicated module worker. That
 VFS does not require cross-origin isolation and keeps all database I/O off the
 UI thread. The runtime is bundled with the extension; no executable code is
 fetched at runtime.

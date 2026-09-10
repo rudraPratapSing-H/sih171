@@ -310,7 +310,7 @@ test("a replacement socket receives nothing until it sends a valid hello", async
 
   await assert.rejects(
     () => sharedBridge().request("cloud_run", { task: "private task", mode: "ask" }),
-    /No WebBrain browser extension is connected/,
+    /No KavachWeb browser extension is connected/,
   );
   assert.equal(receivedCommands, 0);
 

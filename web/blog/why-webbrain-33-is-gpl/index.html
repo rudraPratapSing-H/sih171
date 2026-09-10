@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Why WebBrain 33.0.0 is GPL - WebBrain Blog</title>
-  <meta name="description" content="WebBrain 33.0.0 ships under GPL-3.0-or-later because the extension bundles the Xapian/libzim WebAssembly runtime for full-text Wikipedia ZIM search. Releases before 33.0.0 remain MIT.">
-  <meta name="keywords" content="WebBrain, GPL, GPL-3.0, open source license, Xapian, libzim, Wikipedia offline, Apocalypse Mode">
-  <meta property="og:title" content="Why WebBrain 33.0.0 is GPL">
+  <title>Why KavachWeb 33.0.0 is GPL - KavachWeb Blog</title>
+  <meta name="description" content="KavachWeb 33.0.0 ships under GPL-3.0-or-later because the extension bundles the Xapian/libzim WebAssembly runtime for full-text Wikipedia ZIM search. Releases before 33.0.0 remain MIT.">
+  <meta name="keywords" content="KavachWeb, GPL, GPL-3.0, open source license, Xapian, libzim, Wikipedia offline, Apocalypse Mode">
+  <meta property="og:title" content="Why KavachWeb 33.0.0 is GPL">
   <meta property="og:description" content="We relicensed 33.0.0 to GPL-3.0-or-later after bundling the Xapian/libzim Wasm runtime for offline Wikipedia search. Older releases stay MIT.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://webbrain.one/blog/why-webbrain-33-is-gpl">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Why WebBrain 33.0.0 is GPL">
+  <meta name="twitter:title" content="Why KavachWeb 33.0.0 is GPL">
   <meta name="twitter:description" content="Full-text Wikipedia ZIM search needs a GPL runtime in the Chrome and Firefox packages. That is why 33.0.0 is GPL.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/why-webbrain-33-is-gpl">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -474,8 +474,8 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Why WebBrain 33.0.0 is GPL",
-  "description": "WebBrain 33.0.0 ships under GPL-3.0-or-later because the extension bundles the Xapian/libzim WebAssembly runtime for full-text Wikipedia ZIM search. Releases before 33.0.0 remain MIT.",
+  "headline": "Why KavachWeb 33.0.0 is GPL",
+  "description": "KavachWeb 33.0.0 ships under GPL-3.0-or-later because the extension bundles the Xapian/libzim WebAssembly runtime for full-text Wikipedia ZIM search. Releases before 33.0.0 remain MIT.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -524,19 +524,19 @@
 
   <article>
     <div class="meta">August 20, 2026 &middot; 2 min read &middot; <a href="/blog">&larr; All posts</a></div>
-    <h1>Why WebBrain 33.0.0 is GPL</h1>
-    <p class="lede"><strong>WebBrain 33.0.0 is GPL-3.0-or-later.</strong> Tagged releases before that stay MIT.</p>
+    <h1>Why KavachWeb 33.0.0 is GPL</h1>
+    <p class="lede"><strong>KavachWeb 33.0.0 is GPL-3.0-or-later.</strong> Tagged releases before that stay MIT.</p>
 <p>Apocalypse Mode&#39;s Wikipedia reader needed real full-text search over ZIM archives, not just title lookup. The working way to query the Xapian index inside those files, in a browser, is <a href="https://github.com/openzim/libzim" target="_blank" rel="noopener">libzim</a> compiled to WebAssembly. That runtime is GPL. Once it is bundled and wired into the Chrome and Firefox packages, the combined work has to ship under compatible GPL terms. A settings toggle that hides Apocalypse Mode does not change the license of what was distributed.</p>
 <p>GPL-3.0-or-later is the version because javascript-libzim is GPL-3.0-or-later while libzim and Xapian are GPL-2.0-or-later, and &quot;or later&quot; lets both move up. GPL-3.0 also stays compatible with Apache-2.0 libraries we already ship.</p>
 <p>The MCP server and LM Studio plugin remain MIT. Third-party files keep their own notices. Each 33.x release publishes corresponding source for the bundled Wasm. The longer record is in the <a href="https://github.com/webbrain-one/webbrain/blob/main/docs/offline-rag-licensing.md" target="_blank" rel="noopener">licensing decision</a>.</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

@@ -70,7 +70,7 @@ class BaseLLMProvider {
 
 ### Extended provider catalog
 
-WebBrain also ships 77 disabled-by-default provider cards. Most are sourced
+KavachWeb also ships 77 disabled-by-default provider cards. Most are sourced
 from the OpenCode provider catalog snapshot at commit
 `62e4641235d7847dadc60da37cca8a023dd54fc1`; provider-specific additions use
 their official API documentation. Together with the original cards, Settings
@@ -109,8 +109,8 @@ non-streaming. Tool calls are withheld until a terminal protocol event arrives
 premature EOF clears partial UI text and retries that turn once without
 streaming; the rest of that run then stays non-streaming.
 
-When a streaming provider returns token usage, WebBrain records it directly.
-If the provider omits usage, WebBrain records a conservative character-based
+When a streaming provider returns token usage, KavachWeb records it directly.
+If the provider omits usage, KavachWeb records a conservative character-based
 estimate so streaming cannot bypass the configured cost allowance.
 
 The setting still uses the stored key `openaiAskStreamingEnabled` for backward
@@ -158,19 +158,19 @@ Apocalypse text picker offers two shipped presets:
   starts this download automatically.
 - [`prism-ml/Bonsai-27B-gguf`](https://huggingface.co/prism-ml/Bonsai-27B-gguf)
   (`Q1_0`, about 3.8 GB) through a dedicated vendored [bitgpu](https://github.com/stfurkan/bitgpu)
-  worker. Bonsai is opt-in: WebBrain never auto-downloads the 27B weights.
+  worker. Bonsai is opt-in: KavachWeb never auto-downloads the 27B weights.
   It needs a high-end GPU (16 GB+ RAM/VRAM recommended). GPU-resident LFM and
   Bonsai sessions are never live at the same time; disk caches may coexist.
 
 Custom Hugging Face repositories have not been tested and are likely not to
 work. They must be compatible with Transformers.js text generation, provide a
-`q4f16` ONNX variant, and use a chat template that accepts `tools`; WebBrain
+`q4f16` ONNX variant, and use a chat template that accepts `tools`; KavachWeb
 validates the template after loading and rejects incompatible repositories.
 Do not point Transformers.js at the Bonsai GGUF — 27B is not an ONNX pipeline.
 
 The provider is text-only and defaults to the Compact prompt tier with a
 conservative 16k practical context setting. LFM2.5 2.6B uses its official pure
-reasoning template; WebBrain keeps text before `</think>` out of the visible
+reasoning template; KavachWeb keeps text before `</think>` out of the visible
 answer and reports an error if reasoning exhausts the output budget. Bonsai
 uses bitgpu `think: true` with a 128-token think budget and the same
 post-think visible-answer UX. Each repository is cached separately in Chrome.
@@ -204,11 +204,11 @@ then start Studio and load a chat model. In Studio, open the avatar menu,
 choose **Settings → API Access**, and create an API key. Keys currently use the
 `sk-unsloth-` prefix; keep the full value private.
 
-In WebBrain, open **Settings → Providers → Unsloth Studio (Local)**. Enter the
+In KavachWeb, open **Settings → Providers → Unsloth Studio (Local)**. Enter the
 Studio API address as `http://127.0.0.1:8888/v1`, replacing `8888` when the
 running Studio instance shows a different port. Enter the generated API key,
 click **Load Models**, select the loaded model, then click **Test Connection**.
-WebBrain normalizes a
+KavachWeb normalizes a
 base URL entered without the terminal `/v1` after a successful request.
 
 Unsloth model discovery, chat, interactive Ask streaming, and tool calls use
@@ -217,9 +217,9 @@ vision checkbox only when the model loaded in Studio accepts image input.
 
 #### Subscription proxy guide (EasyCLIProxyAPI / CLIProxyAPI)
 
-The generic **Local OpenAI-compatible Proxy** card can connect WebBrain to a
+The generic **Local OpenAI-compatible Proxy** card can connect KavachWeb to a
 separately managed [EasyCLIProxyAPI](https://github.com/router-for-me/EasyCLIProxyAPI)
-or [CLIProxyAPI](https://github.com/router-for-me/CLIProxyAPI) instance. WebBrain
+or [CLIProxyAPI](https://github.com/router-for-me/CLIProxyAPI) instance. KavachWeb
 uses only the local OpenAI-compatible endpoint and its client key; it does not
 bundle, launch, update, audit, or manage the proxy or its upstream OAuth tokens.
 
@@ -230,12 +230,12 @@ Keep the listener on `127.0.0.1`, require a strong random client key, and never
 publish the endpoint to a LAN or the internet. Official provider API keys remain
 the stable default.
 
-Ollama, llama.cpp, LM Studio, and LocalAI default to `visionMode: auto`. WebBrain asks
+Ollama, llama.cpp, LM Studio, and LocalAI default to `visionMode: auto`. KavachWeb asks
 the selected server for model capability metadata before enrichment and sends
 screenshots only when the response explicitly reports image input. A failed or
 malformed metadata request is text-only for that turn and is retried later;
 Settings can override Auto with Force on or Off. For providers whose Model
-field may be blank, WebBrain coalesces concurrent checks but rechecks once per
+field may be blank, KavachWeb coalesces concurrent checks but rechecks once per
 user turn, so changing the model loaded by the server cannot reuse a stale
 answer. Other local providers retain
 their existing explicit `supportsVision` setting.
@@ -243,11 +243,11 @@ their existing explicit `supportsVision` setting.
 #### Ollama launch handoff (preview)
 
 <p align="center">
-  <img src="../web/assets/webbrain-ollama-heart.png" alt="WebBrain loves Ollama launch handoff" width="720">
+  <img src="../web/assets/webbrain-ollama-heart.png" alt="KavachWeb loves Ollama launch handoff" width="720">
 </p>
 
-WebBrain supports Ollama today through the local OpenAI-compatible provider. A
-new `ollama launch webbrain --model <model>` handoff can also configure WebBrain
+KavachWeb supports Ollama today through the local OpenAI-compatible provider. A
+new `ollama launch webbrain --model <model>` handoff can also configure KavachWeb
 automatically, but it is not integrated into upstream Ollama yet. For now, try
 it from the [`codex/ollama-webbrain-launch-handoff` branch of
 `esokullu/ollama`](https://github.com/esokullu/ollama/tree/codex/ollama-webbrain-launch-handoff);
@@ -342,10 +342,10 @@ pm.getAll();                        // All provider configs (for Settings UI)
 await pm.testProvider('openai');    // Test connection
 ```
 
-Each non-WebBrain provider config includes a persisted `configured` flag. An
+Each non-KavachWeb provider config includes a persisted `configured` flag. An
 explicit configuration update sets it to `true`; this is the UI's **Active**
 state and is separate from `activeProvider`, which is the provider currently
-**Selected** for chat. WebBrain Compass is always selectable without being marked
+**Selected** for chat. KavachWeb Compass is always selectable without being marked
 configured. Connection tests report reachability but do not control the Active
 flag.
 
@@ -355,7 +355,7 @@ provider. A duplicate is stored as a normal provider entry with the stable ID
 so credentials, models, endpoint URLs, compatibility options, export/import,
 and active-provider selection continue to use the existing provider schema.
 The manager rejects duplicate-of-duplicate, second, orphaned, type-mismatched,
-and forged duplicate entries when loading storage. WebBrain Compass and the
+and forged duplicate entries when loading storage. KavachWeb Compass and the
 Chromium-only WebGPU runtime are not duplicable because they do not represent
 independent user-managed API credentials or endpoints; their cards keep the
 Duplicate affordance disabled with an explanatory tooltip.
@@ -377,7 +377,7 @@ Deprecated provider entries (`webbrain`, `openai_subscription`,
 
 ### Cost Allowances
 
-Settings exposes session and total cloud cost allowances. The agent prefers a provider-reported `usage.cost`/`usage.cost_usd` value when present (OpenRouter reports this directly). For direct cloud providers that only return token counts, WebBrain estimates spend from the provider config fields:
+Settings exposes session and total cloud cost allowances. The agent prefers a provider-reported `usage.cost`/`usage.cost_usd` value when present (OpenRouter reports this directly). For direct cloud providers that only return token counts, KavachWeb estimates spend from the provider config fields:
 
 - `inputCostPerMillionUsd`
 - `cacheReadCostPerMillionUsd`
@@ -385,7 +385,7 @@ Settings exposes session and total cloud cost allowances. The agent prefers a pr
 - `cacheWrite1hCostPerMillionUsd`
 - `outputCostPerMillionUsd`
 
-OpenAI reports cache reads and writes inside the input-token total (`prompt_tokens_details.cached_tokens` / `cache_write_tokens`, or the Responses API `input_tokens_details` equivalents), so WebBrain subtracts both before applying the regular input rate and prices writes with `cacheWriteCostPerMillionUsd`. Anthropic and Bedrock report regular input, cache reads, and cache writes separately, so those counts are added as separate billing classes. Anthropic and Bedrock can also distinguish 5-minute and 1-hour cache writes.
+OpenAI reports cache reads and writes inside the input-token total (`prompt_tokens_details.cached_tokens` / `cache_write_tokens`, or the Responses API `input_tokens_details` equivalents), so KavachWeb subtracts both before applying the regular input rate and prices writes with `cacheWriteCostPerMillionUsd`. Anthropic and Bedrock report regular input, cache reads, and cache writes separately, so those counts are added as separate billing classes. Anthropic and Bedrock can also distinguish 5-minute and 1-hour cache writes.
 
 Those rates are editable in the provider card so custom model pricing can be adjusted without code changes. If a cache-specific rate is absent, it falls back to the regular input rate; a missing 1-hour write rate falls back to the general cache-write rate. If a metered remote provider has token usage but no configured input/output rates, the agent uses conservative defaults (`$3` input / `$15` output per 1M tokens). Streaming providers contribute only their final cumulative usage snapshot for each request. Local providers are not counted.
 

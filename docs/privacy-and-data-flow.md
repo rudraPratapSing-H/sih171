@@ -46,32 +46,32 @@ inference stay on-device.
 
 The user chooses their provider in Settings. Options include:
 
-- **WebBrain Compass**: requests go through `api.webbrain.one`; selected interactions may be retained and used for evaluation, improvement, fine-tuning, and training while Help Improve WebBrain is enabled
-- **Bring-your-own cloud providers**: OpenAI, Anthropic, Google Gemini, Mistral, DeepSeek, xAI, Groq, OpenRouter, etc. — requests go directly to the provider using the user's credentials and are never collected by WebBrain
+- **KavachWeb Compass**: requests go through `api.webbrain.one`; selected interactions may be retained and used for evaluation, improvement, fine-tuning, and training while Help Improve KavachWeb is enabled
+- **Bring-your-own cloud providers**: OpenAI, Anthropic, Google Gemini, Mistral, DeepSeek, xAI, Groq, OpenRouter, etc. — requests go directly to the provider using the user's credentials and are never collected by KavachWeb
 - **Local model runtimes**: llama.cpp, Ollama, LM Studio, Jan, vLLM, SGLang,
   LocalAI, GPT4All, and Unsloth Studio — inference requests stay on the user's
   machine when Studio is configured with its loopback URL
 - **WebGPU (In-browser), Chromium only**: the selected text model runs in an extension
   Worker with no API key, base URL, localhost server, or model endpoint
-- **Local OpenAI-compatible Proxy**: WebBrain connects only to the configured
+- **Local OpenAI-compatible Proxy**: KavachWeb connects only to the configured
   local gateway, but the gateway may forward the request context to an upstream
   account. Its configuration and privacy policy determine where data goes.
 
-Local-model and bring-your-own API requests are never collected by WebBrain. WebBrain Compass requests are processed and may be retained as described below.
+Local-model and bring-your-own API requests are never collected by KavachWeb. KavachWeb Compass requests are processed and may be retained as described below.
 
 ### Optional research escalation to ChatGPT
 
 Research escalation is **off by default**. A user must enable it under
 Settings → General before either `delegate_research` or its consent step is
-available to the model. When enabled, WebBrain may propose sending one unusually
+available to the model. When enabled, KavachWeb may propose sending one unusually
 complex, read-only research request to ChatGPT. The consent card shows the exact
 prompt, puts the continue-locally choice first, and requires the user to select
 the explicit approval choice. A timeout, automatic selection, typed variation,
 or prior approval does not count. Each approval creates a tab- and
 conversation-scoped, single-use authorization that expires after five minutes.
 
-After approval, WebBrain opens `https://chatgpt.com/` in a visible helper tab
-and types only the displayed prompt. WebBrain does not separately transmit
+After approval, KavachWeb opens `https://chatgpt.com/` in a visible helper tab
+and types only the displayed prompt. KavachWeb does not separately transmit
 ChatGPT cookies, credentials, API keys, browsing history, attachments, user
 profile, or undisclosed source-page data; any context sent to ChatGPT must be
 visible in that exact prompt before approval. The browser may use the user's
@@ -81,7 +81,7 @@ actions, or high-stakes decisions. Users should still inspect the displayed
 prompt before approving it.
 
 ChatGPT receives and processes the approved prompt under the user's ChatGPT
-account and OpenAI settings and policies. WebBrain reads the resulting answer
+account and OpenAI settings and policies. KavachWeb reads the resulting answer
 and source links from the visible page, labels them as untrusted research
 evidence, and sends that tool result to the user's configured primary LLM as
 part of the ongoing turn. The primary model is instructed to verify decisive
@@ -89,7 +89,7 @@ facts instead of treating the delegated answer as instructions or proof.
 
 If ChatGPT is logged out, blocked by a network or regional policy, redirects
 off the approved origin, changes to an unsupported page layout, or does not
-answer before the configured wait limit, the delegation fails and WebBrain can
+answer before the configured wait limit, the delegation fails and KavachWeb can
 continue locally. Visible Log in or Sign up controls fail closed even when
 ChatGPT also offers a guest composer; the approved prompt is not submitted
 without a logged-in composer on the fixed ChatGPT origin. Stop, closing the
@@ -99,20 +99,20 @@ on login, layout, or timeout failures. Turning Research escalation off removes
 both the delegation tool and the Ask-mode consent schema from later model
 requests.
 
-### WebBrain Compass improvement data
+### KavachWeb Compass improvement data
 
-Help Improve WebBrain is available under Settings -> General and is
-on by default. When it is on, WebBrain may retain eligible Compass prompts, model
+Help Improve KavachWeb is available under Settings -> General and is
+on by default. When it is on, KavachWeb may retain eligible Compass prompts, model
 responses, relevant page text, tool calls, browser-agent actions, feedback, and
 task outcome information for evaluation, development, improvement, fine-tuning,
 training, safety, and browser-automation research. Screenshots and uploaded
 images may be processed to answer the request, but image bytes, base64 media,
-and image URLs are excluded from WebBrain's improvement database. The extension
+and image URLs are excluded from KavachWeb's improvement database. The extension
 sends the current preference, stable conversation id, and an allowlisted
-generation label with every WebBrain Compass model request. It never attaches
+generation label with every KavachWeb Compass model request. It never attaches
 those collection fields to local or bring-your-own providers.
 
-For WebBrain Compass only, an enabled Help Improve preference also allows the
+For KavachWeb Compass only, an enabled Help Improve preference also allows the
 extension to retain one bounded terminal tool call/result and the final run
 status in a local durable outbox until the Compass improvement endpoint
 acknowledges it. Delivery is retried on a later Compass run after transient
@@ -122,7 +122,7 @@ queued records are sent with the disabled preference so the server discards
 them and the client can remove them.
 
 Current clients explicitly send `X-WebBrain-Help-Improve: 1` or `0`. Older
-WebBrain Compass clients that send neither the preference header nor a session id
+KavachWeb Compass clients that send neither the preference header nor a session id
 are treated as using the default-on setting. The Compass service derives a
 best-effort opaque legacy session from the device and the first user message;
 the raw device and prompt-derived fingerprint are not stored or sent upstream.
@@ -141,10 +141,10 @@ routed through an OpenRouter workspace where content logging is disabled. This
 does not prevent the minimal metadata-only operational logging required to
 provide the service, enforce quotas, prevent abuse, maintain security, or debug
 failures. Requests sent to local models or directly to providers using the
-user's own credentials never pass through WebBrain Compass and are never eligible
-for WebBrain training.
+user's own credentials never pass through KavachWeb Compass and are never eligible
+for KavachWeb training.
 
-For eligible completed generations, MySQL is WebBrain's canonical store. The
+For eligible completed generations, MySQL is KavachWeb's canonical store. The
 service strips media, compresses the request/response payload, encrypts it with
 AES-256-GCM, and stores it with an opaque HMAC session id. Interrupted streams
 and failed generations are not stored as generation content. Separately,
@@ -158,7 +158,7 @@ Its separate **Use Inputs/Outputs** training/discount option remains disabled.
 OpenRouter logging is not treated as permanent storage or an image backup. See
 [OpenRouter Input & Output Logging](https://openrouter.ai/docs/guides/features/input-output-logging).
 
-Before retained Compass interactions are used for model development, WebBrain
+Before retained Compass interactions are used for model development, KavachWeb
 applies technical measures designed to remove or mask direct identifiers,
 credentials, secrets, and other sensitive information. Raw Compass interactions
 selected for improvement are retained for no longer than 12 months before
@@ -179,7 +179,7 @@ restart restore the conversation and an in-progress run. The UI journal keeps
 a bounded event window plus separately bounded accumulated streamed text so
 in-progress Markdown can be reconstructed after reconnect. Relevant
 conversation content is sent to the configured provider as request context;
-the stored copies are not separately synced to WebBrain.
+the stored copies are not separately synced to KavachWeb.
 
 ### Trace Recorder
 
@@ -262,7 +262,7 @@ redact that separate trace.
 Replay traces contain workflow/step IDs, semantic match status and score,
 postcondition status, fallback status, and estimated model calls saved. They do
 not contain runtime parameter values or freshly resolved element references.
-If a saved locator stops matching, WebBrain may show sanitized semantic target
+If a saved locator stops matching, KavachWeb may show sanitized semantic target
 descriptions for the user to choose from. It never selects or persists a
 replacement automatically: the user must explicitly choose it, the attempted
 action must pass its saved postcondition, and the workflow must still be the
@@ -285,7 +285,7 @@ If the user enables profile auto-fill, the profile text (name, email, throwaway 
 Saved user memory records are stored locally in `chrome.storage.local` /
 `browser.storage.local` under `wb_user_memory_v1` in plaintext. Records are meant
 for user-stated durable preferences, stable profile hints, and recurring
-workflow preferences. WebBrain rejects obvious secrets and credential-like text,
+workflow preferences. KavachWeb rejects obvious secrets and credential-like text,
 but users should not store passwords, API keys, tokens, recovery codes, or other
 sensitive secrets as memory.
 
@@ -306,13 +306,13 @@ profile text, user memory, custom skills, and saved permission choices. Users
 should treat the file like a credential backup and store it securely.
 
 The snapshot does not include device-bound Cloud Sync authentication/session
-state, the WebBrain Compass device ID, conversations, traces, scheduled jobs,
+state, the KavachWeb Compass device ID, conversations, traces, scheduled jobs,
 usage counters, or accumulated spend. Import does not upload the JSON to
-WebBrain Compass or to the configured LLM provider.
+KavachWeb Compass or to the configured LLM provider.
 
 ### Optional Encrypted Cloud Sync
 
-Active WebBrain Compass subscribers may explicitly enable encrypted profile sync in
+Active KavachWeb Compass subscribers may explicitly enable encrypted profile sync in
 Settings. The extension combines user memory, profile autofill, and provider
 configuration (including API keys, but excluding legacy OAuth access/refresh
 token stores) into one vault. Chromium-only WebGPU provider configuration and
@@ -322,7 +322,7 @@ encrypts it in the browser with AES-256-GCM. Its key is derived from the sync
 password with PBKDF2-HMAC-SHA-256 (600,000 iterations). The password and derived
 key are retained in memory only for the browser session.
 
-WebBrain Compass receives only ciphertext and cryptographic/version metadata. It
+KavachWeb Compass receives only ciphertext and cryptographic/version metadata. It
 cannot decrypt the vault or recover a forgotten password. Authentication uses a
 separate email-approved, scoped token; the billing device GUID alone cannot read
 a vault. Sync is off by default, local writes continue while locked or offline,
@@ -341,11 +341,11 @@ the URL + method to the active LLM conversation.
 ### Experimental WebMCP
 
 WebMCP is off by default. A user must enable **Experimental WebMCP** under
-Settings → General → Advanced before WebBrain sends its tool schemas or prompt
-guidance to the configured LLM. On supporting Chrome pages, WebBrain can then
+Settings → General → Advanced before KavachWeb sends its tool schemas or prompt
+guidance to the configured LLM. On supporting Chrome pages, KavachWeb can then
 enable the experimental CDP `WebMCP` domain. Chrome reports the structured tools registered by the current page,
 including their page-supplied name, description, input schema, annotations, and
-registration frame. WebBrain keeps a bounded in-memory per-tab catalog, assigns
+registration frame. KavachWeb keeps a bounded in-memory per-tab catalog, assigns
 opaque `wmcp_*` IDs, and removes it when the conversation/tab CDP session is
 cleaned up. The catalog is not uploaded separately, but catalog fields and tool
 results enter the ordinary conversation context when the model calls
@@ -359,13 +359,13 @@ support this path.
 ## Telemetry / Analytics
 
 The extension does not include an analytics SDK, crash-reporting SDK, or a
-separate product-telemetry endpoint. When WebBrain Compass is selected, the model
+separate product-telemetry endpoint. When KavachWeb Compass is selected, the model
 request itself goes to `api.webbrain.one` and is subject to the Compass data-use
 terms above. Operational request metadata is retained separately for quota,
 security, abuse prevention, and debugging.
 
 The only outbound HTTP requests are:
-1. **WebBrain Compass model calls** to `https://api.webbrain.one/v1` (when WebBrain Compass is selected; the Help Improve WebBrain preference is sent with each request)
+1. **KavachWeb Compass model calls** to `https://api.webbrain.one/v1` (when KavachWeb Compass is selected; the Help Improve KavachWeb preference is sent with each request)
 2. **Other LLM provider API calls** (directly to URLs the user configured)
 3. **CapSolver API calls** (if the user enables CAPTCHA solving)
 4. **Content fetches** via `fetch_url` / `research_url` tools (to URLs the agent is asked to fetch)
@@ -399,7 +399,7 @@ tabs also preactivate the enabled FreeSkillz skill for the current run so a
 structured blocking `pageGate` can expose its site-scoped read-only fallback
 without a second `load_skill` turn.
 
-Trace records store the WebBrain version that created each run. Conversation
+Trace records store the KavachWeb version that created each run. Conversation
 Markdown records the exporting version; trace Markdown records both the
 exporting version and each turn's recording version, while trace JSON includes
 `exportedByWebBrainVersion` plus the run's `webbrainVersion` when available.
@@ -409,7 +409,7 @@ The "FreeSkillz.xyz" skill (`skills/freeskillz-xyz.md`) is explicitly Ask/Act
 compatible and declares
 `read_youtube_transcript`, `fetch_nytimes_article`, `resolve_public_media`, and
 `download_public_media` tools. When the model calls one of those tools,
-WebBrain sends only the current or model-provided URL, plus declared options
+KavachWeb sends only the current or model-provided URL, plus declared options
 such as transcript language, media kind, maximum height, or filename hint, to
 the declared `https://freeskillz.xyz` endpoint over HTTPS — a first-party
 service operated by the extension's developer, separate from the user's
@@ -429,7 +429,7 @@ stop this data flow entirely.
 
 The "OTP / verification-code helper (email)" skill
 (`skills/otp-verification-code-helper.md`) is explicitly Ask/Act compatible,
-and declares no external endpoint. It guides WebBrain's existing page-reading
+and declares no external endpoint. It guides KavachWeb's existing page-reading
 tools to prefer selected text or a bounded, message-scoped accessibility-tree
 subtree on the active run tab. On Mid/Full, and only after that exact skill is
 active, one fixed internal tool may inspect an already-open signed-in supported
@@ -447,7 +447,7 @@ and closes the clone.
 That clone can make ordinary authenticated requests to the same webmail origin;
 the helper does not call a mailbox API or external skill endpoint. Compact has
 no such tool. The skill cannot read SMS, phone notifications, native apps, or
-another device, and it forbids sign-in bypasses. When the user asks WebBrain to
+another device, and it forbids sign-in bypasses. When the user asks KavachWeb to
 read a code, the scoped page content and extracted code are included
 in the normal request to the user's configured LLM provider as part of the
 current conversation. When Record traces is enabled, the raw page-reading tool
@@ -541,7 +541,7 @@ All IndexedDB reads happen only when the user opens the Traces page.
 Model proposes one exact read-only research prompt
   │
   ▼
-WebBrain consent card shows the exact prompt
+KavachWeb consent card shows the exact prompt
   ├─ Decline / timeout / automatic answer → continue locally; nothing sent
   └─ Explicit approval → single-use, five-minute authorization
                               │

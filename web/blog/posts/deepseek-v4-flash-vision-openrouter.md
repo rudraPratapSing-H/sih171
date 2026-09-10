@@ -6,11 +6,11 @@ sortOrder: -280
 date: 2026-08-27
 readTime: 9 min read
 description: >
-  We tested DeepSeek V4 Flash Vision Exp on 200 WebBrain browser-agent cases. Its text planning beats Qwen3.8 Flash and GLM-5.3 Flash, but its experimental vision route trails both.
+  We tested DeepSeek V4 Flash Vision Exp on 200 KavachWeb browser-agent cases. Its text planning beats Qwen3.8 Flash and GLM-5.3 Flash, but its experimental vision route trails both.
 excerpt: >
   DeepSeek V4 Flash Vision Exp delivers the best first-action routing of our three new Flash models and a 2.60-second planner median. Its vision side is fast, but only 68 of 100 screenshots pass the strict rubric.
 titleTag: >
-  DeepSeek V4 Flash Vision Exp benchmark on OpenRouter - WebBrain Blog
+  DeepSeek V4 Flash Vision Exp benchmark on OpenRouter - KavachWeb Blog
 ogTitle: >
   DeepSeek V4 Flash Vision Exp: 200 browser-agent tests
 ogDescription: >
@@ -29,11 +29,11 @@ keywords:
   - vision language model
   - tool calling
   - AI API pricing
-  - WebBrain
+  - KavachWeb
 author: Emre Sokullu
 authorUrl: https://emresokullu.com
 lede: >
-  **DeepSeek's experimental multimodal route is a better browser planner than its name suggests—and a weaker vision model than the name might imply.** We sent `deepseek/deepseek-v4-flash-vision-exp` through WebBrain's 100-case Chrome planning corpus and 100 production-prompt screenshots on OpenRouter. All 200 requests completed. DeepSeek produced more canonical first actions than Qwen3.8 Flash or GLM-5.3 Flash, matched Qwen's excellent planner latency, and delivered the best p95. On screenshots it was the fastest of the three, yet strict quality fell to **68/100**, eleven passes behind Qwen. This is a strong agentic text model with useful experimental eyes—not yet the best all-purpose multimodal default.
+  **DeepSeek's experimental multimodal route is a better browser planner than its name suggests—and a weaker vision model than the name might imply.** We sent `deepseek/deepseek-v4-flash-vision-exp` through KavachWeb's 100-case Chrome planning corpus and 100 production-prompt screenshots on OpenRouter. All 200 requests completed. DeepSeek produced more canonical first actions than Qwen3.8 Flash or GLM-5.3 Flash, matched Qwen's excellent planner latency, and delivered the best p95. On screenshots it was the fastest of the three, yet strict quality fell to **68/100**, eleven passes behind Qwen. This is a strong agentic text model with useful experimental eyes—not yet the best all-purpose multimodal default.
 ---
 
 ## The short verdict
@@ -97,13 +97,13 @@ That total was about four percent lower than our Qwen run despite DeepSeek's hig
 
 ## What we ran
 
-The **regular LLM benchmark** used WebBrain's 100-case Chrome first-action corpus at Full tier. Each case carries the current system prompt, page context, and production OpenAI-compatible tool schemas. The runner captures one response and does not execute the action. We used the same temperature and no reasoning-effort override as the Qwen3.8 Flash and GLM-5.3 Flash comparison.
+The **regular LLM benchmark** used KavachWeb's 100-case Chrome first-action corpus at Full tier. Each case carries the current system prompt, page context, and production OpenAI-compatible tool schemas. The runner captures one response and does not execute the action. We used the same temperature and no reasoning-effort override as the Qwen3.8 Flash and GLM-5.3 Flash comparison.
 
 The canonical `idealFirstToolCall` is intentionally a routing hint, not a complete task grade. A cautious model may inspect the accessibility tree where the fixture expects an immediate click and still behave well in a live loop. Exact matches are useful for regression testing, but they are not equivalent to end-to-end browser success.
 
-The **vision benchmark** sent 100 browser screenshots through WebBrain's exact production vision contract: fixed six-section system prompt, temperature 0, an 800-token maximum, weighted fact checks, and critical-fact gating. A strict pass requires both the score threshold and every critical fact.
+The **vision benchmark** sent 100 browser screenshots through KavachWeb's exact production vision contract: fixed six-section system prompt, temperature 0, an 800-token maximum, weighted fact checks, and critical-fact gating. A strict pass requires both the score threshold and every critical fact.
 
-DeepSeek recommends temperature 1.0 and larger reasoning budgets for its hardest agent tasks. We intentionally did not adopt those settings: this run measures the model under WebBrain's normal fast planner and screenshot paths, apples-to-apples with the other two models—not DeepSeek's maximum-reasoning ceiling.
+DeepSeek recommends temperature 1.0 and larger reasoning budgets for its hardest agent tasks. We intentionally did not adopt those settings: this run measures the model under KavachWeb's normal fast planner and screenshot paths, apples-to-apples with the other two models—not DeepSeek's maximum-reasoning ceiling.
 
 All 200 requests returned successfully. No API key or authorization header is present in the saved results.
 
@@ -154,7 +154,7 @@ At 68 strict passes, DeepSeek lands exactly alongside the older Qwen3-VL-30B-A3B
 - **Best reason to choose DeepSeek:** text-heavy browser agents. It leads canonical routing, nearly matches Qwen's median, and has the best p95.
 - **Best single multimodal default:** Qwen3.8 Flash. Its planner is just as responsive at the median and its vision quality is materially stronger.
 - **Best current value for frequent screenshots:** GLM-5.3 Flash while the launch discount lasts. It keeps most of Qwen's quality, approaches DeepSeek's vision speed, and costs much less today.
-- **Best split configuration:** DeepSeek as the main planner, with Qwen or GLM handling screenshot description. WebBrain can configure the two roles separately.
+- **Best split configuration:** DeepSeek as the main planner, with Qwen or GLM handling screenshot description. KavachWeb can configure the two roles separately.
 
 DeepSeek V4 Flash Vision Exp is still useful as a one-model endpoint when images are occasional and switching providers is undesirable. It accepts the image, produces a structured description quickly, and keeps the excellent V4 Flash agent backbone available for the rest of the loop. The model ID's `exp` suffix should simply be taken seriously: the vision stack is measurable and functional, but not yet as mature as the text side.
 
@@ -167,4 +167,4 @@ test/vision/results/2026-08-27-openrouter-full_deepseek_deepseek-v4-flash-vision
 
 The benchmark harness, screenshots, rubrics, and complete result files live in [`test/llm`](https://github.com/esokullu/webbrain/tree/main/test/llm) and [`test/vision`](https://github.com/esokullu/webbrain/tree/main/test/vision). The directly comparable Qwen3.8 Flash and GLM-5.3 Flash analysis is in [our previous post](/blog/qwen38-flash-vs-glm53-flash).
 
-Tags: #DeepSeekV4 #DeepSeekFlash #OpenRouter #MultimodalAI #MixtureOfExperts #VisionLanguageModel #ToolCalling #BrowserAgent #WebBrain
+Tags: #DeepSeekV4 #DeepSeekFlash #OpenRouter #MultimodalAI #MixtureOfExperts #VisionLanguageModel #ToolCalling #BrowserAgent #KavachWeb

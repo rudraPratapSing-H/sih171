@@ -6,11 +6,11 @@ sortOrder: -140
 date: 2026-08-02
 readTime: 10 min read
 description: >
-  We ran the same frozen WebBrain UI-vision probe against Thinking Machines Inkling Small on OpenRouter and a full GLM-5.2 Vision hybrid on four RTX PRO 6000 Blackwell GPUs at RunPod.
+  We ran the same frozen KavachWeb UI-vision probe against Thinking Machines Inkling Small on OpenRouter and a full GLM-5.2 Vision hybrid on four RTX PRO 6000 Blackwell GPUs at RunPod.
 excerpt: >
   Both models read all 12 target strings and found the real sign-in blocker. Inkling Small was faster and more accurate on focus and error-state cues; the self-hosted GLM-5.2 derivative proved that a third-party vision graft can make a text-first 744B-class backbone genuinely useful on screenshots.
 titleTag: >
-  Inkling Small vs GLM-5.2 Vision UI benchmark - WebBrain Blog
+  Inkling Small vs GLM-5.2 Vision UI benchmark - KavachWeb Blog
 ogTitle: >
   Inkling Small vs GLM-5.2 Vision: the same frozen UI test
 ogDescription: >
@@ -20,7 +20,7 @@ twitterTitle: >
 twitterDescription: >
   Both went 12/12 on visible strings. Inkling won the visual-state details; GLM's third-party vision graft still passed the core browser-agent test.
 keywords:
-  - WebBrain
+  - KavachWeb
   - Inkling Small
   - Thinking Machines
   - GLM-5.2 Vision
@@ -172,7 +172,7 @@ Inkling Small was trained to understand images. GLM-5.2 was not. Its vision capa
 3. Baseten trained and released a small projector connecting the two frozen models.
 4. A community maintainer repackaged the full model into a four-GPU hybrid checkpoint and supplied the custom runtime.
 
-The final system read every string, interpreted the validation error, and identified the correct blocker on its first frozen WebBrain probe. It did this without jointly retraining the enormous language backbone and vision encoder.
+The final system read every string, interpreted the validation error, and identified the correct blocker on its first frozen KavachWeb probe. It did this without jointly retraining the enormous language backbone and vision encoder.
 
 That is a strong argument for open weights as an ecosystem property, not merely a download checkbox. The original GLM-5.2 OpenRouter route remains text-only, but the model family is no longer practically limited to text for operators willing to deploy the derivative. The same general route could eventually give text-only releases from DeepSeek or Tencent useful vision, although “attach a tower and train a projector” is not a guarantee of quality. Alignment, tokenization, data, projector training, inference kernels, and evaluation still matter.
 
@@ -210,7 +210,7 @@ Both answers ended with:
 6) Unknowns: None.
 ```
 
-But neither answer was complete. Both missed the email-chip chevron, and GLM also missed the red border and focus state. This is exactly why WebBrain's vision prompt asks for unknowns: a planning agent should know when a visual interpretation is uncertain.
+But neither answer was complete. Both missed the email-chip chevron, and GLM also missed the red border and focus state. This is exactly why KavachWeb's vision prompt asks for unknowns: a planning agent should know when a visual interpretation is uncertain.
 
 The models instead treated `Unknowns` as a box to close. That behavior is more dangerous than a simple OCR miss because it gives the downstream planner no reason to cross-check the DOM or accessibility tree. A production agent should therefore continue to merge vision with structured page reads rather than treating a confident screenshot caption as ground truth.
 

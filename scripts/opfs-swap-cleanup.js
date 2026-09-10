@@ -1,5 +1,5 @@
 /**
- * WebBrain — OPFS swap-file cleanup (manual, one-off).
+ * KavachWeb — OPFS swap-file cleanup (manual, one-off).
  *
  * Chrome writes FileSystemWritableFileStream data to a sibling `.crswap` file
  * and only renames it into place on close(). A stream that never closes leaks
@@ -7,7 +7,7 @@
  * copy of the file it was writing.
  *
  * HOW TO RUN
- *   1. chrome://extensions → WebBrain → "Inspect views: service worker"
+ *   1. chrome://extensions → KavachWeb → "Inspect views: service worker"
  *   2. Paste this whole file into the Console.
  *   3. await WEBBRAIN_OPFS.report()      // read-only inventory
  *   4. await WEBBRAIN_OPFS.sweepSwap()   // delete every orphaned *.crswap

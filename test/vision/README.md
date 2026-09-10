@@ -1,6 +1,6 @@
 # Vision model benchmark
 
-This directory turns the one-shot `test/vision-probe.mjs` check into a reproducible 100-case benchmark for the exact screenshot-description sub-call used by WebBrain's `inspect_viewport`, screenshot tools, and auto-screenshot routing.
+This directory turns the one-shot `test/vision-probe.mjs` check into a reproducible 100-case benchmark for the exact screenshot-description sub-call used by KavachWeb's `inspect_viewport`, screenshot tools, and auto-screenshot routing.
 
 The default run sends every image with the production `VISION_SYSTEM_PROMPT`, production user text, temperature `0`, `max_tokens: 800`, and the same thinking-disabling chat-template kwargs as the one-shot probe. Cases are ordered from easy to challenging:
 
@@ -49,7 +49,7 @@ VISION_PROBE_KEY=... node test/vision/run.mjs \
 
 Useful selectors: `--difficulty 5`, `--category chart-reading`, `--concurrency 4`, `--resume`, and `--tag my-run`. Results land under `test/vision/results/<tag>_<model>_<prompt-mode>/`; result files include image/prompt hashes, latency, raw response, per-check evidence, per-dimension scores, and the binary success verdict. `summary.json` aggregates success rate and mean score by difficulty and category.
 
-`--prompt-mode production` is the default and measures WebBrain as shipped. `--prompt-mode question` appends the case's focus question for a secondary targeted-VQA comparison; do not mix those results with production-mode scores.
+`--prompt-mode production` is the default and measures KavachWeb as shipped. `--prompt-mode question` appends the case's focus question for a secondary targeted-VQA comparison; do not mix those results with production-mode scores.
 
 ## Scoring
 

@@ -6,21 +6,21 @@ sortOrder: -90
 date: 2026-07-21
 readTime: 9 min read
 description: >
-  Poolside's Laguna S 2.1 beats Hy3 on two published SWE benchmarks and MiniMax M3 on Terminal-Bench 2.1. It scored 65% in WebBrain's default frozen planner run and 71% with an OpenRouter high-reasoning request, still below Hy3 and M3.
+  Poolside's Laguna S 2.1 beats Hy3 on two published SWE benchmarks and MiniMax M3 on Terminal-Bench 2.1. It scored 65% in KavachWeb's default frozen planner run and 71% with an OpenRouter high-reasoning request, still below Hy3 and M3.
 excerpt: >
   Laguna S 2.1 is much cleaner than Laguna XS and extraordinarily cheap on OpenRouter. A high-reasoning request lifted Sonnet alignment from 65% to 71%, but reduced parsed tool calls from 86 to 78 and still did not catch Hy3 or MiniMax M3.
 titleTag: >
-  Poolside Laguna S 2.1 OpenRouter WebBrain planner benchmark - WebBrain Blog
+  Poolside Laguna S 2.1 OpenRouter KavachWeb planner benchmark - KavachWeb Blog
 ogTitle: >
-  Laguna S 2.1 reaches 71% in WebBrain with a high-reasoning request
+  Laguna S 2.1 reaches 71% in KavachWeb with a high-reasoning request
 ogDescription: >
   Poolside Laguna S 2.1 scored 65% with default reasoning and 71% with a high-effort request. It is fast and cheap, but the second run also increased no-tool outputs.
 twitterTitle: >
-  Poolside Laguna S 2.1 WebBrain planner benchmark
+  Poolside Laguna S 2.1 KavachWeb planner benchmark
 twitterDescription: >
   Laguna S 2.1: 65% Sonnet alignment by default, 71% with a high-reasoning request. Much cheaper and faster than M3, but still below Hy3/M3 with a no-tool trade-off.
 keywords:
-  - WebBrain
+  - KavachWeb
   - Poolside
   - Laguna S 2.1
   - OpenRouter
@@ -32,7 +32,7 @@ keywords:
   - planner benchmark
   - tool calling
 lede: >
-  [Poolside's Laguna S 2.1 launch](https://poolside.ai/blog/introducing-laguna-s-2-1) makes a compelling efficiency claim: a US open-weight, 118B-A8B coding model that is close to Tencent Hy3 on Terminal-Bench 2.1, ahead of it on two SWE benchmarks, and ahead of MiniMax M3 on Terminal-Bench. That is exactly the kind of cheap, self-hostable model we want to see challenge the recent Chinese planner leaders. We ran it twice through WebBrain's frozen 100-case browser-agent first-tool benchmark. The default OpenRouter run landed at 65% Sonnet alignment; an explicit high-reasoning request improved that to 71%. That closes much of the gap, but it also cuts parsed tool calls from 86 to 78 and still trails Hy3 at 73% and MiniMax M3 at 75%.
+  [Poolside's Laguna S 2.1 launch](https://poolside.ai/blog/introducing-laguna-s-2-1) makes a compelling efficiency claim: a US open-weight, 118B-A8B coding model that is close to Tencent Hy3 on Terminal-Bench 2.1, ahead of it on two SWE benchmarks, and ahead of MiniMax M3 on Terminal-Bench. That is exactly the kind of cheap, self-hostable model we want to see challenge the recent Chinese planner leaders. We ran it twice through KavachWeb's frozen 100-case browser-agent first-tool benchmark. The default OpenRouter run landed at 65% Sonnet alignment; an explicit high-reasoning request improved that to 71%. That closes much of the gap, but it also cuts parsed tool calls from 86 to 78 and still trails Hy3 at 73% and MiniMax M3 at 75%.
 ---
 
 ## Why the launch numbers got our attention
@@ -52,7 +52,7 @@ The Hy3 comparison is almost exactly what the headline suggests: Laguna S is 1.5
 
 Those are not secret internal numbers. Poolside publishes [the trajectories behind its final evaluation trials](https://trajectories.poolside.ai), which is unusually helpful. There is still an important methodology caveat: the launch page says pass@1 is averaged over four attempts per task, except DeepSWE, SWE Atlas, and Toolathlon at three attempts, and its comparison table takes the maximum available vendor, benchmark-author, or third-party score for most models. It is a useful overview, but not one uniform independent run.
 
-More importantly, these are long-horizon coding and terminal benchmarks. WebBrain asks a narrower product question: given a real browser-agent prompt and 41 available tools, does the model choose one valid first action?
+More importantly, these are long-horizon coding and terminal benchmarks. KavachWeb asks a narrower product question: given a real browser-agent prompt and 41 available tools, does the model choose one valid first action?
 
 ## What Laguna S 2.1 is
 
@@ -74,7 +74,7 @@ At the time of this run, [OpenRouter's paid endpoint](https://openrouter.ai/pool
 
 That price is genuinely disruptive. It is cheap enough to use as a routine planner, not merely a benchmark curiosity. The weights are also available for local and air-gapped deployment, so this is more than a subsidized API story.
 
-The downside is immediate for a browser agent: **there is no image input**. Laguna S is text-to-text. Like Tencent Hy3 today, it can be evaluated as a planner over page text and accessibility data, but it cannot be WebBrain's complete multimodal model.
+The downside is immediate for a browser agent: **there is no image input**. Laguna S is text-to-text. Like Tencent Hy3 today, it can be evaluated as a planner over page text and accessibility data, but it cannot be KavachWeb's complete multimodal model.
 
 ## What we ran
 
@@ -101,7 +101,7 @@ node test/llm/run-llamacpp.mjs \
   --freeze test/llm/freeze/baseline-2026-05-23.json
 ```
 
-This was a native OpenAI structured-tools run. Thinking was active on the OpenRouter endpoint—the usage records include 9,350 reasoning tokens—and no chat-template fallback was used. The standard WebBrain runner keeps its fixed low-temperature first-tool settings, rather than adopting a model-specific sampling recipe. That is intentional: the question is whether Laguna S works in the same planner slot as the existing rows.
+This was a native OpenAI structured-tools run. Thinking was active on the OpenRouter endpoint—the usage records include 9,350 reasoning tokens—and no chat-template fallback was used. The standard KavachWeb runner keeps its fixed low-temperature first-tool settings, rather than adopting a model-specific sampling recipe. That is intentional: the question is whether Laguna S works in the same planner slot as the existing rows.
 
 We then repeated all 100 cases with OpenRouter's normalized high-effort reasoning request:
 
@@ -221,24 +221,24 @@ The model is also fast enough to feel interactive. Ninety-five high-request case
 | Tab management | 4 | 2 | Mixed correct tab actions, generic inspection, and prose-only limitation handling. |
 | UI mutations | 4 | 2 | Better than default, but two cases still ended without a dispatchable action. |
 
-The destructive slice matters. Laguna S did not immediately perform the destructive actions—it chose read-only inspection—but it also failed to reproduce Sonnet's confirmation boundary on “delete all my emails,” “sell all my bitcoin,” and similar prompts. For WebBrain, safe hesitation needs to be explicit and stable, not merely a generic accessibility-tree call.
+The destructive slice matters. Laguna S did not immediately perform the destructive actions—it chose read-only inspection—but it also failed to reproduce Sonnet's confirmation boundary on “delete all my emails,” “sell all my bitcoin,” and similar prompts. For KavachWeb, safe hesitation needs to be explicit and stable, not merely a generic accessibility-tree call.
 
 ## Why Poolside's benchmark can be right while ours is also right
 
 The published coding scores and our 65% default / 71% requested-high planner rows measure different capabilities:
 
-1. Terminal-Bench and SWE-Bench give the model a long horizon, an executable environment, and many opportunities to recover. WebBrain's frozen suite scores the first decision only.
+1. Terminal-Bench and SWE-Bench give the model a long horizon, an executable environment, and many opportunities to recover. KavachWeb's frozen suite scores the first decision only.
 2. Poolside averages multiple attempts. Our historical comparison uses one response per frozen case.
 3. Poolside's launch comparison combines the best available vendor, official-leaderboard, or third-party figure for most models. Our rows all use one prompt, one 41-tool schema, and one local scoring rule.
 4. Coding agents can recover after narrating or choosing a suboptimal first action. A browser planner that emits no tool simply does not move.
 
-So the fair conclusion is not “Poolside's scores are false.” Laguna S can be a strong coding agent and a mediocre WebBrain first-tool router at the same time. The launch benchmarks do **not** predict our use case well enough to replace direct testing.
+So the fair conclusion is not “Poolside's scores are false.” Laguna S can be a strong coding agent and a mediocre KavachWeb first-tool router at the same time. The launch benchmarks do **not** predict our use case well enough to replace direct testing.
 
 ## The US open-weight angle still matters
 
 The recent inexpensive hosted-agent conversation has been driven heavily by Chinese labs: MiniMax, Tencent, Qwen, and StepFun. [Poolside describes itself as a US-based AI company](https://poolside.ai/government), releases Laguna S weights, supports local and air-gapped deployments, and prices hosted inference at a level that can compete with those APIs.
 
-That makes Laguna S important even though neither run is the clean breakthrough we hoped for. A US open-weight model matching Hy3 or MiniMax in WebBrain's planner harness would materially diversify the shortlist. The high request gets Laguna S close on headline alignment, but its low call rate keeps it from earning an unqualified tie. Its price, latency, local availability, and clean schema discipline still make it a credible model to keep testing as the prompt and tool-calling stack improve.
+That makes Laguna S important even though neither run is the clean breakthrough we hoped for. A US open-weight model matching Hy3 or MiniMax in KavachWeb's planner harness would materially diversify the shortlist. The high request gets Laguna S close on headline alignment, but its low call rate keeps it from earning an unqualified tie. Its price, latency, local availability, and clean schema discipline still make it a credible model to keep testing as the prompt and tool-calling stack improve.
 
 The licensing language is worth keeping precise: Laguna S is **open-weight and self-hostable** under OpenMDW 1.1. “Open source” can imply an OSI-style software license, which is not the claim we need to make here.
 
@@ -248,7 +248,7 @@ Poolside's chart also makes Laguna S look impressively efficient beside Thinking
 
 That comparison is useful, but it is not a reason to wave Inkling away. [Inkling is a general-purpose multimodal model](https://thinkingmachines.ai/model-card/inkling/) with native text, image, and audio inputs, a 1M context window, downloadable weights, and an Apache 2.0 release. Laguna S is a text-only coding specialist. Inkling spends much more capacity on a broader capability surface that matters directly to browser agents.
 
-For WebBrain, vision can be more valuable than a few points on a terminal benchmark: screenshots cover canvas apps, broken accessibility trees, visual verification, and interfaces whose state is not represented in page text. Audio is a separate useful lane again. Bigger and lower on one coding score does not mean worse overall; it may mean the model is solving a broader problem.
+For KavachWeb, vision can be more valuable than a few points on a terminal benchmark: screenshots cover canvas apps, broken accessibility trees, visual verification, and interfaces whose state is not represented in page text. Audio is a separate useful lane again. Bigger and lower on one coding score does not mean worse overall; it may mean the model is solving a broader problem.
 
 ## Token and cost profile
 
@@ -278,16 +278,16 @@ The final reality check is local. Two models we have already run on the same fro
 
 ThinkingCap's comparison is especially clean on quality. It is six points ahead of Laguna S's high-request all-case score, 6.5 points ahead when Sonnet used a tool, emits 13 more parsed actions, and gains four exact matches. Laguna is faster at the median and matches ThinkingCap's 35 ideal tool names, but the lower call rate makes it the weaker router overall.
 
-Gemma 4 31B QAT is the harder result for Laguna S. It leads the high-request row by six all-case points and 8.7 tool-required points, returns 17 more parsed calls, gains four exact and two ideal-name matches, and is also faster. Gemma's local run additionally demonstrated working vision, while Laguna S has no image input. If an RTX 5090-class local setup with roughly 30 GB of observed GPU-memory use is available, Gemma remains the more complete WebBrain candidate from these measurements.
+Gemma 4 31B QAT is the harder result for Laguna S. It leads the high-request row by six all-case points and 8.7 tool-required points, returns 17 more parsed calls, gains four exact and two ideal-name matches, and is also faster. Gemma's local run additionally demonstrated working vision, while Laguna S has no image input. If an RTX 5090-class local setup with roughly 30 GB of observed GPU-memory use is available, Gemma remains the more complete KavachWeb candidate from these measurements.
 
 This is the same frozen prompt, Sonnet reference, 41-tool schema, and scoring rule, but not an identical inference stack. Laguna S used OpenRouter native tools; ThinkingCap used local vLLM native tools; Gemma used the harness's legacy text-call compatibility mode. Latency and economics are therefore deployment observations, not controlled hardware comparisons. Laguna still has a deployment advantage for anyone who wants a nearly free hosted API without maintaining a local GPU.
 
 ## Bottom line
 
-Poolside Laguna S 2.1 did not reproduce its coding-benchmark advantage in WebBrain's frozen browser-planner test. The default row lands at 65% Sonnet alignment. Requesting high reasoning lifts the second sample to 71%, close to Tencent Hy3 at 73% but still below Hy3 and MiniMax M3—and with only 78 parsed tool calls.
+Poolside Laguna S 2.1 did not reproduce its coding-benchmark advantage in KavachWeb's frozen browser-planner test. The default row lands at 65% Sonnet alignment. Requesting high reasoning lifts the second sample to 71%, close to Tencent Hy3 at 73% but still below Hy3 and MiniMax M3—and with only 78 parsed tool calls.
 
 It is still a meaningful release. Laguna S fixes XS's malformed function names, raises exact matches from 6 to 15, stays at a 1.04–1.52-second median, costs less than three cents per paid 100-case replay, and can be deployed from downloadable weights. For a coding agent, or a text planner paired with a separate vision model, that combination is compelling.
 
-For WebBrain's default planner shortlist, though, the answer is still no—not yet. The high-request result is encouraging enough to keep Laguna S in the conversation, but 22 no-tool outputs are too many for a default action router. The official coding numbers are strong in their domain; they are not evidence that Laguna S beats Hy3, MiniMax M3, ThinkingCap 27B, or Gemma 4 31B QAT for browser first-action routing. And without vision, it remains one component of a browser agent rather than the whole model stack.
+For KavachWeb's default planner shortlist, though, the answer is still no—not yet. The high-request result is encouraging enough to keep Laguna S in the conversation, but 22 no-tool outputs are too many for a default action router. The official coding numbers are strong in their domain; they are not evidence that Laguna S beats Hy3, MiniMax M3, ThinkingCap 27B, or Gemma 4 31B QAT for browser first-action routing. And without vision, it remains one component of a browser agent rather than the whole model stack.
 
-Tags: #Poolside #LagunaS #OpenRouter #TencentHy3 #MiniMaxM3 #Inkling #OpenWeights #ToolCalling #BrowserAgent #WebBrain
+Tags: #Poolside #LagunaS #OpenRouter #TencentHy3 #MiniMaxM3 #Inkling #OpenWeights #ToolCalling #BrowserAgent #KavachWeb

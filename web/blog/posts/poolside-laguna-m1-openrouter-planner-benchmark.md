@@ -1,26 +1,26 @@
 ---
 title: >
-  Poolside Laguna M.1 reaches 73% in WebBrain, but 225B does not win
+  Poolside Laguna M.1 reaches 73% in KavachWeb, but 225B does not win
 slug: poolside-laguna-m1-openrouter-planner-benchmark
 sortOrder: -100
 date: 2026-07-21
 readTime: 9 min read
 description: >
-  Poolside Laguna M.1 is almost twice the size of Laguna S 2.1 and fixes much of its no-tool problem. It reached 73% Sonnet alignment in WebBrain, tying Hy3's headline score but still trailing MiniMax M3 and the strongest 27–31B local planners.
+  Poolside Laguna M.1 is almost twice the size of Laguna S 2.1 and fixes much of its no-tool problem. It reached 73% Sonnet alignment in KavachWeb, tying Hy3's headline score but still trailing MiniMax M3 and the strongest 27–31B local planners.
 excerpt: >
   Laguna M.1 returned 92 valid tool calls and reached 73% Sonnet alignment with a high-reasoning request. The larger model is much more dispatchable than Laguna S, but exact and ideal tool selection barely improve.
 titleTag: >
-  Poolside Laguna M.1 OpenRouter WebBrain planner benchmark - WebBrain Blog
+  Poolside Laguna M.1 OpenRouter KavachWeb planner benchmark - KavachWeb Blog
 ogTitle: >
-  Laguna M.1 reaches 73% in WebBrain, but 225B does not win
+  Laguna M.1 reaches 73% in KavachWeb, but 225B does not win
 ogDescription: >
   Poolside's 225B-A23B model fixes Laguna S's no-tool problem and ties Hy3 at 73%, but still trails MiniMax M3, Gemma 4 31B QAT, and ThinkingCap 27B.
 twitterTitle: >
-  Poolside Laguna M.1 WebBrain planner benchmark
+  Poolside Laguna M.1 KavachWeb planner benchmark
 twitterDescription: >
   Laguna M.1: 92 valid calls, 73% Sonnet alignment, and 1.94s median latency. Better than Laguna S, but not the 225B-size win the coding benchmarks suggest.
 keywords:
-  - WebBrain
+  - KavachWeb
   - Poolside
   - Laguna M.1
   - OpenRouter
@@ -34,7 +34,7 @@ keywords:
   - planner benchmark
   - tool calling
 lede: >
-  **Poolside Laguna M.1** is the obvious size test for our Laguna S result. At 225B total parameters and 23B active per token, it is roughly 1.9 times larger in total and 2.7 times larger in active parameters than Laguna S 2.1. Poolside's published coding-agent scores are strong, and M.1 is now an Apache 2.0 open-weight release. We ran the same frozen 100-case WebBrain planner benchmark twice. The larger model does fix S's biggest operational weakness: both M.1 runs produced 92 valid tool calls and only eight no-tool outputs. Quality improved more modestly. The default run reached 71% Sonnet alignment and an explicit high-reasoning request reached 73%—enough to tie Tencent Hy3's headline score, but not enough to beat Hy3 on tool-required cases, MiniMax M3 overall, or our strongest 27–31B local rows.
+  **Poolside Laguna M.1** is the obvious size test for our Laguna S result. At 225B total parameters and 23B active per token, it is roughly 1.9 times larger in total and 2.7 times larger in active parameters than Laguna S 2.1. Poolside's published coding-agent scores are strong, and M.1 is now an Apache 2.0 open-weight release. We ran the same frozen 100-case KavachWeb planner benchmark twice. The larger model does fix S's biggest operational weakness: both M.1 runs produced 92 valid tool calls and only eight no-tool outputs. Quality improved more modestly. The default run reached 71% Sonnet alignment and an explicit high-reasoning request reached 73%—enough to tie Tencent Hy3's headline score, but not enough to beat Hy3 on tool-required cases, MiniMax M3 overall, or our strongest 27–31B local rows.
 ---
 
 ## Why M.1 is an interesting size test
@@ -54,7 +54,7 @@ Those are respectable rather than frontier-leading results. M.1 beats Devstral 2
 
 The methodology matters. Poolside says its M.1 evaluations used the pool agent harness, thinking enabled, a 256K context, temperature 1.0, top-k 20, sandboxed execution, and up to 500 agent steps. The current card reports mean pass@1 over four runs and notes that benchmark images and verifiers were patched for infrastructure reliability. It also uses the highest publicly referenced score for comparison models. That is a serious long-horizon coding evaluation, but it is not a uniform single-shot routing test.
 
-WebBrain asks a narrower question: with the same frozen browser-agent prompt and 41 available tools, does the model emit one valid first action, and is that action close to the Claude Sonnet 4.6 reference?
+KavachWeb asks a narrower question: with the same frozen browser-agent prompt and 41 available tools, does the model emit one valid first action, and is that action close to the Claude Sonnet 4.6 reference?
 
 One more generational caveat: Poolside launched M.1 as its largest model, but described it as a generation behind the much smaller XS.2 architecture. Bigger here does not automatically mean newer.
 
@@ -239,11 +239,11 @@ The high run also used `get_accessibility_tree` 51 times. That tool is valid and
 
 ## Why the coding benchmarks do not transfer directly
 
-Poolside's coding scores and WebBrain's first-action score can both be accurate:
+Poolside's coding scores and KavachWeb's first-action score can both be accurate:
 
-1. SWE-bench and Terminal-Bench allow up to 500 agent steps; WebBrain scores the first response.
+1. SWE-bench and Terminal-Bench allow up to 500 agent steps; KavachWeb scores the first response.
 2. Poolside averages multiple attempts; this comparison saves one response per frozen case.
-3. Poolside uses a coding-agent harness, executable sandboxes, patched task infrastructure, and model-specific sampling. WebBrain holds the prompt and 41-tool schema fixed across models.
+3. Poolside uses a coding-agent harness, executable sandboxes, patched task infrastructure, and model-specific sampling. KavachWeb holds the prompt and 41-tool schema fixed across models.
 4. A coding agent can recover after generic inspection. A browser planner is rewarded for selecting the right specialized action immediately.
 
 M.1's 92% valid-call rate is compatible with strong long-horizon agency. Its 31–32 ideal-name count says that broad agentic competence does not automatically become precise browser routing.
@@ -267,7 +267,7 @@ Laguna M.1 is a meaningful American open-weight result. [Poolside describes itse
 
 That is closer to the breakthrough we were looking for than Laguna S. It is still not an unqualified win. Hy3 remains the more precise action router, MiniMax M3 remains ahead overall, and two much smaller local models lead by four points.
 
-The absence of vision also matters. Gemma 4 31B QAT can cover screenshot-based verification and visually encoded interfaces; M.1 cannot. For WebBrain, M.1 is a capable text planner that would still need a separate vision model.
+The absence of vision also matters. Gemma 4 31B QAT can cover screenshot-based verification and visually encoded interfaces; M.1 cannot. For KavachWeb, M.1 is a capable text planner that would still need a separate vision model.
 
 ## Bottom line
 
@@ -275,6 +275,6 @@ Poolside Laguna M.1 is better than Laguna S 2.1 in the way that matters most ope
 
 But 225B does not buy a planner win. Exact first-call quality remains at 15–16%, ideal tool-name matching stays at 31–32%, and `get_accessibility_tree` absorbs more than half the suite. High reasoning barely changes the token budget and should be treated as a second stochastic sample, not a proven deeper mode.
 
-Our read: M.1 is Poolside's first genuinely competitive WebBrain planner row, and the US open-weight ecosystem should take it seriously. It is not the default choice yet. Hy3 is more precise, MiniMax M3 scores higher, Gemma 4 31B QAT is faster and multimodal, and ThinkingCap 27B matches the local leaders at a fraction of M.1's size. M.1 earns a place on the shortlist—but not the top slot.
+Our read: M.1 is Poolside's first genuinely competitive KavachWeb planner row, and the US open-weight ecosystem should take it seriously. It is not the default choice yet. Hy3 is more precise, MiniMax M3 scores higher, Gemma 4 31B QAT is faster and multimodal, and ThinkingCap 27B matches the local leaders at a fraction of M.1's size. M.1 earns a place on the shortlist—but not the top slot.
 
-Tags: #Poolside #LagunaM1 #OpenRouter #LagunaS #TencentHy3 #MiniMaxM3 #Gemma4 #ThinkingCap #OpenWeights #ToolCalling #BrowserAgent #WebBrain
+Tags: #Poolside #LagunaM1 #OpenRouter #LagunaS #TencentHy3 #MiniMaxM3 #Gemma4 #ThinkingCap #OpenWeights #ToolCalling #BrowserAgent #KavachWeb

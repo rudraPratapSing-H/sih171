@@ -50,11 +50,11 @@ test("MCP catalog exposes structured extraction alongside run controls", async (
     assert.ok(extract, "structured extraction tool is missing");
     assert.deepEqual(extract.inputSchema.required, ["task", "output_schema"]);
     assert.equal(extract.inputSchema.properties.output_schema.type, "object");
-    assert.match(extract.description, /always uses WebBrain Ask mode/i);
+    assert.match(extract.description, /always uses KavachWeb Ask mode/i);
 
     const respond = tools.find((tool) => tool.name === "webbrain_respond");
     assert.ok(respond, "respond tool is missing");
-    assert.match(respond.description, /exact stable value shown by WebBrain: 'once', 'always', or 'deny'/i);
+    assert.match(respond.description, /exact stable value shown by KavachWeb: 'once', 'always', or 'deny'/i);
     assert.match(respond.inputSchema.properties.answer.description, /one-time approval maps to 'once'/i);
   } finally {
     await client.close().catch(() => {});

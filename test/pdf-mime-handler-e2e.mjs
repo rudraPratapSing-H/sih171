@@ -41,7 +41,7 @@ async function chromeLaunchTarget() {
 }
 
 function createMinimalPdf() {
-  const pageContent = 'BT\n/F1 12 Tf\n20 100 Td\n(WebBrain PDF MIME handler test) Tj\nET\n';
+  const pageContent = 'BT\n/F1 12 Tf\n20 100 Td\n(KavachWeb PDF MIME handler test) Tj\nET\n';
   const objects = [
     '<< /Type /Catalog /Pages 2 0 R >>',
     '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
@@ -167,7 +167,7 @@ async function assertHandlerTabSkipsContentTypeProbe(context, settings, extensio
     }, sourceUrl, { timeout: 15_000 }).then(handle => handle.jsonValue());
     assert.ok(Number.isInteger(tabId) && tabId > 0, 'Could not find the tab showing the opaque PDF.');
 
-    // Exactly what the "Open PDF with WebBrain" context menu does. That entry
+    // Exactly what the "Open PDF with KavachWeb" context menu does. That entry
     // is the only route to a wrapped handler URL, and it appears because the
     // response was application/pdf, not because the URL looked like a PDF.
     const handlerUrl = await settings.evaluate(async ({ id, url }) => {
@@ -288,7 +288,7 @@ async function main() {
         timeout: 10000,
       }).catch(() => null);
     }
-    assert.ok(background, 'The WebBrain service worker was not available for the PDF extraction test.');
+    assert.ok(background, 'The KavachWeb service worker was not available for the PDF extraction test.');
     const ready = await background.evaluate(async () => chrome.runtime.sendMessage({
       type: 'offscreen-pdf-extract-ready',
     }));
@@ -304,7 +304,7 @@ async function main() {
     assert.equal(fixture.requestCount() - requestsBeforeExtraction, 1, 'Claude-compatible extraction fetched the PDF more than once.');
     assert.equal(extraction.result?.totalPages, 1);
     assert.equal(extraction.result?.byteLength, fixture.pdf.byteLength);
-    assert.match(extraction.result?.pages?.[0] || '', /WebBrain PDF MIME handler test/);
+    assert.match(extraction.result?.pages?.[0] || '', /KavachWeb PDF MIME handler test/);
     assert.deepEqual(Buffer.from(extraction.result?._pdfBase64 || '', 'base64'), fixture.pdf);
 
     await waitForNativeHandlerOption(settings, false);
@@ -315,11 +315,11 @@ async function main() {
       stored: await chrome.storage.local.get(['pdfViewerEnabled']),
       checked: document.getElementById('toggle-pdf-viewer')?.checked,
     }));
-    assert.equal(initialState.stored.pdfViewerEnabled, undefined, 'Fresh installs must preserve an unset WebBrain PDF setting.');
+    assert.equal(initialState.stored.pdfViewerEnabled, undefined, 'Fresh installs must preserve an unset KavachWeb PDF setting.');
     assert.equal(initialState.checked, false, 'The PDF viewer toggle must render off by default.');
 
     const disabledRouting = await inspectPdfRouting(context, `${fixture.url}?mode=disabled`, extensionId);
-    assert.equal(disabledRouting.sawWebBrainHandler, false, `Disabled PDF handling still entered WebBrain: ${disabledRouting.urls.join(', ')}`);
+    assert.equal(disabledRouting.sawWebBrainHandler, false, `Disabled PDF handling still entered KavachWeb: ${disabledRouting.urls.join(', ')}`);
     assert.equal(disabledRouting.sawNativeHandler, true, `Disabled PDF handling did not reach Chrome's native viewer: ${disabledRouting.urls.join(', ')}`);
 
     await setPdfViewerToggle(settings, true);
@@ -328,14 +328,14 @@ async function main() {
     assert.equal(enabledStored.pdfViewerEnabled, true, 'The enabled toggle was not stored.');
 
     const enabledRouting = await inspectPdfRouting(context, `${fixture.url}?mode=enabled`, extensionId);
-    assert.equal(enabledRouting.sawWebBrainHandler, true, `Enabled PDF handling did not enter WebBrain: ${enabledRouting.urls.join(', ')}`);
+    assert.equal(enabledRouting.sawWebBrainHandler, true, `Enabled PDF handling did not enter KavachWeb: ${enabledRouting.urls.join(', ')}`);
 
     await setPdfViewerToggle(settings, false);
     await waitForNativeHandlerOption(settings, false);
     const disabledAgainRouting = await inspectPdfRouting(context, `${fixture.url}?mode=disabled-again`, extensionId);
-    assert.equal(disabledAgainRouting.sawWebBrainHandler, false, `Turning PDF handling off still entered WebBrain: ${disabledAgainRouting.urls.join(', ')}`);
+    assert.equal(disabledAgainRouting.sawWebBrainHandler, false, `Turning PDF handling off still entered KavachWeb: ${disabledAgainRouting.urls.join(', ')}`);
     assert.equal(disabledAgainRouting.sawNativeHandler, true, `Turning PDF handling off did not restore Chrome's native viewer: ${disabledAgainRouting.urls.join(', ')}`);
-    console.log(`  ✓ Chrome ${browser.version()} keeps native PDF routing aligned with the WebBrain toggle`);
+    console.log(`  ✓ Chrome ${browser.version()} keeps native PDF routing aligned with the KavachWeb toggle`);
 
     await assertHandlerTabSkipsContentTypeProbe(context, settings, extensionId, fixture);
     console.log('  ✓ read_page routing recognizes a PDF handler tab without a Content-Type probe');

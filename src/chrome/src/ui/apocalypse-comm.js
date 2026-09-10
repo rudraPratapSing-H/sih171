@@ -32,11 +32,11 @@ function communicationDocument(markup, url) {
 function createSlot(url, markup) {
   const slot = document.createElement('aside');
   slot.className = 'apocalypse-comm-slot';
-  slot.setAttribute('aria-label', 'WebBrain preparedness bulletin');
+  slot.setAttribute('aria-label', 'KavachWeb preparedness bulletin');
 
   const frame = document.createElement('iframe');
   frame.className = 'apocalypse-comm-frame';
-  frame.title = 'WebBrain preparedness bulletin';
+  frame.title = 'KavachWeb preparedness bulletin';
   frame.srcdoc = communicationDocument(markup, url);
   frame.loading = 'eager';
   frame.referrerPolicy = 'no-referrer';

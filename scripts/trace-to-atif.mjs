@@ -78,7 +78,7 @@ function resultContent(value) {
 function usageMetrics(usage) {
   if (!isObject(usage)) return undefined;
   const extra = {};
-  // WebBrain records provider-native cost. Some providers report USD, while
+  // KavachWeb records provider-native cost. Some providers report USD, while
   // others do not guarantee a currency, so never mislabel it as ATIF cost_usd.
   const reportedCost = finiteNumber(usage.cost);
   if (reportedCost !== undefined) extra.webbrain_reported_cost = reportedCost;
@@ -105,15 +105,15 @@ function sameToolName(left, right) {
 }
 
 export function webbrainTraceToAtif(input) {
-  if (!isObject(input)) throw new TypeError('WebBrain trace export must be an object.');
+  if (!isObject(input)) throw new TypeError('KavachWeb trace export must be an object.');
   if (input.schema !== SOURCE_SCHEMA) {
     throw new TypeError(`Expected schema "${SOURCE_SCHEMA}".`);
   }
   if (Array.isArray(input.runs)) return webbrainTraceBundleToAtif(input);
-  if (!isObject(input.run)) throw new TypeError('WebBrain trace run must be an object.');
-  if (!Array.isArray(input.events)) throw new TypeError('WebBrain trace events must be an array.');
+  if (!isObject(input.run)) throw new TypeError('KavachWeb trace run must be an object.');
+  if (!Array.isArray(input.events)) throw new TypeError('KavachWeb trace events must be an array.');
   if (typeof input.run.runId !== 'string' || !input.run.runId.trim()) {
-    throw new TypeError('WebBrain trace run.runId must be a non-empty string.');
+    throw new TypeError('KavachWeb trace run.runId must be a non-empty string.');
   }
 
   const run = input.run;
@@ -262,7 +262,7 @@ export function webbrainTraceToAtif(input) {
       appendStep({
         timestamp: timestamp(event.ts),
         source: 'system',
-        message: 'WebBrain runtime error',
+        message: 'KavachWeb runtime error',
         observation: {
           results: [{ content: String(data.message || 'Unknown error') }],
         },
@@ -388,15 +388,15 @@ function webbrainTraceBundleToAtif(input) {
     ? input.session.sessionId.trim()
     : '';
   if (!sessionId) {
-    throw new TypeError('WebBrain trace bundle session.sessionId must be a non-empty string.');
+    throw new TypeError('KavachWeb trace bundle session.sessionId must be a non-empty string.');
   }
   if (input.runs.length === 0) {
-    throw new TypeError('WebBrain trace bundle runs must be a non-empty array.');
+    throw new TypeError('KavachWeb trace bundle runs must be a non-empty array.');
   }
 
   const entries = input.runs.map((entry, index) => {
     if (!isObject(entry)) {
-      throw new TypeError(`WebBrain trace bundle entry ${index} must be an object.`);
+      throw new TypeError(`KavachWeb trace bundle entry ${index} must be an object.`);
     }
     return entry;
   }).sort((left, right) => {

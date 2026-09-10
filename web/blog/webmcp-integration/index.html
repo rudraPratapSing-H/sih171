@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebMCP: Websites as Tools for AI Agents - WebBrain Blog</title>
+  <title>WebMCP: Websites as Tools for AI Agents - KavachWeb Blog</title>
   <meta name="description" content="WebMCP lets websites expose structured tools to AI agents. A conversation with Google&#39;s Gemini-in-Chrome team is pushing us toward integration, and we couldn&#39;t be more excited.">
-  <meta name="keywords" content="WebMCP, browser agent, AI agent tools, WebBrain, Model Context Protocol, agentic web, W3C standard, web automation">
+  <meta name="keywords" content="WebMCP, browser agent, AI agent tools, KavachWeb, Model Context Protocol, agentic web, W3C standard, web automation">
   <meta property="og:title" content="WebMCP: Websites as Tools for AI Agents, and Why We&#39;re Excited">
   <meta property="og:description" content="WebMCP lets websites expose structured tools to AI agents. A conversation with Google&#39;s Gemini-in-Chrome team is pushing us toward integration.">
   <meta property="og:type" content="article">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="WebMCP + WebBrain: Excited About the Agentic Web">
-  <meta name="twitter:description" content="WebMCP lets websites expose structured tools to AI agents. A GitHub conversation with Google&#39;s Gemini-in-Chrome team has us rethinking how WebBrain interacts with the web.">
+  <meta name="twitter:title" content="WebMCP + KavachWeb: Excited About the Agentic Web">
+  <meta name="twitter:description" content="WebMCP lets websites expose structured tools to AI agents. A GitHub conversation with Google&#39;s Gemini-in-Chrome team has us rethinking how KavachWeb interacts with the web.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/webmcp-integration">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -534,12 +534,12 @@
 <h2 id="the-origin-trial">The origin trial</h2>
 <p>WebMCP shipped in Chrome 146 Canary in early 2026, and as of June 2026 Chrome 149 has an open <a href="https://developer.chrome.com/origintrials/#/register_trial/4163014905550602241" target="_blank" rel="noopener">origin trial</a>. The specification is still a Community Group Draft — not yet on the formal W3C standards track — but the trajectory is clear. Angular has experimental support. Cloudflare Browser Run supports it. The ecosystem is moving.</p>
 <p>Early benchmarks show roughly a 67% reduction in computational overhead compared to screenshot-based agent interaction. Token usage drops dramatically — some estimates put it at 89% more efficient than pixel-based approaches. That is not a marginal improvement. That is the difference between a local model that can actually help and one that drowns in context before it clicks a single button.</p>
-<h2 id="why-this-matters-for-webbrain">Why this matters for WebBrain</h2>
-<p>WebBrain reads the DOM and the accessibility tree. It does not take screenshots. That already puts us in a better position than pixel-based agents, but we still face a fundamental problem: the page was designed for human eyes, not for a language model trying to figure out which element to interact with.</p>
+<h2 id="why-this-matters-for-kavachweb">Why this matters for KavachWeb</h2>
+<p>KavachWeb reads the DOM and the accessibility tree. It does not take screenshots. That already puts us in a better position than pixel-based agents, but we still face a fundamental problem: the page was designed for human eyes, not for a language model trying to figure out which element to interact with.</p>
 <p>WebMCP changes the equation. If a page exposes its capabilities as structured tools, our planner model does not need to interpret ambiguous UI states to act — it just needs to pick the right tool and fill in the parameters. That is faster, cheaper, more reliable, and safer, because the agent operates within a defined surface instead of having free reign over every element on the page.</p>
 <h2 id="the-conversation-that-started-it">The conversation that started it</h2>
-<p>On July 8, <a href="https://github.com/domfarolino" target="_blank" rel="noopener">Dominic Farolino</a> — one of the driving forces behind WebMCP and the Gemini-in-Chrome team — opened <a href="https://github.com/webbrain-one/webbrain/issues/305" target="_blank" rel="noopener">issue #305</a> on our repo. The proposition was simple: WebBrain could find WebMCP tools through the Chrome DevTools Protocol and load them into the model&#39;s context, giving the agent a structured view of what the page can do before it tries to do anything.</p>
-<p>This is exactly the kind of conversation we love. An external team with deep browser platform experience, looking at WebBrain and asking: how do we make this work better? The integration could be straightforward — discover tools via CDP, present them to the planner, let the model choose — but the implications are significant. It means WebBrain could operate on two levels: the general-purpose fallback of reading the DOM when nothing else is available, and the fast path of using declared tools when the page offers them.</p>
+<p>On July 8, <a href="https://github.com/domfarolino" target="_blank" rel="noopener">Dominic Farolino</a> — one of the driving forces behind WebMCP and the Gemini-in-Chrome team — opened <a href="https://github.com/webbrain-one/webbrain/issues/305" target="_blank" rel="noopener">issue #305</a> on our repo. The proposition was simple: KavachWeb could find WebMCP tools through the Chrome DevTools Protocol and load them into the model&#39;s context, giving the agent a structured view of what the page can do before it tries to do anything.</p>
+<p>This is exactly the kind of conversation we love. An external team with deep browser platform experience, looking at KavachWeb and asking: how do we make this work better? The integration could be straightforward — discover tools via CDP, present them to the planner, let the model choose — but the implications are significant. It means KavachWeb could operate on two levels: the general-purpose fallback of reading the DOM when nothing else is available, and the fast path of using declared tools when the page offers them.</p>
 <p>We are excited about this. Genuinely.</p>
 <h2 id="an-invitation">An invitation</h2>
 <p>This is what happens when people from different corners of the ecosystem collide. Dominic is building browser-native AI at Google. We are building local-first browser agents. WebMCP is the bridge between them, and the fact that someone from that world reached out to us tells us we are all solving the same problem from different angles.</p>
@@ -549,12 +549,12 @@
 <p><a href="https://github.com/webbrain-one/webbrain/issues/305" target="_blank" rel="noopener">Join the conversation on GitHub</a> — and bring your wildest ideas.</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

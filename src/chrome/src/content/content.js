@@ -1,5 +1,5 @@
 /**
- * WebBrain Content Script
+ * KavachWeb Content Script
  * Injected into every page — handles page reading and DOM actions.
  */
 
@@ -2129,7 +2129,7 @@
         ...(rect ? { rect } : {}),
         warning: verified
           ? 'Only this match is selected. This call replaced any previous page selection, and it did not open the browser Find UI. Do not claim earlier find_text matches remain highlighted.'
-          : 'window.find reported a match, but WebBrain could not verify a visible current selection in the top document (for example, the active match may be inside a frame while an older top-document selection remains). Do not claim it is visibly highlighted. The browser Find UI was not opened.',
+          : 'window.find reported a match, but KavachWeb could not verify a visible current selection in the top document (for example, the active match may be inside a frame while an older top-document selection remains). Do not claim it is visibly highlighted. The browser Find UI was not opened.',
       };
     } catch (error) {
       return { success: false, found: false, dispatched: false, noDispatch: true, error: `find_text failed: ${error.message || error}` };

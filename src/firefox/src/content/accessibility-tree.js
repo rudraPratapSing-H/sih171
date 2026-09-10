@@ -1,5 +1,5 @@
 /**
- * WebBrain — in-page accessibility tree builder.
+ * KavachWeb — in-page accessibility tree builder.
  *
  * This is a port of the approach used by Claude for Chrome
  * (claudeplugin/assets/accessibility-tree.js). The original ships minified;

@@ -6,11 +6,11 @@ sortOrder: -250
 date: 2026-08-22
 readTime: 7 min read
 description: >
-  We ran every current sub-dollar Qwen vision model on OpenRouter through WebBrain's 100-case browser-vision benchmark. Qwen3-VL-32B Instruct won on quality, the MoE 30B-A3B matched it at twice the speed, and the thinking variants billed four to five times the output tokens for little or no gain.
+  We ran every current sub-dollar Qwen vision model on OpenRouter through KavachWeb's 100-case browser-vision benchmark. Qwen3-VL-32B Instruct won on quality, the MoE 30B-A3B matched it at twice the speed, and the thinking variants billed four to five times the output tokens for little or no gain.
 excerpt: >
   Dense 32B Instruct takes the quality crown at 69 strict passes. The MoE 30B-A3B lands one pass behind at half the latency. Both thinking variants cost 4-5x more output tokens and didn't beat their instruct siblings — except at 8B, where thinking was worth 13 passes.
 titleTag: >
-  Six Budget Qwen Vision Models Compared on OpenRouter - WebBrain Blog
+  Six Budget Qwen Vision Models Compared on OpenRouter - KavachWeb Blog
 ogTitle: >
   Six budget Qwen vision models compared on OpenRouter
 ogDescription: >
@@ -29,11 +29,11 @@ keywords:
   - Qwen3-VL-30B-A3B
   - reasoning models
   - vision language model
-  - WebBrain
+  - KavachWeb
 author: Emre Sokullu
 authorUrl: https://emresokullu.com
 lede: >
-  **You don't need an expensive API to give a browser agent eyes.** We pushed all six of Qwen's current sub-dollar vision-capable models on OpenRouter through our [100-case browser-vision benchmark](https://github.com/esokullu/webbrain/tree/main/test/vision) — same screenshots, same production six-section prompt, same strict rubric we use to evaluate WebBrain's own vision subsystem. All 600 requests completed without a single error, and the entire sweep cost **$0.53**. The dense Qwen3-VL-32B Instruct won on quality. Its MoE sibling matched it at twice the speed. And the two "thinking" variants billed four to five times the output tokens for a gain you can count on one hand.
+  **You don't need an expensive API to give a browser agent eyes.** We pushed all six of Qwen's current sub-dollar vision-capable models on OpenRouter through our [100-case browser-vision benchmark](https://github.com/esokullu/webbrain/tree/main/test/vision) — same screenshots, same production six-section prompt, same strict rubric we use to evaluate KavachWeb's own vision subsystem. All 600 requests completed without a single error, and the entire sweep cost **$0.53**. The dense Qwen3-VL-32B Instruct won on quality. Its MoE sibling matched it at twice the speed. And the two "thinking" variants billed four to five times the output tokens for a gain you can count on one hand.
 ---
 
 ## The lineup
@@ -53,7 +53,7 @@ Note what's missing from that table: any expensive model. The priciest row costs
 
 ## Results
 
-Every model saw all 100 cases with WebBrain's production screenshot contract: temperature 0, max 800 tokens, six required sections, strict rubric scoring against expected facts. A strict pass means the complete contract plus the case's weighted facts recovered without critical contradiction.
+Every model saw all 100 cases with KavachWeb's production screenshot contract: temperature 0, max 800 tokens, six required sections, strict rubric scoring against expected facts. A strict pass means the complete contract plus the case's weighted facts recovered without critical contradiction.
 
 | Model | Strict passes | Mean rubric | Mean latency | Output tokens | Cost / 100-case run |
 | --- | ---: | ---: | ---: | ---: | ---: |

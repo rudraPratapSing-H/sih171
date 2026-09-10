@@ -1,26 +1,26 @@
 ---
 title: >
-  Tiny raw LFM 2.5 checkpoints in WebBrain's frozen planner benchmark
+  Tiny raw LFM 2.5 checkpoints in KavachWeb's frozen planner benchmark
 slug: tiny-lfm25-raw-planner-benchmark
 sortOrder: -20
 date: 2026-06-26
 readTime: 5 min read
 description: >
-  We ran two tiny raw Liquid LFM 2.5 checkpoints, 230M and 350M, through WebBrain's frozen 100-case browser-agent first-tool benchmark on a local OpenAI-compatible endpoint.
+  We ran two tiny raw Liquid LFM 2.5 checkpoints, 230M and 350M, through KavachWeb's frozen 100-case browser-agent first-tool benchmark on a local OpenAI-compatible endpoint.
 excerpt: >
-  LFM 2.5 230M and 350M both completed the frozen WebBrain planner run without transport errors. The raw tiny checkpoints are not good browser planners yet, but their failure shape is useful fine-tuning data.
+  LFM 2.5 230M and 350M both completed the frozen KavachWeb planner run without transport errors. The raw tiny checkpoints are not good browser planners yet, but their failure shape is useful fine-tuning data.
 titleTag: >
-  Tiny raw LFM 2.5 planner benchmark - WebBrain Blog
+  Tiny raw LFM 2.5 planner benchmark - KavachWeb Blog
 ogTitle: >
-  Tiny raw LFM 2.5 checkpoints in WebBrain's planner benchmark
+  Tiny raw LFM 2.5 checkpoints in KavachWeb's planner benchmark
 ogDescription: >
-  LFM 2.5 230M and 350M on WebBrain's frozen browser-agent first-tool harness: clean API runs, weak planner routing, useful fine-tuning signal.
+  LFM 2.5 230M and 350M on KavachWeb's frozen browser-agent first-tool harness: clean API runs, weak planner routing, useful fine-tuning signal.
 twitterTitle: >
   Tiny raw LFM 2.5 planner benchmark
 twitterDescription: >
-  Two raw tiny LFM 2.5 checkpoints completed WebBrain's frozen 100-case tool-calling run. The numbers are small, and that is mostly the point.
+  Two raw tiny LFM 2.5 checkpoints completed KavachWeb's frozen 100-case tool-calling run. The numbers are small, and that is mostly the point.
 keywords:
-  - WebBrain
+  - KavachWeb
   - LFM 2.5
   - Liquid AI
   - tiny language model
@@ -29,12 +29,12 @@ keywords:
   - planner benchmark
   - Qwen 3.5
 lede: >
-  We ran two tiny raw Liquid LFM 2.5 checkpoints through WebBrain's frozen browser-agent first-tool benchmark: **lfm2.5-230m** and **lfm2.5-350m** served locally from `http://localhost:8000`. Both runs completed all 100 cases without transport errors. The quality numbers are low, but that is not a surprise: these are tiny raw checkpoints, not WebBrain-tuned browser planners. The useful result is the shape of the mistakes.
+  We ran two tiny raw Liquid LFM 2.5 checkpoints through KavachWeb's frozen browser-agent first-tool benchmark: **lfm2.5-230m** and **lfm2.5-350m** served locally from `http://localhost:8000`. Both runs completed all 100 cases without transport errors. The quality numbers are low, but that is not a surprise: these are tiny raw checkpoints, not KavachWeb-tuned browser planners. The useful result is the shape of the mistakes.
 ---
 
 ## What we ran
 
-Both runs used the same frozen May 23, 2026 WebBrain baseline used by the published planner table: Claude Sonnet 4.6's system prompt and 41-tool schema, system hash `5c4fac1387025050`. The endpoint was a local OpenAI-compatible server at `http://localhost:8000`.
+Both runs used the same frozen May 23, 2026 KavachWeb baseline used by the published planner table: Claude Sonnet 4.6's system prompt and 41-tool schema, system hash `5c4fac1387025050`. The endpoint was a local OpenAI-compatible server at `http://localhost:8000`.
 
 ```bash
 node test/llm/run-llamacpp.mjs \
@@ -131,17 +131,17 @@ Qwen 3.5 0.8B is the sharper tiny baseline. Even with fewer than one billion par
 
 ## What this means
 
-These runs should not be read as "LFM is bad at tools." They are closer to a pre-fine-tuning diagnostic. WebBrain's benchmark asks a very specific first-turn planning question: given a browser state, a user instruction, and 41 available tools, choose the first tool and arguments. Tiny raw models are not expected to have that policy baked in.
+These runs should not be read as "LFM is bad at tools." They are closer to a pre-fine-tuning diagnostic. KavachWeb's benchmark asks a very specific first-turn planning question: given a browser state, a user instruction, and 41 available tools, choose the first tool and arguments. Tiny raw models are not expected to have that policy baked in.
 
 What they do show is encouraging in a narrower way:
 
-- The local serving path works cleanly with WebBrain's OpenAI-compatible runner.
+- The local serving path works cleanly with KavachWeb's OpenAI-compatible runner.
 - The 230M model strongly learned the "emit a tool call" behavior, even if it overuses inspection.
 - The 350M model has a broader action vocabulary and better Sonnet alignment, but needs schema control.
 - Both runs are small enough that fine-tuning experiments should be cheap and fast.
 
-For WebBrain, the next interesting experiment is not to keep benchmarking these raw checkpoints as-is. It is to tune them on browser-planner traces and rerun the same frozen harness. If a 230M or 350M model can be trained out of the `get_accessibility_tree` default and into reliable schema-following, it becomes a much more interesting on-device planner candidate.
+For KavachWeb, the next interesting experiment is not to keep benchmarking these raw checkpoints as-is. It is to tune them on browser-planner traces and rerun the same frozen harness. If a 230M or 350M model can be trained out of the `get_accessibility_tree` default and into reliable schema-following, it becomes a much more interesting on-device planner candidate.
 
 The bottom line: raw tiny LFMs are not ready browser planners. That is fine. They are the kind of models you fine-tune into a planner, and this run gives us a compact before-picture. Liquid's new [LFM2.5-230M](https://www.liquid.ai/blog/lfm2-5-230m) strengthens that case: if a 230M model can perform as well as the 350M checkpoint while being roughly 33% smaller, it should become the default tiny LFM target for fine-tuning experiments. For no-fine-tuning, raw tiny-model use, though, Qwen 3.5 0.8B remains the de facto standard to beat.
 
-Tags: #LFM25 #LiquidAI #TinyLanguageModels #ToolCalling #BrowserAgent #WebBrain
+Tags: #LFM25 #LiquidAI #TinyLanguageModels #ToolCalling #BrowserAgent #KavachWeb

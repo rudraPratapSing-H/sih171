@@ -1,5 +1,5 @@
 /**
- * Bridge client — talks to the WebBrain browser extension.
+ * Bridge client — talks to the KavachWeb browser extension.
  *
  * The extension cannot listen on a socket (Manifest V3 has no such API), so
  * `src/chrome/src/offscreen/cloud-bridge.js` dials OUT from an offscreen
@@ -17,7 +17,7 @@
  * a shared package would drag the whole monorepo into both installs. If you
  * change the protocol, change both.
  *
- * Default port is 17375: WebBrain Cloud owns 17373 and the MCP server owns
+ * Default port is 17375: KavachWeb Cloud owns 17373 and the MCP server owns
  * 17374. The extension holds exactly ONE bridge socket, so only one of the
  * three can be attached at a time.
  */
@@ -143,7 +143,7 @@ export class BridgeClient {
       if (this.socket) {
         this.failAllPending(
           new BridgeError(
-            "WebBrain extension connection was superseded.",
+            "KavachWeb extension connection was superseded.",
             undefined,
             "COMMAND_INTERRUPTED",
           ),
@@ -164,7 +164,7 @@ export class BridgeClient {
         this.handshakenSocket = null;
         this.failAllPending(
           new BridgeError(
-            "WebBrain extension disconnected mid-command.",
+            "KavachWeb extension disconnected mid-command.",
             undefined,
             "COMMAND_INTERRUPTED",
           ),
@@ -254,12 +254,12 @@ export class BridgeClient {
 
   notConnectedMessage(): string {
     return (
-      "No WebBrain browser extension is connected, so browser tools are unavailable. " +
-      `This plugin is listening on ${this.url}. To connect: install the WebBrain ` +
+      "No KavachWeb browser extension is connected, so browser tools are unavailable. " +
+      `This plugin is listening on ${this.url}. To connect: install the KavachWeb ` +
       "extension (https://webbrain.one) on a Chromium browser — Chrome, Edge, Brave, " +
-      "Opera or Vivaldi — open it, then set WebBrain → Settings → General → Advanced → MCP to " +
+      "Opera or Vivaldi — open it, then set KavachWeb → Settings → General → Advanced → MCP to " +
       `${this.url} and enable it. The extension holds one bridge at a time, so it ` +
-      "cannot also be pointed at WebBrain Cloud (17373) or the MCP server (17374). " +
+      "cannot also be pointed at KavachWeb Cloud (17373) or the MCP server (17374). " +
       "Firefox cannot host the bridge at all: that build has no offscreen document. " +
       "fetch_url and research_url keep working everywhere, with or without the extension."
     );
@@ -285,7 +285,7 @@ export class BridgeClient {
         this.pending.delete(id);
         reject(
           new BridgeError(
-            `WebBrain did not answer '${action}' within ${responseTimeoutMs}ms.`,
+            `KavachWeb did not answer '${action}' within ${responseTimeoutMs}ms.`,
             undefined,
             "COMMAND_TIMEOUT",
           ),

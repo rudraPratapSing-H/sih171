@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate every WebBrain logo derivative from the canonical brand assets.
+"""Regenerate every KavachWeb logo derivative from the canonical brand assets.
 
 The full-background artwork works well for social cards. Toolbar, favicon,
 and store-icon sizes use the matching transparent brain mark so browser chrome
@@ -112,7 +112,7 @@ def main() -> None:
     for path, box, radius in COMPOSITE_LOGOS:
         replace_composite_logo(path, source, box, radius)
 
-    print("Synchronized WebBrain logo assets from assets/logo-github.png")
+    print("Synchronized KavachWeb logo assets from assets/logo-github.png")
 
 
 if __name__ == "__main__":

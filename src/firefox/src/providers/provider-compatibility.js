@@ -209,7 +209,7 @@ export function shouldUseOpenAIResponsesApi(config = {}) {
   if (config.apiFormat === 'responses') return true;
   if (config.apiFormat === 'chat') return false;
   // OpenCode Zen: https://opencode.ai/zen/v1/responses for muse-spark, gpt-5.x, claude, gemini, grok
-  // WebBrain's OpenCode Zen provider previously forced Chat Completions for all Zen models (404 for Responses models).
+  // KavachWeb's OpenCode Zen provider previously forced Chat Completions for all Zen models (404 for Responses models).
   const rawModel = String(config.model || '');
   const model = rawModel.replace(/^opencode\//i, '').trim().toLowerCase();
   if (isOpenCodeZenConfig(config)) {

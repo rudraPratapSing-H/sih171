@@ -174,12 +174,12 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
     if (providerName === 'webbrain-cloud') {
       if (this.config.deviceGuid) headers['X-WebBrain-Device-Id'] = this.config.deviceGuid;
       headers['X-WebBrain-Client'] = 'extension';
-      headers['X-WebBrain-Help-Improve'] = this.config.helpImproveWebBrain === false ? '0' : '1';
+      headers['X-WebBrain-Help-Improve'] = this.config.helpImproveKavachWeb === false ? '0' : '1';
     }
     // OpenRouter-specific headers
     if (providerName === 'openrouter') {
       headers['HTTP-Referer'] = this.config.siteUrl || 'https://github.com/webbrain-one/webbrain';
-      headers['X-Title'] = 'WebBrain';
+      headers['X-Title'] = 'KavachWeb';
     }
     if (providerName === 'cloudflare') {
       const configuredGatewayId = String(this.config.gatewayId || '').trim();
@@ -258,12 +258,12 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
     if (status === 402 && providerName === 'webbrain-cloud') {
       let actionUrl = this._webbrainSubscribeUrl();
       let actionLabel = 'Subscribe for more usage';
-      let message = 'Daily free WebBrain Compass allowance used.';
+      let message = 'Daily free KavachWeb Compass allowance used.';
       try {
         const parsed = JSON.parse(body || '{}');
         if (parsed.upgrade_url) {
           actionUrl = parsed.upgrade_url;
-          actionLabel = 'Upgrade to WebBrain Plus';
+          actionLabel = 'Upgrade to KavachWeb Plus';
         } else if (parsed.subscribe_url) {
           actionUrl = parsed.subscribe_url;
         } else if (parsed.error?.code === 'webbrain_cloud_plus_tier_exceeded') {
@@ -559,7 +559,7 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
         description: fn.description,
         parameters: fn.parameters || { type: 'object', properties: {} },
         // Chat Completions is non-strict by default. Preserve that behavior
-        // unless a WebBrain tool explicitly opted into strict schemas.
+        // unless a KavachWeb tool explicitly opted into strict schemas.
         strict: fn.strict === true,
       };
     });

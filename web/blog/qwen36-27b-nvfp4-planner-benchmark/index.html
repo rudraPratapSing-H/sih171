@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Qwen 3.6 27B NVFP4 WebBrain planner benchmark - WebBrain Blog</title>
-  <meta name="description" content="We tested nvidia/Qwen3.6-27B-NVFP4 against WebBrain&#39;s frozen browser-agent first-tool benchmark. It is far faster than the older Qwen 3.6 27B row and enters the top 10, but loses three all-case Sonnet-alignment points on boundary cases.">
-  <meta name="keywords" content="WebBrain, Qwen 3.6, Qwen 3.6 27B, NVFP4, NVIDIA, vLLM, browser agent, planner benchmark, tool calling">
-  <meta property="og:title" content="Qwen 3.6 27B NVFP4 enters WebBrain&#39;s planner top 10">
+  <title>Qwen 3.6 27B NVFP4 KavachWeb planner benchmark - KavachWeb Blog</title>
+  <meta name="description" content="We tested nvidia/Qwen3.6-27B-NVFP4 against KavachWeb&#39;s frozen browser-agent first-tool benchmark. It is far faster than the older Qwen 3.6 27B row and enters the top 10, but loses three all-case Sonnet-alignment points on boundary cases.">
+  <meta name="keywords" content="KavachWeb, Qwen 3.6, Qwen 3.6 27B, NVFP4, NVIDIA, vLLM, browser agent, planner benchmark, tool calling">
+  <meta property="og:title" content="Qwen 3.6 27B NVFP4 enters KavachWeb&#39;s planner top 10">
   <meta property="og:description" content="The NVFP4 Qwen 3.6 27B variant is much faster than the older saved Qwen row, but the all-case Sonnet benchmark exposes a boundary-case tradeoff.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://webbrain.one/blog/qwen36-27b-nvfp4-planner-benchmark">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Qwen 3.6 27B NVFP4 WebBrain benchmark">
+  <meta name="twitter:title" content="Qwen 3.6 27B NVFP4 KavachWeb benchmark">
   <meta name="twitter:description" content="Faster, more parseable, top-10 - but not a clean all-case quality upgrade over the older Qwen 3.6 27B row.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/qwen36-27b-nvfp4-planner-benchmark">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -475,7 +475,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "Qwen 3.6 27B NVFP4 is much faster, but not a clean planner upgrade",
-  "description": "We tested nvidia/Qwen3.6-27B-NVFP4 against WebBrain's frozen browser-agent first-tool benchmark. It is far faster than the older Qwen 3.6 27B row and enters the top 10, but loses three all-case Sonnet-alignment points on boundary cases.",
+  "description": "We tested nvidia/Qwen3.6-27B-NVFP4 against KavachWeb's frozen browser-agent first-tool benchmark. It is far faster than the older Qwen 3.6 27B row and enters the top 10, but loses three all-case Sonnet-alignment points on boundary cases.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -525,7 +525,7 @@
   <article>
     <div class="meta">July 2, 2026 &middot; 6 min read &middot; <a href="/blog">&larr; All posts</a></div>
     <h1>Qwen 3.6 27B NVFP4 is much faster, but not a clean planner upgrade</h1>
-    <p class="lede">We ran <strong>nvidia/Qwen3.6-27B-NVFP4</strong> through WebBrain&#39;s frozen 100-case browser-agent planner benchmark because the NVFP4 build is supposed to be the more performant Qwen 3.6 27B serving path. The performance claim holds: this run is dramatically faster than the older saved Qwen 3.6 27B row. The planner-quality claim is more nuanced: it enters the current Sonnet-reference top 10, but it does not beat old Qwen on all-case Sonnet alignment.</p>
+    <p class="lede">We ran <strong>nvidia/Qwen3.6-27B-NVFP4</strong> through KavachWeb&#39;s frozen 100-case browser-agent planner benchmark because the NVFP4 build is supposed to be the more performant Qwen 3.6 27B serving path. The performance claim holds: this run is dramatically faster than the older saved Qwen 3.6 27B row. The planner-quality claim is more nuanced: it enters the current Sonnet-reference top 10, but it does not beat old Qwen on all-case Sonnet alignment.</p>
 <h2 id="what-we-ran">What we ran</h2>
 <p>The local vLLM server at <code>http://localhost:8000</code> advertised:</p>
 <pre><code class="language-json">{
@@ -533,7 +533,7 @@
   &quot;root&quot;: &quot;nvidia/Qwen3.6-27B-NVFP4&quot;,
   &quot;max_model_len&quot;: 65536
 }</code></pre>
-<p>We used the same frozen May 23, 2026 WebBrain baseline used by the recent planner posts: Claude Sonnet 4.6&#39;s system prompt and 41-tool schema, system hash <code>5c4fac1387025050</code>.</p>
+<p>We used the same frozen May 23, 2026 KavachWeb baseline used by the recent planner posts: Claude Sonnet 4.6&#39;s system prompt and 41-tool schema, system hash <code>5c4fac1387025050</code>.</p>
 <pre><code class="language-bash">node test/llm/run-llamacpp.mjs \
   --base http://localhost:8000 \
   --model qwen3.6-27b \
@@ -550,7 +550,7 @@
 <p>That is a useful row. It emits native tool calls cleanly, every emitted tool name is in the frozen schema, and median latency is low enough for an interactive browser loop.</p>
 <p>But it is not a clean quality upgrade over the older Qwen 3.6 27B result.</p>
 <h2 id="against-old-qwen-3-6-27b">Against old Qwen 3.6 27B</h2>
-<p>The old row is still the main comparison point because it is the same model family and size in the saved WebBrain benchmark table.</p>
+<p>The old row is still the main comparison point because it is the same model family and size in the saved KavachWeb benchmark table.</p>
 <div class="table-wrap"><table><thead><tr><th>Model</th><th>Parsed calls</th><th>Exact</th><th>Ideal name</th><th>Sonnet all</th><th>Sonnet tooled</th><th>Median</th><th>p95</th></tr></thead><tbody><tr><td>Qwen 3.6 27B</td><td>92/100</td><td>18/100</td><td>37/100</td><td>77.0%</td><td>77.2%</td><td>10.2s</td><td>15.0s</td></tr><tr><td>Qwen 3.6 27B NVFP4</td><td>96/100</td><td>18/100</td><td>38/100</td><td>74.0%</td><td>77.2%</td><td>1.76s</td><td>6.49s</td></tr></tbody></table></div>
 <p>The speedup is the obvious win: 1.76s median versus 10.2s is about a 5.8x improvement in the saved rows. The p95 also drops from 15.0s to 6.49s.</p>
 <p>The quality picture splits:</p>
@@ -559,7 +559,7 @@
 <p>Sonnet returned no tool on eight frozen cases. The old Qwen row matched six of those no-tool decisions. NVFP4 matched three. In the other five, it emitted tools like <code>screenshot</code>, <code>scratchpad_write</code>, <code>done</code>, or <code>clarify</code>. That is not a schema failure. It is a boundary-discipline issue: the model is more eager to do something.</p>
 <h2 id="current-sonnetreference-top-10">Current Sonnet-reference top 10</h2>
 <p>Rows are ranked by all-case Sonnet match, then by Sonnet-tooled match as the first tiebreaker. Claude Sonnet 4.6 is the reference, not included as a ranked row.</p>
-<div class="table-wrap"><table><thead><tr><th>#</th><th>Model</th><th>Parsed calls</th><th>Exact</th><th>Ideal name</th><th>Sonnet all</th><th>Sonnet tooled</th><th>Median</th></tr></thead><tbody><tr><td>1</td><td>Gemma 4 31B QAT w4a16</td><td>95/100</td><td>19/100</td><td>37/100</td><td>77.0%</td><td>78.3%</td><td>0.55s</td></tr><tr><td>2</td><td>Qwen 3.6 27B</td><td>92/100</td><td>18/100</td><td>37/100</td><td>77.0%</td><td>77.2%</td><td>10.2s</td></tr><tr><td>3</td><td>MiniMax M2.7</td><td>88/100</td><td>23/100</td><td>36/100</td><td>77.0%</td><td>76.1%</td><td>3.1s</td></tr><tr><td>4</td><td>MiniMax M3</td><td>85/100</td><td>17/100</td><td>32/100</td><td>75.0%</td><td>73.9%</td><td>3.1s</td></tr><tr><td>5</td><td><strong>Qwen 3.6 27B NVFP4</strong></td><td><strong>96/100</strong></td><td><strong>18/100</strong></td><td><strong>38/100</strong></td><td><strong>74.0%</strong></td><td><strong>77.2%</strong></td><td><strong>1.76s</strong></td></tr><tr><td>6</td><td>Intel Gemma 4 31B int4 AutoRound</td><td>88/100</td><td>14/100</td><td>34/100</td><td>74.0%</td><td>72.8%</td><td>0.63s</td></tr><tr><td>7</td><td>WebBrain Compass 1.0</td><td>90/100</td><td>16/100</td><td>35/100</td><td>73.0%</td><td>72.8%</td><td>8.8s</td></tr><tr><td>8</td><td>Qwen 3.5 4B</td><td>82/100</td><td>12/100</td><td>33/100</td><td>73.0%</td><td>71.7%</td><td>5.5s</td></tr><tr><td>9</td><td>Ornith-1.0-35B NVFP4</td><td>88/100</td><td>21/100</td><td>36/100</td><td>71.0%</td><td>70.7%</td><td>2.4s</td></tr><tr><td>10</td><td>Gemma 4 26B-A4B</td><td>87/100</td><td>13/100</td><td>30/100</td><td>71.0%</td><td>70.7%</td><td>1.4s</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Model</th><th>Parsed calls</th><th>Exact</th><th>Ideal name</th><th>Sonnet all</th><th>Sonnet tooled</th><th>Median</th></tr></thead><tbody><tr><td>1</td><td>Gemma 4 31B QAT w4a16</td><td>95/100</td><td>19/100</td><td>37/100</td><td>77.0%</td><td>78.3%</td><td>0.55s</td></tr><tr><td>2</td><td>Qwen 3.6 27B</td><td>92/100</td><td>18/100</td><td>37/100</td><td>77.0%</td><td>77.2%</td><td>10.2s</td></tr><tr><td>3</td><td>MiniMax M2.7</td><td>88/100</td><td>23/100</td><td>36/100</td><td>77.0%</td><td>76.1%</td><td>3.1s</td></tr><tr><td>4</td><td>MiniMax M3</td><td>85/100</td><td>17/100</td><td>32/100</td><td>75.0%</td><td>73.9%</td><td>3.1s</td></tr><tr><td>5</td><td><strong>Qwen 3.6 27B NVFP4</strong></td><td><strong>96/100</strong></td><td><strong>18/100</strong></td><td><strong>38/100</strong></td><td><strong>74.0%</strong></td><td><strong>77.2%</strong></td><td><strong>1.76s</strong></td></tr><tr><td>6</td><td>Intel Gemma 4 31B int4 AutoRound</td><td>88/100</td><td>14/100</td><td>34/100</td><td>74.0%</td><td>72.8%</td><td>0.63s</td></tr><tr><td>7</td><td>KavachWeb Compass 1.0</td><td>90/100</td><td>16/100</td><td>35/100</td><td>73.0%</td><td>72.8%</td><td>8.8s</td></tr><tr><td>8</td><td>Qwen 3.5 4B</td><td>82/100</td><td>12/100</td><td>33/100</td><td>73.0%</td><td>71.7%</td><td>5.5s</td></tr><tr><td>9</td><td>Ornith-1.0-35B NVFP4</td><td>88/100</td><td>21/100</td><td>36/100</td><td>71.0%</td><td>70.7%</td><td>2.4s</td></tr><tr><td>10</td><td>Gemma 4 26B-A4B</td><td>87/100</td><td>13/100</td><td>30/100</td><td>71.0%</td><td>70.7%</td><td>1.4s</td></tr></tbody></table></div>
 <p>This is the fair positive interpretation: NVFP4 enters the top 10 and has the highest parsed-call count in that table. It also has the best ideal-name score in the top 10, tied with Qwen 3.6 35B just below the cut. If you only look at cases where Sonnet picked a tool, it is tied with old Qwen 3.6 27B.</p>
 <p>The fair negative interpretation is also real: the old Qwen 3.6 27B row is still better on the all-case metric because it declines or answers directly more often in the same places Sonnet does.</p>
 <h2 id="where-it-is-strong">Where it is strong</h2>
@@ -571,20 +571,20 @@
 <h2 id="where-it-loses-points">Where it loses points</h2>
 <p>The weaker bands are the boundaries and special-purpose shortcuts:</p>
 <div class="table-wrap"><table><thead><tr><th>Category</th><th>Sonnet matches</th><th>What happened</th></tr></thead><tbody><tr><td>Ambiguous / clarify</td><td>0/8</td><td>Over-tooled or picked the wrong terminal shape on no-tool and clarify-style cases.</td></tr><tr><td>Destructive / refusal-worthy</td><td>2/6</td><td>Often inspected or verified instead of matching Sonnet&#39;s confirmation boundary.</td></tr><tr><td>Downloads</td><td>3/6</td><td>Missed some <code>download_file</code>, <code>download_social_media</code>, and <code>fetch_url</code> shortcut choices.</td></tr><tr><td>GitHub flows</td><td>3/6</td><td>Preferred page inspection for some flows where Sonnet navigated or fetched directly.</td></tr><tr><td>Knowledge questions</td><td>3/5</td><td>Correctly no-tooled three short-answer cases, but used tools on two others.</td></tr></tbody></table></div>
-<p>The ambiguous band is the entire reason the all-case score falls below old Qwen. Case 075 is a good example: &quot;finish what we were doing&quot; is intentionally under-specified. Sonnet returned no tool. Old Qwen returned no tool. NVFP4 wrote to the scratchpad. That is a valid WebBrain tool name, but it is the wrong kind of eagerness for this benchmark.</p>
+<p>The ambiguous band is the entire reason the all-case score falls below old Qwen. Case 075 is a good example: &quot;finish what we were doing&quot; is intentionally under-specified. Sonnet returned no tool. Old Qwen returned no tool. NVFP4 wrote to the scratchpad. That is a valid KavachWeb tool name, but it is the wrong kind of eagerness for this benchmark.</p>
 <h2 id="bottom-line">Bottom line</h2>
 <p>Qwen 3.6 27B NVFP4 is a strong local serving result. It is far faster than the older saved Qwen 3.6 27B row, produces more parsed native tool calls, stays inside the frozen schema, and enters the current Sonnet-reference top 10.</p>
 <p>It is not a clean planner-quality upgrade. On tool-required tasks, it is essentially tied with old Qwen 3.6 27B. On all cases, old Qwen still wins by three points because it better matches Sonnet&#39;s &quot;do not call a tool yet&quot; decisions.</p>
-<p>For WebBrain, I would treat this as a serious practical candidate with one caveat: pair it with stronger boundary handling. If the outer agent can guard ambiguous, destructive, and no-browser-needed turns, the NVFP4 serving profile is very attractive. Without that guard, the old Qwen row remains the cleaner planner by the benchmark&#39;s all-case metric.</p>
-<p>Tags: #Qwen36 #NVFP4 #NVIDIA #vLLM #ToolCalling #BrowserAgent #WebBrain</p>
+<p>For KavachWeb, I would treat this as a serious practical candidate with one caveat: pair it with stronger boundary handling. If the outer agent can guard ambiguous, destructive, and no-browser-needed turns, the NVFP4 serving profile is very attractive. Without that guard, the old Qwen row remains the cleaner planner by the benchmark&#39;s all-case metric.</p>
+<p>Tags: #Qwen36 #NVFP4 #NVIDIA #vLLM #ToolCalling #BrowserAgent #KavachWeb</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

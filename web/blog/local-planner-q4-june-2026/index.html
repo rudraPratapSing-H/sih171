@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DiffusionGemma hits 0.35s median in the WebBrain local planner bench - WebBrain Blog</title>
-  <meta name="description" content="DiffusionGemma, Gemma 4 12B Coder, Cohere North-Mini-Code, and VibeThinker-3B in WebBrain&#39;s frozen first-tool-call browser-agent harness.">
-  <meta name="keywords" content="WebBrain, local LLM, browser agent, tool calling, Gemma 4 12B Coder, North-Mini-Code, DiffusionGemma, VibeThinker-3B, llama.cpp, vLLM">
-  <meta property="og:title" content="DiffusionGemma hits 0.35s median in the WebBrain local planner bench">
-  <meta property="og:description" content="Gemma 4 12B Coder, North Mini Code, and DiffusionGemma completed WebBrain&#39;s frozen local planner run; DiffusionGemma is fast but not yet reliable enough for WebBrain, and VibeThinker is not a tool-calling agent model.">
+  <title>DiffusionGemma hits 0.35s median in the KavachWeb local planner bench - KavachWeb Blog</title>
+  <meta name="description" content="DiffusionGemma, Gemma 4 12B Coder, Cohere North-Mini-Code, and VibeThinker-3B in KavachWeb&#39;s frozen first-tool-call browser-agent harness.">
+  <meta name="keywords" content="KavachWeb, local LLM, browser agent, tool calling, Gemma 4 12B Coder, North-Mini-Code, DiffusionGemma, VibeThinker-3B, llama.cpp, vLLM">
+  <meta property="og:title" content="DiffusionGemma hits 0.35s median in the KavachWeb local planner bench">
+  <meta property="og:description" content="Gemma 4 12B Coder, North Mini Code, and DiffusionGemma completed KavachWeb&#39;s frozen local planner run; DiffusionGemma is fast but not yet reliable enough for KavachWeb, and VibeThinker is not a tool-calling agent model.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://webbrain.one/blog/local-planner-q4-june-2026">
   <meta property="og:image" content="https://webbrain.one/og-image.png">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="DiffusionGemma hits 0.35s median in the WebBrain local planner bench">
-  <meta name="twitter:description" content="A practical local-serving pass over four new browser-agent planner candidates for WebBrain.">
+  <meta name="twitter:title" content="DiffusionGemma hits 0.35s median in the KavachWeb local planner bench">
+  <meta name="twitter:description" content="A practical local-serving pass over four new browser-agent planner candidates for KavachWeb.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/local-planner-q4-june-2026">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -474,8 +474,8 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "DiffusionGemma hits 0.35s median in the WebBrain local planner bench",
-  "description": "DiffusionGemma, Gemma 4 12B Coder, Cohere North-Mini-Code, and VibeThinker-3B in WebBrain's frozen first-tool-call browser-agent harness.",
+  "headline": "DiffusionGemma hits 0.35s median in the KavachWeb local planner bench",
+  "description": "DiffusionGemma, Gemma 4 12B Coder, Cohere North-Mini-Code, and VibeThinker-3B in KavachWeb's frozen first-tool-call browser-agent harness.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -524,17 +524,17 @@
 
   <article>
     <div class="meta">June 19, 2026 &middot; 9 min read &middot; <a href="/blog">&larr; All posts</a></div>
-    <h1>DiffusionGemma hits 0.35s median in the WebBrain local planner bench</h1>
-    <p class="lede">We pulled four new local candidates into the WebBrain bench: <strong>Gemma 4 12B Coder Fable5 Composer 2.5</strong>, <strong>Cohere North-Mini-Code 1.0</strong>, <strong>DiffusionGemma-26B-A4B-it</strong>, and <strong>VibeThinker-3B</strong>. The practical result: Gemma and North both completed the frozen legacy first-tool-call run at Q4, DiffusionGemma could not use the normal llama.cpp server path but did complete the harness through vLLM at very high speed, and VibeThinker matched its own caveat: it is not trained for tool-calling or autonomous agents. DiffusionGemma is promising, but not yet something I would put in WebBrain's default path.</p>
+    <h1>DiffusionGemma hits 0.35s median in the KavachWeb local planner bench</h1>
+    <p class="lede">We pulled four new local candidates into the KavachWeb bench: <strong>Gemma 4 12B Coder Fable5 Composer 2.5</strong>, <strong>Cohere North-Mini-Code 1.0</strong>, <strong>DiffusionGemma-26B-A4B-it</strong>, and <strong>VibeThinker-3B</strong>. The practical result: Gemma and North both completed the frozen legacy first-tool-call run at Q4, DiffusionGemma could not use the normal llama.cpp server path but did complete the harness through vLLM at very high speed, and VibeThinker matched its own caveat: it is not trained for tool-calling or autonomous agents. DiffusionGemma is promising, but not yet something I would put in KavachWeb's default path.</p>
 <h2 id="what-we-ran">What we ran</h2>
-<p>This was not a leaderboard run. It was a local-serving reality check: can these models sit behind WebBrain as a first-action browser planner?</p>
+<p>This was not a leaderboard run. It was a local-serving reality check: can these models sit behind KavachWeb as a first-action browser planner?</p>
 <p>For the comparable runs, we used the frozen first-tool-call harness:</p>
 <pre><code class="language-bash">node test/llm/run-llamacpp.mjs \
   --freeze test/llm/freeze/baseline-2026-05-23.json \
   --chat-template-compat alternating \
   --concurrency 1</code></pre>
 <p>That means:</p>
-<ul><li>100 single-turn browser-agent prompts.</li><li>The May 23 Claude Sonnet 4.6 WebBrain system prompt and 41-tool schema, frozen.</li><li>Legacy text-call compatibility: no native OpenAI <code>tools</code> field is sent.</li><li>One active request at a time.</li><li><code>Q4_K_M</code> GGUFs where a GGUF path exists and can run.</li></ul>
+<ul><li>100 single-turn browser-agent prompts.</li><li>The May 23 Claude Sonnet 4.6 KavachWeb system prompt and 41-tool schema, frozen.</li><li>Legacy text-call compatibility: no native OpenAI <code>tools</code> field is sent.</li><li>One active request at a time.</li><li><code>Q4_K_M</code> GGUFs where a GGUF path exists and can run.</li></ul>
 <p>The strict numbers below score only the first model action. <strong>Exact</strong> means tool name and args match the expected first call. <strong>Name</strong> means the tool name matches but args differ. <strong>Parsed calls</strong> measures format reliability, not correctness.</p>
 <h2 id="results">Results</h2>
 <div class="table-wrap"><table><thead><tr><th>Model</th><th>Serving path</th><th>Parsed calls</th><th>Exact</th><th>Name</th><th>Median</th><th>p95</th><th>Observed VRAM</th><th>Status</th></tr></thead><tbody><tr><td>Gemma 4 12B Coder Fable5 Composer 2.5</td><td><code>Q4_K_M</code> GGUF, llama.cpp, 32k ctx</td><td>94/100</td><td>9%</td><td>26%</td><td>1.9s</td><td>2.8s</td><td>~8.8-9.0 GB</td><td>Clean text run</td></tr><tr><td>Cohere North-Mini-Code 1.0</td><td><code>Q4_K_M</code> GGUF, llama.cpp b9714, 32k ctx</td><td>93/100</td><td>9%</td><td>24%</td><td>3.2s</td><td>4.0s</td><td>~19.5 GB</td><td>Clean run with parser workaround</td></tr><tr><td>DiffusionGemma-26B-A4B-it</td><td>NVFP4, vLLM, 32k ctx</td><td>79/100</td><td>10%</td><td>26%</td><td>0.35s</td><td>0.65s</td><td>~32.0 GB reserved</td><td>Very fast; vision probe works</td></tr><tr><td>VibeThinker-3B</td><td>BF16, vLLM, 64k ctx, 8 server seqs</td><td>84/100</td><td>2%</td><td>19%</td><td>5.0s</td><td>15.1s</td><td>~26.8 GB reserved</td><td>Scored, but not recommended</td></tr></tbody></table></div>
@@ -585,7 +585,7 @@
 <p>The first one-case smoke took 8.8s and picked <code>about:extensions</code> instead of Firefox's expected <code>about:addons</code>. After that warmup, the full 100-case run finished in 37.8s wall time, with most cases between 200ms and 650ms. That is the flashy part: it behaves like a large local model, but the warmed vLLM path felt closer to a lightweight router.</p>
 <p>Quality was more mixed. Compared with the earlier Gemma 4 26B-A4B saved run, DiffusionGemma had:</p>
 <ul><li>better exact score by a small amount than Gemma 4 12B Coder and North Mini Code,</li><li>the same 26% tool-name score as Gemma 4 12B Coder,</li><li>lower parseability than Gemma 26B, with 21 no-tool answers,</li><li>much better latency than every other large-class local run in this table.</li></ul>
-<p>The caveat is important: DiffusionGemma does not yet feel reliable enough for WebBrain's default planner. In interactive use it can sometimes behave as if an action has already happened when it has not actually been taken yet. Our working hypothesis is that the diffusion generation path is part of that failure mode: it is less stepwise-deterministic than a normal autoregressive planner, and browser automation punishes that kind of state drift quickly. The speed is real; the action-state calibration still needs work.</p>
+<p>The caveat is important: DiffusionGemma does not yet feel reliable enough for KavachWeb's default planner. In interactive use it can sometimes behave as if an action has already happened when it has not actually been taken yet. Our working hypothesis is that the diffusion generation path is part of that failure mode: it is less stepwise-deterministic than a normal autoregressive planner, and browser automation punishes that kind of state drift quickly. The speed is real; the action-state calibration still needs work.</p>
 <p>The other surprise is vision. Unlike the Gemma 4 12B Coder and North Q4 GGUFs, the vLLM DiffusionGemma endpoint accepted the <code>vision-probe.mjs</code> screenshot and produced a useful structured caption of the Google password-error page. It correctly identified the page purpose, the visible text, the focused password input, and the "Enter a password" error state. That makes it more than a text planner curiosity.</p>
 <p>There is still a serving split to be aware of. Standard <code>llama-server</code> and <code>llama-cli</code> did not load the Q4 GGUF in three builds we checked:</p>
 <ul><li>the existing April-era <code>G:\llama</code> build,</li><li><code>G:\llama-b9286</code>,</li><li>the staged official Windows CUDA <code>b9714</code> build.</li></ul>
@@ -602,7 +602,7 @@
   -ngl 99 \
   --diffusion-steps 24</code></pre>
 <p>That worked. It produced a coherent one-sentence answer and peaked around 21.3 GB total 5090 memory in the smoke run. The CLI reported about 1.3s total generation time for the 256-token canvas, using entropy-bound early stopping.</p>
-<p>But the WebBrain score above comes from vLLM, not from the GGUF CLI path. For local llama.cpp users, this is still not drop-in. For vLLM users with enough VRAM, it is suddenly one of the most interesting candidates in the batch.</p>
+<p>But the KavachWeb score above comes from vLLM, not from the GGUF CLI path. For local llama.cpp users, this is still not drop-in. For vLLM users with enough VRAM, it is suddenly one of the most interesting candidates in the batch.</p>
 <h2 id="vibethinker">VibeThinker</h2>
 <p>Model: <a href="https://huggingface.co/WeiboAI/VibeThinker-3B" target="_blank" rel="noopener">WeiboAI/VibeThinker-3B</a></p>
 <p>We tried VibeThinker two ways.</p>
@@ -611,7 +611,7 @@
 <div class="table-wrap"><table><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody><tr><td>Completed cases</td><td>100/100</td></tr><tr><td>Transport errors</td><td>0</td></tr><tr><td>Parsed calls</td><td>84/100</td></tr><tr><td>Exact first-call match</td><td>2/100</td></tr><tr><td>Tool-name match</td><td>19/100</td></tr><tr><td>Average latency</td><td>6.20s</td></tr><tr><td>Median latency</td><td>4.97s</td></tr><tr><td>p95 latency</td><td>15.13s</td></tr><tr><td>Slowest case</td><td>24.4s</td></tr><tr><td>Observed VRAM</td><td>~26.8 GB reserved by vLLM</td></tr></tbody></table></div>
 <p>This cleaner run still supports the upstream warning. The VibeThinker model card says it was not trained on tool-calling or agent-based programming data and does not recommend it for function calling, API orchestration, or autonomous coding agents. It recommends competitive-programming-style tasks instead.</p>
 <p>That showed up here. VibeThinker emitted calls most of the time, but the first-action routing was weak, no-tool answers were common, and the model often selected generic reading/inspection behavior where the harness expected a concrete browser action.</p>
-<p>So the fair interpretation is narrow: VibeThinker may still be interesting for reasoning or competitive-programming prompts, but these WebBrain planner results should not be used as evidence for or against its intended use case.</p>
+<p>So the fair interpretation is narrow: VibeThinker may still be interesting for reasoning or competitive-programming prompts, but these KavachWeb planner results should not be used as evidence for or against its intended use case.</p>
 <h2 id="what-i-would-keep-testing">What I would keep testing</h2>
 <p>The practical local candidates from this batch are DiffusionGemma on vLLM, Gemma 4 12B Coder, and North Mini Code.</p>
 <p>Gemma is lighter and faster in the llama.cpp lane. North is heavier, slightly slower, and needed a parser workaround, but once raw actions were allowed through it completed the full run cleanly. Both have the same exact-match score, and both overuse <code>get_accessibility_tree</code>.</p>
@@ -639,12 +639,12 @@
 <p>The new models did not beat the earlier leaders on strict first-action accuracy. Their stronger signal is operational: DiffusionGemma is genuinely fast through vLLM and vision-capable, Gemma 4 12B Coder is light and parseable, and North Mini Code is heavy but also parseable once its native action format is allowed through. All three need prompt work before they can challenge the older Qwen, MiniMax, Sonnet, or Nemotron runs on action selection.</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

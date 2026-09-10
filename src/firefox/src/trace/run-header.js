@@ -5,7 +5,7 @@
  * Pure and browser-neutral so it can be unit-tested in test/run.js without a
  * DOM or IndexedDB.
  *
- * `conversationId` is WebBrain's session identity (the Traces UI groups runs
+ * `conversationId` is KavachWeb's session identity (the Traces UI groups runs
  * by it). On top of that, a run can name its parent run, the parent's session
  * id, and its delegation depth — the chain that answers "which root run did
  * this derived run come from" for cloud runs, workflow replays, and any future

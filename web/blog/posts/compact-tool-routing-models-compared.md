@@ -6,30 +6,30 @@ sortOrder: -282
 date: 2026-09-07
 readTime: 3 min read
 description: >
-  An updated WebBrain Compact benchmark table comparing Compass Tiny with Gemma 4, Qwen 3.5, Qwen 3.6, Qwen 3.8, Nanbeige, and the LFM2.5 base model.
+  An updated KavachWeb Compact benchmark table comparing Compass Tiny with Gemma 4, Qwen 3.5, Qwen 3.6, Qwen 3.8, Nanbeige, and the LFM2.5 base model.
 excerpt: >
   Six new local runs expand the Compact comparison. Qwen3.8-27B leads strict exact-action accuracy, while a looser name-only-inclusive metric produces a different ordering.
 titleTag: >
-  Compact Tool Routing: 10 Models Compared - WebBrain Blog
+  Compact Tool Routing: 10 Models Compared - KavachWeb Blog
 ogTitle: >
   Compact tool routing: 10 models compared
 ogDescription: >
-  The latest WebBrain Compact routing results for Compass Tiny, Gemma 4, Qwen, Nanbeige, and LFM2.5.
+  The latest KavachWeb Compact routing results for Compass Tiny, Gemma 4, Qwen, Nanbeige, and LFM2.5.
 twitterTitle: >
-  Compact tool routing: the updated WebBrain table
+  Compact tool routing: the updated KavachWeb table
 twitterDescription: >
   Ten models from 2B to 35B, measured on the same Compact browser-tool suite.
 keywords:
   - browser agent benchmark
   - tool calling
-  - WebBrain Compact
+  - KavachWeb Compact
   - Gemma 4
   - Qwen 3.5
-  - WebBrain Compass Tiny
+  - KavachWeb Compass Tiny
 author: Emre Sokullu
 authorUrl: https://emresokullu.com
 lede: >
-  **We added six local models to the WebBrain Compact routing benchmark.** The updated table now spans 10 models from 2B to 35B. Qwen3.8-27B leads strict exact-action accuracy and first-turn structured-call coverage. A separate, looser tool-family measure produces a different ordering, but should not be read as end-to-end scenario success.
+  **We added six local models to the KavachWeb Compact routing benchmark.** The updated table now spans 10 models from 2B to 35B. Qwen3.8-27B leads strict exact-action accuracy and first-turn structured-call coverage. A separate, looser tool-family measure produces a different ordering, but should not be read as end-to-end scenario success.
 ---
 
 ## Updated results
@@ -46,7 +46,7 @@ The suite contains 100 first-turn prompts and 100 stateful scenarios. Eleven sce
 | Gemma 4 12B QAT | 12B | 90 / 100 | 12 | 34 | 38.2% |
 | Qwen3.5-2B | 2B | 92 / 100 | 11 | 28 | 31.5% |
 | Gemma 4 E2B | 4.6B | 74 / 100 | 8 | **45** | **50.6%** |
-| **WebBrain Compass Tiny v1** | **2.6B** | 81 / 100 | 4 | 42 | 47.2% |
+| **KavachWeb Compass Tiny v1** | **2.6B** | 81 / 100 | 4 | 42 | 47.2% |
 | LFM2.5-2.6B base | 2.6B | 80 / 100 | 4 | 34 | 38.2% |
 
 ## What stands out
@@ -61,4 +61,4 @@ The six new rows—Gemma 4 E2B, Gemma 4 E4B, Gemma 4 12B QAT, Nanbeige4.2-3B, Qw
 
 The runner records the model’s next response without executing the browser action. These are routing results, not end-to-end task-completion rates. The Sonnet-authored reference action is a regression target rather than an oracle: a cautious model may reasonably inspect before acting. In the paired E2B/Qwen3.8 comparison, all 19 scenarios credited only to E2B were loose `ideal_name` outcomes, not exact action-and-argument matches.
 
-Tags: #WebBrain #BrowserAgent #ToolCalling #CompactMode #Gemma4 #Qwen #CompassTiny
+Tags: #KavachWeb #BrowserAgent #ToolCalling #CompactMode #Gemma4 #Qwen #CompassTiny

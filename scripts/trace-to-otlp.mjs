@@ -13,7 +13,7 @@ const STATUS_CODE_ERROR = 2;
 
 // Canonical session export mapping. The legacy { run, events } shape keeps
 // its historical child-span layout; session bundles use this profile so a
-// collector can reconstruct the WebBrain execution graph without guessing.
+// collector can reconstruct the KavachWeb execution graph without guessing.
 export const TRACE_OTLP_MAPPING = Object.freeze({
   session: 'trace',
   run: 'span',
@@ -228,7 +228,7 @@ function toolSpan(event, context, includeContent) {
     attributes: attributes([
       ['gen_ai.operation.name', 'execute_tool'],
       ['gen_ai.tool.name', name],
-      ['gen_ai.agent.name', 'WebBrain'],
+      ['gen_ai.agent.name', 'KavachWeb'],
       ['webbrain.tool.result.status', resultStatus],
       ...(data.resultErrorCode ? [['webbrain.tool.result.error_code', data.resultErrorCode]] : []),
       ...(failed ? [['error.type', 'tool_error']] : []),
@@ -464,7 +464,7 @@ function bundleRunSpan(record, bundle, includeContent) {
     endTimeUnixNano: unixNano(runEnd),
     attributes: attributes([
       ['gen_ai.operation.name', 'invoke_agent'],
-      ['gen_ai.agent.name', 'WebBrain'],
+      ['gen_ai.agent.name', 'KavachWeb'],
       ['gen_ai.agent.version', record.run.webbrainVersion || bundle.exportedByWebBrainVersion],
       ['gen_ai.provider.name', record.run.providerId],
       ['gen_ai.request.model', record.run.model],
@@ -542,13 +542,13 @@ export function traceExportToOtlp(input, { includeContent = false } = {}) {
   const root = {
     traceId,
     spanId: rootSpanId,
-    name: 'invoke_agent WebBrain',
+    name: 'invoke_agent KavachWeb',
     kind: SPAN_KIND_INTERNAL,
     startTimeUnixNano: unixNano(runStart),
     endTimeUnixNano: unixNano(runEnd),
     attributes: attributes([
       ['gen_ai.operation.name', 'invoke_agent'],
-      ['gen_ai.agent.name', 'WebBrain'],
+      ['gen_ai.agent.name', 'KavachWeb'],
       ['gen_ai.agent.version', run.webbrainVersion || input.exportedByWebBrainVersion],
       ['gen_ai.provider.name', run.providerId],
       ['gen_ai.request.model', run.model],

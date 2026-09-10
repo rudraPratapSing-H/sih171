@@ -10,7 +10,7 @@
  * worker rather than sharing one. And there is no `hasFulltextIndex` binding,
  * while `search()` catches its own exceptions and returns an empty vector, so a
  * missing index is indistinguishable from a query that matched nothing. The
- * index check therefore comes from WebBrain's own ZIM reader, passed in here,
+ * index check therefore comes from KavachWeb's own ZIM reader, passed in here,
  * which also means an archive without an index never starts a worker at all.
  *
  * This file contains no GPL code. It drives one. See docs/offline-rag-licensing.md.
@@ -71,7 +71,7 @@ function asNamedFile(source, record) {
 
 /**
  * @param options.createWorker  () => Worker for the vendored runtime.
- * @param options.hasFullTextIndex  (record) => Promise<boolean>, answered by WebBrain's reader.
+ * @param options.hasFullTextIndex  (record) => Promise<boolean>, answered by KavachWeb's reader.
  */
 export function createZimXapianRuntime(options = {}) {
   const createWorker = options.createWorker;

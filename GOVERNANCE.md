@@ -1,14 +1,14 @@
-# WebBrain Project Governance
+# KavachWeb Project Governance
 
-This document describes how the WebBrain project is governed, how decisions are made, and how anyone can become more involved over time.
+This document describes how the KavachWeb project is governed, how decisions are made, and how anyone can become more involved over time.
 
-WebBrain 33.0.0 and later is an open-source project released under GPL-3.0-or-later; earlier releases remain under the license that applied when they were published. Our goal is to build a useful, trustworthy, open AI browser agent that anyone can run, inspect, fork, and extend. Governance exists to serve that goal — not the other way around.
+KavachWeb 33.0.0 and later is an open-source project released under GPL-3.0-or-later; earlier releases remain under the license that applied when they were published. Our goal is to build a useful, trustworthy, open AI browser agent that anyone can run, inspect, fork, and extend. Governance exists to serve that goal — not the other way around.
 
 ## Roles
 
 The project recognizes four roles. Each role is a description of responsibility, not a status symbol, and people commonly move between them over time.
 
-**Users** are anyone who installs and uses WebBrain. Users help the project by filing issues, asking questions, sharing use cases, and giving feedback. No formal commitment is required.
+**Users** are anyone who installs and uses KavachWeb. Users help the project by filing issues, asking questions, sharing use cases, and giving feedback. No formal commitment is required.
 
 **Contributors** are anyone who contributes to the project in any form — code, documentation, translations, bug reports with reproductions, design feedback, triage, or community support. Contributors do not need permission to contribute; opening a pull request or issue is enough.
 
@@ -18,7 +18,7 @@ The project recognizes four roles. Each role is a description of responsibility,
 
 ## Decision Making
 
-WebBrain uses **lazy consensus** as its default decision-making process. This means a proposal moves forward unless someone with standing objects within a reasonable review window (typically 72 hours for ordinary changes, longer for substantial ones).
+KavachWeb uses **lazy consensus** as its default decision-making process. This means a proposal moves forward unless someone with standing objects within a reasonable review window (typically 72 hours for ordinary changes, longer for substantial ones).
 
 Most decisions never need a formal vote. A pull request that receives approval from at least one maintainer and no objections from other maintainers can be merged. Documentation fixes, bug fixes, and small improvements proceed under this default.
 
@@ -34,7 +34,7 @@ Sustained, high-quality contribution over time. This includes code, but also thi
 
 An existing maintainer nominates the contributor by opening a pull request to update `OWNERS.md`. The nomination should briefly describe the contributor's involvement. Other maintainers respond within a reasonable window. Lazy consensus applies — if no maintainer objects, the nomination is accepted.
 
-Maintainers are expected to act in the interest of the project and its users, not in the interest of any single employer or sponsor. WebBrain explicitly aims for maintainer diversity across organizations over time.
+Maintainers are expected to act in the interest of the project and its users, not in the interest of any single employer or sponsor. KavachWeb explicitly aims for maintainer diversity across organizations over time.
 
 ## Stepping Down and Inactivity
 
@@ -46,7 +46,7 @@ In rare cases, a maintainer may be removed for serious or sustained violation of
 
 ## Security and Safety Decisions
 
-WebBrain is a browser agent that can take real actions on a user's behalf. Decisions about default safety behavior — for example, the UI-first rule for API mutations, paywall handling, profile auto-fill defaults, or CAPTCHA solving — are treated as high-impact and require explicit maintainer review. The default posture is conservative: features that increase the agent's blast radius are off by default and clearly disclosed.
+KavachWeb is a browser agent that can take real actions on a user's behalf. Decisions about default safety behavior — for example, the UI-first rule for API mutations, paywall handling, profile auto-fill defaults, or CAPTCHA solving — are treated as high-impact and require explicit maintainer review. The default posture is conservative: features that increase the agent's blast radius are off by default and clearly disclosed.
 
 Security vulnerabilities should be reported privately following the process in `SECURITY.md` (if present) or by emailing the Lead Maintainer directly. Public issue reports for active vulnerabilities will be moved to private channels.
 

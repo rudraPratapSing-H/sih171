@@ -6,21 +6,21 @@ sortOrder: 0
 date: 2026-07-02
 readTime: 6 min read
 description: >
-  We tested nvidia/Qwen3.6-27B-NVFP4 against WebBrain's frozen browser-agent first-tool benchmark. It is far faster than the older Qwen 3.6 27B row and enters the top 10, but loses three all-case Sonnet-alignment points on boundary cases.
+  We tested nvidia/Qwen3.6-27B-NVFP4 against KavachWeb's frozen browser-agent first-tool benchmark. It is far faster than the older Qwen 3.6 27B row and enters the top 10, but loses three all-case Sonnet-alignment points on boundary cases.
 excerpt: >
-  Qwen 3.6 27B NVFP4 gives WebBrain a big local latency win: 96/100 parsed calls, 1.8s median latency, and a top-10 Sonnet-reference result. The planner quality story is more mixed.
+  Qwen 3.6 27B NVFP4 gives KavachWeb a big local latency win: 96/100 parsed calls, 1.8s median latency, and a top-10 Sonnet-reference result. The planner quality story is more mixed.
 titleTag: >
-  Qwen 3.6 27B NVFP4 WebBrain planner benchmark - WebBrain Blog
+  Qwen 3.6 27B NVFP4 KavachWeb planner benchmark - KavachWeb Blog
 ogTitle: >
-  Qwen 3.6 27B NVFP4 enters WebBrain's planner top 10
+  Qwen 3.6 27B NVFP4 enters KavachWeb's planner top 10
 ogDescription: >
   The NVFP4 Qwen 3.6 27B variant is much faster than the older saved Qwen row, but the all-case Sonnet benchmark exposes a boundary-case tradeoff.
 twitterTitle: >
-  Qwen 3.6 27B NVFP4 WebBrain benchmark
+  Qwen 3.6 27B NVFP4 KavachWeb benchmark
 twitterDescription: >
   Faster, more parseable, top-10 - but not a clean all-case quality upgrade over the older Qwen 3.6 27B row.
 keywords:
-  - WebBrain
+  - KavachWeb
   - Qwen 3.6
   - Qwen 3.6 27B
   - NVFP4
@@ -30,7 +30,7 @@ keywords:
   - planner benchmark
   - tool calling
 lede: >
-  We ran **nvidia/Qwen3.6-27B-NVFP4** through WebBrain's frozen 100-case browser-agent planner benchmark because the NVFP4 build is supposed to be the more performant Qwen 3.6 27B serving path. The performance claim holds: this run is dramatically faster than the older saved Qwen 3.6 27B row. The planner-quality claim is more nuanced: it enters the current Sonnet-reference top 10, but it does not beat old Qwen on all-case Sonnet alignment.
+  We ran **nvidia/Qwen3.6-27B-NVFP4** through KavachWeb's frozen 100-case browser-agent planner benchmark because the NVFP4 build is supposed to be the more performant Qwen 3.6 27B serving path. The performance claim holds: this run is dramatically faster than the older saved Qwen 3.6 27B row. The planner-quality claim is more nuanced: it enters the current Sonnet-reference top 10, but it does not beat old Qwen on all-case Sonnet alignment.
 ---
 
 ## What we ran
@@ -45,7 +45,7 @@ The local vLLM server at `http://localhost:8000` advertised:
 }
 ```
 
-We used the same frozen May 23, 2026 WebBrain baseline used by the recent planner posts: Claude Sonnet 4.6's system prompt and 41-tool schema, system hash `5c4fac1387025050`.
+We used the same frozen May 23, 2026 KavachWeb baseline used by the recent planner posts: Claude Sonnet 4.6's system prompt and 41-tool schema, system hash `5c4fac1387025050`.
 
 ```bash
 node test/llm/run-llamacpp.mjs \
@@ -90,7 +90,7 @@ But it is not a clean quality upgrade over the older Qwen 3.6 27B result.
 
 ## Against old Qwen 3.6 27B
 
-The old row is still the main comparison point because it is the same model family and size in the saved WebBrain benchmark table.
+The old row is still the main comparison point because it is the same model family and size in the saved KavachWeb benchmark table.
 
 | Model | Parsed calls | Exact | Ideal name | Sonnet all | Sonnet tooled | Median | p95 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -123,7 +123,7 @@ Rows are ranked by all-case Sonnet match, then by Sonnet-tooled match as the fir
 | 4 | MiniMax M3 | 85/100 | 17/100 | 32/100 | 75.0% | 73.9% | 3.1s |
 | 5 | **Qwen 3.6 27B NVFP4** | **96/100** | **18/100** | **38/100** | **74.0%** | **77.2%** | **1.76s** |
 | 6 | Intel Gemma 4 31B int4 AutoRound | 88/100 | 14/100 | 34/100 | 74.0% | 72.8% | 0.63s |
-| 7 | WebBrain Compass 1.0 | 90/100 | 16/100 | 35/100 | 73.0% | 72.8% | 8.8s |
+| 7 | KavachWeb Compass 1.0 | 90/100 | 16/100 | 35/100 | 73.0% | 72.8% | 8.8s |
 | 8 | Qwen 3.5 4B | 82/100 | 12/100 | 33/100 | 73.0% | 71.7% | 5.5s |
 | 9 | Ornith-1.0-35B NVFP4 | 88/100 | 21/100 | 36/100 | 71.0% | 70.7% | 2.4s |
 | 10 | Gemma 4 26B-A4B | 87/100 | 13/100 | 30/100 | 71.0% | 70.7% | 1.4s |
@@ -177,7 +177,7 @@ The weaker bands are the boundaries and special-purpose shortcuts:
 | GitHub flows | 3/6 | Preferred page inspection for some flows where Sonnet navigated or fetched directly. |
 | Knowledge questions | 3/5 | Correctly no-tooled three short-answer cases, but used tools on two others. |
 
-The ambiguous band is the entire reason the all-case score falls below old Qwen. Case 075 is a good example: "finish what we were doing" is intentionally under-specified. Sonnet returned no tool. Old Qwen returned no tool. NVFP4 wrote to the scratchpad. That is a valid WebBrain tool name, but it is the wrong kind of eagerness for this benchmark.
+The ambiguous band is the entire reason the all-case score falls below old Qwen. Case 075 is a good example: "finish what we were doing" is intentionally under-specified. Sonnet returned no tool. Old Qwen returned no tool. NVFP4 wrote to the scratchpad. That is a valid KavachWeb tool name, but it is the wrong kind of eagerness for this benchmark.
 
 ## Bottom line
 
@@ -185,6 +185,6 @@ Qwen 3.6 27B NVFP4 is a strong local serving result. It is far faster than the o
 
 It is not a clean planner-quality upgrade. On tool-required tasks, it is essentially tied with old Qwen 3.6 27B. On all cases, old Qwen still wins by three points because it better matches Sonnet's "do not call a tool yet" decisions.
 
-For WebBrain, I would treat this as a serious practical candidate with one caveat: pair it with stronger boundary handling. If the outer agent can guard ambiguous, destructive, and no-browser-needed turns, the NVFP4 serving profile is very attractive. Without that guard, the old Qwen row remains the cleaner planner by the benchmark's all-case metric.
+For KavachWeb, I would treat this as a serious practical candidate with one caveat: pair it with stronger boundary handling. If the outer agent can guard ambiguous, destructive, and no-browser-needed turns, the NVFP4 serving profile is very attractive. Without that guard, the old Qwen row remains the cleaner planner by the benchmark's all-case metric.
 
-Tags: #Qwen36 #NVFP4 #NVIDIA #vLLM #ToolCalling #BrowserAgent #WebBrain
+Tags: #Qwen36 #NVFP4 #NVIDIA #vLLM #ToolCalling #BrowserAgent #KavachWeb

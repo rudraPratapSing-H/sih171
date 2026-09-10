@@ -1,6 +1,6 @@
 # Security Model
 
-This document describes the security architecture of WebBrain — what the extension can do, what it trusts, how it handles credentials, and how it defends against prompt injection.
+This document describes the security architecture of KavachWeb — what the extension can do, what it trusts, how it handles credentials, and how it defends against prompt injection.
 
 For vulnerability disclosure, see [SECURITY.md](../SECURITY.md).
 
@@ -58,7 +58,7 @@ credentials, profile
 autofill, and user memory are encrypted before network egress in an authenticated
 AES-GCM envelope. The service stores opaque ciphertext and hashed, revocable sync
 tokens. Revision-based compare-and-swap prevents silent concurrent overwrite.
-The sync password is never sent or persisted and cannot be recovered by WebBrain.
+The sync password is never sent or persisted and cannot be recovered by KavachWeb.
 Legacy OAuth access and refresh token stores are explicitly outside the sync scope.
 
 ### Detection

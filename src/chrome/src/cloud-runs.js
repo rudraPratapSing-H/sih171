@@ -77,7 +77,7 @@ export function normalizeCloudBridgeUrl(value = DEFAULT_CLOUD_BRIDGE_URL) {
   // hostname "[::1]", so both spellings must be allowlisted (same as
   // LOCAL_OLLAMA_HOSTS in ollama-handoff.js).
   if (url.protocol !== 'ws:' || !['127.0.0.1', 'localhost', '::1', '[::1]'].includes(host)) {
-    throw new Error('WebBrain cloud bridge URL must use ws:// on localhost.');
+    throw new Error('KavachWeb cloud bridge URL must use ws:// on localhost.');
   }
   return url.href;
 }
@@ -746,8 +746,8 @@ export function createCloudRunController({
           restored.status = restored.status === 'aborting' ? 'aborted' : 'failed';
           restored.pendingInput = null;
           restored.error = restored.status === 'aborted'
-            ? 'Run aborted when the WebBrain service worker restarted.'
-            : 'Run interrupted when the WebBrain service worker restarted.';
+            ? 'Run aborted when the KavachWeb service worker restarted.'
+            : 'Run interrupted when the KavachWeb service worker restarted.';
           restored.updatedAt = at;
           restored.completedAt = at;
           changed = true;
@@ -1029,7 +1029,7 @@ export function createCloudRunController({
       : String(msg.task || msg.text || '').trim();
     if (!task) throw new Error('cloud_run requires `task`.');
     if (startingTabs.has(tabId) || agent.isRunning(tabId)) {
-      throw new Error(`Tab ${tabId} already has an active WebBrain run.`);
+      throw new Error(`Tab ${tabId} already has an active KavachWeb run.`);
     }
 
     const apiMutationsAllowed = msg.apiMutationsAllowed === true || msg.api_mutations_allowed === true;
@@ -1370,7 +1370,7 @@ export function createCloudRunController({
     const answer = String(msg.answer ?? '').trim();
     if (!answer) throw cloudRunError('cloud_respond requires `answer`.', 400);
     if (!agent.submitClarifyResponse(run.tabId, clarifyId, answer, 'cloud_api')) {
-      throw cloudRunError('Clarification is no longer available in the active WebBrain run.', 409);
+      throw cloudRunError('Clarification is no longer available in the active KavachWeb run.', 409);
     }
     run.status = 'running';
     run.pendingInput = null;

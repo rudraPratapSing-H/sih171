@@ -623,7 +623,7 @@ export function tokenizerSupportsTools(tokenizer) {
 
 function assertToolCapableTextRuntime(runtime, modelId) {
   if (tokenizerSupportsTools(runtime?.tokenizer)) return;
-  throw new Error(`${modelId} is not compatible with WebBrain: custom repositories must provide a chat template that accepts tools.`);
+  throw new Error(`${modelId} is not compatible with KavachWeb: custom repositories must provide a chat template that accepts tools.`);
 }
 
 async function getTextDownloadStatus(modelId, dtype) {

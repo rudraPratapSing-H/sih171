@@ -14,7 +14,7 @@ Two complementary test sets:
    traces. The 20 security cases live under `scenarios/security/`.
 
 Both sets emit OpenAI-compatible chat-completion payloads that mirror
-what the WebBrain extension actually sends.
+what the KavachWeb extension actually sends.
 
 ## Layout
 

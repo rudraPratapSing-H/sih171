@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Round 3: Xiaomi MiMo V2.5 enters the vision shootout — and joins the &quot;Unknowns: None&quot; club — WebBrain Blog</title>
+  <title>Round 3: Xiaomi MiMo V2.5 enters the vision shootout — and joins the &quot;Unknowns: None&quot; club — KavachWeb Blog</title>
   <meta name="description" content="A third round of vision-model benchmarking for browser agents. Xiaomi&#39;s MiMo-V2.5 — the &quot;looks promising&quot; model from our research notes — sits down at the same probe with the same Google sign-in screen. Strong OCR, expensive image tokens, no calibrated uncertainty.">
   <meta name="keywords" content="MiMo V2.5, Xiaomi MiMo, vision model benchmark, browser agent, llama.cpp vision, IQ3_S quantization, calibrated uncertainty, Qwen 3.6 vs MiMo, multimodal model, omni-modal, reasoning model, undici headers timeout, vision probe">
   <meta property="og:title" content="Round 3: Xiaomi MiMo V2.5 vs the vision shootout — does the omni-modal flagship dethrone Qwen 3.6?">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Round 3: Xiaomi MiMo V2.5 enters the vision shootout">
   <meta name="twitter:description" content="Strong OCR, weak on uncertainty, expensive on tokens. The empirical follow-up to our MiMo speculation post.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/vision-shootout-round-3">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -525,9 +525,9 @@
   <article>
     <div class="meta">May 7, 2026 &middot; 7 min read &middot; <a href="/blog">&larr; All posts</a></div>
     <h1>Round 3: Xiaomi MiMo V2.5 enters the vision shootout — and joins the &quot;Unknowns: None&quot; club</h1>
-    <p class="lede">A week ago we wrote a <a href="/blog/mimo-v25-pro-vs-flash">research note about Xiaomi's MiMo V2.5</a> calling it a promising candidate for WebBrain — multimodal by design, long context, strong vendor benchmarks. This post is the empirical follow-up: same probe as <a href="/blog/vision-shootout-round-2">round 2</a>, same Google sign-in screen, same prompt. The speculation held up on most axes. On the one axis a browser agent values most, MiMo joined the wrong club.</p>
+    <p class="lede">A week ago we wrote a <a href="/blog/mimo-v25-pro-vs-flash">research note about Xiaomi's MiMo V2.5</a> calling it a promising candidate for KavachWeb — multimodal by design, long context, strong vendor benchmarks. This post is the empirical follow-up: same probe as <a href="/blog/vision-shootout-round-2">round 2</a>, same Google sign-in screen, same prompt. The speculation held up on most axes. On the one axis a browser agent values most, MiMo joined the wrong club.</p>
 <h2 id="the-setup-again">The setup, again</h2>
-<p>Same <code>test/vision-probe.mjs</code> from the repo, same 6-section structured caption prompt that WebBrain's vision sub-call ships with, same image (Google sign-in with focused password field, red error border, and the email chip with a dropdown chevron). MiMo-V2.5 was loaded at <strong>IQ3_S</strong> on <code>llama.cpp</code> (<code>localhost:8080</code>), 308B total params at ~3.0 bpw — the smallest sane quant that fits on the box we tested on. Run with <code>chat_template_kwargs.enable_thinking: false</code> AND <code>think: false</code> AND <code>thinking: false</code>; MiMo respected one of them and did not emit reasoning tokens during the vision call.</p>
+<p>Same <code>test/vision-probe.mjs</code> from the repo, same 6-section structured caption prompt that KavachWeb's vision sub-call ships with, same image (Google sign-in with focused password field, red error border, and the email chip with a dropdown chevron). MiMo-V2.5 was loaded at <strong>IQ3_S</strong> on <code>llama.cpp</code> (<code>localhost:8080</code>), 308B total params at ~3.0 bpw — the smallest sane quant that fits on the box we tested on. Run with <code>chat_template_kwargs.enable_thinking: false</code> AND <code>think: false</code> AND <code>thinking: false</code>; MiMo respected one of them and did not emit reasoning tokens during the vision call.</p>
 <h2 id="a-probe-upgrade-detour">A probe upgrade detour</h2>
 <p>First attempt: <code>UND_ERR_HEADERS_TIMEOUT</code>. Node's <code>fetch</code> (undici) waits at most 5 minutes for response headers before giving up. For a 308B-IQ3_S model with multimodal prefill, prompt-eval alone can blow past that — the server doesn't emit headers until the first generated token, and the first generated token doesn't arrive until after image embedding plus several thousand tokens of prefill on a quant that's bottlenecked on memory bandwidth.</p>
 <p>Two-line fix: drop <code>fetch</code> for <code>node:http</code> directly, which has no default headers timeout. While we were in there, the probe also picked up streaming output (so you see tokens as they arrive instead of staring at a hung process), separate <code>reasoning_content</code> capture (MiMo and the DeepSeek-R1 family emit reasoning deltas on their own channel, separate from the visible output), and a <code>timings</code> readout showing prompt-eval and predict tokens-per-second when the server provides them. The probe in the repo handles all of this automatically now — no flags, no surgery.</p>
@@ -558,7 +558,7 @@
 <pre><code>6) Unknowns: None.</code></pre>
 <p>So MiMo joins Nemotron, Qwen 27B-dense, Gemma 4-E2B, and Gemma 4-31B in the "wrote None even when there was something to flag" club. Round 2 argued that this is the bullet that decides everything else for a browser agent — affordance misses are recoverable via the accessibility tree, OCR misses are recoverable via DOM cross-check, but overconfidence is structurally unrecoverable. Without §6, model perception becomes ground truth, and ground truth includes whatever the model hallucinated.</p>
 <h2 id="the-speculation-revisited">The speculation, revisited</h2>
-<p>The <a href="/blog/mimo-v25-pro-vs-flash">Pro vs Flash post</a> was a research note: vendor benchmarks looked strong, omni-modal positioning matched WebBrain's screenshot-heavy loop, the recommendation was to add MiMo behind an opt-in routing flag and let the eval harness decide. Empirically:</p>
+<p>The <a href="/blog/mimo-v25-pro-vs-flash">Pro vs Flash post</a> was a research note: vendor benchmarks looked strong, omni-modal positioning matched KavachWeb's screenshot-heavy loop, the recommendation was to add MiMo behind an opt-in routing flag and let the eval harness decide. Empirically:</p>
 <ul><li><strong>Multimodal by design held up.</strong> OCR and state extraction are real, not theoretical.</li><li><strong>Long-context claims are untested by this probe</strong> — it's a single-screenshot benchmark, not an agent-trace replay. We'll get to that.</li><li><strong>Strong-benchmark posture didn't translate to calibrated uncertainty.</strong> MiMo nails the visible-text and state extraction sections that overlap with traditional VLM benchmarks. The §6 honest-uncertainty bullet is not on any standard benchmark, and it shows.</li></ul>
 <p>None of this rules MiMo out — but the "should we route to it by default for browser-agent vision?" answer is no, not at IQ3_S, not on the calibrated-uncertainty axis. Qwen 3.6-35B-A3B at the same VRAM bracket beats it on the metric that matters most.</p>
 <h2 id="the-quantization-caveat-same-one-round-2-raised-now-with-a-data-point">The quantization caveat — same one round 2 raised, now with a data point</h2>
@@ -572,7 +572,7 @@
 <ul><li>You need the omni-modal coverage MiMo claims (audio + video + image), not just static screenshots.</li><li>You need MiMo's long-context reasoning behavior on multi-step agent traces — this probe is single-shot and can't speak to that.</li><li>You're willing to run a higher quant (Q4<em>K</em>M or above) to find out whether §6 calibration recovers at higher precision. We don't know yet. The probe makes it cheap to find out.</li></ul>
 <p>For the dedicated single-screenshot vision sub-call inside a browser-agent loop, the answer at IQ3_S is: not yet. For the speculative routing layer in the Pro vs Flash post — keep it opt-in, escalate to it on uncertainty, but don't make it the default.</p>
 <h2 id="what-s-next">What's next</h2>
-<ul><li><strong>Quant ladder for MiMo.</strong> IQ3<em>S → Q4</em>K<em>M → Q6</em>K → Q8_0. Does §6 calibration recover at any point, or is this a model-level behavior rather than a quant artifact?</li><li><strong>Same ladder for Qwen 3.6-35B-A3B.</strong> Round 2's open question — at what bpw does the calibrated-uncertainty behavior collapse back to "None"? Knowing the floor is useful for anyone trying to fit the model on tighter VRAM budgets.</li><li><strong>Multilingual screenshots.</strong> MiMo is multilingual on paper; we haven't tested it on Turkish, Spanish, or Chinese pages. Round 2 ruled Nemotron out on this axis without WebBrain users seeing a benchmark; MiMo might recover here.</li><li><strong>Cold-start with proper measurement.</strong> The cold multimodal latency on this hardware is a real number we should publish, not extrapolate.</li></ul>
+<ul><li><strong>Quant ladder for MiMo.</strong> IQ3<em>S → Q4</em>K<em>M → Q6</em>K → Q8_0. Does §6 calibration recover at any point, or is this a model-level behavior rather than a quant artifact?</li><li><strong>Same ladder for Qwen 3.6-35B-A3B.</strong> Round 2's open question — at what bpw does the calibrated-uncertainty behavior collapse back to "None"? Knowing the floor is useful for anyone trying to fit the model on tighter VRAM budgets.</li><li><strong>Multilingual screenshots.</strong> MiMo is multilingual on paper; we haven't tested it on Turkish, Spanish, or Chinese pages. Round 2 ruled Nemotron out on this axis without KavachWeb users seeing a benchmark; MiMo might recover here.</li><li><strong>Cold-start with proper measurement.</strong> The cold multimodal latency on this hardware is a real number we should publish, not extrapolate.</li></ul>
 <p>The probe stays where it is — three lines, mirror parity with the extension's actual sub-call:</p>
 <pre><code>node test/vision-probe.mjs ./shot.png http://127.0.0.1:8080  MiMo-V2.5-IQ3_S
 node test/vision-probe.mjs ./shot.png http://127.0.0.1:8080  Qwen3.6-35B-A3B
@@ -582,12 +582,12 @@ node test/vision-probe.mjs ./shot.png http://localhost:11434/v1  llava:13b</code
 </div>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

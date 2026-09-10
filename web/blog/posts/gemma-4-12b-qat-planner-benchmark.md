@@ -1,26 +1,26 @@
 ---
 title: >
-  Gemma 4 12B QAT is fast enough for WebBrain, but Qwen 3.5 9B still routes a little better
+  Gemma 4 12B QAT is fast enough for KavachWeb, but Qwen 3.5 9B still routes a little better
 slug: gemma-4-12b-qat-planner-benchmark
 sortOrder: -5
 date: 2026-06-20
 readTime: 6 min read
 description: >
-  We tested google/gemma-4-12B-it-qat-w4a16-ct through vLLM against WebBrain's frozen first-tool-call browser-agent harness at concurrency 8, then ran the same vision probe used in earlier local-model posts.
+  We tested google/gemma-4-12B-it-qat-w4a16-ct through vLLM against KavachWeb's frozen first-tool-call browser-agent harness at concurrency 8, then ran the same vision probe used in earlier local-model posts.
 excerpt: >
-  Gemma 4 12B QAT lands as a very fast local WebBrain planner: 92/100 parsed calls, 14% exact, 33% tool-name match, 0.43s median per request, and a working but imperfect vision probe.
+  Gemma 4 12B QAT lands as a very fast local KavachWeb planner: 92/100 parsed calls, 14% exact, 33% tool-name match, 0.43s median per request, and a working but imperfect vision probe.
 titleTag: >
-  Gemma 4 12B QAT WebBrain planner benchmark - WebBrain Blog
+  Gemma 4 12B QAT KavachWeb planner benchmark - KavachWeb Blog
 ogTitle: >
-  Gemma 4 12B QAT is a fast local WebBrain planner
+  Gemma 4 12B QAT is a fast local KavachWeb planner
 ogDescription: >
   The 12B QAT Gemma run beats the older Gemma 4 12B Coder Fable5 Composer 2.5 result, but Qwen 3.5 9B still has a small routing-quality lead.
 twitterTitle: >
-  Gemma 4 12B QAT WebBrain planner benchmark
+  Gemma 4 12B QAT KavachWeb planner benchmark
 twitterDescription: >
   92 parsed calls, 14 exact first-actions, 0.43s median, and a mixed vision probe for Gemma 4 12B QAT on vLLM.
 keywords:
-  - WebBrain
+  - KavachWeb
   - Gemma 4
   - Gemma 4 12B
   - QAT
@@ -30,7 +30,7 @@ keywords:
   - tool calling
   - Qwen 3.5 9B
 lede: >
-  We ran **google/gemma-4-12B-it-qat-w4a16-ct** through WebBrain's frozen first-tool-call planner harness on the currently running local vLLM server at port 8000. The result is a useful middle tier: much faster than the older Gemma 4 12B Coder Fable5 Composer 2.5 run and stronger on routing, but still a small step behind Qwen 3.5 9B on strict first-action quality.
+  We ran **google/gemma-4-12B-it-qat-w4a16-ct** through KavachWeb's frozen first-tool-call planner harness on the currently running local vLLM server at port 8000. The result is a useful middle tier: much faster than the older Gemma 4 12B Coder Fable5 Composer 2.5 run and stronger on routing, but still a small step behind Qwen 3.5 9B on strict first-action quality.
 ---
 
 ## What we ran
@@ -57,7 +57,7 @@ node test/llm/run-llamacpp.mjs \
   --chat-template-compat alternating
 ```
 
-That means 100 single-turn browser-agent prompts, the May 23 Claude Sonnet 4.6 WebBrain system prompt and 41-tool schema, legacy text-call compatibility, no native OpenAI `tools` field, and up to eight active requests at a time.
+That means 100 single-turn browser-agent prompts, the May 23 Claude Sonnet 4.6 KavachWeb system prompt and 41-tool schema, legacy text-call compatibility, no native OpenAI `tools` field, and up to eight active requests at a time.
 
 The clean rerun completed all 100 cases without transport errors in 7.7 seconds of wall time. The latency numbers below are still per-case response latencies, not wall time divided by 100.
 
@@ -105,7 +105,7 @@ So the 12B QAT checkpoint is not the new local routing leader. It is the better 
 
 ## What concurrency 8 changes
 
-The run was intentionally saturated. With `--concurrency 8`, the harness keeps up to eight chat-completion requests in flight, which is why the whole 100-case replay finished in 7.7 seconds and why GPU utilization looks higher than a normal WebBrain browser loop.
+The run was intentionally saturated. With `--concurrency 8`, the harness keeps up to eight chat-completion requests in flight, which is why the whole 100-case replay finished in 7.7 seconds and why GPU utilization looks higher than a normal KavachWeb browser loop.
 
 That is useful for throughput testing, but it is not how one interactive extension tab usually behaves. For product feel, the median per-case latency matters more: 0.43s here is comfortably interactive. For server sizing, the wall time matters: vLLM can chew through the frozen replay very quickly when batching parallel prompts.
 

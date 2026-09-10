@@ -587,7 +587,7 @@ const CASES = [
   {
     user: 'close all my tabs except this one',
     tab: HOME,
-    ideal: done('I can\'t close tabs from here — WebBrain doesn\'t have a tabs-close tool. You can do this manually with right-click on a tab → "Close other tabs".'),
+    ideal: done('I can\'t close tabs from here — KavachWeb doesn\'t have a tabs-close tool. You can do this manually with right-click on a tab → "Close other tabs".'),
     rubric: 'There is no tab-close tool in the schema. done with an honest explanation + the manual shortcut is correct. Fabricating a tool call is wrong.',
   },
   {

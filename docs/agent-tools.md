@@ -1,6 +1,6 @@
 # Agent Tools
 
-WebBrain separates **model tier** from **conversation mode**.
+KavachWeb separates **model tier** from **conversation mode**.
 
 - **Tier** (`compact`, `mid`, `full`) is a per-provider setting. It controls how
   many normal browser-agent tools a model sees.

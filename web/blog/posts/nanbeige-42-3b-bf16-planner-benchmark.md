@@ -6,11 +6,11 @@ sortOrder: -110
 date: 2026-07-22
 readTime: 8 min read
 description: >
-  We tested Nanbeige4.2-3B in BF16 on an RTX 5090. Its official agent benchmarks beat Qwen 3.5 9B and Gemma 4 12B, but WebBrain's frozen browser-planner replay did not reproduce that lead.
+  We tested Nanbeige4.2-3B in BF16 on an RTX 5090. Its official agent benchmarks beat Qwen 3.5 9B and Gemma 4 12B, but KavachWeb's frozen browser-planner replay did not reproduce that lead.
 excerpt: >
   Nanbeige 4.2 3B produced 90 parsed calls, reached 67% Sonnet alignment, and delivered a 1.49s single-request median. That is impressive for 4B total parameters, but below Qwen 3.5 9B and Gemma 4 E4B in our first-action test.
 titleTag: >
-  Nanbeige 4.2 3B BF16 WebBrain planner benchmark - WebBrain Blog
+  Nanbeige 4.2 3B BF16 KavachWeb planner benchmark - KavachWeb Blog
 ogTitle: >
   Nanbeige 4.2 3B is strong for its size, but does not beat Qwen 3.5 9B here
 ogDescription: >
@@ -18,9 +18,9 @@ ogDescription: >
 twitterTitle: >
   Nanbeige 4.2 3B BF16 browser-planner benchmark
 twitterDescription: >
-  90 parsed calls, 67% Sonnet alignment, 11 exact actions, and a 1.49s c=1 median. Excellent size efficiency; no Qwen 3.5 9B upset in WebBrain.
+  90 parsed calls, 67% Sonnet alignment, 11 exact actions, and a 1.49s c=1 median. Excellent size efficiency; no Qwen 3.5 9B upset in KavachWeb.
 keywords:
-  - WebBrain
+  - KavachWeb
   - Nanbeige
   - Nanbeige 4.2 3B
   - Qwen 3.5 9B
@@ -32,7 +32,7 @@ keywords:
   - browser agent
   - tool calling
 lede: >
-  **Nanbeige4.2-3B** makes one of the boldest small-model claims we have seen recently. Its official card reports wins over Qwen 3.5 9B, Gemma 4 12B, and Gemma 4 E4B across a long list of agent and reasoning benchmarks. The naming is slightly confusing but defensible: it has about 4B total parameters and 3B non-embedding parameters. We loaded the full BF16 checkpoint on an RTX 5090 and ran WebBrain's frozen 100-case first-tool benchmark. It is genuinely capable for its size, highly parseable, and reasonably fast in single-request use. It did not reproduce the claimed ordering here: the clean c=1 run reached 67% Claude Sonnet 4.6 tool-name alignment, below Qwen 3.5 9B at 70% and Gemma 4 E4B at 68%, while strict exact and ideal-tool scores also trailed all three comparison models.
+  **Nanbeige4.2-3B** makes one of the boldest small-model claims we have seen recently. Its official card reports wins over Qwen 3.5 9B, Gemma 4 12B, and Gemma 4 E4B across a long list of agent and reasoning benchmarks. The naming is slightly confusing but defensible: it has about 4B total parameters and 3B non-embedding parameters. We loaded the full BF16 checkpoint on an RTX 5090 and ran KavachWeb's frozen 100-case first-tool benchmark. It is genuinely capable for its size, highly parseable, and reasonably fast in single-request use. It did not reproduce the claimed ordering here: the clean c=1 run reached 67% Claude Sonnet 4.6 tool-name alignment, below Qwen 3.5 9B at 70% and Gemma 4 E4B at 68%, while strict exact and ideal-tool scores also trailed all three comparison models.
 ---
 
 ## Why the official numbers are exciting
@@ -61,7 +61,7 @@ Those are exactly the results that motivated this test. A 4B-total local model b
 
 The methodology notes matter, however. Nanbeige says all of its evaluations use thinking mode with `preserve_thinking=true`. Several agent rows use the team's own scaffold; the quickstart recommends `temperature=1.0`, as many as 65,536 new tokens for tool tasks, preserved thinking in multi-turn agents, and `tool_call_format="xml"` for best tool-calling performance.
 
-WebBrain's frozen replay asks a different and deliberately narrower question: given one browser instruction, the same system prompt, and the same 41 tools, what is the model's **first action**?
+KavachWeb's frozen replay asks a different and deliberately narrower question: given one browser instruction, the same system prompt, and the same 41 tools, what is the model's **first action**?
 
 ## What we ran
 
@@ -94,7 +94,7 @@ node test/llm/run-llamacpp.mjs \
   --freeze test/llm/freeze/baseline-2026-05-23.json
 ```
 
-That pins the May 23 Claude Sonnet 4.6 WebBrain prompt, its 41-tool schema, and system hash `5c4fac1387025050`. It sends native OpenAI-style structured tools, uses Act mode's fixed temperature of 0.15, and allows 4,096 output tokens. We did not force Nanbeige's XML compatibility format or add `preserve_thinking=true` to the template.
+That pins the May 23 Claude Sonnet 4.6 KavachWeb prompt, its 41-tool schema, and system hash `5c4fac1387025050`. It sends native OpenAI-style structured tools, uses Act mode's fixed temperature of 0.15, and allows 4,096 output tokens. We did not force Nanbeige's XML compatibility format or add `preserve_thinking=true` to the template.
 
 This is the right configuration for our historical first-action comparison. It is not a reproduction of Nanbeige's own benchmark recipe.
 
@@ -118,7 +118,7 @@ This is the right configuration for our historical first-action comparison. It i
 
 The operational result is respectable. Ninety calls parsed natively, and only one used a nonexistent tool name: `scratchpad_read`. The model also handled the no-tool knowledge cases fairly well, matching Sonnet on four of five.
 
-The quality miss is action selection. Nanbeige chose `get_accessibility_tree` **49 times**. Qwen 3.5 9B did so 39 times, Gemma 4 12B QAT 43 times, and Gemma 4 E4B 42 times. Reading the page is often a safe first move, but WebBrain's direct commands frequently have a more specific action available.
+The quality miss is action selection. Nanbeige chose `get_accessibility_tree` **49 times**. Qwen 3.5 9B did so 39 times, Gemma 4 12B QAT 43 times, and Gemma 4 E4B 42 times. Reading the page is often a safe first move, but KavachWeb's direct commands frequently have a more specific action available.
 
 Some category results were strong:
 
@@ -175,17 +175,17 @@ Quality also moved by four Sonnet points between the clean c=1 and c=8 runs. The
 
 This checkpoint is a text model. Unlike the Qwen 3.5 9B and Gemma 4 checkpoints in this comparison, it cannot inspect a screenshot, read a canvas application, recover from a broken accessibility tree visually, or perform UI OCR by itself.
 
-That matters for WebBrain. A compact text planner can still operate over accessibility trees and extracted page content, but it is not a complete replacement for a multimodal local model. Nanbeige's agent efficiency is impressive; its modality coverage is narrower.
+That matters for KavachWeb. A compact text planner can still operate over accessibility trees and extracted page content, but it is not a complete replacement for a multimodal local model. Nanbeige's agent efficiency is impressive; its modality coverage is narrower.
 
 ## Verdict
 
 Nanbeige 4.2 3B is not hype-free, but it is also not a disappointment. A 4B-total / 3B-non-embedding model producing 90 structured calls, matching Sonnet's first tool 67% of the time, and serving at a 1.49-second median is a strong small-model result.
 
-The stronger claim did not transfer. In WebBrain's frozen browser-planner test, it did **not** beat Qwen 3.5 9B, and it did not beat Gemma 4 E4B. It tied the quantized Gemma 4 12B QAT run on Sonnet alignment while losing on strict ideal-action scores.
+The stronger claim did not transfer. In KavachWeb's frozen browser-planner test, it did **not** beat Qwen 3.5 9B, and it did not beat Gemma 4 E4B. It tied the quantized Gemma 4 12B QAT run on Sonnet alignment while losing on strict ideal-action scores.
 
-The fairest conclusion is scope, not contradiction. Nanbeige's published wins come from long-horizon agent, office, code, and reasoning evaluations under its recommended thinking-oriented scaffolds. Our test isolates one first browser action under a fixed historical prompt. The official results may be correct in their environments; they are not a guarantee that this smaller model will route WebBrain's first tool better.
+The fairest conclusion is scope, not contradiction. Nanbeige's published wins come from long-horizon agent, office, code, and reasoning evaluations under its recommended thinking-oriented scaffolds. Our test isolates one first browser action under a fixed historical prompt. The official results may be correct in their environments; they are not a guarantee that this smaller model will route KavachWeb's first tool better.
 
-For a text-only local assistant with long tasks and a Nanbeige-aware scaffold, this release deserves more testing. For WebBrain's current low-latency browser planner, **Qwen 3.5 9B remains the stronger small local default**, while Gemma's multimodality remains a practical advantage.
+For a text-only local assistant with long tasks and a Nanbeige-aware scaffold, this release deserves more testing. For KavachWeb's current low-latency browser planner, **Qwen 3.5 9B remains the stronger small local default**, while Gemma's multimodality remains a practical advantage.
 
 Saved results:
 

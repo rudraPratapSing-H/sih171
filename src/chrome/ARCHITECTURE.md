@@ -1,10 +1,10 @@
-# WebBrain Chrome/Edge Extension — Architecture
+# KavachWeb Chrome/Edge Extension — Architecture
 
 > Version 34.1.6 · Manifest V3 · Service Worker background
 
 ## High-Level Overview
 
-WebBrain is a browser extension that gives an LLM controlled access to the browser tab the user is looking at. The user types a natural-language instruction in a side panel, chooses Ask, Act, or Dev mode, and an autonomous agent loop calls the LLM, executes allowed tool calls (click, type, navigate, inspect, etc.), feeds the results back to the LLM, and repeats until the task is done or a loop detector halts it.
+KavachWeb is a browser extension that gives an LLM controlled access to the browser tab the user is looking at. The user types a natural-language instruction in a side panel, chooses Ask, Act, or Dev mode, and an autonomous agent loop calls the LLM, executes allowed tool calls (click, type, navigate, inspect, etc.), feeds the results back to the LLM, and repeats until the task is done or a loop detector halts it.
 
 ```
 ┌─────────────┐     messages      ┌─────────────┐    HTTP/JSON     ┌──────────────┐
@@ -185,11 +185,11 @@ As an intentionally undiscoverable convenience, a normal prompt may end in
 tab recording before dispatch, and automatically stops it from the run cleanup
 path. `--save-as` supplies the Downloads filename (with `.webm` normalized).
 `/record --full-screen` opens Chrome's screen/window picker from the offscreen
-recorder context through `getDisplayMedia()`, shows the WebBrain recording banner
-by default, and can be stopped by its Stop button or double Escape on WebBrain or
+recorder context through `getDisplayMedia()`, shows the KavachWeb recording banner
+by default, and can be stopped by its Stop button or double Escape on KavachWeb or
 browser pages. Add `--hide-recording-indicator` to hide the banner; Chrome's
 picker decides what can be captured, so the user must choose the browser window
-or whole screen if they want the WebBrain panel in the video.
+or whole screen if they want the KavachWeb panel in the video.
 
 ### Flow
 
@@ -518,7 +518,7 @@ Full Act also adds advanced UI/DOM fallbacks: `resize_window`, `hover` (CDP-trus
 | Evaluate | `Runtime.evaluate` | Run code in page context |
 | DOM query | `DOM.*` | Shadow DOM piercing |
 
-CDP events are **trusted** (`event.isTrusted === true`). Many sites reject synthetic `el.click()`; CDP is what lets WebBrain work on those.
+CDP events are **trusted** (`event.isTrusted === true`). Many sites reject synthetic `el.click()`; CDP is what lets KavachWeb work on those.
 
 ### CDP click vs content-script click
 
@@ -558,7 +558,7 @@ class BaseProvider {
 | `WebGPUProvider` | Chrome offscreen worker; no endpoint | Text-only selectable Hugging Face ONNX model |
 | `WebGPUVisionProvider` | Chrome offscreen worker; no endpoint | Always; dedicated screenshot-description sidecar only |
 
-`ProviderManager` seeds WebBrain Compass, one Chromium in-browser WebGPU provider,
+`ProviderManager` seeds KavachWeb Compass, one Chromium in-browser WebGPU provider,
 nine local endpoints, Azure OpenAI, AWS Bedrock, direct cloud providers, and router providers. The canonical current ID
 and default-model table is maintained in
 [`docs/providers-and-models.md`](../../docs/providers-and-models.md).

@@ -1,4 +1,4 @@
-// Build the exact LLM request payload WebBrain would send for a given
+// Build the exact LLM request payload KavachWeb would send for a given
 // (user message, tab, mode) — mirrors the selected browser agent's
 // _buildSystemPrompt + _enrichUserMessageWithCurrentPage + getToolsForMode,
 // minus the WebExtension-only bits (vision sub-call, screenshot capture,

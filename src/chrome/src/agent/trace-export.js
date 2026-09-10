@@ -269,14 +269,14 @@ function renderPromptProvenance(value) {
 }
 
 export function tracesToMarkdown(runsWithEvents, {
-  title = 'WebBrain Conversation — tool chain',
+  title = 'KavachWeb Conversation — tool chain',
   notes = [],
   exportedByWebBrainVersion = '',
 } = {}) {
   const runs = Array.isArray(runsWithEvents) ? runsWithEvents : [];
   let md = `# ${title}\n\n`;
   const exportVersion = oneLine(exportedByWebBrainVersion);
-  if (exportVersion) md += `_Exported with WebBrain v${exportVersion}_\n\n`;
+  if (exportVersion) md += `_Exported with KavachWeb v${exportVersion}_\n\n`;
   let turnCount = 0;
   let toolCount = 0;
   let unknownEventCount = 0;
@@ -289,7 +289,7 @@ export function tracesToMarkdown(runsWithEvents, {
     const recordedVersion = oneLine(run.webbrainVersion || '');
     const events = Array.isArray(entry.events) ? [...entry.events].sort((a, b) => (a?.seq || 0) - (b?.seq || 0)) : [];
     const meta = [
-      recordedVersion ? `recorded with WebBrain v${recordedVersion}` : 'recorded WebBrain version unavailable',
+      recordedVersion ? `recorded with KavachWeb v${recordedVersion}` : 'recorded KavachWeb version unavailable',
       run.model,
       exportedRunStatus(run, events),
     ].filter(Boolean).join(' · ');
@@ -330,7 +330,7 @@ export function tracesToMarkdown(runsWithEvents, {
         } else if (d.phase === 'read_scope') {
           md += `**Read scope:**\n${fencedBlock(content)}\n`;
         } else {
-          md += `**WebBrain:** ${oneLine(content)}\n`;
+          md += `**KavachWeb:** ${oneLine(content)}\n`;
           lastAssistantContent = content;
         }
       } else if (ev.kind === 'tool') {

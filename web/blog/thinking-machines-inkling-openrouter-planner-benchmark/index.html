@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thinking Machines Inkling OpenRouter planner benchmark - WebBrain Blog</title>
-  <meta name="description" content="We tested Thinking Machines Inkling through OpenRouter on WebBrain&#39;s frozen 100-case browser-planner benchmark, then checked its image and audio understanding.">
-  <meta name="keywords" content="WebBrain, Thinking Machines, Inkling, OpenRouter, open-weight model, American AI, multimodal AI, audio model, browser agent, tool calling, Poolside Laguna">
+  <title>Thinking Machines Inkling OpenRouter planner benchmark - KavachWeb Blog</title>
+  <meta name="description" content="We tested Thinking Machines Inkling through OpenRouter on KavachWeb&#39;s frozen 100-case browser-planner benchmark, then checked its image and audio understanding.">
+  <meta name="keywords" content="KavachWeb, Thinking Machines, Inkling, OpenRouter, open-weight model, American AI, multimodal AI, audio model, browser agent, tool calling, Poolside Laguna">
   <meta property="og:title" content="Inkling makes the American open-weight comeback multimodal">
   <meta property="og:description" content="96 valid calls, 45 ideal tool choices, 73% Sonnet alignment, plus successful image and audio probes. Our independent OpenRouter test of Thinking Machines Inkling.">
   <meta property="og:type" content="article">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Thinking Machines Inkling: frozen planner, vision, and audio test">
   <meta name="twitter:description" content="96 valid calls, 45 ideal tool choices, and 73% Sonnet alignment. Max reasoning did not improve the result, but Inkling&#39;s modality breadth is the real story.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/thinking-machines-inkling-openrouter-planner-benchmark">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -475,7 +475,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "Inkling makes the American open-weight comeback genuinely multimodal",
-  "description": "We tested Thinking Machines Inkling through OpenRouter on WebBrain's frozen 100-case browser-planner benchmark, then checked its image and audio understanding.",
+  "description": "We tested Thinking Machines Inkling through OpenRouter on KavachWeb's frozen 100-case browser-planner benchmark, then checked its image and audio understanding.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -525,7 +525,7 @@
   <article>
     <div class="meta">July 23, 2026 &middot; 10 min read &middot; <a href="/blog">&larr; All posts</a></div>
     <h1>Inkling makes the American open-weight comeback genuinely multimodal</h1>
-    <p class="lede"><strong>Thinking Machines Inkling</strong> is a different kind of American open-weight release: 975B total parameters, 41B active parameters, a permissive Apache 2.0 license, and native text, image, and audio input. At launch, it appears to be the largest US open-weight model by total parameter count, although that label depends on how &quot;American&quot; and &quot;open&quot; are defined. We ran the OpenRouter route through WebBrain&#39;s frozen 100-case first-action benchmark, repeated it with maximum reasoning, and added small image and audio probes. The result is not a new planner-score champion. It is something more interesting: a highly parseable, broad model that usually reaches the right tool family, handles all three advertised input modalities, and makes the recent US open-weight revival feel much less theoretical.</p>
+    <p class="lede"><strong>Thinking Machines Inkling</strong> is a different kind of American open-weight release: 975B total parameters, 41B active parameters, a permissive Apache 2.0 license, and native text, image, and audio input. At launch, it appears to be the largest US open-weight model by total parameter count, although that label depends on how &quot;American&quot; and &quot;open&quot; are defined. We ran the OpenRouter route through KavachWeb&#39;s frozen 100-case first-action benchmark, repeated it with maximum reasoning, and added small image and audio probes. The result is not a new planner-score champion. It is something more interesting: a highly parseable, broad model that usually reaches the right tool family, handles all three advertised input modalities, and makes the recent US open-weight revival feel much less theoretical.</p>
 <h2 id="what-thinking-machines-released">What Thinking Machines released</h2>
 <p><a href="https://thinkingmachines.ai/model-card/inkling/" target="_blank" rel="noopener">Inkling&#39;s model card</a> describes a 66-layer sparse mixture-of-experts model with <strong>975B total parameters and 41B active parameters</strong>. Each layer activates six of 256 routed experts plus two shared experts, with a hybrid of local and global attention.</p>
 <div class="table-wrap"><table><thead><tr><th>Inkling specification</th><th>Official value</th></tr></thead><tbody><tr><td>Total / active parameters</td><td>975B / 41B</td></tr><tr><td>Training data</td><td>45T tokens</td></tr><tr><td>Input modalities</td><td>Text, image, audio</td></tr><tr><td>Output modality</td><td>Text</td></tr><tr><td>Official context length</td><td>Up to 1M tokens</td></tr><tr><td>License</td><td>Apache 2.0</td></tr><tr><td>BF16 deployment requirement</td><td>At least 2TB VRAM</td></tr><tr><td>NVFP4 deployment requirement</td><td>At least 600GB VRAM</td></tr></tbody></table></div>
@@ -535,7 +535,7 @@
 <p>Thinking Machines explicitly says Inkling is <strong>not the strongest model on every benchmark</strong>. Its claim is breadth: reasoning, coding, computer use, tool use, vision, audio, and fine-tunability in one open-weight checkpoint.</p>
 <p>Selected standalone results from the official model card:</p>
 <div class="table-wrap"><table><thead><tr><th>Official evaluation</th><th>Inkling</th></tr></thead><tbody><tr><td>Humanity&#39;s Last Exam, text</td><td>29.7</td></tr><tr><td>Humanity&#39;s Last Exam, tools</td><td>46.0</td></tr><tr><td>SWE-bench Verified</td><td>77.6</td></tr><tr><td>SWE-bench Pro Public</td><td>54.3</td></tr><tr><td>Terminal-Bench 2.1</td><td>63.8</td></tr><tr><td>MCP Atlas</td><td>74.1</td></tr><tr><td>Toolathlon</td><td>45.5</td></tr><tr><td>IFBench</td><td>79.8</td></tr><tr><td>MMMU Pro</td><td>73.5</td></tr><tr><td>MMAU audio</td><td>77.2</td></tr><tr><td>VoiceBench</td><td>91.4</td></tr></tbody></table></div>
-<p>Those numbers are strong enough to justify an independent agent test, but they should not be confused with our result. Thinking Machines evaluated with <code>effort=0.99</code> and <code>temperature=1.0</code>; coding trajectories could use up to 256K tokens. WebBrain freezes a much shorter and more deterministic first-action problem.</p>
+<p>Those numbers are strong enough to justify an independent agent test, but they should not be confused with our result. Thinking Machines evaluated with <code>effort=0.99</code> and <code>temperature=1.0</code>; coding trajectories could use up to 256K tokens. KavachWeb freezes a much shorter and more deterministic first-action problem.</p>
 <h2 id="what-we-tested">What we tested</h2>
 <p>We used the exact OpenRouter model id:</p>
 <pre><code class="language-text">thinkingmachines/inkling</code></pre>
@@ -543,7 +543,7 @@
 <pre><code class="language-text">input:      $1.00 per million tokens
 output:     $4.05 per million tokens
 cache read: $0.17 per million tokens</code></pre>
-<p>The frozen WebBrain replay contains 100 browser instructions, 41 available tools, and the same system prompt used in our recent local-model tests. Every model must select its first action; it does not get a full browsing trajectory in which to recover from a weak opening.</p>
+<p>The frozen KavachWeb replay contains 100 browser instructions, 41 available tools, and the same system prompt used in our recent local-model tests. Every model must select its first action; it does not get a full browsing trajectory in which to recover from a weak opening.</p>
 <p>We kept the harness defaults:</p>
 <pre><code class="language-text">temperature: 0.15
 max output:  4,096 tokens
@@ -551,7 +551,7 @@ concurrency: 4
 reference:   Claude Sonnet 4.6
 freeze:      baseline-2026-05-23.json
 system hash: 5c4fac1387025050</code></pre>
-<p>This is deliberately not a reproduction of Thinking Machines&#39; official scaffold. It answers a narrower product question: <strong>can the hosted model reliably dispatch WebBrain&#39;s first browser action?</strong></p>
+<p>This is deliberately not a reproduction of Thinking Machines&#39; official scaffold. It answers a narrower product question: <strong>can the hosted model reliably dispatch KavachWeb&#39;s first browser action?</strong></p>
 <h2 id="frozen-result-valid-and-usually-in-the-right-tool-family">Frozen result: valid and usually in the right tool family</h2>
 <div class="table-wrap"><table><thead><tr><th>Metric</th><th>Default reasoning</th><th>Maximum reasoning</th></tr></thead><tbody><tr><td>Requests completed</td><td>100 / 100</td><td>100 / 100</td></tr><tr><td>API errors</td><td>0</td><td>0</td></tr><tr><td>Parsed calls</td><td>96</td><td>95</td></tr><tr><td>Schema-valid calls</td><td>96</td><td>95</td></tr><tr><td>Exact ideal action</td><td>16</td><td>18</td></tr><tr><td>Ideal tool name</td><td><strong>45</strong></td><td>42</td></tr><tr><td>Sonnet tool-name match, all cases</td><td><strong>73%</strong></td><td>72%</td></tr><tr><td>Sonnet match, tool-using cases</td><td><strong>75.0%</strong></td><td>72.8%</td></tr><tr><td>Median latency</td><td>1.27s</td><td><strong>1.23s</strong></td></tr><tr><td>P95 latency</td><td>3.78s</td><td><strong>2.85s</strong></td></tr><tr><td>Wall time, concurrency 4</td><td>38.68s</td><td>38.50s</td></tr><tr><td>Observed account charge</td><td>$0.282</td><td>$0.307</td></tr></tbody></table></div>
 <p>The default run is the better result. Maximum reasoning added two exact matches, but lost one parsed call, three ideal tool-name matches, one Sonnet match, and 2.2 percentage points on the tool-using subset. It also produced a 7.84-second worst-case outlier.</p>
@@ -594,19 +594,19 @@ other tools             13</code></pre>
 <p>The pricing is attractive relative to frontier hosted models, but not in Poolside&#39;s ultra-cheap category. Heavy output use at $4.05 per million tokens can add up. Our frozen prompts benefited from substantial provider-side cache reads; the actual account-credit deltas were $0.282 for default and $0.307 for maximum reasoning.</p>
 <h2 id="verdict">Verdict</h2>
 <p>Inkling passes the test that matters most for a model this ambitious: its breadth is real.</p>
-<p>It completed every request without an API error, produced 96 valid structured calls, selected our ideal tool more often than the two narrow local references, understood a real UI screenshot, and correctly decoded a synthetic audio instruction. Increasing reasoning effort did not help, and its 73% Sonnet alignment does not make it the best WebBrain planner.</p>
+<p>It completed every request without an API error, produced 96 valid structured calls, selected our ideal tool more often than the two narrow local references, understood a real UI screenshot, and correctly decoded a synthetic audio instruction. Increasing reasoning effort did not help, and its 73% Sonnet alignment does not make it the best KavachWeb planner.</p>
 <p>That is still a strong launch. The combination of Apache 2.0 weights, 41B active parameters, half-million-token hosted context, vision, audio, and solid tool use is unusual. After Poolside&#39;s stronger Laguna releases, Inkling is further evidence that American open-weight AI is no longer absent from the serious-model conversation.</p>
 <p>Frozen result directories:</p>
 <pre><code class="language-text">test/llm/results/2026-07-23-inkling-openrouter-default_chrome_thinkingmachines_inkling_frozen
 test/llm/results/2026-07-23-inkling-openrouter-max_chrome_thinkingmachines_inkling_frozen</code></pre>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

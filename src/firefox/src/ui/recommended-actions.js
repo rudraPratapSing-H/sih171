@@ -173,7 +173,7 @@ function webbrainTweetRunOptions(postText) {
     id: 'tweet-webbrain',
     skipPlanner: true,
     tool: 'navigate',
-    summary: 'Publish the reviewed localized WebBrain post exactly as supplied.',
+    summary: 'Publish the reviewed localized KavachWeb post exactly as supplied.',
     steps: [
       'Open https://x.com/compose/post in the current tab through the visible browser UI.',
       'Wait for the visible X composer to become stable before entering text.',
@@ -191,7 +191,7 @@ function webbrainLinkedInRunOptions(postText) {
     id: 'post-webbrain-linkedin',
     skipPlanner: true,
     tool: 'navigate',
-    summary: 'Publish the reviewed localized WebBrain post on LinkedIn exactly as supplied.',
+    summary: 'Publish the reviewed localized KavachWeb post on LinkedIn exactly as supplied.',
     steps: [
       'Open https://www.linkedin.com/feed/ in the current tab through the visible browser UI.',
       'Select Start a post to open LinkedIn\'s visible composer.',

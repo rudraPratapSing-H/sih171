@@ -6,11 +6,11 @@ sortOrder: -130
 date: 2026-08-02
 readTime: 22 min read
 description: >
-  A consensus-ranked, cost-aware WebBrain planner test of thirteen OpenRouter models from OpenAI, Anthropic, Google, xAI, Poolside, MiniMax, Z.ai, DeepSeek, Thinking Machines, Qwen, Moonshot, and Tencent.
+  A consensus-ranked, cost-aware KavachWeb planner test of thirteen OpenRouter models from OpenAI, Anthropic, Google, xAI, Poolside, MiniMax, Z.ai, DeepSeek, Thinking Machines, Qwen, Moonshot, and Tencent.
 excerpt: >
   DeepSeek V4 Flash and Tencent HY3 lead our reference-free first-action consensus, while Gemini 3.6 Flash goes 100-for-100 on valid calls and Poolside Laguna XS becomes a remarkably cheap American open-weight contender. GLM-5.2's released Vision NVFP4 graft changes its modality story, and Qwen 3.6 27B remains our practical RTX 5090 pick.
 titleTag: >
-  US-China open-weight and frontier model benchmark - WebBrain Blog
+  US-China open-weight and frontier model benchmark - KavachWeb Blog
 ogTitle: >
   Two AI gaps are narrowing: our thirteen-model planner benchmark
 ogDescription: >
@@ -20,7 +20,7 @@ twitterTitle: >
 twitterDescription: >
   DeepSeek and HY3 lead consensus; Gemini is operationally spotless; Laguna XS strengthens US open weights; Qwen 27B remains the RTX 5090 choice.
 keywords:
-  - WebBrain
+  - KavachWeb
   - OpenRouter
   - open-weight AI
   - American AI
@@ -39,12 +39,12 @@ keywords:
   - browser agent
   - tool calling
 lede: >
-  **Two gaps are narrowing at once.** American open-weight releases from Thinking Machines and Poolside are finally making the cheap, self-hostable model conversation less one-sided. At the frontier, Chinese labs are putting models such as Kimi K3 and GLM-5.2 much closer to the operational territory occupied by Claude, Gemini, Grok, and GPT. We tested thirteen OpenRouter routes on the same 100-case WebBrain browser-planner payload, then ranked them without treating Sonnet 5—or any other single model—as the judge. The result is encouraging, complicated, and much more useful than a one-number leaderboard: inexpensive Chinese text planners lead first-action consensus, Gemini 3.6 Flash is exceptionally clean, tiny-active Poolside Laguna XS is a real American value result, Kimi K3 nearly matches Sonnet 5's dispatch reliability, and Qwen 3.6 27B is still the model we would put in a single RTX 5090 workstation.
+  **Two gaps are narrowing at once.** American open-weight releases from Thinking Machines and Poolside are finally making the cheap, self-hostable model conversation less one-sided. At the frontier, Chinese labs are putting models such as Kimi K3 and GLM-5.2 much closer to the operational territory occupied by Claude, Gemini, Grok, and GPT. We tested thirteen OpenRouter routes on the same 100-case KavachWeb browser-planner payload, then ranked them without treating Sonnet 5—or any other single model—as the judge. The result is encouraging, complicated, and much more useful than a one-number leaderboard: inexpensive Chinese text planners lead first-action consensus, Gemini 3.6 Flash is exceptionally clean, tiny-active Poolside Laguna XS is a real American value result, Kimi K3 nearly matches Sonnet 5's dispatch reliability, and Qwen 3.6 27B is still the model we would put in a single RTX 5090 workstation.
 ---
 
 ## The short version
 
-We sent **1,300 comparable requests**—100 per model—through the same WebBrain Chrome planner payload. All thirteen result sets completed without a final API error. Instead of measuring “alignment with Claude Sonnet 5,” we compared every model's normalized first action with the other twelve models on each case.
+We sent **1,300 comparable requests**—100 per model—through the same KavachWeb Chrome planner payload. All thirteen result sets completed without a final API error. Instead of measuring “alignment with Claude Sonnet 5,” we compared every model's normalized first action with the other twelve models on each case.
 
 The main findings:
 
@@ -85,7 +85,7 @@ It also shows why DeepSeek and HY3 cannot simply be declared the two best browse
 
 ## What we ran
 
-This was the **full-tier**, non-frozen planner suite as it existed at commit `7182c21f`: 100 Chrome first-action cases per model, 41 available WebBrain tools, native structured tool calls, and no saved request bodies.
+This was the **full-tier**, non-frozen planner suite as it existed at commit `7182c21f`: 100 Chrome first-action cases per model, 41 available KavachWeb tools, native structured tool calls, and no saved request bodies.
 
 ```text
 cases per model:       100
@@ -104,7 +104,7 @@ code checkout tested:   7182c21f
 
 The checkout matters. We ran the original ten models on commit `7182c21f`, then fast-forwarded the repository from `origin/main`. When adding Laguna XS, Grok, and Gemini, we detected that the Chrome prompt/tool source had changed. We therefore reran those three in a detached `7182c21f` worktree and use only those `-7182` result directories in the thirteen-model comparison. The raw files preserve the run metadata; we do not mix post-pull samples into the ranking.
 
-“Non-frozen” also matters. Earlier WebBrain posts used a May 2026 frozen baseline and often reported agreement with a saved Sonnet reference. This run uses one pinned code checkout rather than that historical frozen snapshot. It is appropriate for comparing these thirteen same-payload runs with each other, not for splicing their percentages into older frozen tables.
+“Non-frozen” also matters. Earlier KavachWeb posts used a May 2026 frozen baseline and often reported agreement with a saved Sonnet reference. This run uses one pinned code checkout rather than that historical frozen snapshot. It is appropriate for comparing these thirteen same-payload runs with each other, not for splicing their percentages into older frozen tables.
 
 Finally, this is a first-action test. It asks whether a model dispatches the right opening tool and arguments. It does not let a model browse for twenty turns, recover from a cautious observation, interpret a screenshot, execute code, or revise a plan after seeing a tool result. Those are not footnotes; they materially affect GPT-5.6, multimodal models, and long-horizon agent specialists.
 
@@ -156,7 +156,7 @@ Sonnet rises to third when the three new peer models join the consensus pool. It
 
 GLM-5.2 moves to fifth by exact consensus but retains the group's best exact-ideal count at 20. It is fast at 1.73 seconds median and has a tight 4.44-second p95. Three calls failed schema validation because the accessibility filter contained a stray quote—`visible"`—which is a small generation defect with a large production consequence if the caller does not validate arguments.
 
-DeepSeek and HY3 share the important downside: **their tested routes are text-only**. They can plan over URLs, accessibility trees, extracted page text, and prior tool state, but cannot serve as WebBrain's only model when a canvas app, chart, broken accessibility tree, or screenshot contains the decisive information. Gemini can. GLM's tested route cannot, but its separate Vision NVFP4 checkpoint makes that limitation less structural than it first appears.
+DeepSeek and HY3 share the important downside: **their tested routes are text-only**. They can plan over URLs, accessibility trees, extracted page text, and prior tool state, but cannot serve as KavachWeb's only model when a canvas app, chart, broken accessibility tree, or screenshot contains the decisive information. Gemini can. GLM's tested route cannot, but its separate Vision NVFP4 checkpoint makes that limitation less structural than it first appears.
 
 ## Gemini 3.6 Flash and Grok 4.5
 
@@ -372,4 +372,4 @@ test/llm/results/2026-08-02-full-suite-consensus.json
 
 No request bodies or API keys are stored in those files.
 
-Tags: #OpenWeights #OpenRouter #DeepSeekV4 #TencentHY3 #GLM52 #KimiK3 #MiniMaxM3 #ClaudeSonnet5 #GPT56 #Gemini36 #Grok45 #Poolside #LagunaXS #Inkling #Qwen36 #RTX5090 #ToolCalling #BrowserAgent #WebBrain
+Tags: #OpenWeights #OpenRouter #DeepSeekV4 #TencentHY3 #GLM52 #KimiK3 #MiniMaxM3 #ClaudeSonnet5 #GPT56 #Gemini36 #Grok45 #Poolside #LagunaXS #Inkling #Qwen36 #RTX5090 #ToolCalling #BrowserAgent #KavachWeb

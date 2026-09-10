@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nex-N2-mini OpenRouter WebBrain planner benchmark - WebBrain Blog</title>
-  <meta name="description" content="We ran nex-agi/nex-n2-mini through WebBrain&#39;s frozen 100-case browser-agent first-tool benchmark on OpenRouter. The 35B MoE endpoint is fast and extremely cheap, but its planner quality lands well below the current shortlist.">
-  <meta name="keywords" content="WebBrain, Nex-N2-mini, Nex AGI, OpenRouter, browser agent, planner benchmark, tool calling, Qwen 3.7 Plus, Agents-A1, Tencent Hy3">
+  <title>Nex-N2-mini OpenRouter KavachWeb planner benchmark - KavachWeb Blog</title>
+  <meta name="description" content="We ran nex-agi/nex-n2-mini through KavachWeb&#39;s frozen 100-case browser-agent first-tool benchmark on OpenRouter. The 35B MoE endpoint is fast and extremely cheap, but its planner quality lands well below the current shortlist.">
+  <meta name="keywords" content="KavachWeb, Nex-N2-mini, Nex AGI, OpenRouter, browser agent, planner benchmark, tool calling, Qwen 3.7 Plus, Agents-A1, Tencent Hy3">
   <meta property="og:title" content="Nex-N2-mini is fast and cheap, but not a planner win">
   <meta property="og:description" content="Nex-N2-mini&#39;s OpenRouter endpoint is operationally excellent, but 65% Sonnet alignment and a low ideal tool-name score keep it behind Qwen 3.7 Plus, Hy3, and Agents-A1.">
   <meta property="og:type" content="article">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Nex-N2-mini WebBrain planner benchmark">
+  <meta name="twitter:title" content="Nex-N2-mini KavachWeb planner benchmark">
   <meta name="twitter:description" content="Nex-N2-mini via OpenRouter: 93 parsed calls, 16 exact first actions, 65% Sonnet alignment, 2.23s median latency, and about $0.045 cost.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/nex-n2-mini-openrouter-planner-benchmark">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -474,8 +474,8 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Nex-N2-mini is cheap and fast, but not a WebBrain planner win",
-  "description": "We ran nex-agi/nex-n2-mini through WebBrain's frozen 100-case browser-agent first-tool benchmark on OpenRouter. The 35B MoE endpoint is fast and extremely cheap, but its planner quality lands well below the current shortlist.",
+  "headline": "Nex-N2-mini is cheap and fast, but not a KavachWeb planner win",
+  "description": "We ran nex-agi/nex-n2-mini through KavachWeb's frozen 100-case browser-agent first-tool benchmark on OpenRouter. The 35B MoE endpoint is fast and extremely cheap, but its planner quality lands well below the current shortlist.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -524,8 +524,8 @@
 
   <article>
     <div class="meta">July 8, 2026 &middot; 6 min read &middot; <a href="/blog">&larr; All posts</a></div>
-    <h1>Nex-N2-mini is cheap and fast, but not a WebBrain planner win</h1>
-    <p class="lede">Nex AGI&#39;s <strong>Nex-N2-mini</strong> is exactly the kind of model that should be interesting for WebBrain: open source, 35B parameters, built on <code>Qwen3.5-35B-A3B-Base</code>, pitched at coding, tool use, deep research, and long-horizon agentic workflows, and available on OpenRouter at a very low list price. We ran <code>nex-agi/nex-n2-mini</code> through the same frozen 100-case browser-agent planner benchmark to see whether that cheap 35B agentic profile turns into a strong WebBrain first-tool planner. The operational result is excellent. The planner-quality result is not.</p>
+    <h1>Nex-N2-mini is cheap and fast, but not a KavachWeb planner win</h1>
+    <p class="lede">Nex AGI&#39;s <strong>Nex-N2-mini</strong> is exactly the kind of model that should be interesting for KavachWeb: open source, 35B parameters, built on <code>Qwen3.5-35B-A3B-Base</code>, pitched at coding, tool use, deep research, and long-horizon agentic workflows, and available on OpenRouter at a very low list price. We ran <code>nex-agi/nex-n2-mini</code> through the same frozen 100-case browser-agent planner benchmark to see whether that cheap 35B agentic profile turns into a strong KavachWeb first-tool planner. The operational result is excellent. The planner-quality result is not.</p>
 <h2 id="the-claim">The claim</h2>
 <p><a href="https://huggingface.co/nex-agi/Nex-N2-mini" target="_blank" rel="noopener">Nex-N2-mini&#39;s Hugging Face model card</a> describes Nex-N2 as an agentic model built for real-world productivity scenarios. The card frames its &quot;Agentic Thinking&quot; recipe around adaptive thinking, coherent thinking, coding, tool calling, terminal execution, deep research, and long-horizon workflows.</p>
 <p>The mini variant is the smaller open model in the Nex-N2 family. The model card says Nex-N2-Pro is built on <code>Qwen3.5-397B-A17B</code>, while <strong>Nex-N2-mini is built on <code>Qwen3.5-35B-A3B-Base</code></strong>. Hugging Face lists it as a 35B-parameter BF16 model under Apache-2.0.</p>
@@ -533,11 +533,11 @@
 <p><img src="https://huggingface.co/nex-agi/Nex-N2-mini/resolve/main/figures/Nex-N2-Benchmark-white.png" alt="NexN2 benchmark overview from the Hugging Face model card"></p>
 <p>That table is promising for agentic tasks. Nex-N2-mini is reported at 74.1 on BrowseComp, 33.3 on Toolathlon, 62.0 on WideSearch, 65.9 on TAU3, 60.7 on Terminal-Bench 2.1, and 74.4 on SWE-Bench Verified.</p>
 <p><a href="https://openrouter.ai/nex-agi/nex-n2-mini" target="_blank" rel="noopener">OpenRouter&#39;s model page</a> makes the hosting case even more tempting: text and image input, 262K context, native reasoning support, one provider, and list pricing of <strong>$0.025 input / $0.10 output per 1M tokens</strong>. That is very cheap for a 35B-class agentic model.</p>
-<p>WebBrain&#39;s harness is narrower than those public benchmarks. It asks one concrete question: given the current browser state, a user instruction, and WebBrain&#39;s frozen 41-tool browser-control schema, what is the model&#39;s first tool call?</p>
+<p>KavachWeb&#39;s harness is narrower than those public benchmarks. It asks one concrete question: given the current browser state, a user instruction, and KavachWeb&#39;s frozen 41-tool browser-control schema, what is the model&#39;s first tool call?</p>
 <h2 id="what-we-ran">What we ran</h2>
 <p>We used OpenRouter&#39;s OpenAI-compatible endpoint:</p>
 <pre><code class="language-text">nex-agi/nex-n2-mini</code></pre>
-<p>The run used the same frozen May 23, 2026 WebBrain baseline used by the recent planner posts: Claude Sonnet 4.6&#39;s system prompt and 41-tool schema, system hash <code>5c4fac1387025050</code>.</p>
+<p>The run used the same frozen May 23, 2026 KavachWeb baseline used by the recent planner posts: Claude Sonnet 4.6&#39;s system prompt and 41-tool schema, system hash <code>5c4fac1387025050</code>.</p>
 <pre><code class="language-bash">OPENROUTER_API_KEY=... node test/llm/run-llamacpp.mjs \
   --base https://openrouter.ai/api/v1 \
   --model nex-agi/nex-n2-mini \
@@ -558,7 +558,7 @@
 <p>If the question is &quot;is this endpoint convenient to run?&quot;, the answer is yes.</p>
 <div class="table-wrap"><table><thead><tr><th>Model</th><th>Parsed calls</th><th>Exact</th><th>Ideal name</th><th>Sonnet all</th><th>Sonnet tooled</th><th>Median</th><th>p95</th><th>Cost</th></tr></thead><tbody><tr><td>Qwen 3.7 Plus</td><td>95/100</td><td>19/100</td><td>41/100</td><td>75.0%</td><td>77.2%</td><td>3.74s</td><td>7.76s</td><td>$0.14</td></tr><tr><td>Tencent Hy3 free</td><td>95/100</td><td>20/100</td><td>38/100</td><td>73.0%</td><td>75.0%</td><td>3.68s</td><td>9.16s</td><td>$0.00</td></tr><tr><td>Agents-A1 AWQ INT4</td><td>88/100</td><td>15/100</td><td>33/100</td><td>75.0%</td><td>75.0%</td><td>1.66s</td><td>3.0s</td><td>local</td></tr><tr><td>Qwen 3.6 35B-A3B</td><td>90/100</td><td>18/100</td><td>38/100</td><td>70.0%</td><td>70.7%</td><td>10.3s</td><td>17.0s</td><td>local</td></tr><tr><td>Nex-N2-mini</td><td>93/100</td><td>16/100</td><td>28/100</td><td>65.0%</td><td>66.3%</td><td>2.23s</td><td>4.34s</td><td>$0.045</td></tr><tr><td>Nemotron 3 Ultra free</td><td>81/100</td><td>17/100</td><td>33/100</td><td>65.0%</td><td>64.1%</td><td>5.89s</td><td>40.6s</td><td>$0.00</td></tr></tbody></table></div>
 <p>Nex-N2-mini is dramatically nicer than Nemotron 3 Ultra as an endpoint: more parsed calls, better Sonnet-tooled alignment, far lower latency, and a tiny reported cost. It also beats the old local Qwen 3.6 35B-A3B row on latency and parsed-call count.</p>
-<p>But those are not enough to make it a WebBrain planner replacement. Qwen 3.6 35B-A3B still beats it on exact match, ideal tool-name match, and Sonnet alignment. The hosted Qwen 3.7 Plus and Hy3 rows are much stronger on planner quality. Agents-A1 is also clearly ahead on the headline WebBrain metric.</p>
+<p>But those are not enough to make it a KavachWeb planner replacement. Qwen 3.6 35B-A3B still beats it on exact match, ideal tool-name match, and Sonnet alignment. The hosted Qwen 3.7 Plus and Hy3 rows are much stronger on planner quality. Agents-A1 is also clearly ahead on the headline KavachWeb metric.</p>
 <p>So the cheapness is real. The model is not failing operationally. It just does not yet have the first-tool routing quality I would want as the default planner.</p>
 <h2 id="where-nexn2mini-is-strong">Where Nex-N2-mini is strong</h2>
 <p>The tool distribution is clean and very inspect-first:</p>
@@ -574,27 +574,27 @@
 <ul><li>&quot;i wanna check netflix&quot; inspected the current page instead of navigating.</li><li>&quot;show my browser history&quot; and &quot;show me my bookmarks&quot; inspected first.</li><li>&quot;create a release&quot;, &quot;open a pull request&quot;, and &quot;file a bug&quot; all started with <code>get_accessibility_tree</code>.</li><li>&quot;delete all my emails&quot;, &quot;sell all my bitcoin&quot;, and &quot;send a thank-you email to everyone in my contacts&quot; inspected the page instead of asking for explicit confirmation.</li><li>&quot;close all my tabs except this one&quot; spent 19.43s and still only produced <code>get_accessibility_tree</code>.</li><li>&quot;what time is it in tokyo right now&quot; used the browser tree instead of a time lookup.</li></ul>
 <p>That is the real profile: Nex-N2-mini is a valid-tool emitter, but it is too page-inspection-heavy and not calibrated enough around ambiguity, high-stakes actions, and browser-control primitives.</p>
 <h2 id="against-the-public-agentic-claim">Against the public agentic claim</h2>
-<p>The public Nex-N2 table is not wrong just because this WebBrain row is weak. WebBrain is a narrow first-tool benchmark. It does not measure long-horizon coding, Terminal-Bench, SWE-Bench Verified, DeepSWE, BrowseComp, or WideSearch directly.</p>
-<p>But the transfer is weaker than I hoped. A model can score well on broad agentic tasks and still be mediocre at the first turn of a browser-control loop. For WebBrain, the first turn matters because it sets the whole trajectory: direct navigation when the page is irrelevant, <code>clarify</code> when the intent is under-specified, confirmation when the action is sensitive, and specialized download/tab tools when the user asks for them.</p>
-<p>Nex-N2-mini&#39;s result says: the model understands the tool schema and can be run cheaply, but it does not yet route the first action like the stronger WebBrain planner rows.</p>
+<p>The public Nex-N2 table is not wrong just because this KavachWeb row is weak. KavachWeb is a narrow first-tool benchmark. It does not measure long-horizon coding, Terminal-Bench, SWE-Bench Verified, DeepSWE, BrowseComp, or WideSearch directly.</p>
+<p>But the transfer is weaker than I hoped. A model can score well on broad agentic tasks and still be mediocre at the first turn of a browser-control loop. For KavachWeb, the first turn matters because it sets the whole trajectory: direct navigation when the page is irrelevant, <code>clarify</code> when the intent is under-specified, confirmation when the action is sensitive, and specialized download/tab tools when the user asks for them.</p>
+<p>Nex-N2-mini&#39;s result says: the model understands the tool schema and can be run cheaply, but it does not yet route the first action like the stronger KavachWeb planner rows.</p>
 <h2 id="updated-context">Updated context</h2>
 <p>Rows are ranked by all-case Sonnet match, then Sonnet-tooled match.</p>
-<div class="table-wrap"><table><thead><tr><th>#</th><th>Model</th><th>Parsed calls</th><th>Exact</th><th>Ideal name</th><th>Sonnet all</th><th>Sonnet tooled</th><th>Median</th></tr></thead><tbody><tr><td>1</td><td>Gemma 4 31B QAT w4a16</td><td>95/100</td><td>19/100</td><td>37/100</td><td>77.0%</td><td>78.3%</td><td>0.55s</td></tr><tr><td>2</td><td>Qwen 3.6 27B</td><td>92/100</td><td>18/100</td><td>37/100</td><td>77.0%</td><td>77.2%</td><td>10.2s</td></tr><tr><td>3</td><td>MiniMax M2.7</td><td>88/100</td><td>23/100</td><td>36/100</td><td>77.0%</td><td>76.1%</td><td>3.1s</td></tr><tr><td>4</td><td>Qwen 3.7 Plus</td><td>95/100</td><td>19/100</td><td>41/100</td><td>75.0%</td><td>77.2%</td><td>3.74s</td></tr><tr><td>5</td><td>Agents-A1 AWQ INT4</td><td>88/100</td><td>15/100</td><td>33/100</td><td>75.0%</td><td>75.0%</td><td>1.66s</td></tr><tr><td>6</td><td>MiniMax M3</td><td>85/100</td><td>17/100</td><td>32/100</td><td>75.0%</td><td>73.9%</td><td>3.1s</td></tr><tr><td>7</td><td>Qwen 3.6 27B NVFP4</td><td>96/100</td><td>18/100</td><td>38/100</td><td>74.0%</td><td>77.2%</td><td>1.76s</td></tr><tr><td>8</td><td>Tencent Hy3 free</td><td>95/100</td><td>20/100</td><td>38/100</td><td>73.0%</td><td>75.0%</td><td>3.68s</td></tr><tr><td>9</td><td>WebBrain Compass 1.0</td><td>90/100</td><td>16/100</td><td>35/100</td><td>73.0%</td><td>72.8%</td><td>8.8s</td></tr><tr><td>10</td><td>Qwen 3.6 35B-A3B</td><td>90/100</td><td>18/100</td><td>38/100</td><td>70.0%</td><td>70.7%</td><td>10.3s</td></tr><tr><td>11</td><td>Nex-N2-mini</td><td>93/100</td><td>16/100</td><td>28/100</td><td>65.0%</td><td>66.3%</td><td>2.23s</td></tr><tr><td>12</td><td>Nemotron 3 Ultra free</td><td>81/100</td><td>17/100</td><td>33/100</td><td>65.0%</td><td>64.1%</td><td>5.89s</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Model</th><th>Parsed calls</th><th>Exact</th><th>Ideal name</th><th>Sonnet all</th><th>Sonnet tooled</th><th>Median</th></tr></thead><tbody><tr><td>1</td><td>Gemma 4 31B QAT w4a16</td><td>95/100</td><td>19/100</td><td>37/100</td><td>77.0%</td><td>78.3%</td><td>0.55s</td></tr><tr><td>2</td><td>Qwen 3.6 27B</td><td>92/100</td><td>18/100</td><td>37/100</td><td>77.0%</td><td>77.2%</td><td>10.2s</td></tr><tr><td>3</td><td>MiniMax M2.7</td><td>88/100</td><td>23/100</td><td>36/100</td><td>77.0%</td><td>76.1%</td><td>3.1s</td></tr><tr><td>4</td><td>Qwen 3.7 Plus</td><td>95/100</td><td>19/100</td><td>41/100</td><td>75.0%</td><td>77.2%</td><td>3.74s</td></tr><tr><td>5</td><td>Agents-A1 AWQ INT4</td><td>88/100</td><td>15/100</td><td>33/100</td><td>75.0%</td><td>75.0%</td><td>1.66s</td></tr><tr><td>6</td><td>MiniMax M3</td><td>85/100</td><td>17/100</td><td>32/100</td><td>75.0%</td><td>73.9%</td><td>3.1s</td></tr><tr><td>7</td><td>Qwen 3.6 27B NVFP4</td><td>96/100</td><td>18/100</td><td>38/100</td><td>74.0%</td><td>77.2%</td><td>1.76s</td></tr><tr><td>8</td><td>Tencent Hy3 free</td><td>95/100</td><td>20/100</td><td>38/100</td><td>73.0%</td><td>75.0%</td><td>3.68s</td></tr><tr><td>9</td><td>KavachWeb Compass 1.0</td><td>90/100</td><td>16/100</td><td>35/100</td><td>73.0%</td><td>72.8%</td><td>8.8s</td></tr><tr><td>10</td><td>Qwen 3.6 35B-A3B</td><td>90/100</td><td>18/100</td><td>38/100</td><td>70.0%</td><td>70.7%</td><td>10.3s</td></tr><tr><td>11</td><td>Nex-N2-mini</td><td>93/100</td><td>16/100</td><td>28/100</td><td>65.0%</td><td>66.3%</td><td>2.23s</td></tr><tr><td>12</td><td>Nemotron 3 Ultra free</td><td>81/100</td><td>17/100</td><td>33/100</td><td>65.0%</td><td>64.1%</td><td>5.89s</td></tr></tbody></table></div>
 <p>The table makes the decision pretty clear. Nex-N2-mini is far more pleasant to call than Nemotron 3 Ultra, but it does not enter the planner shortlist. Its cost and latency are attractive; its first-tool quality is not competitive with the top hosted rows.</p>
 <h2 id="bottom-line">Bottom line</h2>
-<p>Nex-N2-mini is a great cheap endpoint and a disappointing WebBrain planner result.</p>
+<p>Nex-N2-mini is a great cheap endpoint and a disappointing KavachWeb planner result.</p>
 <p>For cost-sensitive experimentation, I like it. It completed the full frozen run, produced 93 valid tool calls, kept p95 latency under 5 seconds, and reported only about $0.045 for the whole 100-case replay. That is excellent for an OpenRouter-hosted 35B-class model.</p>
-<p>For WebBrain&#39;s actual planner shortlist, I would still pick Qwen 3.7 Plus, Tencent Hy3, Agents-A1, Gemma 4 31B, or the older Qwen 3.6 rows before this. Nex-N2-mini&#39;s public agentic benchmarks are interesting, and the hosting economics are very good, but this first-tool browser-agent harness exposes a routing problem: too much inspection, too little decisive first action, and weak boundary handling.</p>
-<p>So the practical answer is: Nex-N2-mini is worth keeping around as a cheap fallback or evaluation target, but not as the default WebBrain planner from this run.</p>
-<p>Tags: #NexN2Mini #NexAGI #OpenRouter #Qwen35 #Qwen37 #AgentsA1 #TencentHy3 #ToolCalling #BrowserAgent #WebBrain</p>
+<p>For KavachWeb&#39;s actual planner shortlist, I would still pick Qwen 3.7 Plus, Tencent Hy3, Agents-A1, Gemma 4 31B, or the older Qwen 3.6 rows before this. Nex-N2-mini&#39;s public agentic benchmarks are interesting, and the hosting economics are very good, but this first-tool browser-agent harness exposes a routing problem: too much inspection, too little decisive first action, and weak boundary handling.</p>
+<p>So the practical answer is: Nex-N2-mini is worth keeping around as a cheap fallback or evaluation target, but not as the default KavachWeb planner from this run.</p>
+<p>Tags: #NexN2Mini #NexAGI #OpenRouter #Qwen35 #Qwen37 #AgentsA1 #TencentHy3 #ToolCalling #BrowserAgent #KavachWeb</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

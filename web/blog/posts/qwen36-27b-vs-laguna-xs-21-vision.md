@@ -6,21 +6,21 @@ sortOrder: -160
 date: 2026-08-05
 readTime: 11 min read
 description: >
-  Qwen 3.6 27B and Laguna XS 2.1 take radically different routes to local multimodal AI. We compare their architectures, WebBrain planner results, hardware tradeoffs, and Laguna's new experimental vision checkpoint.
+  Qwen 3.6 27B and Laguna XS 2.1 take radically different routes to local multimodal AI. We compare their architectures, KavachWeb planner results, hardware tradeoffs, and Laguna's new experimental vision checkpoint.
 excerpt: >
   Qwen remains the safer ready-to-run local multimodal model, but Laguna XS 2.1's new MoonViT vision bridge turns Poolside's 3B-active MoE into a serious contender—and brings American and Chinese open-weight models much closer to head-to-head.
 titleTag: >
-  Qwen 3.6 27B vs Laguna XS 2.1 Vision - WebBrain Blog
+  Qwen 3.6 27B vs Laguna XS 2.1 Vision - KavachWeb Blog
 ogTitle: >
   Qwen 3.6 27B vs Laguna XS 2.1 Vision: which local model wins?
 ogDescription: >
-  Dense native multimodality versus a 3B-active MoE with a new MoonViT vision bridge: architecture, WebBrain benchmark data, and the local deployment verdict.
+  Dense native multimodality versus a 3B-active MoE with a new MoonViT vision bridge: architecture, KavachWeb benchmark data, and the local deployment verdict.
 twitterTitle: >
   Qwen 3.6 27B vs Laguna XS 2.1 Vision
 twitterDescription: >
   Qwen is still the safer local VLM today. Laguna's new vision bridge makes the American 3B-active MoE a serious challenger.
 keywords:
-  - WebBrain
+  - KavachWeb
   - Qwen 3.6 27B
   - Laguna XS 2.1
   - Laguna XS 2.1 Vision
@@ -78,13 +78,13 @@ Qwen's multimodality is part of the released model architecture. Its 27-layer vi
 
 Those latency numbers came from cloud routes, not the same physical GPU. In our view, the difference could become even larger on a single RTX 5090 once Laguna has an optimized local runtime: Qwen has to execute a dense 27B language model for every generated token, while Laguna's router activates roughly 3B. A local head-to-head would also remove cloud-provider scheduling, batching, network, and route differences. That is an architectural expectation, not a result we have measured yet; the Laguna Vision package still needs its end-to-end 5090 serving path.
 
-The new WebBrain vision checkpoint leaves that Laguna backbone frozen. It also freezes a 27-layer MoonViT tower from [Moonshot AI's Kimi K2.6](https://huggingface.co/moonshotai/Kimi-K2.6). The only newly trained component is a 30.68M-parameter projector: layer normalization, a 2x2 patch merge, then two linear transformations with GELU to turn MoonViT features into Laguna tokens. The projector was trained on 100,000 examples, with up to 512 merged image tokens inside 2,048-token training sequences.
+The new KavachWeb vision checkpoint leaves that Laguna backbone frozen. It also freezes a 27-layer MoonViT tower from [Moonshot AI's Kimi K2.6](https://huggingface.co/moonshotai/Kimi-K2.6). The only newly trained component is a 30.68M-parameter projector: layer normalization, a 2x2 patch merge, then two linear transformations with GELU to turn MoonViT features into Laguna tokens. The projector was trained on 100,000 examples, with up to 512 merged image tokens inside 2,048-token training sequences.
 
-That distinction matters. Qwen is an integrated multimodal release. Laguna Vision is a modular graft: an efficient American text backbone, a Chinese vision tower, and a compact WebBrain-trained bridge between them.
+That distinction matters. Qwen is an integrated multimodal release. Laguna Vision is a modular graft: an efficient American text backbone, a Chinese vision tower, and a compact KavachWeb-trained bridge between them.
 
-## What the WebBrain benchmark actually says
+## What the KavachWeb benchmark actually says
 
-Our [American-Chinese open-model frontier benchmark](/blog/american-chinese-open-model-frontier-gap-benchmark) sent the same 100 WebBrain first-action cases to thirteen OpenRouter routes. The primary score compared each model's normalized action with all twelve peers; no single reference model acted as judge.
+Our [American-Chinese open-model frontier benchmark](/blog/american-chinese-open-model-frontier-gap-benchmark) sent the same 100 KavachWeb first-action cases to thirteen OpenRouter routes. The primary score compared each model's normalized action with all twelve peers; no single reference model acted as judge.
 
 Here are the directly comparable Qwen and Laguna rows:
 
@@ -112,7 +112,7 @@ So the fair reading is not “Laguna beat Qwen.” It is this: **Laguna's text b
 
 ## Why the vision checkpoint changes everything
 
-A browser agent cannot live on text alone. Accessibility trees and extracted page text miss canvases, charts, visual error states, selected controls, layout relationships, and interfaces with poor semantics. A text-only Laguna route could be an efficient planner, but it could not be WebBrain's only local model.
+A browser agent cannot live on text alone. Accessibility trees and extracted page text miss canvases, charts, visual error states, selected controls, layout relationships, and interfaces with poor semantics. A text-only Laguna route could be an efficient planner, but it could not be KavachWeb's only local model.
 
 [Laguna XS 2.1 Vision NVFP4](https://huggingface.co/webbrain-one/Laguna-XS-2.1-Vision-NVFP4) changes that product equation. The repository now contains:
 
@@ -136,8 +136,8 @@ That does **not** mean the work is finished. The model card intentionally does n
 | Lowest active compute for text and coding | **Laguna XS 2.1** | Only 3B of 33B parameters active per token; upstream quantizations and a documented 36GB Mac path |
 | Experimental local browser vision on larger Blackwell hardware | **Laguna XS 2.1 Vision NVFP4** | Efficient agentic backbone plus MoonViT sight, if you can help finish and validate the serving integration |
 | Mature visual and video understanding | **Qwen 3.6 27B** | Multimodality is native, documented, and benchmarked by Qwen across image, spatial, document, visual-agent, and video tasks |
-| Best measured WebBrain hosted text efficiency | **Laguna XS 2.1** | Higher exact-action consensus, lower median and p95 latency, and lower observed replay cost in the same-payload run |
-| Best WebBrain ideal-action precision of the two | **Qwen 3.6 27B** | 36 ideal tool names and 17 exact ideals versus Laguna's 31 and 5 |
+| Best measured KavachWeb hosted text efficiency | **Laguna XS 2.1** | Higher exact-action consensus, lower median and p95 latency, and lower observed replay cost in the same-payload run |
+| Best KavachWeb ideal-action precision of the two | **Qwen 3.6 27B** | 36 ideal tool names and 17 exact ideals versus Laguna's 31 and 5 |
 
 The hardware distinction is important. A 3B-active MoE does not mean only 3B parameters need to be stored. Laguna still carries a 33B backbone, and the vision tower, projector, KV cache, serving engine, and context length all consume memory. But once the package is resident, the low active-parameter count is a genuine compute and speed advantage. Quantization and MoE-aware runtime design determine how much of that theoretical advantage appears on a particular machine.
 
@@ -149,7 +149,7 @@ Laguna XS 2.1 narrowed the American side of the gap even before vision: a 33B/3B
 
 American and Chinese open-weight models are now almost head-to-head in the local-agent conversation: Qwen leads on integrated multimodal maturity and consumer-GPU readiness; Laguna challenges on active-compute efficiency, latency, hosted cost, and agentic specialization. If the Laguna vision package passes its remaining serving and visual-quality gates, the choice will come down to workload and hardware instead of a categorical capability gap.
 
-There is also a useful complication: Laguna Vision itself crosses the national boundary. Poolside supplies the American language backbone, Moonshot supplies the Chinese MoonViT tower, and WebBrain supplies the projector and packaging. Open-weight progress is becoming competitive and collaborative at the same time.
+There is also a useful complication: Laguna Vision itself crosses the national boundary. Poolside supplies the American language backbone, Moonshot supplies the Chinese MoonViT tower, and KavachWeb supplies the projector and packaging. Open-weight progress is becoming competitive and collaborative at the same time.
 
 ## Bottom line
 
@@ -159,4 +159,4 @@ There is also a useful complication: Laguna Vision itself crosses the national b
 
 The next decisive test is no longer another text-only first-action replay. It is a controlled, end-to-end visual-agent benchmark on the finished NVFP4 package: screenshots, OCR, charts, rich editors, spatial grounding, tool-call validity, latency, and memory on real local hardware. Until then, Qwen wins the deployment decision—but Laguna has made the race real.
 
-Tags: #Qwen36 #LagunaXS #Poolside #MoonViT #NVFP4 #LocalLLM #LocalVLM #OpenWeights #BrowserAgent #WebBrain
+Tags: #Qwen36 #LagunaXS #Poolside #MoonViT #NVFP4 #LocalLLM #LocalVLM #OpenWeights #BrowserAgent #KavachWeb

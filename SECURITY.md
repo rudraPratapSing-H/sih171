@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-WebBrain operates with extensive browser permissions (`<all_urls>`, `debugger`, `downloads`, `tabCapture`) and drives authenticated sessions. If you discover a security vulnerability, please handle it responsibly.
+KavachWeb operates with extensive browser permissions (`<all_urls>`, `debugger`, `downloads`, `tabCapture`) and drives authenticated sessions. If you discover a security vulnerability, please handle it responsibly.
 
 **Do NOT file a public GitHub issue.** Instead, email the maintainer directly:
 

@@ -600,7 +600,7 @@ function normalizeSkills(value, { maxSkills = MAX_CUSTOM_SKILLS } = {}) {
     const name = cleanSingleLine(item.name).slice(0, 80)
       || agentSkill?.name
       || inferName(content, skills.length);
-    // Agent Skills frontmatter is instruction-only metadata. WebBrain routing
+    // Agent Skills frontmatter is instruction-only metadata. KavachWeb routing
     // manifests and network tools are trusted only when they occur in the
     // Markdown body after a valid frontmatter boundary.
     const manifestContent = agentSkill ? agentSkill.body : content;

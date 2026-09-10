@@ -1,6 +1,6 @@
 # 技能
 
-技能是可信的指令文本 —— 可选地带有自己的工具清单 —— WebBrain **只在相关时**才会
+技能是可信的指令文本 —— 可选地带有自己的工具清单 —— KavachWeb **只在相关时**才会
 将其加载到运行中。可在设置 → 技能中管理：导入技能文本或 URL，或移除任何内置技能。
 
 ## 加载机制
@@ -24,16 +24,16 @@ Mid 和 Full 运行会收到一个小型的可用技能目录：ID、名称、�
 意图是给 LLM 的跨语言*语义*提示，而非字面关键词匹配。没有元数据的技能会将第一段
 正文推断为摘要，不会推断出意图，并默认为 Act/Dev。
 
-WebBrain 也会识别导入的
+KavachWeb 也会识别导入的
 [Agent Skills `SKILL.md`](https://agentskills.io/specification) 中必需的
 `name` 和 `description` YAML frontmatter。名称和描述会写入路由目录，而在加载
 Markdown 正文前会移除 frontmatter。在设置中输入的名称及 `webbrain-skill` 块仍有
 更高优先级。
 
-这仅属于指令兼容。WebBrain 只导入一个文本文档；它不会获取打包的 `scripts/`、
+这仅属于指令兼容。KavachWeb 只导入一个文本文档；它不会获取打包的 `scripts/`、
 `references/` 或 `assets/`，不会执行技能代码，也不会把 Agent Skills 的
-`allowed-tools` 字段当作 WebBrain 权限或工具清单。WebBrain HTTP 工具仍应使用
-`webbrain-tools`。WebBrain 只识别有效 frontmatter 之后 Markdown 正文中的
+`allowed-tools` 字段当作 KavachWeb 权限或工具清单。KavachWeb HTTP 工具仍应使用
+`webbrain-tools`。KavachWeb 只识别有效 frontmatter 之后 Markdown 正文中的
 `webbrain-skill` 和 `webbrain-tools` 围栏；frontmatter 内形似围栏的文本不能授予
 路由资格或注册工具。
 
@@ -85,7 +85,7 @@ Markdown 正文前会移除 frontmatter。在设置中输入的名称及 `webbra
 
 #### Humanizer（人性化改写）
 
-改写 WebBrain 为你撰写的正文，例如邮件回复或帖子，使其读起来像真人所写。它不声明
+改写 KavachWeb 为你撰写的正文，例如邮件回复或帖子，使其读起来像真人所写。它不声明
 任何网络工具，也不新增工具。
 
 在网页邮箱标签页（Gmail、Outlook、Yahoo、Proton、Fastmail、Zoho、Yandex）上，它会

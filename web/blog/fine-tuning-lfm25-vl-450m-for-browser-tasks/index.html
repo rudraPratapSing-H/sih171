@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fine-Tuning LFM2.5-VL-450M for Browser Tasks - WebBrain Blog</title>
-  <meta name="description" content="How WebBrain turned Liquid AI&#39;s 450M vision-language model into a browser specialist using a reviewed 16,646-example first dataset, a targeted 50,000-example second dataset, LoRA, and a held-out 100-case test.">
-  <meta name="keywords" content="WebBrain VL 2 450M, LFM2.5-VL-450M, Liquid AI, fine-tuning, LoRA, browser screenshots, GUI dataset, WebGPU, ONNX, teacher distillation">
-  <meta property="og:title" content="From 16K to 50K screenshots: building WebBrain VL 2 450M">
-  <meta property="og:description" content="A reproducible account of the data, LoRA training, validation, ONNX export, and browser benchmark behind WebBrain&#39;s 450M WebGPU vision model.">
+  <title>Fine-Tuning LFM2.5-VL-450M for Browser Tasks - KavachWeb Blog</title>
+  <meta name="description" content="How KavachWeb turned Liquid AI&#39;s 450M vision-language model into a browser specialist using a reviewed 16,646-example first dataset, a targeted 50,000-example second dataset, LoRA, and a held-out 100-case test.">
+  <meta name="keywords" content="KavachWeb VL 2 450M, LFM2.5-VL-450M, Liquid AI, fine-tuning, LoRA, browser screenshots, GUI dataset, WebGPU, ONNX, teacher distillation">
+  <meta property="og:title" content="From 16K to 50K screenshots: building KavachWeb VL 2 450M">
+  <meta property="og:description" content="A reproducible account of the data, LoRA training, validation, ONNX export, and browser benchmark behind KavachWeb&#39;s 450M WebGPU vision model.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://webbrain.one/blog/fine-tuning-lfm25-vl-450m-for-browser-tasks">
   <meta property="og:image" content="https://webbrain.one/og-image.png">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The fine-tuning story behind WebBrain VL 2 450M">
+  <meta name="twitter:title" content="The fine-tuning story behind KavachWeb VL 2 450M">
   <meta name="twitter:description" content="Base model: near zero strict passes. First dataset: 30/100. 50K dataset: 36/100 PyTorch and 44/100 in the deployed WebGPU package.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/fine-tuning-lfm25-vl-450m-for-browser-tasks">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -475,7 +475,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "From 16K to 50K Browser Screenshots: Fine-Tuning LFM2.5-VL-450M",
-  "description": "How WebBrain turned Liquid AI's 450M vision-language model into a browser specialist using a reviewed 16,646-example first dataset, a targeted 50,000-example second dataset, LoRA, and a held-out 100-case test.",
+  "description": "How KavachWeb turned Liquid AI's 450M vision-language model into a browser specialist using a reviewed 16,646-example first dataset, a targeted 50,000-example second dataset, LoRA, and a held-out 100-case test.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -525,9 +525,9 @@
   <article>
     <div class="meta">August 22, 2026 &middot; 10 min read &middot; <a href="/blog">&larr; All posts</a></div>
     <h1>From 16K to 50K Browser Screenshots: Fine-Tuning LFM2.5-VL-450M</h1>
-    <p class="lede"><strong>The first benchmark result was bad enough to be useful.</strong> Off-the-shelf LFM2.5-VL-450M could recover fragments of browser state, but it almost never satisfied WebBrain&#39;s exact six-section screenshot contract. We kept the model small and changed the data instead. A first training round built around a 20K target produced 16,646 accepted examples. A second round expanded the corpus to exactly 50,000 screenshots and targeted the remaining failures. The deployed result now passes 44 of the same 100 held-out cases—and runs inside the browser through WebGPU.</p>
+    <p class="lede"><strong>The first benchmark result was bad enough to be useful.</strong> Off-the-shelf LFM2.5-VL-450M could recover fragments of browser state, but it almost never satisfied KavachWeb&#39;s exact six-section screenshot contract. We kept the model small and changed the data instead. A first training round built around a 20K target produced 16,646 accepted examples. A second round expanded the corpus to exactly 50,000 screenshots and targeted the remaining failures. The deployed result now passes 44 of the same 100 held-out cases—and runs inside the browser through WebGPU.</p>
 <h2 id="why-start-with-lfm2-5vl450m">Why start with LFM2.5-VL-450M?</h2>
-<p>The obvious way to improve vision quality is to use a larger model. For WebBrain&#39;s local fallback, that answer is incomplete. The model has to download into an extension, fit alongside the main browser workload, keep screenshots on-device, and run on consumer WebGPU implementations.</p>
+<p>The obvious way to improve vision quality is to use a larger model. For KavachWeb&#39;s local fallback, that answer is incomplete. The model has to download into an extension, fit alongside the main browser workload, keep screenshots on-device, and run on consumer WebGPU implementations.</p>
 <p><a href="https://huggingface.co/LiquidAI/LFM2.5-VL-450M" target="_blank" rel="noopener">Liquid AI&#39;s LFM2.5-VL-450M</a> gave us a useful starting shape: a genuinely small multimodal checkpoint, an architecture that could be exported for browser inference, and a model family designed to be adapted. The raw checkpoint was not already good at our particular response contract. That was the experiment.</p>
 <p>The target was deliberately narrow. Given a 1280×720 browser viewport, produce six sections for a browser-automation agent:</p>
 <ol><li>page purpose and current task;</li><li>exact visible text;</li><li>actionable controls and inputs;</li><li>state, selection, loading, or validation signals;</li><li>blockers such as modals, consent layers, and security challenges;</li><li>unknowns, unreadable text, and uncertainty.</li></ol>
@@ -539,7 +539,7 @@
 <h2 id="round-one-a-20k-target-16-646-accepted-examples">Round one: a 20K target, 16,646 accepted examples</h2>
 <p>The first corpus was planned as an approximately 20K browser-GUI dataset. Licensing checks, deduplication, structural validation, and label review left <strong>16,646 accepted rows</strong>:</p>
 <div class="table-wrap"><table><thead><tr><th>Source</th><th>Accepted rows</th><th>Role</th></tr></thead><tbody><tr><td>HuggingFaceM4/WebSight</td><td>9,561</td><td>Broad webpage layouts and text</td></tr><tr><td>Farama Foundation MiniWoB++</td><td>4,592</td><td>Compact browser tasks and controls</td></tr><tr><td>docling-project/ScreenParse</td><td>2,493</td><td>Screen parsing and GUI structure</td></tr><tr><td><strong>Total</strong></td><td><strong>16,646</strong></td><td>First frozen training corpus</td></tr></tbody></table></div>
-<p>Each screenshot was paired with WebBrain&#39;s production system prompt and a six-section teacher response. The response mattered as much as the image: a model can recognize a login screen yet still fail WebBrain if it invents labels, omits blockers, or ignores the required sections.</p>
+<p>Each screenshot was paired with KavachWeb&#39;s production system prompt and a six-section teacher response. The response mattered as much as the image: a model can recognize a login screen yet still fail KavachWeb if it invents labels, omits blockers, or ignores the required sections.</p>
 <p>This first LoRA fine-tune moved the release-lineage result from <strong>0/100 strict passes and 4.17% mean rubric</strong> to <strong>30/100 and 70.06%</strong> under the same PyTorch/Transformers evaluation path. That was not production-ready, but it proved that the small base had substantial task-specific capacity.</p>
 <h2 id="round-two-keep-the-useful-rows-target-the-failures">Round two: keep the useful rows, target the failures</h2>
 <p>The 50K corpus did not throw away round one. It retained the 16,646 reviewed examples and added <strong>33,354 targeted browser-GUI screenshots</strong>, producing exactly 50,000 unique rows:</p>
@@ -556,13 +556,13 @@
 <p>Only the adapter is small. Once merged, the released model remains the same 453M parameter class as its base; adding more training examples changes the weights, not the number of parameters.</p>
 <h2 id="what-changed-across-the-two-rounds">What changed across the two rounds</h2>
 <p>The cleanest lineage comparison uses the same PyTorch/Transformers evaluator:</p>
-<div class="table-wrap"><table><thead><tr><th>Checkpoint</th><th>Training examples</th><th>Strict passes</th><th>Mean rubric</th><th>Errors</th></tr></thead><tbody><tr><td>Off-the-shelf LFM2.5-VL-450M</td><td>0</td><td>0/100</td><td>4.17%</td><td>0</td></tr><tr><td>WebBrain V1</td><td>16,646</td><td>30/100</td><td>70.06%</td><td>0</td></tr><tr><td><strong>WebBrain V2</strong></td><td><strong>50,000</strong></td><td><strong>36/100</strong></td><td><strong>74.99%</strong></td><td><strong>0</strong></td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>Checkpoint</th><th>Training examples</th><th>Strict passes</th><th>Mean rubric</th><th>Errors</th></tr></thead><tbody><tr><td>Off-the-shelf LFM2.5-VL-450M</td><td>0</td><td>0/100</td><td>4.17%</td><td>0</td></tr><tr><td>KavachWeb V1</td><td>16,646</td><td>30/100</td><td>70.06%</td><td>0</td></tr><tr><td><strong>KavachWeb V2</strong></td><td><strong>50,000</strong></td><td><strong>36/100</strong></td><td><strong>74.99%</strong></td><td><strong>0</strong></td></tr></tbody></table></div>
 <p>The first data round produced the dramatic gain. The second produced a smaller but still real improvement on the same held-out suite: six additional full passes and 4.93 mean-rubric points. That is a familiar fine-tuning curve. Once a small model learns the broad task and output grammar, more data mostly improves difficult edge cases rather than recreating the first leap.</p>
 <p>The earlier <a href="/blog/tiny-vision-models-qwen38-reference/">tiny-model benchmark</a> reported the raw 450M checkpoint at 1/100 and 21.6% through MLX. That is a different inference and decoding stack from the release-lineage PyTorch row above, so we do not subtract one number from the other. Both measurements tell the same practical story: the unfine-tuned model was far below the browser-specific checkpoints.</p>
 <h2 id="the-deployed-webgpu-result">The deployed WebGPU result</h2>
 <p>Training success is not enough if the browser export collapses. We merged the adapter, exported the model to ONNX, kept the embeddings and vision encoder in FP16 to preserve small-text and GUI detail, and quantized the merged decoder to symmetric Q4.</p>
 <p>The deployed package passed a real Transformers.js/WebGPU smoke test and produced this release-gate result:</p>
-<div class="table-wrap"><table><thead><tr><th>Deployment</th><th>Strict passes</th><th>Mean rubric</th><th>Six-section completion</th><th>Errors</th></tr></thead><tbody><tr><td>WebBrain V2, PyTorch</td><td>36/100</td><td>74.99%</td><td>—</td><td>0</td></tr><tr><td><strong>WebBrain V2, ONNX Q4/FP16</strong></td><td><strong>44/100</strong></td><td><strong>76.24%</strong></td><td><strong>87/100</strong></td><td><strong>0</strong></td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>Deployment</th><th>Strict passes</th><th>Mean rubric</th><th>Six-section completion</th><th>Errors</th></tr></thead><tbody><tr><td>KavachWeb V2, PyTorch</td><td>36/100</td><td>74.99%</td><td>—</td><td>0</td></tr><tr><td><strong>KavachWeb V2, ONNX Q4/FP16</strong></td><td><strong>44/100</strong></td><td><strong>76.24%</strong></td><td><strong>87/100</strong></td><td><strong>0</strong></td></tr></tbody></table></div>
 <p><img src="/assets/browser-vision-benchmark-strict-passes.png" alt="Strictpass results for webbrainvl2, three Qwen 3.5 sizes, gemma4e4b, and lfm2.5vl1.6b"></p>
 <p><em>The deployed WebGPU row is shown against the same compact-model benchmark results used in our expanded comparison.</em></p>
 <p>Quantization does not normally promise higher quality. Autoregressive generation can shift with numerical format, runtime kernels, and decoding behavior, and in this suite those shifts happened to cross more strict thresholds. We publish both rows rather than pretending one runtime is a universal property of the checkpoint.</p>
@@ -571,28 +571,28 @@
 <p>The fine-tuned 450M model did something the raw size would not predict. Its deployed 44/100 result sits in the same strict-pass band as Qwen 3.5 2B at 39/100 and Gemma 4 E4B at 41/100. Qwen and Gemma retain higher mean rubric scores, so the right claim is task-specific parity, not universal superiority.</p>
 <p><img src="/assets/browser-vision-model-size.png" alt="Performanceversusparameter scatter plot for webbrainvl2, Qwen 3.5, gemma4e4b, and lfm2.5vl1.6b"></p>
 <p><em>With parameters on X and strict passes on Y, the browser-specific 450M model sits apart in the upper-left. Gemma E4B is shown at its effective 4B class.</em></p>
-<p>The result against LFM2.5-VL-3B is more dramatic. The 3B MLX run scored 0/100 strict passes and a 7.76% mean because it repeatedly ignored the required numbered six-section contract. WebBrain V2 followed that contract far more reliably and scored 44/100 despite having roughly one-seventh as many parameters.</p>
-<p>That does <strong>not</strong> prove that 450M is a generally stronger vision model than LFM 3B. It proves something more useful for product engineering: under WebBrain&#39;s exact browser-observation prompt and grader, the smaller specialist is much more effective than the larger off-the-shelf checkpoint.</p>
+<p>The result against LFM2.5-VL-3B is more dramatic. The 3B MLX run scored 0/100 strict passes and a 7.76% mean because it repeatedly ignored the required numbered six-section contract. KavachWeb V2 followed that contract far more reliably and scored 44/100 despite having roughly one-seventh as many parameters.</p>
+<p>That does <strong>not</strong> prove that 450M is a generally stronger vision model than LFM 3B. It proves something more useful for product engineering: under KavachWeb&#39;s exact browser-observation prompt and grader, the smaller specialist is much more effective than the larger off-the-shelf checkpoint.</p>
 <p>Kudos to Liquid AI. A fine-tune can only expose capacity and adaptability that exist in the foundation. LFM2.5-VL-450M gave us enough of both to build a useful browser specialist without turning the extension into a multi-gigabyte inference appliance.</p>
-<h2 id="a-much-less-expensive-webbrain-stack">A much less expensive WebBrain stack</h2>
-<p>WebBrain can split planning and vision instead of paying a multimodal API for every turn:</p>
-<ol><li>Run the main text-and-tool loop through an inexpensive hosted planner such as <a href="/blog/poolside-laguna-s-openrouter-planner-benchmark/">Poolside Laguna S 2.1 on OpenRouter</a>.</li><li>Route the minority of calls that actually need pixels to WebBrain VL 2 450M locally through WebGPU.</li><li>Keep corroborating high-impact observations with DOM, accessibility, and browser-native state.</li></ol>
+<h2 id="a-much-less-expensive-kavachweb-stack">A much less expensive KavachWeb stack</h2>
+<p>KavachWeb can split planning and vision instead of paying a multimodal API for every turn:</p>
+<ol><li>Run the main text-and-tool loop through an inexpensive hosted planner such as <a href="/blog/poolside-laguna-s-openrouter-planner-benchmark/">Poolside Laguna S 2.1 on OpenRouter</a>.</li><li>Route the minority of calls that actually need pixels to KavachWeb VL 2 450M locally through WebGPU.</li><li>Keep corroborating high-impact observations with DOM, accessibility, and browser-native state.</li></ol>
 <p>The economics are attractive. Our saved 100-case Laguna S high-reasoning planner replay reported <strong>$0.0227</strong>, while a separate GPT-5.6 Luna Pro 100-case planner replay reported <strong>$0.228</strong>—about ten times as much. Those runs used different benchmark revisions and should not be treated as a controlled billing comparison, but they show the scale of the available budget tier. OpenRouter prices and cache behavior can also change.</p>
-<p>The local vision side adds no remote image-token bill after the model download. That makes it plausible to run WebBrain with an inexpensive text-only API and private local screenshot fallback at roughly an order-of-magnitude lower observed planner cost than an already economical hosted route such as Luna, without giving up visual recovery entirely.</p>
+<p>The local vision side adds no remote image-token bill after the model download. That makes it plausible to run KavachWeb with an inexpensive text-only API and private local screenshot fallback at roughly an order-of-magnitude lower observed planner cost than an already economical hosted route such as Luna, without giving up visual recovery entirely.</p>
 <p>If you can run a strong local multimodal model or prefer a frontier vision API, those remain excellent options. The point is that they are no longer the only coherent way to give a browser agent eyes.</p>
 <h2 id="what-the-experiment-taught-us">What the experiment taught us</h2>
 <p>More parameters are a powerful general-purpose prior. Better data is a powerful product-specific prior.</p>
-<p>The off-the-shelf 450M model was not good enough for WebBrain&#39;s screenshot contract. The first 16,646 accepted examples taught it the task. The 50K corpus broadened difficult browser states and improved the held-out result again. ONNX export preserved—and in this release run slightly improved—the behavior in the runtime users will actually execute.</p>
+<p>The off-the-shelf 450M model was not good enough for KavachWeb&#39;s screenshot contract. The first 16,646 accepted examples taught it the task. The 50K corpus broadened difficult browser states and improved the held-out result again. ONNX export preserved—and in this release run slightly improved—the behavior in the runtime users will actually execute.</p>
 <p>That is the power of fine-tuning: not making 450M universally equal to 4B, but making 450M unusually good at the precise job your system needs.</p>
-<p>Tags: #WebBrain #LFM25VL #LiquidAI #FineTuning #LoRA #WebGPU #ONNX #BrowserVision #LocalAI #TeacherDistillation</p>
+<p>Tags: #KavachWeb #LFM25VL #LiquidAI #FineTuning #LoRA #WebGPU #ONNX #BrowserVision #LocalAI #TeacherDistillation</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

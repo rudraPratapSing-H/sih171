@@ -1,6 +1,6 @@
-# WebBrain Cloud E2E
+# KavachWeb Cloud E2E
 
-`ci/` runs catalogued browser-agent scenarios in a fresh WebBrain Cloud
+`ci/` runs catalogued browser-agent scenarios in a fresh KavachWeb Cloud
 incognito browser. Each scenario produces a structured result, exported trace,
 deterministic rubric, optional `.webm` recording, and a suite summary.
 
@@ -75,7 +75,7 @@ APIs were actually exercised successfully.
 
 Scenarios are graded from three independent signals:
 
-1. WebBrain run status and schema-valid `done_json` output.
+1. KavachWeb run status and schema-valid `done_json` output.
 2. Expected structured-result values and final host.
 3. For Gnippets challenge runs, server-observed events such as
    `login_succeeded`, `post_created`, or `captcha_solved`.

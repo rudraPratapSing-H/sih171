@@ -1,26 +1,26 @@
 ---
 title: >
-  Nemotron 3 Ultra is huge, free, and not a WebBrain planner win
+  Nemotron 3 Ultra is huge, free, and not a KavachWeb planner win
 slug: nemotron3-ultra-openrouter-planner-benchmark
 sortOrder: -45
 date: 2026-07-08
 readTime: 6 min read
 description: >
-  We ran nvidia/nemotron-3-ultra-550b-a55b:free through WebBrain's frozen 100-case browser-agent first-tool benchmark on OpenRouter. The 550B-total MoE model completed the run, but landed well below the best planner rows.
+  We ran nvidia/nemotron-3-ultra-550b-a55b:free through KavachWeb's frozen 100-case browser-agent first-tool benchmark on OpenRouter. The 550B-total MoE model completed the run, but landed well below the best planner rows.
 excerpt: >
-  Nemotron 3 Ultra completed WebBrain's frozen planner benchmark through OpenRouter's free endpoint, but 81 parsed calls, 65% Sonnet alignment, and a 40.6s p95 keep it out of the planner shortlist.
+  Nemotron 3 Ultra completed KavachWeb's frozen planner benchmark through OpenRouter's free endpoint, but 81 parsed calls, 65% Sonnet alignment, and a 40.6s p95 keep it out of the planner shortlist.
 titleTag: >
-  Nemotron 3 Ultra OpenRouter WebBrain planner benchmark - WebBrain Blog
+  Nemotron 3 Ultra OpenRouter KavachWeb planner benchmark - KavachWeb Blog
 ogTitle: >
-  Nemotron 3 Ultra is not a WebBrain planner win
+  Nemotron 3 Ultra is not a KavachWeb planner win
 ogDescription: >
-  NVIDIA's 550B-total Nemotron 3 Ultra free endpoint completed WebBrain's frozen planner run, but trails Agents-A1, Hy3, Qwen 3.7 Plus, and older Qwen 3.6 rows.
+  NVIDIA's 550B-total Nemotron 3 Ultra free endpoint completed KavachWeb's frozen planner run, but trails Agents-A1, Hy3, Qwen 3.7 Plus, and older Qwen 3.6 rows.
 twitterTitle: >
-  Nemotron 3 Ultra WebBrain planner benchmark
+  Nemotron 3 Ultra KavachWeb planner benchmark
 twitterDescription: >
   Nemotron 3 Ultra via OpenRouter: 81 parsed calls, 17 exact first actions, 65% Sonnet alignment, and a very slow p95.
 keywords:
-  - WebBrain
+  - KavachWeb
   - Nemotron 3 Ultra
   - NVIDIA
   - OpenRouter
@@ -31,7 +31,7 @@ keywords:
   - Agents-A1
   - Tencent Hy3
 lede: >
-  NVIDIA's **Nemotron 3 Ultra 550B-A55B** is exactly the kind of model name that makes a browser-agent benchmark irresistible: 550B total parameters, 55B active, a 1M-token context window, and positioning around agent orchestration, coding agents, deep research, and long-running workflows. We ran `nvidia/nemotron-3-ultra-550b-a55b:free` through WebBrain's frozen planner harness on OpenRouter. The run completed cleanly, but the planner result is underwhelming.
+  NVIDIA's **Nemotron 3 Ultra 550B-A55B** is exactly the kind of model name that makes a browser-agent benchmark irresistible: 550B total parameters, 55B active, a 1M-token context window, and positioning around agent orchestration, coding agents, deep research, and long-running workflows. We ran `nvidia/nemotron-3-ultra-550b-a55b:free` through KavachWeb's frozen planner harness on OpenRouter. The run completed cleanly, but the planner result is underwhelming.
 ---
 
 ## The claim
@@ -40,7 +40,7 @@ lede: >
 
 The [Hugging Face weights page](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16) says the same thing in model-card language: this is a frontier-scale open model optimized for demanding multi-step agents, long-context analysis, and reasoning over code, math, and science.
 
-That is not the same as being a good browser first-tool planner. WebBrain's harness is narrower and harsher: the model sees a browser state, user instruction, and a 41-tool browser-control schema, then we score the first tool call only.
+That is not the same as being a good browser first-tool planner. KavachWeb's harness is narrower and harsher: the model sees a browser state, user instruction, and a 41-tool browser-control schema, then we score the first tool call only.
 
 ## What we ran
 
@@ -50,7 +50,7 @@ We used OpenRouter's free endpoint:
 nvidia/nemotron-3-ultra-550b-a55b:free
 ```
 
-The run used the same frozen May 23, 2026 WebBrain baseline used by the recent planner posts: Claude Sonnet 4.6's system prompt and 41-tool schema, system hash `5c4fac1387025050`.
+The run used the same frozen May 23, 2026 KavachWeb baseline used by the recent planner posts: Claude Sonnet 4.6's system prompt and 41-tool schema, system hash `5c4fac1387025050`.
 
 ```bash
 OPENROUTER_API_KEY=... node test/llm/run-llamacpp.mjs \
@@ -92,11 +92,11 @@ test/llm/results/2026-07-08-openrouter-nemotron3-ultra-free_chrome_nvidia_nemotr
 
 The good news: the endpoint completed the full 100-case suite with zero transport errors and no rate-limit recovery work. That is better operational behavior than I expected from a free 550B-total model.
 
-The bad news: this is not a strong WebBrain planner row. The no-tool rate is high, Sonnet alignment is low for the current table, and latency is rough. The median is tolerable for a free frontier-scale model, but a 40.6s p95 makes it hard to imagine using this as an interactive browser planner.
+The bad news: this is not a strong KavachWeb planner row. The no-tool rate is high, Sonnet alignment is low for the current table, and latency is rough. The median is tolerable for a free frontier-scale model, but a 40.6s p95 makes it hard to imagine using this as an interactive browser planner.
 
 ## Against the nearby hosted rows
 
-The obvious comparison is not the full 550B parameter count. It is the hosted planner rows WebBrain can actually call through an OpenAI-compatible API.
+The obvious comparison is not the full 550B parameter count. It is the hosted planner rows KavachWeb can actually call through an OpenAI-compatible API.
 
 | Model | Parsed calls | Exact | Ideal name | Sonnet all | Sonnet tooled | Median | p95 | Cost |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -108,7 +108,7 @@ The obvious comparison is not the full 550B parameter count. It is the hosted pl
 
 Nemotron's exact score is not terrible: 17/100 is in the neighborhood of MiniMax M3 and Qwen 3.6 35B-A3B. But every broader planner signal is worse. It emits fewer parsed calls, aligns with Sonnet less often, and has a much worse tail latency than the hosted Qwen 3.7 Plus and Hy3 rows.
 
-The Hy3 comparison is especially clean because both rows used OpenRouter free variants. Hy3 produced 95 parsed calls, 73% Sonnet alignment, and a 9.16s p95. Nemotron produced 81 parsed calls, 65% Sonnet alignment, and a 40.6s p95. For WebBrain's planner job, Hy3 is the stronger free OpenRouter candidate by a wide margin.
+The Hy3 comparison is especially clean because both rows used OpenRouter free variants. Hy3 produced 95 parsed calls, 73% Sonnet alignment, and a 9.16s p95. Nemotron produced 81 parsed calls, 65% Sonnet alignment, and a 40.6s p95. For KavachWeb's planner job, Hy3 is the stronger free OpenRouter candidate by a wide margin.
 
 ## Where Nemotron is strong
 
@@ -155,7 +155,7 @@ The weak spots are broad:
 | Tab management | 4 | 2 | 1 | Sometimes gave correct prose, but slowly and outside the tool protocol. |
 | UI mutations | 4 | 0 | 2 | Did not match Sonnet on any of the four browser-control prompts. |
 
-The no-tool issue matters. In normal chat, prose can be acceptable for a vague instruction like "log in" or "buy it." But in WebBrain's planner protocol, ambiguity should usually become a `clarify` tool. Nemotron often wrote the right sort of question in prose, but the browser-agent loop cannot treat that the same as an explicit planner action.
+The no-tool issue matters. In normal chat, prose can be acceptable for a vague instruction like "log in" or "buy it." But in KavachWeb's planner protocol, ambiguity should usually become a `clarify` tool. Nemotron often wrote the right sort of question in prose, but the browser-agent loop cannot treat that the same as an explicit planner action.
 
 There were also concrete tool-choice misses:
 
@@ -181,7 +181,7 @@ Rows are ranked by all-case Sonnet match, then Sonnet-tooled match.
 | 6 | MiniMax M3 | 85/100 | 17/100 | 32/100 | 75.0% | 73.9% | 3.1s |
 | 7 | Qwen 3.6 27B NVFP4 | 96/100 | 18/100 | 38/100 | 74.0% | 77.2% | 1.76s |
 | 8 | Tencent Hy3 free | 95/100 | 20/100 | 38/100 | 73.0% | 75.0% | 3.68s |
-| 9 | WebBrain Compass 1.0 | 90/100 | 16/100 | 35/100 | 73.0% | 72.8% | 8.8s |
+| 9 | KavachWeb Compass 1.0 | 90/100 | 16/100 | 35/100 | 73.0% | 72.8% | 8.8s |
 | 10 | Qwen 3.6 35B-A3B | 90/100 | 18/100 | 38/100 | 70.0% | 70.7% | 10.3s |
 | 11 | Nemotron 3 Ultra free | 81/100 | 17/100 | 33/100 | 65.0% | 64.1% | 5.89s |
 
@@ -189,8 +189,8 @@ This is a useful negative result. Nemotron 3 Ultra is bigger than every model in
 
 ## Bottom line
 
-Nemotron 3 Ultra is not a WebBrain planner shortlist model from this run. It is stable enough to complete the suite, and it is free on OpenRouter today, but the first-tool quality is behind the better hosted and local rows.
+Nemotron 3 Ultra is not a KavachWeb planner shortlist model from this run. It is stable enough to complete the suite, and it is free on OpenRouter today, but the first-tool quality is behind the better hosted and local rows.
 
-For WebBrain, I would pick Qwen 3.7 Plus, Tencent Hy3, Agents-A1, Gemma 4 31B, or the older Qwen 3.6 rows before this Nemotron endpoint. Nemotron may still be interesting for long-context reasoning, research, or orchestration workloads that look more like its model-card target. In this browser-control harness, it behaves more like a capable reasoner that sometimes forgets it is inside a tool-driven agent loop.
+For KavachWeb, I would pick Qwen 3.7 Plus, Tencent Hy3, Agents-A1, Gemma 4 31B, or the older Qwen 3.6 rows before this Nemotron endpoint. Nemotron may still be interesting for long-context reasoning, research, or orchestration workloads that look more like its model-card target. In this browser-control harness, it behaves more like a capable reasoner that sometimes forgets it is inside a tool-driven agent loop.
 
-Tags: #Nemotron3Ultra #NVIDIA #OpenRouter #Qwen37 #AgentsA1 #TencentHy3 #ToolCalling #BrowserAgent #WebBrain
+Tags: #Nemotron3Ultra #NVIDIA #OpenRouter #Qwen37 #AgentsA1 #TencentHy3 #ToolCalling #BrowserAgent #KavachWeb

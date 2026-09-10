@@ -1,4 +1,4 @@
-# WebBrain User Memory Tutorial
+# KavachWeb User Memory Tutorial
 
 Manual local suite for the v1 user-memory feature. It is intentionally static:
 no build step, no backend routes, and no network calls from the page itself.
@@ -15,7 +15,7 @@ Open:
 http://127.0.0.1:8765/
 ```
 
-Load the WebBrain extension in the browser and use the side panel against that
+Load the KavachWeb extension in the browser and use the side panel against that
 tab.
 
 ## Coverage

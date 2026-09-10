@@ -1,17 +1,17 @@
 <p align="center">
-  <img src="assets/logo-mark.png" alt="Logo WebBrain" width="92">
+  <img src="assets/logo-mark.png" alt="Logo KavachWeb" width="92">
 </p>
 
-<h1 align="center">WebBrain</h1>
+<h1 align="center">KavachWeb</h1>
 
 <p align="center">
   Agent de navigation IA open source pour discuter avec les pages, automatiser les tâches et exécuter des workflows multi-étapes avec le LLM de votre choix.
 </p>
 
 <p align="center">
-  <a href="https://chromewebstore.google.com/detail/webbrain/ljhijonmfahplgbbacgcfnaihbjljhhb"><img src="https://img.shields.io/badge/Chrome-Installer-4285F4?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white" alt="Installer WebBrain depuis le Chrome Web Store"></a>
-  <a href="https://addons.mozilla.org/en-US/firefox/addon/webbrain/"><img src="https://img.shields.io/badge/Firefox-Installer-FF7139?style=for-the-badge&amp;logo=firefoxbrowser&amp;logoColor=white" alt="Installer WebBrain depuis Firefox Browser Add-ons"></a>
-  <a href="https://microsoftedge.microsoft.com/addons/detail/dfbioajafcijomhljabppcelecgdgfeo"><img src="https://img.shields.io/badge/Edge-Installer-0A84FF?style=for-the-badge&amp;logo=microsoftedge&amp;logoColor=white" alt="Installer WebBrain depuis Microsoft Edge Add-ons"></a>
+  <a href="https://chromewebstore.google.com/detail/webbrain/ljhijonmfahplgbbacgcfnaihbjljhhb"><img src="https://img.shields.io/badge/Chrome-Installer-4285F4?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white" alt="Installer KavachWeb depuis le Chrome Web Store"></a>
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/webbrain/"><img src="https://img.shields.io/badge/Firefox-Installer-FF7139?style=for-the-badge&amp;logo=firefoxbrowser&amp;logoColor=white" alt="Installer KavachWeb depuis Firefox Browser Add-ons"></a>
+  <a href="https://microsoftedge.microsoft.com/addons/detail/dfbioajafcijomhljabppcelecgdgfeo"><img src="https://img.shields.io/badge/Edge-Installer-0A84FF?style=for-the-badge&amp;logo=microsoftedge&amp;logoColor=white" alt="Installer KavachWeb depuis Microsoft Edge Add-ons"></a>
 </p>
 
 <p align="center">
@@ -23,9 +23,9 @@
   <a href="LICENSE">GPL-3.0-or-later</a>
 </p>
 
-![WebBrain lit une page, remplit un formulaire et télécharge un fichier](assets/webbrain-demo.gif)
+![KavachWeb lit une page, remplit un formulaire et télécharge un fichier](assets/webbrain-demo.gif)
 
-WebBrain est une extension de navigateur qui place un agent IA dans un panneau
+KavachWeb est une extension de navigateur qui place un agent IA dans un panneau
 latéral, à côté de vos onglets. Posez-lui des questions sur la page où vous
 êtes, ou confiez-lui une tâche et laissez-le cliquer, saisir et naviguer pour
 l'accomplir. Il tourne sur le modèle de votre choix — un serveur local
@@ -59,7 +59,7 @@ redémarrage de Firefox ; une installation permanente nécessite une signature v
 
 ## Utilisation
 
-Cliquez sur l'icône WebBrain pour ouvrir le panneau latéral, puis tapez par
+Cliquez sur l'icône KavachWeb pour ouvrir le panneau latéral, puis tapez par
 exemple :
 
 - « Résume cette page »
@@ -77,10 +77,10 @@ Trois modes contrôlent ce que l'agent a le droit de faire :
 
 ## Choisir un modèle
 
-**WebBrain Compass 1.0** est l'option par défaut : ni clé API, ni configuration
+**KavachWeb Compass 1.0** est l'option par défaut : ni clé API, ni configuration
 locale.
 
-**Les modèles locaux** ne demandent pas non plus de clé API. Pointez WebBrain
+**Les modèles locaux** ne demandent pas non plus de clé API. Pointez KavachWeb
 vers n'importe quel serveur compatible OpenAI :
 
 ```bash
@@ -96,7 +96,7 @@ compatible OpenAI** accepte aussi les passerelles de boucle locale authentifiée
 comme CLIProxyAPI ; consultez la [configuration sécurisée du proxy](docs/fr/providers-and-models.md#exemple-de-proxy-dabonnement-cliproxyapi).
 Chargez un modèle avec **au moins une fenêtre de contexte de
 16k jetons** — 8k ne fonctionne qu'avec le niveau Compact, et 4k est trop petit
-pour le prompt système et les schémas d'outils. WebBrain détecte
+pour le prompt système et les schémas d'outils. KavachWeb détecte
 automatiquement la fenêtre réelle pour llama.cpp, Ollama et LM Studio, et
 compacte la conversation à mesure qu'elle se remplit. Il existe aussi un relais
 `ollama launch webbrain --model <model>` en préversion. Détails :
@@ -141,7 +141,7 @@ d'autres. Les Paramètres embarquent **106 cartes de fournisseurs sur Chromium**
 
 ## Outils de l'agent
 
-WebBrain sépare le **niveau** du **mode**. Le niveau (`compact`, `mid`, `full`)
+KavachWeb sépare le **niveau** du **mode**. Le niveau (`compact`, `mid`, `full`)
 est un réglage par fournisseur contrôlant le nombre d'outils que le modèle voit
 — Compact convient aux petits modèles locaux, Full débloque hover, drag-drop,
 frames et shadow DOM. Le mode (`ask`, `act`, `dev`) contrôle ce que
@@ -180,7 +180,7 @@ capture d'exécution : [commandes slash](docs/fr/slash-commands.md).
 ## Raccourcis clavier
 
 Les raccourcis du panneau latéral Chrome fonctionnent lorsque le panneau latéral
-WebBrain a le focus.
+KavachWeb a le focus.
 
 | Raccourci | Ce qu'il fait |
 |----------|--------------|
@@ -189,7 +189,7 @@ WebBrain a le focus.
 | `Ctrl+Shift+X` ou `Cmd+Shift+X` | Passer en mode Act |
 | `Ctrl+Shift+D` ou `Cmd+Shift+D` | Passer en mode Dev |
 | `Escape` | Arrêter l'exécution active, sauf s'il ne fait que fermer l'autocomplétion des commandes slash |
-| `Escape` deux fois | Arrêter un enregistrement actif depuis WebBrain ou une page du navigateur |
+| `Escape` deux fois | Arrêter un enregistrement actif depuis KavachWeb ou une page du navigateur |
 
 ## Documentation
 
@@ -276,7 +276,7 @@ Source : [`lmstudio-plugin/`](lmstudio-plugin/).
 ```bibtex
 @software{webbrain2026,
   author = {Sokullu, Emre},
-  title = {WebBrain : Agent de navigation IA open source pour discuter avec les pages},
+  title = {KavachWeb : Agent de navigation IA open source pour discuter avec les pages},
   year = {2026},
   publisher = {GitHub},
   url = {https://github.com/webbrain-one/webbrain}
@@ -285,7 +285,7 @@ Source : [`lmstudio-plugin/`](lmstudio-plugin/).
 
 ## Licence
 
-WebBrain 33.0.0 et les versions ultérieures sont distribués sous
+KavachWeb 33.0.0 et les versions ultérieures sont distribués sous
 [GPL-3.0-or-later](LICENSE), car l’extension de navigateur distribuée intègre
 le runtime WebAssembly Xapian/libzim sous GPL. Les versions antérieures à
 33.0.0 restent sous la licence MIT applicable lors de leur publication ; ce

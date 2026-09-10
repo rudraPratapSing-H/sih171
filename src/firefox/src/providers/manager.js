@@ -41,13 +41,13 @@ import {
 } from './connection-test-assets.js';
 
 const WEBBRAIN_CLOUD_PROVIDER_ID = 'webbrain_cloud';
-const WEBBRAIN_CLOUD_PROVIDER_LABEL = 'WebBrain Compass';
+const WEBBRAIN_CLOUD_PROVIDER_LABEL = 'KavachWeb Compass';
 const DUPLICATE_PROVIDER_SUFFIX = '__duplicate';
 const LOCAL_MODEL_LIST_PROVIDER_IDS = ['llamacpp', 'ollama', 'lmstudio', 'jan', 'vllm', 'sglang', 'localai', 'gpt4all', 'local_openai_proxy', 'unsloth'];
 const WEBBRAIN_CLOUD_CONTEXT_WINDOW = 1000000;
 const WEBBRAIN_CLOUD_LEGACY_CONTEXT_WINDOW = 256000;
 const WEBBRAIN_DEVICE_GUID_KEY = 'webbrainDeviceGuid';
-const HELP_IMPROVE_WEBBRAIN_KEY = 'helpImproveWebBrain';
+const HELP_IMPROVE_WEBBRAIN_KEY = 'helpImproveKavachWeb';
 const OPENROUTER_DEFAULT_MODEL = 'openrouter/free';
 const OPENROUTER_LEGACY_DEFAULT_MODEL = 'stepfun/step-3.7-flash';
 const OPENAI_DEFAULT_MODEL = 'gpt-5.6-terra';
@@ -351,7 +351,7 @@ export class ProviderManager {
     if (hadLegacyClaudeSubscription) await signOutClaude();
     if (configs[WEBBRAIN_CLOUD_PROVIDER_ID]) {
       configs[WEBBRAIN_CLOUD_PROVIDER_ID].deviceGuid = await this._getDeviceGuid(data[WEBBRAIN_DEVICE_GUID_KEY]);
-      configs[WEBBRAIN_CLOUD_PROVIDER_ID].helpImproveWebBrain = data[HELP_IMPROVE_WEBBRAIN_KEY] !== false;
+      configs[WEBBRAIN_CLOUD_PROVIDER_ID].helpImproveKavachWeb = data[HELP_IMPROVE_WEBBRAIN_KEY] !== false;
     }
     this.activeProviderId = legacyActiveProviderId || WEBBRAIN_CLOUD_PROVIDER_ID;
     if (!configs[this.activeProviderId]) this.activeProviderId = WEBBRAIN_CLOUD_PROVIDER_ID;
@@ -396,7 +396,7 @@ export class ProviderManager {
         supportsStreamUsageOptions: true,
         supportsAskStreaming: true,
         supportsVision: true,
-        // WebBrain Compass proxies to OpenRouter, whose upstream models
+        // KavachWeb Compass proxies to OpenRouter, whose upstream models
         // (minimax, stepfun, …) handle tools + images together fine. Dropping
         // tools on image turns forced the model into prompt-based tool calling,
         // which leaks raw tool-call template tokens (e.g. `]<]minimax[>[`) into
@@ -932,7 +932,7 @@ export class ProviderManager {
         label: WEBBRAIN_CLOUD_PROVIDER_LABEL,
       };
     }
-    // Existing installs stored omitToolsWhenImagesPresent:true for WebBrain
+    // Existing installs stored omitToolsWhenImagesPresent:true for KavachWeb
     // Compass, which suppressed native tools on every screenshot turn and broke
     // tool calling. Force it off so the saved config picks up the new default.
     if (migrated.webbrain_cloud?.omitToolsWhenImagesPresent) {

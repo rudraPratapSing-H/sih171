@@ -98,7 +98,7 @@ async function tokenError(label, res) {
  *
  * `redirect` defaults to this extension's chromiumapp.org callback (the
  * standard installed-app redirect the user registers for their own
- * client). `staticClientId` is WebBrain's own id; when absent, start()
+ * client). `staticClientId` is KavachWeb's own id; when absent, start()
  * requires the caller to pass a user-supplied client_id.
  */
 function makeOAuthClient(def) {
@@ -308,7 +308,7 @@ const GEMINI_OAUTH = makeOAuthClient({
 });
 
 // Chrome Web Store publishing. The user owns the Google Cloud OAuth client;
-// WebBrain never ships a shared publishing identity. The loopback redirect is
+// KavachWeb never ships a shared publishing identity. The loopback redirect is
 // observed in the temporary auth tab, so no local HTTP server is required.
 const CHROME_WEB_STORE_OAUTH = makeOAuthClient({
   label: 'Chrome Web Store',

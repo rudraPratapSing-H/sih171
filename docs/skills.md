@@ -1,7 +1,7 @@
 # Skills
 
 A skill is trusted instruction text — optionally with its own tool manifest —
-that WebBrain loads into a run **only when it is relevant**. Manage them under
+that KavachWeb loads into a run **only when it is relevant**. Manage them under
 Settings → Skills, where you can import skill text or a URL, or remove any
 bundled skill.
 
@@ -29,16 +29,16 @@ Intents are cross-language *meaning* hints for the LLM, not literal keyword
 matching. Skills without metadata infer the first prose paragraph as their
 summary, have no inferred intents, and default to Act/Dev.
 
-WebBrain also recognizes the required `name` and `description` YAML frontmatter
+KavachWeb also recognizes the required `name` and `description` YAML frontmatter
 from an imported [Agent Skills `SKILL.md`](https://agentskills.io/specification).
 The name and description populate the routing catalog, and the frontmatter is
 removed before the Markdown body is loaded. A name entered in Settings and a
 `webbrain-skill` block still take precedence.
 
-This is instruction-only compatibility. WebBrain imports one text document; it
+This is instruction-only compatibility. KavachWeb imports one text document; it
 does not fetch bundled `scripts/`, `references/`, or `assets/`, execute skill
-code, or treat the Agent Skills `allowed-tools` field as a WebBrain permission
-or tool manifest. Use `webbrain-tools` for WebBrain HTTP tools. WebBrain
+code, or treat the Agent Skills `allowed-tools` field as a KavachWeb permission
+or tool manifest. Use `webbrain-tools` for KavachWeb HTTP tools. KavachWeb
 recognizes `webbrain-skill` and `webbrain-tools` fences only in the Markdown
 body after valid frontmatter; fence-like text inside frontmatter cannot grant
 routing eligibility or register tools.
@@ -103,7 +103,7 @@ deleted.
 
 #### Humanizer
 
-Rewrites prose WebBrain composes for you, such as an email reply or a post, so
+Rewrites prose KavachWeb composes for you, such as an email reply or a post, so
 it reads as human writing. It declares no network tool and adds no tools.
 
 On webmail tabs (Gmail, Outlook, Yahoo, Proton, Fastmail, Zoho, Yandex) it is

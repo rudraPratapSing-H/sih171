@@ -54,7 +54,7 @@ export async function captureAndSaveRunScreenshot(api, tabId, filename) {
   if (!tab) {
     throw new Error('The run tab is no longer available.');
   }
-  // Firefox has supported arbitrary-tab capture since Firefox 59. WebBrain's
+  // Firefox has supported arbitrary-tab capture since Firefox 59. KavachWeb's
   // declared minimum is 109 and the manifest includes the required <all_urls>.
   const dataUrl = await api.tabs.captureTab(tabId, { format: 'png' });
   filename = await filenameInConfiguredDownloadDirectory(api, filename);

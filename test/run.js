@@ -1,5 +1,5 @@
 /**
- * WebBrain test runner — pure Node, no framework, no chrome.* APIs.
+ * KavachWeb test runner — pure Node, no framework, no chrome.* APIs.
  *
  *   node test/run.js
  *
@@ -3003,7 +3003,7 @@ test('research escalation setting strings are localized in every catalog', async
   const english = {
     'tool.delegate_research': 'Researching with ChatGPT',
     'st.display.research_escalation.label': 'Research escalation',
-    'st.display.research_escalation.desc': 'When enabled, WebBrain may ask before sending an unusually complex read-only research prompt to ChatGPT. Off by default. The exact prompt is shared only after your explicit approval.',
+    'st.display.research_escalation.desc': 'When enabled, KavachWeb may ask before sending an unusually complex read-only research prompt to ChatGPT. Off by default. The exact prompt is shared only after your explicit approval.',
   };
   for (const browser of ['chrome', 'firefox']) {
     const dir = path.join(ROOT, 'src', browser, 'src/ui/locales');
@@ -7757,7 +7757,7 @@ test('matches Xianyu Goofish surfaces with safe second-hand transaction guidance
 test('matches Bilibili surfaces with mirrored regional guidance', () => {
   const urls = [
     'https://www.bilibili.com/video/BV1FD4y147uH/?p=2',
-    'https://search.bilibili.com/all?keyword=WebBrain',
+    'https://search.bilibili.com/all?keyword=KavachWeb',
     'https://space.bilibili.com/2/dynamic',
     'https://t.bilibili.com/',
   ];
@@ -7782,7 +7782,7 @@ test('matches Xiaohongshu surfaces with mirrored regional guidance', () => {
   const urls = [
     'https://www.xiaohongshu.com/explore',
     'https://www.xiaohongshu.com/explore/63f9b8b700000000120335d8?xsec_token=example',
-    'https://www.xiaohongshu.com/search_result?keyword=WebBrain',
+    'https://www.xiaohongshu.com/search_result?keyword=KavachWeb',
     'https://www.xiaohongshu.com/user/profile/5e92d7f20000000001004bc0',
     'https://creator.xiaohongshu.com/publish/publish?source=official',
   ];
@@ -9136,7 +9136,7 @@ test('social adapters expose URL-specific infinite-scroll capture policy in both
     ['bilibili', 'https://t.bilibili.com/'],
     ['bilibili', 'https://space.bilibili.com/2/dynamic'],
     ['xiaohongshu', 'https://www.xiaohongshu.com/explore'],
-    ['xiaohongshu', 'https://www.xiaohongshu.com/search_result?keyword=WebBrain'],
+    ['xiaohongshu', 'https://www.xiaohongshu.com/search_result?keyword=KavachWeb'],
     ['xiaohongshu', 'https://www.xiaohongshu.com/user/profile/abc123'],
     ['instagram', 'https://www.instagram.com/openai/'],
     ['instagram', 'https://www.instagram.com/explore/'],
@@ -9153,7 +9153,7 @@ test('social adapters expose URL-specific infinite-scroll capture policy in both
     'https://www.reddit.com/r/javascript/comments/abc123/example/',
     'https://youtu.be/abc123',
     'https://www.bilibili.com/video/BV1FD4y147uH/',
-    'https://search.bilibili.com/all?keyword=WebBrain',
+    'https://search.bilibili.com/all?keyword=KavachWeb',
     'https://www.xiaohongshu.com/explore/63f9b8b700000000120335d8?xsec_token=example',
     'https://creator.xiaohongshu.com/publish/publish?source=official',
     'https://www.instagram.com/p/ABC123/',
@@ -10268,7 +10268,7 @@ const TRACE_RUNS = [
   },
 ];
 
-test('ATIF export: maps a WebBrain run, LLM calls, tools, metrics, and final response', () => {
+test('ATIF export: maps a KavachWeb run, LLM calls, tools, metrics, and final response', () => {
   const input = {
     schema: 'webbrain-trace/1',
     exportedAt: 1_770_000_100_000,
@@ -10537,7 +10537,7 @@ test('ATIF export: replaces repeated provider tool-call IDs deterministically', 
   );
 });
 
-test('ATIF export: rejects unsupported or malformed WebBrain exports', () => {
+test('ATIF export: rejects unsupported or malformed KavachWeb exports', () => {
   assert.throws(
     () => webbrainTraceToAtif({ schema: 'other/1', run: {}, events: [] }),
     /Expected schema "webbrain-trace\/1"/,
@@ -10626,7 +10626,7 @@ test('trace export: renders the full tool chain from trace events, in order', ()
   const { markdown, turnCount, toolCount } = tracesToMarkdown(TRACE_RUNS);
   assert.equal(turnCount, 1);
   assert.equal(toolCount, 4);
-  assert.match(markdown, /# WebBrain Conversation — tool chain/);
+  assert.match(markdown, /# KavachWeb Conversation — tool chain/);
   assert.match(markdown, /## Turn 1 — Find the cheapest Sony WH-1000XM5/);
   assert.match(markdown, /\*\*Read scope:\*\*\n```\n\{"read_scope":"visible_page"\}/); // classifier is diagnostic metadata, not an assistant answer
   assert.match(markdown, /\*\*Planner:\*\*\n```json\n\{"summary"/);   // planner labelled + fenced, model's ```json language preserved
@@ -12252,7 +12252,7 @@ test('Firefox Cloud runtime delivery uses its available fetch transport', async 
       providerName: 'webbrain-cloud',
       baseUrl: 'https://cloud.example/v1',
       deviceGuid: 'device-test',
-      helpImproveWebBrain: true,
+      helpImproveKavachWeb: true,
     });
     const result = await provider.sendRuntimeEvents('conv-firefox', [{ event_id: 'event-1', event: {} }], { timeoutMs: 500 });
     assert.deepEqual(result, { ok: true, retryable: false, status: 202 });
@@ -12274,7 +12274,7 @@ test('Cloud runtime delivery stays consent-gated and mirrored across both builds
   for (const browser of ['chrome', 'firefox']) {
     const agent = fs.readFileSync(path.join(ROOT, `src/${browser}/src/agent/agent.js`), 'utf8');
     const provider = fs.readFileSync(path.join(ROOT, `src/${browser}/src/providers/openai.js`), 'utf8');
-    assert.match(agent, /helpImproveWebBrain !== false[\s\S]*enqueueCloudRuntimeEvent/);
+    assert.match(agent, /helpImproveKavachWeb !== false[\s\S]*enqueueCloudRuntimeEvent/);
     assert.match(agent, /void flushCloudRuntimeOutbox\(provider\)/);
     assert.match(provider, /\/improvement\/runtime-events/);
     assert.match(provider, /retryable: response\.status === 408 \|\| response\.status === 429 \|\| response\.status >= 500/);
@@ -12534,16 +12534,16 @@ test('trace export: notes appear before the footer', () => {
   );
 });
 
-test('trace export: identifies exporting and recording WebBrain versions', () => {
+test('trace export: identifies exporting and recording KavachWeb versions', () => {
   const { markdown } = tracesToMarkdown(TRACE_RUNS, { exportedByWebBrainVersion: '23.3.1' });
-  assert.match(markdown, /_Exported with WebBrain v23\.3\.1_/);
-  assert.match(markdown, /recorded with WebBrain v23\.3\.1 · haiku · stopped/);
+  assert.match(markdown, /_Exported with KavachWeb v23\.3\.1_/);
+  assert.match(markdown, /recorded with KavachWeb v23\.3\.1 · haiku · stopped/);
 
   const legacy = tracesToMarkdown([{
     run: { runId: 'legacy', userMessage: 'old trace', model: 'legacy-model', status: 'done' },
     events: [],
   }], { exportedByWebBrainVersion: '23.3.1' });
-  assert.match(legacy.markdown, /recorded WebBrain version unavailable · legacy-model · done/);
+  assert.match(legacy.markdown, /recorded KavachWeb version unavailable · legacy-model · done/);
 });
 
 test('trace export: renders loop-stopped final content and does not label it done', () => {
@@ -12830,7 +12830,7 @@ test('OTLP trace converter emits valid ID, hierarchy, timing, and GenAI span sha
   assert.match(root.traceId, /^[0-9a-f]{32}$/);
   assert.match(root.spanId, /^[0-9a-f]{16}$/);
   assert.equal(root.parentSpanId, undefined);
-  assert.equal(root.name, 'invoke_agent WebBrain');
+  assert.equal(root.name, 'invoke_agent KavachWeb');
   assert.equal(root.kind, 1);
   assert.equal(root.startTimeUnixNano, '1784937600000000000');
   assert.equal(root.endTimeUnixNano, '1784937601500000000');
@@ -13279,14 +13279,14 @@ test('/export --traces is wired in both side panels and backgrounds', () => {
       /case 'export_traces': \{[\s\S]*?agent\.exportTraces\(tabId\)/,
       `${label}: export_traces should call agent.exportTraces`,
     );
-    assert.match(panel, /_Exported with WebBrain v\$\{webbrainVersion\}_/, `${label}: /export should include the current manifest version`);
+    assert.match(panel, /_Exported with KavachWeb v\$\{webbrainVersion\}_/, `${label}: /export should include the current manifest version`);
   }
 });
 
 test('config transfer exports and restores Settings values including provider keys', () => {
   const stored = {
     wbLocale: 'tr',
-    downloadDirectory: 'Work/WebBrain',
+    downloadDirectory: 'Work/KavachWeb',
     strictSecretMode: true,
     profileEnabled: true,
     profileText: 'Use the test profile',
@@ -13318,7 +13318,7 @@ test('config transfer exports and restores Settings values including provider ke
   assert.equal(chromeExport.settings.capsolverApiKey, 'CAP-0123456789abcdefghij');
   assert.equal(chromeExport.settings.captchaSolverEnabled, true);
   assert.equal(chromeExport.settings.profileText, 'Use the test profile');
-  assert.equal(chromeExport.settings.downloadDirectory, 'Work/WebBrain');
+  assert.equal(chromeExport.settings.downloadDirectory, 'Work/KavachWeb');
   assert.equal(chromeExport.settings.wb_user_memory_v1.records.length, 1);
   assert.equal(chromeExport.settings.providers.webbrain_cloud.deviceGuid, undefined, 'device identity must not be portable');
   assert.equal(chromeExport.settings.cloudCostSpentUsd, undefined, 'spend counters are runtime state, not config');
@@ -13330,7 +13330,7 @@ test('config transfer exports and restores Settings values including provider ke
   const imported = ConfigTransferCh.parseConfigImport(JSON.stringify(chromeExport));
   assert.equal(imported.settings.providers.openai.apiKey, 'provider-secret');
   assert.equal(imported.settings.activeProvider, 'openai');
-  assert.equal(imported.settings.downloadDirectory, 'Work/WebBrain');
+  assert.equal(imported.settings.downloadDirectory, 'Work/KavachWeb');
   assert.equal(imported.settings.themeMode, 'system', 'missing Settings values should restore their product defaults');
   assert.equal(Object.keys(imported.settings).length, ConfigTransferCh.CONFIG_STORAGE_KEYS.length);
 
@@ -13381,7 +13381,7 @@ test('config transfer exports and restores Settings values including provider ke
   assert.deepEqual(
     mergedPatch.providers.webbrain_cloud,
     currentSettings.providers.webbrain_cloud,
-    'sparse import must preserve the complete platform-managed WebBrain Compass provider',
+    'sparse import must preserve the complete platform-managed KavachWeb Compass provider',
   );
   assert.equal(mergedPatch.providers.anthropic.apiKey, 'existing-secret');
   assert.equal(mergedPatch.providers.openai.apiKey, 'provider-secret');
@@ -13389,7 +13389,7 @@ test('config transfer exports and restores Settings values including provider ke
   assert.equal(
     ConfigTransferCh.mergeConfigPatchSettings({}, chromePatch.settings).providers.webbrain_cloud,
     undefined,
-    'a portable WebBrain Compass provider must not be introduced without platform state',
+    'a portable KavachWeb Compass provider must not be introduced without platform state',
   );
 });
 
@@ -13543,7 +13543,7 @@ test('trace lossless tier: export renders masked request previews only for lossl
       data: {
         messageCount: 2, toolsCount: 1, lossless: true,
         messages: [
-          { role: 'system', content: 'You are WebBrain.' },
+          { role: 'system', content: 'You are KavachWeb.' },
           { role: 'user', content: '{"password":"hunter2abc", "api_key":"value12345"} api_key=sk-secret1234567890 and Bearer tok1234567890' },
         ],
         tools: [{ function: { name: 'click' } }],
@@ -14559,7 +14559,7 @@ test('import_config_patch background handler merges against live provider storag
     assert.deepEqual(
       stored.providers.webbrain_cloud,
       { type: 'openai', baseUrl: 'https://platform.example/v1', apiKey: 'platform-secret', deviceGuid: 'platform-device' },
-      `${label}: the handler's storage read must preserve the platform-managed WebBrain Compass provider`,
+      `${label}: the handler's storage read must preserve the platform-managed KavachWeb Compass provider`,
     );
     assert.equal(stored.providers.anthropic.apiKey, 'existing-secret', `${label}: existing providers must survive a sparse import`);
     assert.equal(stored.providers.openai.apiKey, 'provider-secret', `${label}: imported providers must be added`);
@@ -14606,18 +14606,18 @@ test('download directory routing is relative and uses each browser-supported pat
     ['firefox', DownloadDirectoryFx],
   ]) {
     assert.equal(downloadDirectory.normalizeDownloadDirectory(''), '', `${label}: blank should use the system default`);
-    assert.equal(downloadDirectory.normalizeDownloadDirectory(' Work\\WebBrain '), 'Work/WebBrain', `${label}: nested relative directory should normalize`);
-    assert.equal(downloadDirectory.normalizeDownloadDirectory('/tmp/WebBrain'), '', `${label}: absolute POSIX paths should be rejected`);
-    assert.equal(downloadDirectory.normalizeDownloadDirectory('C:\\Downloads\\WebBrain'), '', `${label}: absolute Windows paths should be rejected`);
+    assert.equal(downloadDirectory.normalizeDownloadDirectory(' Work\\KavachWeb '), 'Work/KavachWeb', `${label}: nested relative directory should normalize`);
+    assert.equal(downloadDirectory.normalizeDownloadDirectory('/tmp/KavachWeb'), '', `${label}: absolute POSIX paths should be rejected`);
+    assert.equal(downloadDirectory.normalizeDownloadDirectory('C:\\Downloads\\KavachWeb'), '', `${label}: absolute Windows paths should be rejected`);
     assert.equal(downloadDirectory.normalizeDownloadDirectory('Work/../Other'), '', `${label}: parent traversal should be rejected`);
     assert.equal(
-      downloadDirectory.filenameInDownloadDirectory('Work/WebBrain', '/Users/test/Downloads/report.pdf'),
-      'Work/WebBrain/report.pdf',
+      downloadDirectory.filenameInDownloadDirectory('Work/KavachWeb', '/Users/test/Downloads/report.pdf'),
+      'Work/KavachWeb/report.pdf',
       `${label}: configured directory should prefix the tentative basename`,
     );
     assert.equal(
-      downloadDirectory.filenameInDownloadDirectory('Work/WebBrain', 'Q1: "report"?.pdf'),
-      'Work/WebBrain/Q1_ _report__.pdf',
+      downloadDirectory.filenameInDownloadDirectory('Work/KavachWeb', 'Q1: "report"?.pdf'),
+      'Work/KavachWeb/Q1_ _report__.pdf',
       `${label}: explicit basenames should be safe for downloads.download`,
     );
   }
@@ -14629,7 +14629,7 @@ test('download directory routing is relative and uses each browser-supported pat
     storage: {
       local: {
         async get() {
-          return { downloadDirectory: 'WebBrain' };
+          return { downloadDirectory: 'KavachWeb' };
         },
       },
       onChanged: {
@@ -14663,7 +14663,7 @@ test('download directory routing is relative and uses each browser-supported pat
     'chrome: own downloads should wait for the stored directory',
   );
   await new Promise((resolve) => setImmediate(resolve));
-  assert.deepEqual(ownSuggestions, [{ filename: 'WebBrain/generated.txt' }], 'chrome: own download should be routed');
+  assert.deepEqual(ownSuggestions, [{ filename: 'KavachWeb/generated.txt' }], 'chrome: own download should be routed');
 
   const unrelatedSuggestions = [];
   assert.equal(
@@ -14715,7 +14715,7 @@ test('Firefox download_files routes known filenames without probing unknown down
   const originalBrowser = globalThis.browser;
   const originalFetch = globalThis.fetch;
   const downloadCalls = [];
-  let configuredDirectory = 'Work/WebBrain';
+  let configuredDirectory = 'Work/KavachWeb';
   try {
     globalThis.browser = {
       storage: {
@@ -14733,7 +14733,7 @@ test('Firefox download_files routes known filenames without probing unknown down
         async search({ id }) {
           return [{
             id,
-            filename: '/Users/test/Downloads/Work/WebBrain/report.pdf',
+            filename: '/Users/test/Downloads/Work/KavachWeb/report.pdf',
             state: 'complete',
             bytesReceived: 100,
             totalBytes: 100,
@@ -14751,7 +14751,7 @@ test('Firefox download_files routes known filenames without probing unknown down
     });
     assert.equal(result.success, true);
     assert.equal(downloadCalls.length, 1);
-    assert.equal(downloadCalls[0].filename, 'Work/WebBrain/quarterly-report.pdf');
+    assert.equal(downloadCalls[0].filename, 'Work/KavachWeb/quarterly-report.pdf');
 
     const fallback = await downloadFilesFx({ urls: ['https://example.com/one-time?id=2'] });
     assert.equal(fallback.success, true);
@@ -14810,7 +14810,7 @@ test('/export --config and /import JSON or --file are wired in both browsers', (
   }
 });
 
-test('trace record and JSON exports carry WebBrain version metadata', () => {
+test('trace record and JSON exports carry KavachWeb version metadata', () => {
   for (const [label, prefix, runtimeName] of [
     ['chrome', 'src/chrome', 'chrome'],
     ['firefox', 'src/firefox', 'browser'],
@@ -15783,7 +15783,7 @@ test('delivery checkpoint enforcement is wired into both agent loops', () => {
   }
 });
 
-test('active WebBrain Compass provider keeps delivery checkpoints advisory', async () => {
+test('active KavachWeb Compass provider keeps delivery checkpoints advisory', async () => {
   for (const [label, AgentClass] of [['chrome', AgentCh], ['firefox', AgentFx]]) {
     for (const mode of ['ask', 'act']) {
       const agent = new AgentClass({ getVisionProvider: async () => null });
@@ -15825,15 +15825,15 @@ test('active WebBrain Compass provider keeps delivery checkpoints advisory', asy
         8,
       );
 
-      assert.equal(result.action, 'continue', `${label}/${mode}: active WebBrain Compass was forced into terminal delivery`);
-      assert.equal(executed.length, 9, `${label}/${mode}: active WebBrain Compass stopped after the eighth observation`);
+      assert.equal(result.action, 'continue', `${label}/${mode}: active KavachWeb Compass was forced into terminal delivery`);
+      assert.equal(executed.length, 9, `${label}/${mode}: active KavachWeb Compass stopped after the eighth observation`);
       const eighthResult = messages.find(message => message.tool_call_id === `${mode}_cloud_research_8`);
       assert.match(eighthResult?.content || '', /DELIVERY CHECKPOINT/, `${label}/${mode}: advisory checkpoint was removed`);
       assert.doesNotMatch(eighthResult?.content || '', /DELIVERY REQUIRED/, `${label}/${mode}: advisory checkpoint became terminal`);
       assert.equal(
         updates.some(update => /Observation limit reached/i.test(update.data?.message || '')),
         false,
-        `${label}/${mode}: active WebBrain Compass displayed terminal observation-limit recovery`,
+        `${label}/${mode}: active KavachWeb Compass displayed terminal observation-limit recovery`,
       );
     }
   }
@@ -16078,7 +16078,7 @@ test('step-limit recovery keeps Cloud observation checkpoints advisory but force
       };
     };
 
-    assert.equal(agent._stepLimitRecoveryEligible({ supportsTools: true, config: { providerName: 'webbrain-cloud' } }), true, `${label}: selected WebBrain Cloud provider should receive terminal handoff`);
+    assert.equal(agent._stepLimitRecoveryEligible({ supportsTools: true, config: { providerName: 'webbrain-cloud' } }), true, `${label}: selected KavachWeb Cloud provider should receive terminal handoff`);
     assert.equal(agent._stepLimitRecoveryEligible({ supportsTools: true }, { cloudRun: true }), false, `${label}: structured Cloud API run must keep its done_json contract`);
     assert.equal(agent._stepLimitRecoveryEligible({ supportsTools: true }, { scheduledRun: true, independentRun: true }), false, `${label}: unattended scheduled runs must keep their deterministic max-step verdict`);
     assert.equal(agent._stepLimitRecoveryEligible({ supportsTools: false }), false, `${label}: tool-free provider cannot produce a structured done call`);
@@ -21236,11 +21236,11 @@ test('the 8-way GitHub fetch trap collapses to one bucket', () => {
   // 8 different ways. All should map to the same bucket so the existing
   // loop detector fires.
   const variants = [
-    'https://raw.githubusercontent.com/esokullu/WebBrain/main/web/build/locales/en.json',
-    'https://api.github.com/repos/esokullu/WebBrain/contents/web/build/locales/en.json',
-    'https://github.com/esokullu/WebBrain/blob/main/web/build/locales/en.json',
-    'https://github.com/esokullu/WebBrain/raw/main/web/build/locales/en.json',
-    'https://github.com/esokullu/WebBrain/edit/main/web/build/locales/en.json',
+    'https://raw.githubusercontent.com/esokullu/KavachWeb/main/web/build/locales/en.json',
+    'https://api.github.com/repos/esokullu/KavachWeb/contents/web/build/locales/en.json',
+    'https://github.com/esokullu/KavachWeb/blob/main/web/build/locales/en.json',
+    'https://github.com/esokullu/KavachWeb/raw/main/web/build/locales/en.json',
+    'https://github.com/esokullu/KavachWeb/edit/main/web/build/locales/en.json',
   ];
   const buckets = variants.map(resourceBucket);
   const unique = new Set(buckets);
@@ -21250,14 +21250,14 @@ test('the 8-way GitHub fetch trap collapses to one bucket', () => {
 
 test('different files in the same repo get different buckets', () => {
   assert.notEqual(
-    resourceBucket('https://raw.githubusercontent.com/esokullu/WebBrain/main/web/build/locales/en.json'),
-    resourceBucket('https://raw.githubusercontent.com/esokullu/WebBrain/main/web/build/locales/tr.json'),
+    resourceBucket('https://raw.githubusercontent.com/esokullu/KavachWeb/main/web/build/locales/en.json'),
+    resourceBucket('https://raw.githubusercontent.com/esokullu/KavachWeb/main/web/build/locales/tr.json'),
   );
 });
 
 test('different repos get different buckets', () => {
   assert.notEqual(
-    resourceBucket('https://raw.githubusercontent.com/esokullu/WebBrain/main/README.md'),
+    resourceBucket('https://raw.githubusercontent.com/esokullu/KavachWeb/main/README.md'),
     resourceBucket('https://raw.githubusercontent.com/anthropic/skill-rules/main/README.md'),
   );
 });
@@ -21421,7 +21421,7 @@ test('explicit MAJOR.MINOR.PATCH override', () => {
 test('update-changelog: inserts newest-first release sections', () => {
   const before = `# Changelog
 
-All notable changes to WebBrain are documented in this file.
+All notable changes to KavachWeb are documented in this file.
 
 ## [1.2.3] - 2026-06-01
 
@@ -21614,7 +21614,7 @@ test('rewriteVersionByAnchor: rewrites EXT_VERSION literal in settings.js', () =
 });
 
 test('rewriteVersionByAnchor: rewrites ARCHITECTURE.md header line', () => {
-  const before = `# WebBrain Chrome Extension — Architecture\n\n> Version 7.0.0 · Manifest V3 · Service Worker background\n`;
+  const before = `# KavachWeb Chrome Extension — Architecture\n\n> Version 7.0.0 · Manifest V3 · Service Worker background\n`;
   const after = rewriteVersionByAnchor(
     before, '7.0.0', '7.1.0', `(>\\s*Version\\s+)__OLD__(\\s*·)`
   );
@@ -21784,7 +21784,7 @@ test('version 33-and-later licensing boundary is consistent across project metad
   }
 
   const rootLicense = fs.readFileSync(path.join(ROOT, 'LICENSE'), 'utf8');
-  assert.match(rootLicense, /WebBrain 33\.0\.0 and later/);
+  assert.match(rootLicense, /KavachWeb 33\.0\.0 and later/);
   assert.match(rootLicense, /GNU GENERAL PUBLIC LICENSE\s+Version 3/);
   assert.match(rootLicense, /releases before 33\.0\.0 remain available under the MIT License/i);
   assert.match(fs.readFileSync(path.join(ROOT, 'LICENSES/MIT.txt'), 'utf8'), /^MIT License/);
@@ -21796,7 +21796,7 @@ test('version 33-and-later licensing boundary is consistent across project metad
   }
 
   const english = JSON.parse(fs.readFileSync(path.join(ROOT, 'web/build/locales/en.json'), 'utf8'));
-  assert.equal(english['faq.offline_licensing.q'], 'Why is WebBrain 33.0.0 and later GPL-licensed?');
+  assert.equal(english['faq.offline_licensing.q'], 'Why is KavachWeb 33.0.0 and later GPL-licensed?');
   assert.match(english['faq.offline_licensing.a_html'], /bundles and integrates the GPL-licensed Xapian\/libzim WebAssembly runtime/);
   assert.match(english['faq.offline_licensing.a_html'], /releases before 33\.0\.0 remain MIT-licensed/i);
   assert.doesNotMatch(english['faq.offline_licensing.a_html'], /open licensing question/i);
@@ -22360,7 +22360,7 @@ test('coupon-domain generator stops oversized streaming responses before bufferi
   assert.equal(cancelled, true, 'the generator should cancel the oversized response stream');
 });
 
-test('WebBrain promotion has localized X and LinkedIn variants with ready-to-go plans', () => {
+test('KavachWeb promotion has localized X and LinkedIn variants with ready-to-go plans', () => {
   const expectedTweetSteps = (exactPost) => [
     'Open https://x.com/compose/post in the current tab through the visible browser UI.',
     'Wait for the visible X composer to become stable before entering text.',
@@ -22396,7 +22396,7 @@ test('WebBrain promotion has localized X and LinkedIn variants with ready-to-go 
       assert.ok(tweet?.prompt?.includes(exactPost), 'visible action prompt should carry the reviewed localized post verbatim');
       assert.equal(tweet?.runOptions?.skipPlanner, true);
       assert.equal(tweet?.runOptions?.tool, 'navigate');
-      assert.equal(tweet?.runOptions?.summary, 'Publish the reviewed localized WebBrain post exactly as supplied.');
+      assert.equal(tweet?.runOptions?.summary, 'Publish the reviewed localized KavachWeb post exactly as supplied.');
       assert.deepEqual(tweet?.runOptions?.steps, expectedTweetSteps(exactPost));
 
       const linkedinActions = buildRecommendedActions(pageInfo, { max: 4, webbrainPromotionVariant: 'linkedin' });
@@ -22407,7 +22407,7 @@ test('WebBrain promotion has localized X and LinkedIn variants with ready-to-go 
       assert.ok(linkedin?.prompt?.includes(exactPost), 'LinkedIn prompt should carry the reviewed localized post verbatim');
       assert.equal(linkedin?.runOptions?.skipPlanner, true);
       assert.equal(linkedin?.runOptions?.tool, 'navigate');
-      assert.equal(linkedin?.runOptions?.summary, 'Publish the reviewed localized WebBrain post on LinkedIn exactly as supplied.');
+      assert.equal(linkedin?.runOptions?.summary, 'Publish the reviewed localized KavachWeb post on LinkedIn exactly as supplied.');
       assert.deepEqual(linkedin?.runOptions?.steps, expectedLinkedInSteps(exactPost));
       assert.equal(linkedinActions.some((action) => action.id === 'tweet-webbrain'), false, 'one cohort should render only one promotion');
     }
@@ -22427,7 +22427,7 @@ test('WebBrain promotion has localized X and LinkedIn variants with ready-to-go 
   }
 });
 
-test('WebBrain promotion fills only the last slot left by contextual actions', () => {
+test('KavachWeb promotion fills only the last slot left by contextual actions', () => {
   const threadPage = {
     url: 'https://mail.google.com/mail/u/0/#inbox/FMfc123',
     title: 'Gmail - Project update',
@@ -22459,7 +22459,7 @@ test('WebBrain promotion fills only the last slot left by contextual actions', (
   }
 });
 
-test('WebBrain promotion chooses a fresh 50/50 variant per display with motion-safe visual treatment', () => {
+test('KavachWeb promotion chooses a fresh 50/50 variant per display with motion-safe visual treatment', () => {
   for (const [label, panelRel, cssRel] of [
     ['chrome', 'src/chrome/src/ui/sidepanel.js', 'src/chrome/styles/sidepanel.css'],
     ['firefox', 'src/firefox/src/ui/sidepanel.js', 'src/firefox/styles/sidepanel.css'],
@@ -22498,7 +22498,7 @@ test('WebBrain promotion chooses a fresh 50/50 variant per display with motion-s
   }
 });
 
-test('WebBrain social promotion copy is reviewed, localized, mirrored, and safely bounded', async () => {
+test('KavachWeb social promotion copy is reviewed, localized, mirrored, and safely bounded', async () => {
   const localeNames = ['ar', 'en', 'es', 'fr', 'he', 'id', 'ja', 'ko', 'ms', 'pl', 'ru', 'th', 'tl', 'tr', 'uk', 'zh'];
   const transformedUrlLength = 23;
   const conservativeXWeight = (value) => {
@@ -22528,7 +22528,7 @@ test('WebBrain social promotion copy is reviewed, localized, mirrored, and safel
 
     const text = chromeLocale['sp.recommended.tweet.text'];
     assert.equal((text.match(/https:\/\/webbrain\.one/g) || []).length, 1, `${locale}: post should contain exactly one canonical URL`);
-    assert.ok(text.includes('WebBrain'), `${locale}: post should preserve the product name`);
+    assert.ok(text.includes('KavachWeb'), `${locale}: post should preserve the product name`);
     assert.ok(text.includes('LLM'), `${locale}: post should preserve the bring-your-own-LLM claim`);
     assert.ok(
       conservativeXWeight(text) <= 280,
@@ -29756,8 +29756,8 @@ Follow the visible browser workflow.`;
       `${label}: folded description was not used as the routing summary`,
     );
     assert.deepEqual(skill.modes, ['act'], `${label}: Agent Skills metadata must not grant Ask eligibility`);
-    assert.deepEqual(skill.intents, [], `${label}: Agent Skills metadata must not invent WebBrain intents`);
-    assert.deepEqual(skill.tools, [], `${label}: allowed-tools must not become WebBrain runtime tools`);
+    assert.deepEqual(skill.intents, [], `${label}: Agent Skills metadata must not invent KavachWeb intents`);
+    assert.deepEqual(skill.tools, [], `${label}: allowed-tools must not become KavachWeb runtime tools`);
 
     const prompt = buildPrompt([skill], {
       mode: 'act',
@@ -29769,7 +29769,7 @@ Follow the visible browser workflow.`;
   }
 });
 
-test('Agent Skills frontmatter stays subordinate to explicit WebBrain metadata', () => {
+test('Agent Skills frontmatter stays subordinate to explicit KavachWeb metadata', () => {
   const content = `---
 name: portable-research
 description: 'Researches sources and explains when they apply.'
@@ -29777,7 +29777,7 @@ description: 'Researches sources and explains when they apply.'
 # Research
 
 \`\`\`webbrain-skill
-{"summary":"Use WebBrain-specific routing.","modes":["ask","act"],"intents":["source_research"]}
+{"summary":"Use KavachWeb-specific routing.","modes":["ask","act"],"intents":["source_research"]}
 \`\`\`
 
 Compare primary sources.`;
@@ -29792,9 +29792,9 @@ Compare primary sources.`;
       content,
     }]);
     assert.equal(skill.name, 'Local display name', `${label}: explicit local name lost precedence`);
-    assert.equal(skill.summary, 'Use WebBrain-specific routing.', `${label}: WebBrain summary lost precedence`);
-    assert.deepEqual(skill.modes, ['ask', 'act'], `${label}: WebBrain modes lost precedence`);
-    assert.deepEqual(skill.intents, ['source_research'], `${label}: WebBrain intents lost precedence`);
+    assert.equal(skill.summary, 'Use KavachWeb-specific routing.', `${label}: KavachWeb summary lost precedence`);
+    assert.deepEqual(skill.modes, ['ask', 'act'], `${label}: KavachWeb modes lost precedence`);
+    assert.deepEqual(skill.intents, ['source_research'], `${label}: KavachWeb intents lost precedence`);
 
     const prompt = buildPrompt([skill], {
       mode: 'ask',
@@ -29999,7 +29999,7 @@ Keep the oversized source.`;
   }
 });
 
-test('Agent Skills frontmatter cannot grant WebBrain metadata or tools', () => {
+test('Agent Skills frontmatter cannot grant KavachWeb metadata or tools', () => {
   const content = `---
 name: boundary-test
 description: |
@@ -30023,7 +30023,7 @@ Visible instructions.`;
   };
   const bodyToolContent = `---
 name: body-tool
-description: Registers an explicit WebBrain tool from the Markdown body.
+description: Registers an explicit KavachWeb tool from the Markdown body.
 ---
 # Body tool
 
@@ -30056,7 +30056,7 @@ description: Registers an explicit WebBrain tool from the Markdown body.
     assert.deepEqual(
       bodyTool.tools.map((tool) => tool.name),
       ['visible_network'],
-      `${label}: the trust-boundary fix blocked a WebBrain tool declared in the Markdown body`,
+      `${label}: the trust-boundary fix blocked a KavachWeb tool declared in the Markdown body`,
     );
   }
 });
@@ -30875,7 +30875,7 @@ test('Emergency Box bundles the expanded field library and a stable basic health
     const communication = runtime.EMERGENCY_BOX_COMMUNICATION_RESOURCES;
     assert.equal(communication.length, 1, `${label}: built-in communication catalog is incomplete`);
     assert.equal(communication[0].id, 'communication-panlex-basic-lexicon', `${label}: universal lexicon identity drifted`);
-    assert.equal(communication[0].builtIn, true, `${label}: universal lexicon should ship with WebBrain`);
+    assert.equal(communication[0].builtIn, true, `${label}: universal lexicon should ship with KavachWeb`);
     assert.equal(communication[0].rights, 'CC0 1.0 Universal', `${label}: universal lexicon license is not disclosed`);
     assert.equal(resources.length, 73, `${label}: curated emergency catalog is incomplete`);
     assert.equal(new Set(resources.map(resource => resource.id)).size, resources.length,
@@ -32083,9 +32083,9 @@ test('Emergency Box UI and PDF reader stay in Chrome and Firefox parity', () => 
   }
 });
 
-test('every WebBrain page signs its header with the extension logo', () => {
+test('every KavachWeb page signs its header with the extension logo', () => {
   // The suite pages carry their own marks (a nuclear trefoil, W, PDF, TXT), so the
-  // WebBrain lockup is what tells a reader whose product those marks belong to.
+  // KavachWeb lockup is what tells a reader whose product those marks belong to.
   const apocalypsePages = [
     'emergency-box.html',
     'wikipedia-library.html',
@@ -32099,7 +32099,7 @@ test('every WebBrain page signs its header with the extension logo', () => {
 
     const kit = fs.readFileSync(path.join(uiDir, 'apocalypse-kit.css'), 'utf8');
     assert.match(kit, /\.kit-brand \{[\s\S]*?font:[^;]*var\(--font-mono\)/,
-      `${browser}: the Apocalypse Kit does not style the shared WebBrain eyebrow`);
+      `${browser}: the Apocalypse Kit does not style the shared KavachWeb eyebrow`);
     assert.doesNotMatch(kit, /\.kit-brand \{[^}]*border:/,
       `${browser}: a boxed signature reads as a third button beside Back`);
     assert.match(kit, /@media \(max-width:700px\) \{[\s\S]*?\.kit-brand-mode \{ display:none; \}/,
@@ -32109,15 +32109,15 @@ test('every WebBrain page signs its header with the extension logo', () => {
 
     for (const page of apocalypsePages) {
       const html = fs.readFileSync(path.join(uiDir, page), 'utf8');
-      assert.match(html, /<a class="kit-brand" href="apocalypse-mode\.html"[\s\S]*?src="\.\.\/\.\.\/icons\/icon128\.png"[\s\S]*?WebBrain[\s\S]*?data-i18n="ap\.title"[\s\S]*?<\/a>/,
-        `${browser}: ${page} does not carry the WebBrain lockup back to Apocalypse Mode`);
+      assert.match(html, /<a class="kit-brand" href="apocalypse-mode\.html"[\s\S]*?src="\.\.\/\.\.\/icons\/icon128\.png"[\s\S]*?KavachWeb[\s\S]*?data-i18n="ap\.title"[\s\S]*?<\/a>/,
+        `${browser}: ${page} does not carry the KavachWeb lockup back to Apocalypse Mode`);
       assert.match(html, /<div class="(?:title-block|document-heading)">\s*<a class="kit-brand"/,
         `${browser}: ${page} does not sit the signature above its own page title`);
     }
 
     // The hub already names the mode in its h1 and must not link to itself.
     const hub = fs.readFileSync(path.join(uiDir, 'apocalypse-mode.html'), 'utf8');
-    assert.match(hub, /<div class="header-copy"><span class="kit-brand"><img class="kit-brand-logo" src="\.\.\/\.\.\/icons\/icon128\.png"[^>]*><span class="kit-brand-name">WebBrain<\/span><\/span><h1 data-i18n="ap\.title">/,
+    assert.match(hub, /<div class="header-copy"><span class="kit-brand"><img class="kit-brand-logo" src="\.\.\/\.\.\/icons\/icon128\.png"[^>]*><span class="kit-brand-name">KavachWeb<\/span><\/span><h1 data-i18n="ap\.title">/,
       `${browser}: Apocalypse Mode does not sign the title it already names`);
     assert.doesNotMatch(hub, /<a class="kit-brand"/,
       `${browser}: Apocalypse Mode links its own brand lockup back to itself`);
@@ -32128,11 +32128,11 @@ test('every WebBrain page signs its header with the extension logo', () => {
     for (const [page, key] of [['history.html', 'hist.title'], ['traces.html', 'tr.title']]) {
       const html = fs.readFileSync(path.join(uiDir, page), 'utf8');
       assert.match(html, new RegExp(`<h1><img class="brand-mark" src="\\.\\./\\.\\./icons/icon128\\.png"[^>]*><span data-i18n="${key.replace('.', '\\.')}"></span></h1>`),
-        `${browser}: ${page} does not show the WebBrain logo beside a separately translated title`);
+        `${browser}: ${page} does not show the KavachWeb logo beside a separately translated title`);
     }
     const settings = fs.readFileSync(path.join(uiDir, 'settings.html'), 'utf8');
     assert.match(settings, /<h1><img class="brand-mark" src="\.\.\/\.\.\/icons\/icon128\.png"[^>]*><a id="settings-title-link"[^>]*data-i18n="st\.title"><\/a><\/h1>/,
-      `${browser}: Settings does not show the WebBrain logo beside its title link`);
+      `${browser}: Settings does not show the KavachWeb logo beside its title link`);
     for (const page of ['settings.html', 'history.html', 'traces.html']) {
       const html = fs.readFileSync(path.join(uiDir, page), 'utf8');
       assert.match(html, /\.brand-mark \{[\s\S]*?width: \d+px;/,
@@ -32279,7 +32279,7 @@ test('Apocalypse communication slot renders only a bounded fetched bulletin', as
     const uiDir = path.join(ROOT, `src/${browser}/src/ui`);
     const runtime = await import(`${pathToFileURL(path.join(uiDir, 'apocalypse-comm.js')).href}?test=${browser}`);
     assert.equal(runtime.communicationUrl().href, 'https://webbrain.one/apocalypse-comm.html',
-      `${browser}: communication slot does not use the published WebBrain endpoint`);
+      `${browser}: communication slot does not use the published KavachWeb endpoint`);
     assert.equal(runtime.isRenderableMarkup(''), false, `${browser}: empty bulletin is treated as visible`);
     assert.equal(runtime.isRenderableMarkup(' \n<!-- reserved -->\n<!doctype html>'), false,
       `${browser}: placeholder-only bulletin is treated as visible`);
@@ -35143,7 +35143,7 @@ test('Apocalypse Mode keeps summary stats in its header and optional Wikipedia i
       `${prefix}: Apocalypse Mode page header does not match the radioactive settings gateway icon`);
     assert.match(pageHtml, /class="header-copy"[\s\S]*?data-i18n="ap\.title"[\s\S]*?data-i18n="ap\.subtitle"/,
       `${prefix}: Apocalypse Mode title and offline slogan are not grouped in the page header`);
-    assert.match(apocalypseCopy, /'ap\.subtitle': 'WebBrain, ready when the internet isn’t\.'/,
+    assert.match(apocalypseCopy, /'ap\.subtitle': 'KavachWeb, ready when the internet isn’t\.'/,
       `${prefix}: Apocalypse Mode header does not advertise offline access`);
     assert.match(apocalypseCopy, /'ap\.metric\.summary': 'Wikipedia archive statistics'/,
       `${prefix}: header archive stats have no accessible label`);
@@ -39756,12 +39756,12 @@ test('vision Settings copy is explicit, bounded, and mirrored across every local
       `${label}: automatic screenshot policy copy diverged across browsers`);
     assert.ok(chromeLocale['st.display.auto_screenshot.desc']?.trim(),
       `${label}: automatic screenshot policy copy is missing`);
-    assert.match(chromeLocale['st.vision.local.title'], /WebBrain VL 2 450M/,
-      `${label}: local vision title does not identify the shipped WebBrain VL model`);
+    assert.match(chromeLocale['st.vision.local.title'], /KavachWeb VL 2 450M/,
+      `${label}: local vision title does not identify the shipped KavachWeb VL model`);
     assert.match(chromeLocale['st.vision.local.desc'], /WebGPU/,
       `${label}: local vision copy does not identify the explicit hardware probe`);
     assert.match(chromeLocale['st.vision.local.desc'], /webbrain-one\/webbrain-vl-2-450M-onnx/,
-      `${label}: local vision copy does not identify the shipped WebBrain VL model`);
+      `${label}: local vision copy does not identify the shipped KavachWeb VL model`);
     assert.match(chromeLocale['st.vision.local.desc'], /810/,
       `${label}: local vision copy omits the explicit download size`);
     assert.doesNotMatch(chromeLocale['st.vision.local.testing'], /810|Hugging Face/,
@@ -39827,7 +39827,7 @@ test('Cloud Sync settings localize security-sensitive copy in every browser loca
     for (const key of requiredKeys.slice(0, 13)) {
       assert.ok(card.includes(`data-i18n="${key}"`) || card.includes(`data-i18n-html="${key}"`), `${browser}: Cloud Sync markup bypasses ${key}`);
     }
-    assert.doesNotMatch(card, />\s*(?:Encrypted Cloud Sync|WebBrain Compass email|Sync password|Send sign-in link|Replace cloud copy)[^<]*</, `${browser}: Cloud Sync markup retains hard-coded English copy`);
+    assert.doesNotMatch(card, />\s*(?:Encrypted Cloud Sync|KavachWeb Compass email|Sync password|Send sign-in link|Replace cloud copy)[^<]*</, `${browser}: Cloud Sync markup retains hard-coded English copy`);
     assert.match(script, /function describeProfileSyncState\(state\)[\s\S]*?t\('st\.sync\.status\./, `${browser}: runtime sync status should use i18n`);
     assert.match(script, /document\.addEventListener\('wb-locale-changed',[\s\S]*?refreshProfileSyncState\(\);[\s\S]*?\}\);/, `${browser}: language changes should redraw the dynamic sync status`);
     assert.match(script, /window\.confirm\(t\('st\.sync\.confirm\.disable'\)\)/, `${browser}: disable confirmation should use i18n`);
@@ -40140,7 +40140,7 @@ test('webbrain.one homepage showcases a localized Apocalypse Mode readiness stac
   }
   assert.equal(JSON.parse(fs.readFileSync(path.join(ROOT, 'web/build/locales/en.json'), 'utf8'))['apocalypse.video.cta'], 'Watch our video');
   assert.match(template, /<a class="apocalypse-cta" href="#download">\{\{t:download\.title\}\}[\s\S]*?<button[\s\S]*?class="apocalypse-video-link"[\s\S]*?id="apocalypse-video-open"[\s\S]*?aria-haspopup="dialog"[\s\S]*?aria-controls="apocalypse-video-dialog"[\s\S]*?>\{\{t:apocalypse\.video\.cta\}\}<\/button>/,
-    'web: Install WebBrain should keep a Watch our video modal trigger underneath');
+    'web: Install KavachWeb should keep a Watch our video modal trigger underneath');
   assert.match(template, /<dialog[\s\S]*?id="apocalypse-video-dialog"[\s\S]*?<video id="apocalypse-video"[^>]*data-desktop-src="\/assets\/apocalypse-mode\.mp4"[^>]*data-mobile-src="\/assets\/apocalypse-mode\.mp4"/,
     'web: Apocalypse Mode should open the same video dialog pattern as the other homepage players');
   assert.match(template, /function openApocalypseVideo\(\)[\s\S]*?dialog\.showModal\(\)[\s\S]*?video\.play\(\)[\s\S]*?dialog\.addEventListener\('close'[\s\S]*?video\.pause\(\)/,
@@ -40153,7 +40153,7 @@ test('webbrain.one homepage showcases a localized Apocalypse Mode readiness stac
     fs.statSync(path.join(ROOT, 'web/assets/apocalypse-mode.mp4')).size > 100_000,
     'web assets: the Apocalypse Mode video should not be empty',
   );
-  assert.match(generated, /<section class="section apocalypse-section" id="apocalypse"[\s\S]*?WebBrain, ready when the internet isn’t\.[\s\S]*?Watch our video[\s\S]*?WebGPU powered local LLM[\s\S]*?TEXT MODEL · ON DEVICE[\s\S]*?Wikipedia[\s\S]*?First Aid — U\.S\. Army Field Manual/,
+  assert.match(generated, /<section class="section apocalypse-section" id="apocalypse"[\s\S]*?KavachWeb, ready when the internet isn’t\.[\s\S]*?Watch our video[\s\S]*?WebGPU powered local LLM[\s\S]*?TEXT MODEL · ON DEVICE[\s\S]*?Wikipedia[\s\S]*?First Aid — U\.S\. Army Field Manual/,
     'web build: generated English homepage should contain the complete Apocalypse Mode showcase');
 });
 
@@ -40171,7 +40171,7 @@ test('public Apocalypse Mode guide and launch essay document the offline boundar
     'docs: the guide should state the browser-specific WebGPU boundary');
   assert.match(guide, /LiquidAI\/LFM2\.5-2\.6B-ONNX[\s\S]*?does not silently change the provider/,
     'docs: the local text model should be named without implying global provider selection');
-  assert.match(guide, /about 810 MB[\s\S]*?WebBrain VL 2 450M/,
+  assert.match(guide, /about 810 MB[\s\S]*?KavachWeb VL 2 450M/,
     'docs: the shipped local vision model and approximate download size should be current');
   assert.match(guide, /Wikipedia reader[\s\S]*?Emergency Box[\s\S]*?Medical guidance becomes outdated/,
     'docs: the offline readers and medical-content warning should be covered');
@@ -40195,7 +40195,7 @@ test('public Apocalypse Mode guide and launch essay document the offline boundar
 
   assert.match(blogSource, /disaster[\s\S]*?war[\s\S]*?WebGPU[\s\S]*?Once those resources are downloaded, the core is self-contained/,
     'blog: the essay should connect resilience to the self-contained local stack');
-  assert.match(blogSource, /Offline does not mean invulnerable[\s\S]*?Download it while you can[\s\S]*?Keep WebBrain in your browser\. Keep it ready\./,
+  assert.match(blogSource, /Offline does not mean invulnerable[\s\S]*?Download it while you can[\s\S]*?Keep KavachWeb in your browser\. Keep it ready\./,
     'blog: the essay should pair its call to action with honest limitations');
   assert.match(blogPage, /<link rel="canonical" href="https:\/\/webbrain\.one\/blog\/why-we-built-apocalypse-mode">/,
     'blog: the generator should publish the Apocalypse Mode essay with canonical metadata');
@@ -40218,7 +40218,7 @@ test('homepage does not promote the unmerged Ollama launch handoff', () => {
   );
   assert.doesNotMatch(
     generated,
-    /ollama-launch-handoff|Choose an Ollama model, then hand it to WebBrain/,
+    /ollama-launch-handoff|Choose an Ollama model, then hand it to KavachWeb/,
     'web: the generated English homepage should not advertise the unmerged handoff',
   );
   assert.ok(
@@ -40300,14 +40300,14 @@ test('trust rail follows the demo with all four safeguards', () => {
     'web: the video chapter should be separated from the animation and give its thumbnail presence',
   );
 
-  assert.equal(english['security.title'], 'How WebBrain keeps you in control');
+  assert.equal(english['security.title'], 'How KavachWeb keeps you in control');
   assert.equal(english['hero.trust.b1'], 'Read-only Ask Mode by default');
   assert.equal(english['hero.trust.b2'], 'Asks before consequential actions');
   assert.equal(english['hero.trust.b3'], 'Open-source & auditable');
   assert.equal(english['hero.trust.b4'], 'No telemetry, no accounts');
   assert.equal(english['security.video.open_aria'], 'Watch the security video');
   assert.equal(english['security.video.close_aria'], 'Close the security video');
-  assert.equal(turkish['security.title'], 'WebBrain kontrolü sende nasıl tutar');
+  assert.equal(turkish['security.title'], 'KavachWeb kontrolü sende nasıl tutar');
   assert.equal(turkish['hero.trust.b1'], 'Varsayılan olarak salt okunur Sor kipi');
   assert.equal(turkish['hero.trust.b2'], 'Önemli eylemlerden önce sorar');
   assert.equal(turkish['hero.trust.b3'], 'Açık kaynak ve denetlenebilir');
@@ -40342,10 +40342,10 @@ test('web footer includes the Discord invite beside its other social icons', () 
     /href="\{\{t:social\.discord_url\}\}"[^>]*rel="noopener"[^>]*aria-label="\{\{t:social\.discord_label\}\}"[^>]*class="footer-icon"[\s\S]*?<svg viewBox="0 0 16 16"/,
     'web footer: Discord invite should use the established accessible icon-link pattern',
   );
-  assert.equal(english['social.discord_label'], 'WebBrain on Discord');
+  assert.equal(english['social.discord_label'], 'KavachWeb on Discord');
   assert.match(
     generated,
-    /href="https:\/\/discord\.gg\/cgC325ssfw"[^>]*aria-label="WebBrain on Discord"[^>]*class="footer-icon"/,
+    /href="https:\/\/discord\.gg\/cgC325ssfw"[^>]*aria-label="KavachWeb on Discord"[^>]*class="footer-icon"/,
     'web build: generated English footer should include the Discord invite icon',
   );
 });
@@ -40409,7 +40409,7 @@ test('landing demo uses the new captioned videos and keeps the old comparison in
   assert.match(
     template,
     /<dialog[\s\S]*?id="comparison-video-dialog"[\s\S]*?<video id="comparison-video"[^>]*data-desktop-src="\/assets\/demo-desktop\.mp4"[^>]*data-mobile-src="\/assets\/demo-mobile\.mp4"/,
-    'web comparison: the prior Claude-vs-WebBrain pair should live in the responsive modal',
+    'web comparison: the prior Claude-vs-KavachWeb pair should live in the responsive modal',
   );
   assert.match(
     template,
@@ -40419,16 +40419,16 @@ test('landing demo uses the new captioned videos and keeps the old comparison in
   // The test is favorable, so the copy states the result instead of hedging.
   assert.equal(
     english['compare.speed_video.title'],
-    'Local WebBrain beats Claude in Chrome, side by side',
+    'Local KavachWeb beats Claude in Chrome, side by side',
   );
   assert.equal(
     english['compare.speed_video.description'],
-    'Same task, same browser. WebBrain runs Gemma 4 31B on-device and finishes first.',
+    'Same task, same browser. KavachWeb runs Gemma 4 31B on-device and finishes first.',
   );
   assert.equal(english['compare.speed_video.cta'], 'Watch the comparison');
   assert.equal(
     turkish['compare.speed_video.title'],
-    "Yerel WebBrain, Chrome'daki Claude'u yan yana testte geçiyor",
+    "Yerel KavachWeb, Chrome'daki Claude'u yan yana testte geçiyor",
   );
   assert.equal(turkish['compare.speed_video.cta'], 'Karşılaştırmayı izle');
 });
@@ -40999,7 +40999,7 @@ test('new locale dictionaries contain translated copy and preserve functional to
       assert.deepEqual(extract(dropProseAmpersands(translated[key]), /&(?:[a-z]+|#\d+|#x[\da-f]+);/gi), extract(dropProseAmpersands(english[key]), /&(?:[a-z]+|#\d+|#x[\da-f]+);/gi), `${label}/${key}: HTML entity changed`);
       assert.deepEqual(extract(translated[key], /(?:https?:\/\/|(?:chrome-extension|moz-extension):\/\/|(?:chrome|edge|about):\/\/?)[^\s<>"']+/gi), extract(english[key], /(?:https?:\/\/|(?:chrome-extension|moz-extension):\/\/|(?:chrome|edge|about):\/\/?)[^\s<>"']+/gi), `${label}/${key}: URL changed`);
       assert.deepEqual(extract(translated[key], slashCommand), extract(english[key], slashCommand), `${label}/${key}: slash command changed`);
-      assert.equal(extract(translated[key], /WebBrain/g).length, extract(english[key], /WebBrain/g).length, `${label}/${key}: WebBrain brand changed`);
+      assert.equal(extract(translated[key], /KavachWeb/g).length, extract(english[key], /KavachWeb/g).length, `${label}/${key}: KavachWeb brand changed`);
       assert.doesNotMatch(translated[key], /ZXQ(?:PH|ITEM|PROTECTED)/, `${label}/${key}: translation placeholder leaked`);
     }
   };
@@ -41269,12 +41269,12 @@ test('sidepanel onboarding makes Cloud improvement use an explicit persisted cho
     const background = fs.readFileSync(path.join(ROOT, prefix, 'src/background.js'), 'utf8');
 
     assert.match(html, /id="ob-help-improve"[\s\S]*?id="ob-help-improve-checkbox" aria-describedby="ob-help-improve-description" checked[\s\S]*?data-i18n="st\.display\.help_improve\.label"[\s\S]*?id="ob-help-improve-description"[\s\S]*?data-i18n-html="st\.display\.help_improve\.desc_html"/, `${label}: final onboarding step should expose the canonical Help Improve checkbox and disclosure`);
-    assert.match(panel, /storage\.local\.get\(\['onboardingComplete', 'helpImproveWebBrain'\]\)/, `${label}: onboarding should hydrate completion and privacy state together`);
-    assert.match(panel, /persistedHelpImprove = stored\.helpImproveWebBrain !== false/, `${label}: onboarding should preserve the existing default-on preference`);
+    assert.match(panel, /storage\.local\.get\(\['onboardingComplete', 'helpImproveKavachWeb'\]\)/, `${label}: onboarding should hydrate completion and privacy state together`);
+    assert.match(panel, /persistedHelpImprove = stored\.helpImproveKavachWeb !== false/, `${label}: onboarding should preserve the existing default-on preference`);
     assert.match(panel, /await sendToBackground\('set_help_improve_preference', \{ enabled: requestedValue \}\);\s*persistedHelpImprove = requestedValue;\s*if \(cloudReady\) showCloudReady\(\);/, `${label}: a successful privacy retry should restore Cloud status instead of leaving the error visible`);
-    assert.match(background, new RegExp(`case 'set_help_improve_preference':[\\s\\S]*?typeof msg\\.enabled !== 'boolean'[\\s\\S]*?await ${runtime}\\.storage\\.local\\.get\\('helpImproveWebBrain'\\)[\\s\\S]*?await ${runtime}\\.storage\\.local\\.set\\(\\{ helpImproveWebBrain: msg\\.enabled \\}\\);[\\s\\S]*?await providerManager\\.load\\(\\);[\\s\\S]*?await ${runtime}\\.storage\\.local\\.set\\(\\{ helpImproveWebBrain: previousEnabled \\}\\)\\.catch\\(\\(\\) => \\{\\}\\)[\\s\\S]*?return \\{ ok: true, enabled: msg\\.enabled \\};`), `${label}: a failed provider reload should roll back the stored privacy preference before the write is treated as failed`);
+    assert.match(background, new RegExp(`case 'set_help_improve_preference':[\\s\\S]*?typeof msg\\.enabled !== 'boolean'[\\s\\S]*?await ${runtime}\\.storage\\.local\\.get\\('helpImproveKavachWeb'\\)[\\s\\S]*?await ${runtime}\\.storage\\.local\\.set\\(\\{ helpImproveKavachWeb: msg\\.enabled \\}\\);[\\s\\S]*?await providerManager\\.load\\(\\);[\\s\\S]*?await ${runtime}\\.storage\\.local\\.set\\(\\{ helpImproveKavachWeb: previousEnabled \\}\\)\\.catch\\(\\(\\) => \\{\\}\\)[\\s\\S]*?return \\{ ok: true, enabled: msg\\.enabled \\};`), `${label}: a failed provider reload should roll back the stored privacy preference before the write is treated as failed`);
     assert.match(panel, /catch \(error\) \{[\s\S]*?helpImproveCheckbox\.checked = persistedHelpImprove[\s\S]*?return false;/, `${label}: failed privacy persistence should restore the last saved choice`);
-    assert.match(panel, /function showCloudReady\(\) \{[\s\S]*?setHelpImproveVisible\(true\)/, `${label}: the choice should appear when WebBrain Compass is active`);
+    assert.match(panel, /function showCloudReady\(\) \{[\s\S]*?setHelpImproveVisible\(true\)/, `${label}: the choice should appear when KavachWeb Compass is active`);
     assert.match(panel, /function showLocalChoices\(choices\) \{[\s\S]*?setHelpImproveVisible\(false\)/, `${label}: the Cloud-only choice should stay out of local-model setup`);
     assert.match(panel, /function showProviderFallback\([^)]*\) \{[\s\S]*?providerUnknown = statusKey === 'ob\.tokens\.detect_failed'[\s\S]*?setHelpImproveVisible\(providerUnknown\)[\s\S]*?skipBtn\.disabled = !providerUnknown/, `${label}: a failed provider scan should keep Skip gated and show the Cloud disclosure until the active provider is known`);
     assert.match(panel, /async function scanLocalModels\(\) \{[\s\S]*?settingsBtn\.disabled = true;\s*skipBtn\.disabled = true;/, `${label}: Skip should stay disabled until provider detection decides whether the Cloud disclosure applies`);
@@ -41537,7 +41537,7 @@ test('first install opens a browser-aware panel launcher without fake toolbar co
   assert.match(chromePanelHtml, /id="pin-coachmark-done"[\s\S]*?id="pin-coachmark-skip"/, 'chrome: pin coachmark should provide confirm and explicit skip actions');
   assert.doesNotMatch(firefoxPanelHtml, /id="pin-coachmark"/, 'firefox: sidebar should not point at a Chromium-only panel pin');
   assert.match(chromePanelJs, /sidePanel\?\.getLayout\?\.\(\)/, 'chrome: coachmark should read the real left/right side-panel layout when supported');
-  assert.match(chromePanelJs, /await pinCoachmarkDismissed\.catch\(\(\)\s*=>\s*\{\}\);[\s\S]*?storage\.local\.get\(\['onboardingComplete', 'helpImproveWebBrain'\]\)/, 'chrome: product onboarding should wait until the pin coachmark is dismissed before loading setup and privacy state');
+  assert.match(chromePanelJs, /await pinCoachmarkDismissed\.catch\(\(\)\s*=>\s*\{\}\);[\s\S]*?storage\.local\.get\(\['onboardingComplete', 'helpImproveKavachWeb'\]\)/, 'chrome: product onboarding should wait until the pin coachmark is dismissed before loading setup and privacy state');
   assert.match(chromePanelJs, /initPinCoachmark[\s\S]*?catch\s*\{[\s\S]*?\}[\s\S]*?\}\)\(\)/, 'chrome: pin coachmark setup failures must not reject into onboarding');
   assert.match(chromePanelJs, /for \(const layer of backgroundLayers\) \{[\s\S]*?layer\.inert = true/, 'chrome: modal coachmark should make the rest of the panel inert');
   assert.match(chromePanelJs, /for \(const \[layer, wasInert\] of backgroundInertState\) \{[\s\S]*?layer\.inert = wasInert/, 'chrome: modal coachmark should restore prior inert state on dismissal');
@@ -41952,7 +41952,7 @@ test('run screenshot capture keeps Firefox backgrounded while Chrome retains its
         },
         search: async ({ id }) => [{
           id,
-          filename: `/Users/test/Downloads/WebBrain/${downloads.at(-1).filename}`,
+          filename: `/Users/test/Downloads/KavachWeb/${downloads.at(-1).filename}`,
           state: 'complete',
         }],
       },
@@ -41969,7 +41969,7 @@ test('run screenshot capture keeps Firefox backgrounded while Chrome retains its
     }
     assert.equal(downloads[0].filename, 'run-after.png', `${label}: after screenshot should be saved under the requested filename`);
     assert.deepEqual(result, {
-      filename: '/Users/test/Downloads/WebBrain/run-after.png',
+      filename: '/Users/test/Downloads/KavachWeb/run-after.png',
       downloadId: 99,
       state: 'complete',
     });
@@ -41989,9 +41989,9 @@ test('saved download results wait for completion and expose the browser-resolved
         async search({ id }) {
           searches += 1;
           if (searches === 1) {
-            return [{ id, filename: '/Users/test/Downloads/WebBrain/report.pdf', state: 'in_progress' }];
+            return [{ id, filename: '/Users/test/Downloads/KavachWeb/report.pdf', state: 'in_progress' }];
           }
-          return [{ id, filename: '/Users/test/Downloads/WebBrain/report (1).pdf', state: 'complete' }];
+          return [{ id, filename: '/Users/test/Downloads/KavachWeb/report (1).pdf', state: 'complete' }];
         },
       },
     };
@@ -42005,7 +42005,7 @@ test('saved download results wait for completion and expose the browser-resolved
 
     assert.deepEqual(result, {
       downloadId: 73,
-      filename: '/Users/test/Downloads/WebBrain/report (1).pdf',
+      filename: '/Users/test/Downloads/KavachWeb/report (1).pdf',
       state: 'complete',
     }, `${label}: should return the completed browser path, including conflict renames`);
     assert.equal(searches, 2, `${label}: should not report an in-progress download as saved`);
@@ -42037,7 +42037,7 @@ test('saved download results reject interrupted and timed-out saves', async () =
           async search() {
             return [{
               id: 75,
-              filename: '/Users/test/Downloads/WebBrain/large-recording.webm',
+              filename: '/Users/test/Downloads/KavachWeb/large-recording.webm',
               state: 'in_progress',
             }];
           },
@@ -42054,7 +42054,7 @@ test('saved download results reject interrupted and timed-out saves', async () =
   }
 });
 
-test('WebBrain save surfaces report completed paths while durable download context stays id-only', async () => {
+test('KavachWeb save surfaces report completed paths while durable download context stays id-only', async () => {
   for (const [label, prefix] of [
     ['chrome', 'src/chrome'],
     ['firefox', 'src/firefox'],
@@ -43334,7 +43334,7 @@ test('sidepanel subscribe error card clears DOM without HTML reinterpretation', 
       `${subscribeDeclaration}\n${panel.slice(parserStart, parserEnd + 2)}\nreturn parseSubscribeError;`,
     )();
     assert.deepEqual(
-      parseSubscribeError('Paid allowance used.\nUpgrade to WebBrain Plus: https://api.webbrain.one/upgrade?client_reference_id=device'),
+      parseSubscribeError('Paid allowance used.\nUpgrade to KavachWeb Plus: https://api.webbrain.one/upgrade?client_reference_id=device'),
       {
         url: 'https://api.webbrain.one/upgrade?client_reference_id=device',
         message: 'Paid allowance used.',
@@ -43901,7 +43901,7 @@ test('all locales explain CapSolver auto-enablement and key validation', async (
   }
 });
 
-test('Help Improve WebBrain is default-on in Advanced, persisted, and reloads Compass request config', async () => {
+test('Help Improve KavachWeb is default-on in Advanced, persisted, and reloads Compass request config', async () => {
   for (const [label, prefix, runtime] of [
     ['chrome', 'src/chrome', 'chrome'],
     ['firefox', 'src/firefox', 'browser'],
@@ -43918,10 +43918,10 @@ test('Help Improve WebBrain is default-on in Advanced, persisted, and reloads Co
     const advancedIndex = html.indexOf('<details class="advanced-settings">');
     const advancedEnd = html.indexOf('</details>', advancedIndex);
     assert.ok(advancedIndex > -1 && helpImproveIndex > advancedIndex && helpImproveIndex < advancedEnd, `${label}: Help Improve should live in General > Advanced`);
-    assert.match(settings, /helpImproveToggle\.checked = stored\.helpImproveWebBrain !== false/, `${label}: missing default-on storage hydration`);
-    assert.match(settings, new RegExp(`${runtime}\\.storage\\.local\\.set\\(\\{ helpImproveWebBrain: helpImproveToggle\\.checked \\}\\)`), `${label}: setting should persist`);
-    assert.match(locale, /'st\.display\.help_improve\.label': 'Help Improve WebBrain'/, `${label}: setting label missing`);
-    assert.match(locale, /On by default[^']*<u>Local-model and bring-your-own API requests are never collected by WebBrain\.<\/u>/, `${label}: setting disclosure should explain and emphasize its default and scope`);
+    assert.match(settings, /helpImproveToggle\.checked = stored\.helpImproveKavachWeb !== false/, `${label}: missing default-on storage hydration`);
+    assert.match(settings, new RegExp(`${runtime}\\.storage\\.local\\.set\\(\\{ helpImproveKavachWeb: helpImproveToggle\\.checked \\}\\)`), `${label}: setting should persist`);
+    assert.match(locale, /'st\.display\.help_improve\.label': 'Help Improve KavachWeb'/, `${label}: setting label missing`);
+    assert.match(locale, /On by default[^']*<u>Local-model and bring-your-own API requests are never collected by KavachWeb\.<\/u>/, `${label}: setting disclosure should explain and emphasize its default and scope`);
     assert.match(locale, /Turn it off in General → Advanced to exclude future Compass interactions/, `${label}: provider disclosure should point to General > Advanced`);
     for (const localeFile of fs.readdirSync(localeDir).filter((name) => name.endsWith('.js'))) {
       const translatedLocale = fs.readFileSync(path.join(localeDir, localeFile), 'utf8');
@@ -43931,9 +43931,9 @@ test('Help Improve WebBrain is default-on in Advanced, persisted, and reloads Co
       assert.ok(providerDisclosure.includes(translatedMessages['st.display.advanced']), `${label}/${localeFile}: provider disclosure should name the localized Advanced section`);
       assert.match(providerDisclosure, /<u>[^<]+<\/u>/, `${label}/${localeFile}: provider local/BYO exclusion should also be underlined`);
     }
-    assert.match(manager, /const HELP_IMPROVE_WEBBRAIN_KEY = 'helpImproveWebBrain';/, `${label}: provider manager setting key missing`);
-    assert.match(manager, /helpImproveWebBrain = data\[HELP_IMPROVE_WEBBRAIN_KEY\] !== false/, `${label}: Compass provider config should default improvement use on`);
-    assert.match(background, /changes\.providers \|\| changes\.activeProvider \|\| changes\.helpImproveWebBrain/, `${label}: Compass provider config should reload after opt-out changes`);
+    assert.match(manager, /const HELP_IMPROVE_WEBBRAIN_KEY = 'helpImproveKavachWeb';/, `${label}: provider manager setting key missing`);
+    assert.match(manager, /helpImproveKavachWeb = data\[HELP_IMPROVE_WEBBRAIN_KEY\] !== false/, `${label}: Compass provider config should default improvement use on`);
+    assert.match(background, /changes\.providers \|\| changes\.activeProvider \|\| changes\.helpImproveKavachWeb/, `${label}: Compass provider config should reload after opt-out changes`);
   }
 });
 
@@ -43952,7 +43952,7 @@ test('settings General search filters visible and Advanced controls', () => {
   }
 });
 
-test('Settings > General configures WebBrain download subdirectory with system-default fallback', () => {
+test('Settings > General configures KavachWeb download subdirectory with system-default fallback', () => {
   for (const [label, prefix, runtime] of [
     ['chrome', 'src/chrome', 'chrome'],
     ['firefox', 'src/firefox', 'browser'],
@@ -43986,7 +43986,7 @@ test('Settings > General configures WebBrain download subdirectory with system-d
   }
 });
 
-test('automatic WebBrain tab grouping has a portable user opt-out', async () => {
+test('automatic KavachWeb tab grouping has a portable user opt-out', async () => {
   const chromePreferencePath = path.join(ROOT, 'src/chrome/src/tab-group-preference.js');
   const firefoxPreferencePath = path.join(ROOT, 'src/firefox/src/tab-group-preference.js');
   const chromePreferenceSource = fs.readFileSync(chromePreferencePath, 'utf8');
@@ -44278,7 +44278,7 @@ test('Firefox browser shortcuts avoid reserved defaults and stay window-scoped',
     'focus-input': 'Alt+Shift+I',
   };
   for (const [command, shortcut] of Object.entries(expected)) {
-    assert.equal(manifest.commands[command].suggested_key.default, shortcut, `${command} should extend Firefox's existing WebBrain shortcut family`);
+    assert.equal(manifest.commands[command].suggested_key.default, shortcut, `${command} should extend Firefox's existing KavachWeb shortcut family`);
   }
   const reservedDefaults = new Set(['Ctrl+Shift+A', 'Ctrl+Shift+X', 'Ctrl+Shift+D', 'Ctrl+Period']);
   for (const command of Object.keys(expected)) {
@@ -44467,8 +44467,8 @@ test('sidepanel reports missing background responses without res.content crash',
       path.join(ROOT, panelRel.replace('/ui/sidepanel.js', '/run-reconnect.js')),
       'utf8',
     );
-    assert.match(panel, /No response from WebBrain background/, `${label}: missing background response should become a clear error`);
-    assert.match(panel, /formatBackgroundSendError\(action/, `${label}: runtime disconnects should be rewritten as WebBrain errors`);
+    assert.match(panel, /No response from KavachWeb background/, `${label}: missing background response should become a clear error`);
+    assert.match(panel, /formatBackgroundSendError\(action/, `${label}: runtime disconnects should be rewritten as KavachWeb errors`);
     assert.match(reconnect, /Receiving end does not exist/, `${label}: Chrome missing-receiver errors should be recognized`);
     assert.match(panel, /response == null/, `${label}: sendToBackground should reject nullish responses`);
     assert.equal((panel.match(/res\?\.content && (?:currentAssistantEl|assistantEl)/g) || []).length >= 2, true, `${label}: chat and continue should not dereference missing responses`);
@@ -45729,7 +45729,7 @@ test('settings page drops stale provider activation completions', () => {
   }
 });
 
-test('WebBrain Compass branding stays distinct from the webbrain.cloud service', () => {
+test('KavachWeb Compass branding stays distinct from the webbrain.cloud service', () => {
   const compassLocaleKeys = [
     'sp.subscribe.allowance_used',
     'ob.cloud.body',
@@ -45758,22 +45758,22 @@ test('WebBrain Compass branding stays distinct from the webbrain.cloud service',
       `src/${browser}/src/ui/sidepanel.js`,
     ];
     const manager = fs.readFileSync(path.join(ROOT, extensionFacingFiles[0]), 'utf8');
-    assert.match(manager, /const WEBBRAIN_CLOUD_PROVIDER_LABEL = 'WebBrain Compass';/, `${browser}: the managed LLM provider should define the Compass name`);
+    assert.match(manager, /const WEBBRAIN_CLOUD_PROVIDER_LABEL = 'KavachWeb Compass';/, `${browser}: the managed LLM provider should define the Compass name`);
     assert.match(manager, /label: WEBBRAIN_CLOUD_PROVIDER_LABEL,/, `${browser}: the managed LLM provider should use the canonical Compass name`);
     for (const relativePath of extensionFacingFiles) {
       const source = fs.readFileSync(path.join(ROOT, relativePath), 'utf8');
-      assert.doesNotMatch(source, /WebBrain Cloud/, `${relativePath}: extension-facing provider copy should not use the separate service name`);
+      assert.doesNotMatch(source, /KavachWeb Cloud/, `${relativePath}: extension-facing provider copy should not use the separate service name`);
     }
 
     const localeDir = path.join(ROOT, `src/${browser}/src/ui/locales`);
     for (const filename of fs.readdirSync(localeDir).filter((name) => name.endsWith('.js'))) {
       const locale = fs.readFileSync(path.join(localeDir, filename), 'utf8');
-      assert.doesNotMatch(locale, /WebBrain Cloud/, `${browser}/${filename}: extension-facing provider copy should not use the separate service name`);
+      assert.doesNotMatch(locale, /KavachWeb Cloud/, `${browser}/${filename}: extension-facing provider copy should not use the separate service name`);
       for (const key of compassLocaleKeys) {
         const brandedLine = locale.split('\n').find((line) => line.includes(`'${key}'`) || line.includes(`"${key}"`));
         assert.ok(brandedLine, `${browser}/${filename}: missing ${key}`);
         const brandedValue = brandedLine.slice(brandedLine.indexOf(':') + 1);
-        assert.match(brandedValue, /WebBrain Compass/, `${browser}/${filename}: ${key} should keep the Compass product name unlocalized`);
+        assert.match(brandedValue, /KavachWeb Compass/, `${browser}/${filename}: ${key} should keep the Compass product name unlocalized`);
         if (providerCopyKeys.has(key)) {
           assert.doesNotMatch(brandedValue, localizedCloudAlias, `${browser}/${filename}: ${key} should not use a legacy Cloud alias for Compass`);
         }
@@ -45783,11 +45783,11 @@ test('WebBrain Compass branding stays distinct from the webbrain.cloud service',
 
   const cloudClient = fs.readFileSync(path.join(ROOT, 'ci/lib/webbrain-client.mjs'), 'utf8');
   assert.match(cloudClient, /https:\/\/webbrain\.cloud/, 'the E2E client should keep targeting the separate webbrain.cloud service');
-  assert.match(cloudClient, /WebBrain Cloud returned HTTP/, 'the webbrain.cloud service should retain its own display name');
-  assert.doesNotMatch(cloudClient, /WebBrain Compass/, 'the webbrain.cloud E2E client must not be renamed to Compass');
+  assert.match(cloudClient, /KavachWeb Cloud returned HTTP/, 'the webbrain.cloud service should retain its own display name');
+  assert.doesNotMatch(cloudClient, /KavachWeb Compass/, 'the webbrain.cloud E2E client must not be renamed to Compass');
 });
 
-test('provider picker exposes only WebBrain Compass, configured providers, and More', () => {
+test('provider picker exposes only KavachWeb Compass, configured providers, and More', () => {
   for (const [label, panelRel, settingsRel, settingsHtmlRel] of [
     ['chrome', 'src/chrome/src/ui/sidepanel.js', 'src/chrome/src/ui/settings.js', 'src/chrome/src/ui/settings.html'],
     ['firefox', 'src/firefox/src/ui/sidepanel.js', 'src/firefox/src/ui/settings.js', 'src/firefox/src/ui/settings.html'],
@@ -45797,7 +45797,7 @@ test('provider picker exposes only WebBrain Compass, configured providers, and M
     const settingsHtml = fs.readFileSync(path.join(ROOT, settingsHtmlRel), 'utf8');
 
     assert.match(panel, /id !== 'webbrain_cloud' && config\?\.configured === true/, `${label}: picker should filter to configured non-cloud providers`);
-    assert.match(panel, /cloudOption\.value = 'webbrain_cloud'/, `${label}: WebBrain Compass should always be offered`);
+    assert.match(panel, /cloudOption\.value = 'webbrain_cloud'/, `${label}: KavachWeb Compass should always be offered`);
     assert.match(panel, /MORE_PROVIDERS_OPTION_VALUE = '__more_providers__'/, `${label}: More sentinel missing`);
     assert.match(panel, /providerSelect\.value = selectedProviderId;[\s\S]*?await openProvidersSettingsPage\(\);[\s\S]*?return;/, `${label}: More should restore the selection and stop before activation`);
     assert.match(panel, /settings\.html#providers/, `${label}: More should deep-link to Providers settings`);
@@ -45959,11 +45959,11 @@ test('settings warns on missing or short API keys and shows the Ollama localhost
     assert.match(
       settings,
       /definitionId === 'ollama'[\s\S]*?provider-ollama-warning[\s\S]*?OLLAMA_ORIGINS="\$\{escapeHtml\(extensionOrigin\)\}" ollama serve[\s\S]*?https:\/\/www\.webbrain\.one\/blog\/ollama-launch-handoff[\s\S]*?target="_blank" rel="noopener noreferrer"/,
-      `${label}: Ollama card should include the current WebBrain origin command and external handoff link`,
+      `${label}: Ollama card should include the current KavachWeb origin command and external handoff link`,
     );
     assert.ok(
       settings.includes(`const extensionOrigin = ${runtimeGlobal}.runtime.getURL('').replace(/\\/$/, '');`),
-      `${label}: Ollama guidance should derive this WebBrain installation's exact extension origin`,
+      `${label}: Ollama guidance should derive this KavachWeb installation's exact extension origin`,
     );
     assert.doesNotMatch(settings, /OLLAMA_ORIGINS="\*" ollama serve/, `${label}: Ollama card should not recommend wildcard web origins`);
     assert.doesNotMatch(settings, /OLLAMA_ORIGINS="(?:chrome|moz)-extension:\/\/\*/, `${label}: Ollama card should not allow every installed extension`);
@@ -46114,7 +46114,7 @@ test('settings exposes compatibility controls and native Anthropic custom reques
   }
 });
 
-test('settings scopes WebBrain Compass billing button to provider card only', () => {
+test('settings scopes KavachWeb Compass billing button to provider card only', () => {
   for (const [label, settingsRel, htmlRel] of [
     ['chrome', 'src/chrome/src/ui/settings.js', 'src/chrome/src/ui/settings.html'],
     ['firefox', 'src/firefox/src/ui/settings.js', 'src/firefox/src/ui/settings.html'],
@@ -46123,7 +46123,7 @@ test('settings scopes WebBrain Compass billing button to provider card only', ()
     const html = fs.readFileSync(path.join(ROOT, htmlRel), 'utf8');
     assert.doesNotMatch(html, /account-section/, `${label}: top-level account section should be removed`);
     assert.doesNotMatch(settings, /renderAuthSection/, `${label}: top-level billing renderer should be removed`);
-    assert.match(settings, /id === 'webbrain_cloud'[\s\S]*btn-manage-billing/, `${label}: billing button should be created only for WebBrain Compass`);
+    assert.match(settings, /id === 'webbrain_cloud'[\s\S]*btn-manage-billing/, `${label}: billing button should be created only for KavachWeb Compass`);
     assert.match(settings, /document\.querySelectorAll\('\.btn-manage-billing'\)[\s\S]*window\.open\(href, '_blank', 'noopener,noreferrer'\)/, `${label}: billing button should open the account portal`);
   }
 });
@@ -47921,7 +47921,7 @@ test('sidepanel allows safe slash commands and queues normal messages while busy
     );
     assert.match(
       locale,
-      /'sp\.slash\.busy_only_oob': 'Messages are queued while WebBrain is busy\. Only \/help, \/progress, \/scratchpad, \/memory, \/schedule --list, \/watch, \/dangerously-skip-permissions, \/screenshot, \/export, \/export --traces, and \/verbose can run immediately as slash commands\./,
+      /'sp\.slash\.busy_only_oob': 'Messages are queued while KavachWeb is busy\. Only \/help, \/progress, \/scratchpad, \/memory, \/schedule --list, \/watch, \/dangerously-skip-permissions, \/screenshot, \/export, \/export --traces, and \/verbose can run immediately as slash commands\./,
       `${label}: busy slash notice should explain queued messages and safe slash commands`,
     );
   }
@@ -48463,7 +48463,7 @@ test('selection shortcut localizations cover every interface locale with browser
     assert.equal(chinese.strings.includePageContext, '包含页面和对话上下文', `${label}: the Chinese shortcut should localize the full-context choice`);
     assert.equal(chinese.strings.hideShortcut, '隐藏此项', `${label}: the Chinese shortcut should use the compact Hide this label`);
     assert.equal(getLocalization('en').strings.askSelection, 'Add to chat', `${label}: the native selection action should retain its concise label`);
-    assert.equal(getLocalization('en').strings.askHighlightedText, 'Ask WebBrain about this', `${label}: the webpage shortcut should retain its original prompt`);
+    assert.equal(getLocalization('en').strings.askHighlightedText, 'Ask KavachWeb about this', `${label}: the webpage shortcut should retain its original prompt`);
     assert.equal(getLocalization('en').strings.addSelectionToChat, 'Add this to chat', `${label}: the selected-answer action should use the explicit chat label`);
     assert.equal(getLocalization('en').strings.hideShortcut, 'Hide this', `${label}: the English shortcut should use the compact footer label`);
     assert.equal(chinese.dir, 'ltr', `${label}: Chinese should retain left-to-right layout`);
@@ -49746,11 +49746,11 @@ test('selection prompt display formatter hides untrusted wrappers from the chat 
     ['chrome', buildSelectionPromptCh, buildFullContextSelectionPromptCh, buildContextMenuPromptCh, formatSelectionPromptForDisplayCh],
     ['firefox', buildSelectionPromptFx, buildFullContextSelectionPromptFx, buildContextMenuPromptFx, formatSelectionPromptForDisplayFx],
   ]) {
-    const custom = buildSelectionPrompt('IMPORTANT SAFETY NOTICE\nWebBrain Act mode…', 'custom', 'Should this be on the homepage?');
+    const custom = buildSelectionPrompt('IMPORTANT SAFETY NOTICE\nKavachWeb Act mode…', 'custom', 'Should this be on the homepage?');
     const customDisplay = formatSelectionPromptForDisplay(custom);
     assert.equal(
       customDisplay,
-      'Should this be on the homepage?\n\nSelected text:\nIMPORTANT SAFETY NOTICE\nWebBrain Act mode…',
+      'Should this be on the homepage?\n\nSelected text:\nIMPORTANT SAFETY NOTICE\nKavachWeb Act mode…',
       `${label}: custom questions should show the user question and selection without model wrappers`,
     );
     assert.doesNotMatch(customDisplay, /untrusted_page_content/, `${label}: display text must not include boundary tags`);
@@ -49878,10 +49878,10 @@ test('selection shortcut is shipped, enabled by default, and keeps browser-speci
     assert.match(content, /function applyLocalization\(\)[\s\S]*?host\.dir = localization\.dir;[\s\S]*?\.action-label`\);[\s\S]*?label\.textContent = strings\[action\];/, `${label}: localization should update action labels without replacing their icons`);
     assert.match(content, /shortcut\.setAttribute\('aria-label', strings\.askHighlightedText\);[\s\S]*?popup\.setAttribute\('aria-label', strings\.askHighlightedText\);/, `${label}: webpage shortcut localization should retain the selected-text prompt`);
     assert.match(content, /class="shortcut-icon" aria-hidden="true">\?<\/span>/, `${label}: shortcut should use the compact question-mark icon`);
-    assert.match(content, /<button class="shortcut" type="button" aria-label="Ask WebBrain about this" title="Ask WebBrain about this" hidden>/, `${label}: shortcut fallback copy should retain its original selected-text prompt`);
+    assert.match(content, /<button class="shortcut" type="button" aria-label="Ask KavachWeb about this" title="Ask KavachWeb about this" hidden>/, `${label}: shortcut fallback copy should retain its original selected-text prompt`);
     assert.match(content, /\.shortcut \{[\s\S]*?border:1px solid rgba\(108,99,255,\.34\);[\s\S]*?background:var\(--bg\); color:var\(--accent\);[\s\S]*?box-shadow:0 10px 26px rgba\(35,30,95,\.22\)/, `${label}: shortcut should retain its purple treatment`);
     assert.match(content, /\.popup \{[\s\S]*?max-height:calc\(100vh - 16px\); overflow-y:auto; overscroll-behavior:contain;/, `${label}: expanded popup should remain scrollable inside short viewports`);
-    assert.doesNotMatch(content, /M6\.8 8\.5 9\.2 14l2\.8-3\.4 2\.8 3\.4 2\.4-5\.5/, `${label}: discarded WebBrain W outline should be removed`);
+    assert.doesNotMatch(content, /M6\.8 8\.5 9\.2 14l2\.8-3\.4 2\.8 3\.4 2\.4-5\.5/, `${label}: discarded KavachWeb W outline should be removed`);
     assert.doesNotMatch(content, /M12 2\.8c\.65 3\.78/, `${label}: Claude-like sparkle icon should be removed`);
     assert.match(content, /const MAX_SELECTION_HIGHLIGHT_RECTS = 200;/, `${label}: selection highlights should have a hard DOM-node limit`);
     assert.match(content, /function collectVisibleHighlightRects\(rects\)[\s\S]*?rect\.top < window\.innerHeight[\s\S]*?visibleRects\.length >= MAX_SELECTION_HIGHLIGHT_RECTS/, `${label}: selection snapshots should retain only a bounded set of visible lines`);
@@ -52683,7 +52683,7 @@ test('ScheduledJobManager requeues when the target tab is already running', asyn
     await h.manager.handleAlarm(h.alarmName(created.jobId));
     const job = h.jobs()[0];
     assert.equal(job.status, 'queued', `${label}: busy tab should queue`);
-    assert.match(job.lastError, /active WebBrain run/, `${label}: queue reason should be recorded`);
+    assert.match(job.lastError, /active KavachWeb run/, `${label}: queue reason should be recorded`);
     assert.equal(h.alarms.get(h.alarmName(created.jobId)).when, now + SchedulerMod.QUEUE_RETRY_MS);
   }
 });
@@ -52983,7 +52983,7 @@ test('ScheduledJobManager requeues same-tab scheduled alarm races', async () => 
 
     const secondJob = h.jobs().find((job) => job.id === second.jobId);
     assert.equal(secondJob.status, 'queued', `${label}: second same-tab alarm should queue`);
-    assert.match(secondJob.lastError, /active WebBrain run/, `${label}: queue reason should mention active run`);
+    assert.match(secondJob.lastError, /active KavachWeb run/, `${label}: queue reason should mention active run`);
     assert.equal(runCount, 1, `${label}: second job should not enter processMessage while first is active`);
 
     finishFirst();
@@ -53011,7 +53011,7 @@ test('ScheduledJobManager requeues agent active-run errors', async () => {
     await h.manager.handleAlarm(h.alarmName(created.jobId));
     const job = h.jobs()[0];
     assert.equal(job.status, 'queued', `${label}: active-run exception should queue, not fail`);
-    assert.match(job.lastError, /active WebBrain run/, `${label}: queue reason should mention active run`);
+    assert.match(job.lastError, /active KavachWeb run/, `${label}: queue reason should mention active run`);
     assert.equal(h.alarms.get(h.alarmName(created.jobId)).when, now + SchedulerMod.QUEUE_RETRY_MS);
   }
 });
@@ -59485,12 +59485,12 @@ test('MCP bridge settings are Chromium-only, live under Advanced, and keep setup
   assert.match(chromeSettings, /url\.protocol !== 'ws:'[\s\S]*127\.0\.0\.1[\s\S]*localhost[\s\S]*\[::1\]/, 'settings should reject non-loopback bridge URLs before saving');
   assert.match(chromeLocale, /'st\.display\.cloud_bridge\.label': 'MCP'/, 'Chrome English MCP label missing');
   assert.match(chromeLocale, /Connect one local controller to this Chromium profile using port 17374\./, 'MCP copy should explain the local listener');
-  assert.doesNotMatch(chromeLocale, /'st\.display\.cloud_bridge\.desc':[^\n]*(?:WebBrain Cloud|WebBrain Compass)/, 'MCP description should not mention WebBrain Cloud or Compass');
+  assert.doesNotMatch(chromeLocale, /'st\.display\.cloud_bridge\.desc':[^\n]*(?:KavachWeb Cloud|KavachWeb Compass)/, 'MCP description should not mention KavachWeb Cloud or Compass');
   for (const filename of fs.readdirSync(path.join(ROOT, 'src/chrome/src/ui/locales')).filter((name) => name.endsWith('.js'))) {
     const locale = fs.readFileSync(path.join(ROOT, 'src/chrome/src/ui/locales', filename), 'utf8');
     assert.match(locale, /'st\.display\.cloud_bridge\.label': 'MCP'/, `${filename}: MCP title should stay language-neutral`);
     assert.match(locale, /'st\.display\.cloud_bridge\.url_placeholder': 'ws:\/\/127\.0\.0\.1:17374\/extension'/, `${filename}: MCP placeholder should use the MCP listener`);
-    assert.doesNotMatch(locale, /'st\.display\.cloud_bridge\.desc':[^\n]*(?:WebBrain Cloud|WebBrain Compass|LM Studio|17373|17375)/, `${filename}: MCP description should mention only the MCP destination`);
+    assert.doesNotMatch(locale, /'st\.display\.cloud_bridge\.desc':[^\n]*(?:KavachWeb Cloud|KavachWeb Compass|LM Studio|17373|17375)/, `${filename}: MCP description should mention only the MCP destination`);
   }
 
   for (const rel of ['README.md', 'mcp-server/README.md', 'lmstudio-plugin/README.md']) {
@@ -61825,7 +61825,7 @@ test('Chrome exposes separate endpoint-free WebGPU text and vision providers', a
   }
 });
 
-test('vision routing keeps the WebBrain VL fallback behind explicit overrides and active raw vision', async () => {
+test('vision routing keeps the KavachWeb VL fallback behind explicit overrides and active raw vision', async () => {
   const manager = new ProviderManagerCh();
   const activeVision = { name: 'webbrain-cloud', model: 'cloud-vision', supportsVision: true };
   const activeText = { name: 'text-only', supportsVision: false };
@@ -62452,7 +62452,7 @@ test('Apocalypse enable keeps a selected Bonsai preset and does not auto-downloa
   }
 });
 
-test('WebGPU worker follows local text-generation and WebBrain VL vision contracts', () => {
+test('WebGPU worker follows local text-generation and KavachWeb VL vision contracts', () => {
   const worker = fs.readFileSync(path.join(ROOT, 'src/chrome/src/offscreen/inference-worker.js'), 'utf8');
   const host = fs.readFileSync(path.join(ROOT, 'src/chrome/src/offscreen/vision-inference-host.js'), 'utf8');
   const background = fs.readFileSync(path.join(ROOT, 'src/chrome/src/background.js'), 'utf8');
@@ -62665,7 +62665,7 @@ test('WebGPU worker follows local text-generation and WebBrain VL vision contrac
   assert.match(apocalypseHtml, /data-vision-download-action="resume"/);
   assert.match(apocalypseHtml, /data-vision-download-action="stop"/);
   assert.match(apocalypseHtml, /~810 MB · WebGPU/);
-  assert.match(apocalypseDocs, /WebBrain VL 2 450M/);
+  assert.match(apocalypseDocs, /KavachWeb VL 2 450M/);
   assert.match(apocalypseDocs, /approximately 810 MB/);
   for (const [label, script] of [
     ['chrome', apocalypseScript],
@@ -65603,9 +65603,9 @@ test('ProviderManager load ignores unsupported stored provider configs', async (
       assert.equal(mgr.providers.get('groq')?.config.apiKey, `${label}-groq-key`, `${label}: Groq API key should survive migration`);
       assert.equal(mgr.providers.get('fireworks')?.config.apiKey, `${label}-fireworks-key`, `${label}: Fireworks API key should survive migration`);
       assert.equal(mgr.providers.get('together')?.config.apiKey, `${label}-together-key`, `${label}: Together API key should survive migration`);
-      assert.equal(mgr.providers.get('webbrain_cloud')?.config.contextWindow, 1000000, `${label}: legacy WebBrain Compass context window should migrate`);
-      assert.equal(mgr.providers.get('webbrain_cloud')?.config.apiKey, `${label}-cloud-key`, `${label}: WebBrain Compass API key should survive migration`);
-      assert.equal(mgr.providers.get('webbrain_cloud')?.config.configured, false, `${label}: WebBrain Compass should stay available without being configured`);
+      assert.equal(mgr.providers.get('webbrain_cloud')?.config.contextWindow, 1000000, `${label}: legacy KavachWeb Compass context window should migrate`);
+      assert.equal(mgr.providers.get('webbrain_cloud')?.config.apiKey, `${label}-cloud-key`, `${label}: KavachWeb Compass API key should survive migration`);
+      assert.equal(mgr.providers.get('webbrain_cloud')?.config.configured, false, `${label}: KavachWeb Compass should stay available without being configured`);
       assert.equal(mgr.providers.get('custom_proxy')?.config.type, 'openai', `${label}: supported custom provider should load`);
       assert.equal(mgr.providers.get('custom_proxy')?.config.model, 'custom-model', `${label}: custom provider config should survive`);
       assert.equal(mgr.providers.get('custom_proxy')?.config.configured, true, `${label}: legacy stored-only provider should migrate to configured`);
@@ -65628,7 +65628,7 @@ test('ProviderManager load ignores unsupported stored provider configs', async (
         providers: {
           webbrain_cloud: {
             ...defaults.webbrain_cloud,
-            label: 'WebBrain Cloud',
+            label: 'KavachWeb Cloud',
             configured: false,
           },
         },
@@ -65636,8 +65636,8 @@ test('ProviderManager load ignores unsupported stored provider configs', async (
       globalThis[runtimeKey] = makeRuntime(legacyCloudLabelStorage);
       const legacyCloudLabelManager = new PM();
       await legacyCloudLabelManager.load();
-      assert.equal(legacyCloudLabelManager.providers.get('webbrain_cloud')?.config.label, 'WebBrain Compass', `${label}: the managed provider should migrate its legacy stored label`);
-      assert.equal(legacyCloudLabelStorage.providers.webbrain_cloud.label, 'WebBrain Compass', `${label}: the migrated managed-provider label should be persisted`);
+      assert.equal(legacyCloudLabelManager.providers.get('webbrain_cloud')?.config.label, 'KavachWeb Compass', `${label}: the managed provider should migrate its legacy stored label`);
+      assert.equal(legacyCloudLabelStorage.providers.webbrain_cloud.label, 'KavachWeb Compass', `${label}: the migrated managed-provider label should be persisted`);
 
       const historicalSnapshotStorage = {
         webbrainDeviceGuid: validGuid,
@@ -65714,7 +65714,7 @@ test('ProviderManager load ignores unsupported stored provider configs', async (
       globalThis[runtimeKey] = makeRuntime(fallbackStorage);
       const fallbackManager = new PM();
       await fallbackManager.load();
-      assert.equal(fallbackManager.activeProviderId, 'webbrain_cloud', `${label}: legacy unconfigured selection should fall back to WebBrain Compass`);
+      assert.equal(fallbackManager.activeProviderId, 'webbrain_cloud', `${label}: legacy unconfigured selection should fall back to KavachWeb Compass`);
     }
   } finally {
     globalThis.chrome = originalChrome;
@@ -66094,7 +66094,7 @@ test('ProviderManager reloads one valid duplicate and purges forged duplicate en
           webbrain_cloud__duplicate: {
             ...structuredClone(defaults.webbrain_cloud),
             duplicateOf: 'webbrain_cloud',
-            label: 'WebBrain Compass 2',
+            label: 'KavachWeb Compass 2',
           },
           kimi__duplicate: {
             ...structuredClone(defaults.kimi),
@@ -66365,7 +66365,7 @@ test('extended provider catalog is complete, mirrored, safe, and excluded-provid
   );
 });
 
-test('WebBrain Compass 402 formatting and localized billing actions distinguish every quota tier', async () => {
+test('KavachWeb Compass 402 formatting and localized billing actions distinguish every quota tier', async () => {
   for (const [label, Provider, AgentClass] of [
     ['chrome', OpenAIProviderCh, AgentCh],
     ['firefox', OpenAIProviderFx, AgentFx],
@@ -66384,7 +66384,7 @@ test('WebBrain Compass 402 formatting and localized billing actions distinguish 
       error: { message: 'Paid allowance used.', code: 'webbrain_cloud_paid_tier_exceeded' },
       upgrade_url: 'https://api.webbrain.one/upgrade?client_reference_id=device-guid',
     }));
-    assert.match(upgrade, /Upgrade to WebBrain Plus: https:\/\/api\.webbrain\.one\/upgrade/, `${label}: base paid quota should offer the Plus upgrade flow`);
+    assert.match(upgrade, /Upgrade to KavachWeb Plus: https:\/\/api\.webbrain\.one\/upgrade/, `${label}: base paid quota should offer the Plus upgrade flow`);
 
     const plusBody = JSON.stringify({
       error: { message: 'Votre quota Plus quotidien est épuisé.', code: 'webbrain_cloud_plus_tier_exceeded' },
@@ -66414,7 +66414,7 @@ test('WebBrain Compass 402 formatting and localized billing actions distinguish 
   }
 });
 
-test('WebBrain Compass quota errors stay terminal in the main streaming agent loop', async () => {
+test('KavachWeb Compass quota errors stay terminal in the main streaming agent loop', async () => {
   for (const [index, AgentClass] of [AgentCh, AgentFx].entries()) {
     const quotaMessage = 'Votre quota Plus quotidien est épuisé.';
     const provider = {
@@ -66775,7 +66775,7 @@ test('assistant response repair preserves escapes inside double-escaped fenced c
 test('assistant display repair decodes JSON-quoted page title verification lines', () => {
   for (const title of [
     'Example Domain',
-    'Emre Sokullu on X: "Introducing WebBrain — an open-source AI browser agent…"',
+    'Emre Sokullu on X: "Introducing KavachWeb — an open-source AI browser agent…"',
   ]) {
     const malformed = [
       'Verification:',
@@ -66798,7 +66798,7 @@ test('assistant display repair decodes JSON-quoted page title verification lines
 });
 
 test('assistant display repair preserves unrelated, fenced, and malformed escapes', () => {
-  const title = 'Emre Sokullu on X: "Introducing WebBrain"';
+  const title = 'Emre Sokullu on X: "Introducing KavachWeb"';
   const jsonTitle = JSON.stringify(title);
   const unchanged = [
     `Other field: ${jsonTitle}`,
@@ -67197,11 +67197,11 @@ test('transcribeAudio excludes Kimi and its duplicate from Whisper auto-pick', a
   }
 });
 
-test('_defaultConfigs: WebBrain Compass has a 1M context window by default', () => {
+test('_defaultConfigs: KavachWeb Compass has a 1M context window by default', () => {
   for (const PM of [ProviderManagerCh, ProviderManagerFx]) {
     const defaults = new PM()._defaultConfigs();
-    assert.equal(defaults.webbrain_cloud.contextWindow, 1000000, `${PM.name}: WebBrain Compass context window should be 1M`);
-    assert.equal(defaults.webbrain_cloud.enabled, true, `${PM.name}: WebBrain Compass should stay enabled by default`);
+    assert.equal(defaults.webbrain_cloud.contextWindow, 1000000, `${PM.name}: KavachWeb Compass context window should be 1M`);
+    assert.equal(defaults.webbrain_cloud.enabled, true, `${PM.name}: KavachWeb Compass should stay enabled by default`);
   }
 });
 
@@ -68194,14 +68194,14 @@ test('_defaultConfigs: chrome and firefox differ only by the Chromium WebGPU pro
   }
 });
 
-test('WebBrain Compass sends the Help Improve preference without leaking it to BYO providers', () => {
+test('KavachWeb Compass sends the Help Improve preference without leaking it to BYO providers', () => {
   for (const Provider of [OpenAIProviderCh, OpenAIProviderFx]) {
     const defaultOn = new Provider({ providerName: 'webbrain-cloud', deviceGuid: 'device-123' });
     assert.equal(defaultOn._headers()['X-WebBrain-Help-Improve'], '1');
     assert.equal(defaultOn._headers()['X-WebBrain-Device-Id'], 'device-123');
     assert.equal(defaultOn._headers()['X-WebBrain-Client'], 'extension');
 
-    const optedOut = new Provider({ providerName: 'webbrain-cloud', helpImproveWebBrain: false });
+    const optedOut = new Provider({ providerName: 'webbrain-cloud', helpImproveKavachWeb: false });
     assert.equal(optedOut._headers()['X-WebBrain-Help-Improve'], '0');
     assert.equal(optedOut._headers()['X-WebBrain-Device-Id'], undefined);
     assert.equal(optedOut._headers()['X-WebBrain-Client'], 'extension');
@@ -70131,7 +70131,7 @@ test('Agent tool loops preserve provider reasoning state on both execution paths
   }
 });
 
-test('WebBrain Compass groups every generation in a stable conversation session without touching local or BYO calls', () => {
+test('KavachWeb Compass groups every generation in a stable conversation session without touching local or BYO calls', () => {
   for (const [label, AgentClass, Provider, prefix] of [
     ['chrome', AgentCh, OpenAIProviderCh, 'src/chrome'],
     ['firefox', AgentFx, OpenAIProviderFx, 'src/firefox'],
@@ -71495,14 +71495,14 @@ test('Agent cost metering treats bracketed local IPv6 URLs as local', () => {
   }
 });
 
-test('Agent cost metering is limited to cloud and router categories and excludes WebBrain Compass', () => {
+test('Agent cost metering is limited to cloud and router categories and excludes KavachWeb Compass', () => {
   for (const AgentClass of [AgentCh, AgentFx]) {
     const agent = new AgentClass({});
     const cases = [
       {
         config: { category: 'cloud', providerName: 'webbrain-cloud', baseUrl: 'https://api.webbrain.one/v1' },
         expected: false,
-        label: 'WebBrain Compass',
+        label: 'KavachWeb Compass',
       },
       {
         config: { category: 'cloud', providerName: 'openai', baseUrl: 'https://api.openai.com/v1' },
@@ -71573,7 +71573,7 @@ test('dedicated vision providers are cost-metered when remote and exempt when lo
   }
 });
 
-test('cost accounting starts a fresh aggregate after the WebBrain Compass exemption', () => {
+test('cost accounting starts a fresh aggregate after the KavachWeb Compass exemption', () => {
   for (const [label, prefix] of [
     ['chrome', 'src/chrome'],
     ['firefox', 'src/firefox'],
@@ -71588,7 +71588,7 @@ test('cost accounting starts a fresh aggregate after the WebBrain Compass exempt
     assert.doesNotMatch(
       agentSource,
       /const CLOUD_COST_SPENT_KEY = 'cloudCostSpentUsd';/,
-      `${label}: legacy spend that included WebBrain Compass must not be inherited`,
+      `${label}: legacy spend that included KavachWeb Compass must not be inherited`,
     );
     assert.match(
       settingsSource,
@@ -74339,7 +74339,7 @@ test('submit confirmation card has no always-allow path', async () => {
 
     assert.equal(updates.length, 1, `${AgentClass.name}: submit prompt did not emit immediately`);
     assert.equal(updates[0].type, 'clarify', `${AgentClass.name}: submit prompt should use clarify plumbing`);
-    assert.equal(updates[0].data.question, 'WebBrain wants to submit this form on host.com.');
+    assert.equal(updates[0].data.question, 'KavachWeb wants to submit this form on host.com.');
     assert.deepEqual(updates[0].data.options, ['once', 'deny'], `${AgentClass.name}: submit prompt must not include always`);
     assert.equal(updates[0].data.submitConfirmation.host, 'host.com', `${AgentClass.name}: submit payload missing host`);
     assert.match(updates[0].data.submitConfirmation.summary, /Email/, `${AgentClass.name}: submit payload missing summary`);
@@ -80197,7 +80197,7 @@ test('submit confirmation UI and scheduled persistence omit always allow', () =>
       permissionCommentStart !== -1 && permissionCommentStart < permissionStart ? permissionCommentStart : permissionStart
     );
     assert.match(submitBranch, /card\.dataset\.submitConfirmation = '1'/, `${label}: submit card needs a separate marker`);
-    assert.match(submitBranch, /WebBrain wants to submit this form on \$\{host\}\./, `${label}: submit question text missing`);
+    assert.match(submitBranch, /KavachWeb wants to submit this form on \$\{host\}\./, `${label}: submit question text missing`);
     assert.match(submitBranch, /Submit once/, `${label}: submit-once option missing`);
     assert.match(submitBranch, /Do not submit/, `${label}: deny-submit option missing`);
     assert.match(submitBranch, /\['once', 'Submit once'\][\s\S]*\['deny', 'Do not submit'\]/, `${label}: submit choices should be once/deny only`);
@@ -80278,7 +80278,7 @@ test('Agent enrich: trusted runtime clock reaches planner and execution context'
     const messages = [{ role: 'user', content: 'Earlier turn' }];
     const enriched = await agent._enrichUserMessageWithCurrentPage(999, messages, 'publish this today');
     const text = userMessageToText(enriched);
-    assert.match(text, /\[Trusted runtime context — generated by WebBrain, not page content;/, `${label}: executor context missing clock`);
+    assert.match(text, /\[Trusted runtime context — generated by KavachWeb, not page content;/, `${label}: executor context missing clock`);
     assert.match(text, /runtime_mode=act; mutation_tools_enabled=true/, `${label}: executor context missing authoritative mode`);
     assert.equal((text.match(/runtime_mode=act/g) || []).length, 1, `${label}: mode envelope should be injected once per run`);
     assert.match(text, /Current local date: \d{4}-\d{2}-\d{2}/, `${label}: executor context missing local date`);
@@ -82859,14 +82859,14 @@ test('meta-only done summaries are rejected so questions receive the actual answ
     'Explained how the saved-workflow replay feature is implemented in code, based on the actual files in PR #443.',
     'Confirmed the exact UI entry points for saved workflows from the sidepanel.js diff in PR #443.',
   ];
-  const deliveredAnswer = 'Open WebBrain\'s History menu, choose Saved workflows, select a workflow, and click Run.';
+  const deliveredAnswer = 'Open KavachWeb\'s History menu, choose Saved workflows, select a workflow, and click Run.';
 
   for (const [index, AgentClass] of [AgentCh, AgentFx].entries()) {
     const agent = new AgentClass({ getActive: () => ({ contextWindow: 128000, supportsVision: false }) });
     const tabId = 797 + index;
     const messages = [
       { role: 'system', content: 'sys' },
-      { role: 'user', content: 'How do I access saved workflows from the WebBrain plugin?' },
+      { role: 'user', content: 'How do I access saved workflows from the KavachWeb plugin?' },
     ];
     agent.conversations.set(tabId, messages);
     agent.conversationModes.set(tabId, 'ask');
@@ -82933,7 +82933,7 @@ test('meta-only done summaries are rejected so questions receive the actual answ
 });
 
 test('accepted done repairs only the terminal display summary', async () => {
-  const title = 'Emre Sokullu on X: "Introducing WebBrain"';
+  const title = 'Emre Sokullu on X: "Introducing KavachWeb"';
   const malformed = `Verification:\n- Page title: ${JSON.stringify(title)}`;
   const expected = `Verification:\n- Page title: ${title}`;
 
@@ -86065,7 +86065,7 @@ test('false Ask-mode completions receive a focused Act recovery and honest termi
   }
 });
 
-test('reported application read-only state is not a WebBrain runtime-mode contradiction', () => {
+test('reported application read-only state is not a KavachWeb runtime-mode contradiction', () => {
   for (const [index, AgentClass] of [AgentCh, AgentFx].entries()) {
     const agent = new AgentClass({});
     const tabId = 8675 + index;
@@ -86100,7 +86100,7 @@ test('reported application read-only state is not a WebBrain runtime-mode contra
       `${AgentClass.name}: explicit self/runtime inability claim was no longer detected`,
     );
     assert.equal(
-      agent._isRuntimeModeContradictionTerminal('This WebBrain run is in Ask mode, so WebBrain cannot complete the submission.'),
+      agent._isRuntimeModeContradictionTerminal('This KavachWeb run is in Ask mode, so KavachWeb cannot complete the submission.'),
       true,
       `${AgentClass.name}: explicitly named runtime inability claim was no longer detected`,
     );
@@ -88144,13 +88144,13 @@ test('planner intent carries explicit app-state evidence authorization', async (
           requestKind: 'execute',
           requiresStateChange: true,
           allowsAppStateToolEvidence: true,
-          localizedSummary: 'Remember the requested note in the WebBrain scratchpad.',
+          localizedSummary: 'Remember the requested note in the KavachWeb scratchpad.',
         }),
       });
       const tabId = 8692 + index;
       const gate = await agent._runPlannerIntentGate(
         tabId,
-        { role: 'user', content: 'Remember this note in the WebBrain scratchpad.' },
+        { role: 'user', content: 'Remember this note in the KavachWeb scratchpad.' },
         () => {},
         null,
         null,
@@ -88351,13 +88351,13 @@ test('full planner carries explicit app-state evidence authorization', async () 
         content: plannerFixtureJson({
           requires_state_change: true,
           allows_app_state_tool_evidence: true,
-          summary: 'Write the requested note to the WebBrain scratchpad',
+          summary: 'Write the requested note to the KavachWeb scratchpad',
         }),
       });
 
       const gate = await agent._runPlannerGate(
         tabId,
-        { role: 'user', content: 'Remember this note in the WebBrain scratchpad.' },
+        { role: 'user', content: 'Remember this note in the KavachWeb scratchpad.' },
         () => {},
         null,
         null,
@@ -90188,7 +90188,7 @@ test('publication workflows classify and bind requested payload fields', async (
     agent._persist = () => {};
     const tabId = 8977 + index;
     const releaseUrl = 'https://github.com/esokullu/webbrain/releases/new';
-    const taskText = 'Publish tag v33.6.0 titled "WebBrain 33.6.0" with notes "Kernel evidence fixes."';
+    const taskText = 'Publish tag v33.6.0 titled "KavachWeb 33.6.0" with notes "Kernel evidence fixes."';
     const selected = agent._resolvePlannerSiteWorkflow(releaseUrl, {
       request_kind: 'execute',
       site_job: 'publish-release',
@@ -90214,7 +90214,7 @@ test('publication workflows classify and bind requested payload fields', async (
           targets: [],
           workflowFields: [
             { field: 'tag', value: 'v33.6.0' },
-            { field: 'title', value: 'WebBrain 33.6.0' },
+            { field: 'title', value: 'KavachWeb 33.6.0' },
             { field: 'notes', value: 'Kernel evidence fixes.' },
           ],
           confidence: 0.99,
@@ -90235,7 +90235,7 @@ test('publication workflows classify and bind requested payload fields', async (
     }, `${AgentClass.name}: the classifier did not receive the publish-release workflow`);
     assert.deepEqual(guard.workflowMetadataRequirements, [
       { field: 'tag', value: 'v33.6.0' },
-      { field: 'title', value: 'WebBrain 33.6.0' },
+      { field: 'title', value: 'KavachWeb 33.6.0' },
       { field: 'notes', value: 'Kernel evidence fixes.' },
     ], `${AgentClass.name}: trusted publication payload fields were not retained`);
     const prompt = agent._progressIntentClassifierMessages(taskText, classifierContext)[0].content;
@@ -93598,7 +93598,7 @@ test('selected workflow submission evidence is job-bound and terminal-state spec
     publishGuard.successfulConsequentialToolCalls = 1;
     publishGuard.workflowMetadataRequirements = [
       { field: 'tag', value: 'v33.6.0' },
-      { field: 'title', value: 'WebBrain 33.6.0' },
+      { field: 'title', value: 'KavachWeb 33.6.0' },
       { field: 'notes', value: 'Kernel evidence fixes.' },
     ];
     publishGuard.workflowMetadataRequirementsResolved = true;
@@ -93655,7 +93655,7 @@ test('selected workflow submission evidence is job-bound and terminal-state spec
       publishTabId,
       {
         workflowPageText: [
-          'WebBrain 33.6.0',
+          'KavachWeb 33.6.0',
           'Published successfully.',
           'Draft notes from an earlier tag.',
         ].join('\n'),
@@ -93667,7 +93667,7 @@ test('selected workflow submission evidence is job-bound and terminal-state spec
       publishTabId,
       {
         workflowPageText: [
-          'WebBrain 33.6.0',
+          'KavachWeb 33.6.0',
           'Published successfully.',
           'Kernel evidence fixes.',
         ].join('\n'),
@@ -97585,7 +97585,7 @@ test('auto-scratchpad: download path is pinned, deduped, and survives compaction
       messages.push({ role: 'user', content: `ok ${i}` });
     }
     const origLog = console.log;
-    console.log = () => {}; // silence _manageContext's "[WebBrain] Context trimmed" line
+    console.log = () => {}; // silence _manageContext's "[KavachWeb] Context trimmed" line
     try {
       await agent._manageContext(tabId, messages, () => {});
     } finally {
@@ -98715,10 +98715,10 @@ test('Compact Firefox upload_file discovers before opening its picker and attach
       tabs: {
         async executeScript(_tabId, details) {
           scripts.push(details.code);
-          if (details.code.includes('WebBrain file attachment target probe')) {
+          if (details.code.includes('KavachWeb file attachment target probe')) {
             return [{ success: true, dispatched: false }];
           }
-          if (details.code.includes('WebBrain file attachment settle probe')) {
+          if (details.code.includes('KavachWeb file attachment settle probe')) {
             return [{ attachmentState: 'input_attached' }];
           }
           return [{ success: true, dispatched: true, file: 'resume.pdf', size: 4, attachmentState: 'input_attached' }];
@@ -98782,9 +98782,9 @@ test('Compact Firefox upload_file discovers before opening its picker and attach
     assert.equal(result.file, 'resume.pdf');
     assert.equal(result.attachmentState, 'input_attached');
     assert.equal(scripts.length, 3);
-    assert.match(scripts[0], /WebBrain file attachment target probe/);
+    assert.match(scripts[0], /KavachWeb file attachment target probe/);
     assert.match(scripts[1], /const selector = "#resume-upload"/);
-    assert.match(scripts[2], /WebBrain file attachment settle probe/);
+    assert.match(scripts[2], /KavachWeb file attachment settle probe/);
     assert.equal(agent._compactUploadTargets.has(42), false, 'targetId must be one-use');
   } finally {
     if (originalBrowser === undefined) delete globalThis.browser;
@@ -98837,7 +98837,7 @@ test('Firefox upload_file injects the exact user attachment bytes without re-fet
       tabs: {
         async executeScript(_tabId, details) {
           scripts.push(details.code);
-          if (details.code.includes('WebBrain file attachment settle probe')) {
+          if (details.code.includes('KavachWeb file attachment settle probe')) {
             return [{ attachmentState: 'input_attached' }];
           }
           return [{ success: true, dispatched: true, file: 'demo.gif', size: 6, attachmentState: 'input_attached' }];
@@ -98862,11 +98862,11 @@ test('Firefox upload_file injects the exact user attachment bytes without re-fet
     assert.equal(result.verified, false);
     assert.equal(result.remoteStateVerified, false);
     assert.equal(scripts.length, 3);
-    assert.match(scripts[0], /WebBrain file attachment target probe/);
+    assert.match(scripts[0], /KavachWeb file attachment target probe/);
     assert.match(scripts[1], /const b64 = "R0lGODlh"/);
     assert.match(scripts[1], /new File\(\[bytes\], "demo\.gif", \{ type: "image\/gif" \}\)/);
-    assert.match(scripts[2], /WebBrain file attachment settle probe/);
-    assert.equal(agent._pendingUploadPickers.size, 0, 'attachmentId must not open the WebBrain picker');
+    assert.match(scripts[2], /KavachWeb file attachment settle probe/);
+    assert.equal(agent._pendingUploadPickers.size, 0, 'attachmentId must not open the KavachWeb picker');
   } finally {
     if (originalBrowser === undefined) delete globalThis.browser;
     else globalThis.browser = originalBrowser;
@@ -98887,14 +98887,14 @@ test('Firefox upload_file deadline distinguishes target preparation from FileLis
       globalThis.browser = {
         tabs: {
           async executeScript(_tabId, details) {
-            if (details.code.includes('WebBrain file attachment target probe')) {
+            if (details.code.includes('KavachWeb file attachment target probe')) {
               if (stallStage === 'target-probe') {
                 markStageStarted();
                 await stalledStage;
               }
               return [{ success: true, dispatched: false }];
             }
-            if (details.code.includes('WebBrain file attachment settle probe')) {
+            if (details.code.includes('KavachWeb file attachment settle probe')) {
               if (stallStage === 'settle-probe') {
                 markStageStarted();
                 await stalledStage;
@@ -99038,10 +99038,10 @@ test('upload_file (firefox) re-fetches downloadId with manual redirect handling 
         },
         async executeScript(tabId, details) {
           executedScripts.push(details.code);
-          if (details.code.includes('WebBrain file attachment target probe')) {
+          if (details.code.includes('KavachWeb file attachment target probe')) {
             return [{ success: true, dispatched: false }];
           }
-          if (details.code.includes('WebBrain file attachment settle probe')) {
+          if (details.code.includes('KavachWeb file attachment settle probe')) {
             return [{ attachmentState: injectedAttachmentState }];
           }
           return [{ success: true, file: 'test.zip', size: 4, attachmentState: 'input_attached' }];
@@ -99104,7 +99104,7 @@ test('upload_file (firefox) re-fetches downloadId with manual redirect handling 
     assert.equal(fetchCalls[1].opts.credentials, 'omit');
 
     assert.equal(executedScripts.length, 3);
-    assert.ok(executedScripts[0].includes('WebBrain file attachment target probe'), 'Script should probe before dispatch');
+    assert.ok(executedScripts[0].includes('KavachWeb file attachment target probe'), 'Script should probe before dispatch');
     assert.ok(executedScripts[1].includes('new DataTransfer()'), 'Script should use DataTransfer');
     assert.ok(executedScripts[1].includes('dt.items.add(file)'), 'Script should add file to DataTransfer');
     assert.ok(executedScripts[1].includes('el.files = dt.files'), 'Script should assign DataTransfer files to input');
@@ -99112,7 +99112,7 @@ test('upload_file (firefox) re-fetches downloadId with manual redirect handling 
     assert.ok(executedScripts[1].includes('collectDeepMatches(element.shadowRoot)'), 'Script should search open shadow roots');
     assert.ok(executedScripts[1].includes('matches.length > 1'), 'Script should reject ambiguous selectors');
     assert.ok(executedScripts[1].includes('exact, unique selector'), 'Script should return actionable ambiguity guidance');
-    assert.ok(executedScripts[2].includes('WebBrain file attachment settle probe'), 'Script should re-check after queued change handlers');
+    assert.ok(executedScripts[2].includes('KavachWeb file attachment settle probe'), 'Script should re-check after queued change handlers');
 
     injectedAttachmentState = 'page_consumed';
     const consumed = await agent.executeTool(42, 'upload_file', args);
@@ -100279,7 +100279,7 @@ test('verify_form returns semantic iframe-scoped field evidence', async () => {
     method: 'post',
     fieldCount: 2,
     fields: [
-      { matchIndex: 0, label: 'WebBrain', name: 'product', type: 'text', value: 'WebBrain' },
+      { matchIndex: 0, label: 'KavachWeb', name: 'product', type: 'text', value: 'KavachWeb' },
       { matchIndex: 1, label: 'Website URL', name: 'url', type: 'url', value: 'https://webbrain.app' },
     ],
   };
@@ -100305,7 +100305,7 @@ test('verify_form returns semantic iframe-scoped field evidence', async () => {
     assert.equal(chromeResult.scope, 'iframe');
     assert.equal(chromeResult.fieldCount, 2);
     assert.deepEqual(chromeResult.fields.map(field => [field.label, field.value, field.frameId]), [
-      ['WebBrain', 'WebBrain', 7],
+      ['KavachWeb', 'KavachWeb', 7],
       ['Website URL', 'https://webbrain.app', 7],
     ]);
 
@@ -100327,7 +100327,7 @@ test('verify_form returns semantic iframe-scoped field evidence', async () => {
     assert.equal(firefoxResult.scope, 'iframe');
     assert.equal(firefoxResult.fieldCount, 2);
     assert.deepEqual(firefoxResult.fields.map(field => [field.label, field.value, field.frameId]), [
-      ['WebBrain', 'WebBrain', 7],
+      ['KavachWeb', 'KavachWeb', 7],
       ['Website URL', 'https://webbrain.app', 7],
     ]);
   } finally {
@@ -102280,7 +102280,7 @@ test('planner consistency repair preserves submit intent across one direct clari
         };
         const args = [
           9340 + (agentIndex * 20) + (routeIndex * 10),
-          { role: 'user', content: 'Use the WebBrain details and answer the remaining questions.' },
+          { role: 'user', content: 'Use the KavachWeb details and answer the remaining questions.' },
           () => {},
           null,
           null,
@@ -103934,14 +103934,14 @@ test('settings exposes custom skills tab and packaged skills resource directory'
   const privacyPolicy = fs.readFileSync(path.join(ROOT, 'web/privacy.html'), 'utf8');
   const privacyDataFlow = fs.readFileSync(path.join(ROOT, 'docs/privacy-and-data-flow.md'), 'utf8');
   assert.match(privacyPolicy, /Last updated: July 16, 2026/, 'privacy policy date should cover legacy default-on Cloud capture');
-  assert.match(privacyPolicy, /Local models and bring-your-own API:[\s\S]*never collected by WebBrain/i, 'privacy TL;DR should exclude local and BYO requests');
-  assert.match(privacyPolicy, /WebBrain Compass:[\s\S]*evaluation, improvement, fine-tuning, and training/i, 'privacy TL;DR should disclose Cloud improvement use');
-  assert.match(privacyPolicy, /Help Improve WebBrain[\s\S]*on by default/i, 'privacy policy should disclose the default-on setting');
+  assert.match(privacyPolicy, /Local models and bring-your-own API:[\s\S]*never collected by KavachWeb/i, 'privacy TL;DR should exclude local and BYO requests');
+  assert.match(privacyPolicy, /KavachWeb Compass:[\s\S]*evaluation, improvement, fine-tuning, and training/i, 'privacy TL;DR should disclose Cloud improvement use');
+  assert.match(privacyPolicy, /Help Improve KavachWeb[\s\S]*on by default/i, 'privacy policy should disclose the default-on setting');
   assert.match(privacyPolicy, /Settings → General/, 'privacy policy should identify the opt-out path');
-  assert.doesNotMatch(privacyPolicy, /Help Improve WebBrain[^<\n]*Settings → General → Advanced|Settings → General → Advanced[^<\n]*Help Improve WebBrain/, 'privacy policy should not use the old Help Improve opt-out path');
-  assert.match(privacyDataFlow, /Help Improve WebBrain is available under Settings -> General and is/, 'data-flow documentation should identify the visible Help Improve location');
+  assert.doesNotMatch(privacyPolicy, /Help Improve KavachWeb[^<\n]*Settings → General → Advanced|Settings → General → Advanced[^<\n]*Help Improve KavachWeb/, 'privacy policy should not use the old Help Improve opt-out path');
+  assert.match(privacyDataFlow, /Help Improve KavachWeb is available under Settings -> General and is/, 'data-flow documentation should identify the visible Help Improve location');
   assert.doesNotMatch(privacyDataFlow, /Settings -> General -> Advanced/, 'data-flow documentation should not use the old Help Improve opt-out path');
-  assert.match(privacyPolicy, /Older WebBrain Compass clients[\s\S]*default-on setting[\s\S]*install the latest WebBrain client/i, 'privacy policy should disclose legacy default-on capture and the opt-out upgrade path');
+  assert.match(privacyPolicy, /Older KavachWeb Compass clients[\s\S]*default-on setting[\s\S]*install the latest KavachWeb client/i, 'privacy policy should disclose legacy default-on capture and the opt-out upgrade path');
   assert.match(privacyPolicy, /next new conversation[\s\S]*cannot make the current conversation eligible again/i, 'privacy policy should explain permanent conversation tainting');
   assert.match(privacyPolicy, /Screenshots and uploaded images may be processed for inference[\s\S]*strips image URLs, base64 media, and image bytes/i, 'privacy policy should distinguish inference processing from improvement storage');
   assert.match(privacyPolicy, /OpenRouter documents[\s\S]*minimum retention of three months[\s\S]*may be retained longer/i, 'privacy policy should disclose OpenRouter logging retention');
@@ -103956,8 +103956,8 @@ test('settings exposes custom skills tab and packaged skills resource directory'
   assert.match(privacyPolicy, /full instructions and compatible tools are sent only after/i, 'privacy policy should disclose on-demand full skill loading');
 
   const privacyDocs = fs.readFileSync(path.join(ROOT, 'docs/privacy-and-data-flow.md'), 'utf8');
-  assert.match(privacyDocs, /WebBrain Compass improvement data/, 'developer privacy docs should cover Cloud improvement data');
-  assert.match(privacyDocs, /MySQL is WebBrain's canonical store/, 'developer privacy docs should name the canonical improvement store');
+  assert.match(privacyDocs, /KavachWeb Compass improvement data/, 'developer privacy docs should cover Cloud improvement data');
+  assert.match(privacyDocs, /MySQL is KavachWeb's canonical store/, 'developer privacy docs should name the canonical improvement store');
   assert.match(privacyDocs, /AES-256-GCM/, 'developer privacy docs should disclose encrypted payload storage');
   assert.match(privacyDocs, /Older[\s\S]*clients[\s\S]*default-on setting[\s\S]*explicit `0` is always opted out/i, 'developer privacy docs should define legacy default-on capture and explicit opt-out');
   assert.match(privacyDocs, /12 months before[\s\S]*de-identification/, 'developer privacy docs should match raw retention');
@@ -105835,7 +105835,7 @@ test('Chrome click_ax timeout after mouse press unwinds without completing the c
   }
 });
 
-test('page Stop WebBrain clears stale indicators without stopping recordings', () => {
+test('page Stop KavachWeb clears stale indicators without stopping recordings', () => {
   for (const [label, prefix, runtimeApi] of [
     ['chrome', 'src/chrome', 'chrome'],
     ['firefox', 'src/firefox', 'browser'],
@@ -106558,38 +106558,38 @@ test('planner gate: trusted recommended media action skips planner and pins read
   });
 });
 
-test('planner gate: trusted WebBrain social promotion actions skip planner and pin ready plans', async () => {
+test('planner gate: trusted KavachWeb social promotion actions skip planner and pin ready plans', async () => {
   await withPlannerBrowserGlobals(async () => {
     for (const [label, AgentClass] of [['chrome', AgentCh], ['firefox', AgentFx]]) {
       const readyPlans = [
         {
           name: 'X',
-          request: 'Publish a concise tweet about WebBrain.',
+          request: 'Publish a concise tweet about KavachWeb.',
           expectedUrl: /https:\/\/x\.com\/compose\/post/,
           plan: {
             id: 'tweet-webbrain',
             skipPlanner: true,
             tool: 'navigate',
-            summary: 'Publish the reviewed localized WebBrain post exactly as supplied.',
+            summary: 'Publish the reviewed localized KavachWeb post exactly as supplied.',
             steps: [
               'Open https://x.com/compose/post in the current tab through the visible browser UI.',
-              'Enter this exact reviewed localized text through the visible X composer without rewriting it: "Introducing WebBrain — an open-source AI browser agent that lives in your browser. Chat with any page, automate multi-step workflows, and bring your own LLM. Extensible by design. Try it: https://webbrain.one"',
+              'Enter this exact reviewed localized text through the visible X composer without rewriting it: "Introducing KavachWeb — an open-source AI browser agent that lives in your browser. Chat with any page, automate multi-step workflows, and bring your own LLM. Extensible by design. Try it: https://webbrain.one"',
               'Verify the new tweet appears and report its URL.',
             ],
           },
         },
         {
           name: 'LinkedIn',
-          request: 'Publish a concise LinkedIn post about WebBrain.',
+          request: 'Publish a concise LinkedIn post about KavachWeb.',
           expectedUrl: /https:\/\/www\.linkedin\.com\/feed\//,
           plan: {
             id: 'post-webbrain-linkedin',
             skipPlanner: true,
             tool: 'navigate',
-            summary: 'Publish the reviewed localized WebBrain post on LinkedIn exactly as supplied.',
+            summary: 'Publish the reviewed localized KavachWeb post on LinkedIn exactly as supplied.',
             steps: [
               'Open https://www.linkedin.com/feed/ in the current tab through the visible browser UI.',
-              'Select Start a post and enter this exact reviewed localized text without rewriting it: "Introducing WebBrain — an open-source AI browser agent that lives in your browser. Chat with any page, automate multi-step workflows, and bring your own LLM. Extensible by design. Try it: https://webbrain.one"',
+              'Select Start a post and enter this exact reviewed localized text without rewriting it: "Introducing KavachWeb — an open-source AI browser agent that lives in your browser. Chat with any page, automate multi-step workflows, and bring your own LLM. Extensible by design. Try it: https://webbrain.one"',
               'Verify the new LinkedIn post appears and report its URL.',
             ],
           },
@@ -108510,7 +108510,7 @@ test('detached runs reconnect to a live request without starting it twice', asyn
         starts.push(action);
         if (firstStart) {
           firstStart = false;
-          throw new Error('WebBrain extension connection was lost while sending "chat_start".');
+          throw new Error('KavachWeb extension connection was lost while sending "chat_start".');
         }
         return { accepted: true, requestId };
       },
@@ -108758,7 +108758,7 @@ test('detached runs never retry an uncertain start after observing the live requ
         payload: { tabId: 46, requestId, mode: 'act', text: 'click the target once' },
         start: async (action) => {
           starts.push(action);
-          throw new Error('WebBrain extension connection was lost while sending "chat_start".');
+          throw new Error('KavachWeb extension connection was lost while sending "chat_start".');
         },
         probe: async () => states.shift() || { running: false, starting: false, runUi: null },
         isConnectionError: error => /connection was lost/i.test(error.message),
@@ -108793,7 +108793,7 @@ test('detached runs honor cancellation before retrying an uncertain start', asyn
         payload: { tabId: 48, requestId, mode: 'act', text: 'do not retry after Stop' },
         start: async (action) => {
           starts.push(action);
-          throw new Error('WebBrain extension connection was lost while sending "chat_start".');
+          throw new Error('KavachWeb extension connection was lost while sending "chat_start".');
         },
         probe: async () => {
           probes += 1;
@@ -109322,7 +109322,7 @@ test('plan approval reconnect recovers a lost reply without submitting twice', a
       requestId: `${label}-plan-request`,
       send: async () => {
         sends += 1;
-        throw new Error('WebBrain extension connection was lost while sending "plan_response".');
+        throw new Error('KavachWeb extension connection was lost while sending "plan_response".');
       },
       probe: async () => ({
         running: true,
@@ -109357,7 +109357,7 @@ test('plan approval reconnect retries only while the same plan remains pending',
       send: async () => {
         sends += 1;
         if (sends === 1) {
-          throw new Error('WebBrain extension connection was lost while sending "plan_response".');
+          throw new Error('KavachWeb extension connection was lost while sending "plan_response".');
         }
         return { ok: true, matched: true };
       },
@@ -109527,9 +109527,9 @@ test('sidepanel routes every run-error path through request-scoped deduplication
   }
 });
 
-test('WebBrain Compass subscription 402 renders as one terminal assistant prompt', async () => {
+test('KavachWeb Compass subscription 402 renders as one terminal assistant prompt', async () => {
   for (const [label, AgentClass] of [['chrome', AgentCh], ['firefox', AgentFx]]) {
-    const subscriptionMessage = 'webbrain-cloud error 402: Daily free WebBrain Compass allowance used.\n'
+    const subscriptionMessage = 'webbrain-cloud error 402: Daily free KavachWeb Compass allowance used.\n'
       + 'Subscribe for more usage: https://webbrain.one/subscribe?client_reference_id=device-guid';
     let providerCalls = 0;
     const provider = {
@@ -111041,7 +111041,7 @@ test('planner input: active prior task and pending draft survive long tool chatt
     const clarificationContext = agent._buildPlannerFollowUpContext(clarificationMessages);
     assert.equal(clarificationContext.plannerClarification?.requiresSubmission, true, `${label}: pending submit clarification was not retained`);
     const clarificationPlannerMessages = build(
-      { role: 'user', content: 'Use the WebBrain details.' },
+      { role: 'user', content: 'Use the KavachWeb details.' },
       'https://example.test/application',
       'Application',
       agent._buildPlannerHistoryDigest(clarificationMessages),
@@ -111131,11 +111131,11 @@ test('planner input: runtime context does not consume prior user-turn history bu
     const agent = new AgentClass({});
     const digest = agent._buildPlannerHistoryDigest([
       { role: 'system', content: 'sys' },
-      { role: 'user', content: `${runtimeContext}\n\nSearch GitHub for the WebBrain repository and open its first issue.` },
+      { role: 'user', content: `${runtimeContext}\n\nSearch GitHub for the KavachWeb repository and open its first issue.` },
       { role: 'assistant', content: 'I found the repository and its issues list.' },
     ], 2000);
 
-    assert.match(digest, /User: Search GitHub for the WebBrain repository and open its first issue\./, `${label}: prior task was lost behind runtime context`);
+    assert.match(digest, /User: Search GitHub for the KavachWeb repository and open its first issue\./, `${label}: prior task was lost behind runtime context`);
     assert.match(digest, /Assistant: I found the repository and its issues list\./, `${label}: assistant antecedent should remain visible`);
     assert.doesNotMatch(digest, /Trusted runtime context|Current local date|Use this clock/, `${label}: runtime context leaked into planner history`);
   }
@@ -118975,9 +118975,9 @@ test('public EasyCLIProxy guide keeps executable, account, network, and media bo
     'docs: the Chinese guide should advertise both language versions');
   assert.match(guide, /Last verified 26 August 2026 · EasyCLIProxyAPI v0\.2\.62/,
     'docs: drift-prone upstream facts should be date and version stamped');
-  assert.match(guide, /Not built, hosted, audited, or guaranteed by WebBrain[\s\S]*?WebBrain cannot inspect what a future upstream build does/,
+  assert.match(guide, /Not built, hosted, audited, or guaranteed by KavachWeb[\s\S]*?KavachWeb cannot inspect what a future upstream build does/,
     'docs: executable ownership and future-update risk should appear before download');
-  assert.ok(guide.indexOf('Not built, hosted, audited, or guaranteed by WebBrain') < guide.indexOf('releases/latest'),
+  assert.ok(guide.indexOf('Not built, hosted, audited, or guaranteed by KavachWeb') < guide.indexOf('releases/latest'),
     'docs: the third-party warning should precede the download link');
   assert.match(guide, /ChatGPT subscriptions and API billing are separate products[\s\S]*?consumer terms restrict automated or non-human access[\s\S]*?Gemini CLI's terms say its OAuth authentication may not be used with third-party tools or services/,
     'docs: provider-policy risk should be described specifically without calling the tool illegal');
@@ -119001,7 +119001,7 @@ test('public EasyCLIProxy guide keeps executable, account, network, and media bo
     'docs: Chinese captions should stay off by default to avoid overlapping hardcoded English captions');
   assert.match(chineseGuide, /本教程使用普通话旁白[\s\S]*?简体中文字幕可在播放器中手动开启，默认关闭/,
     'docs: the Chinese page should explain its Mandarin audio and opt-in caption behavior');
-  assert.match(chineseGuide, /并非由 WebBrain 开发、托管、审计或担保[\s\S]*?WebBrain 无法检查未来的上游构建[\s\S]*?不要使用 <code>0\.0\.0\.0<\/code>/,
+  assert.match(chineseGuide, /并非由 KavachWeb 开发、托管、审计或担保[\s\S]*?KavachWeb 无法检查未来的上游构建[\s\S]*?不要使用 <code>0\.0\.0\.0<\/code>/,
     'docs: the Chinese translation should preserve executable and network-risk warnings');
   assert.match(docsCss, /\.trust-ledger \{[\s\S]*?var\(--warn\)[\s\S]*?\.trust-ledger dl > div/,
     'docs: the trust boundary should be a deliberate visual component');
@@ -119045,7 +119045,7 @@ test('public EasyCLIProxy guide keeps executable, account, network, and media bo
   assert.match(chineseMp4Header, /ftyp/, 'docs media: Mandarin tutorial should be an MP4 file');
   assert.match(captions, /^WEBVTT\n/, 'docs media: captions should be WebVTT');
   assert.match(chineseCaptions, /^WEBVTT\n/, 'docs media: Chinese captions should be WebVTT');
-  assert.match(chineseCaptions, /把 AI 订阅连接到 WebBrain[\s\S]*?本地 OpenAI 兼容代理[\s\S]*?操作模式/,
+  assert.match(chineseCaptions, /把 AI 订阅连接到 KavachWeb[\s\S]*?本地 OpenAI 兼容代理[\s\S]*?操作模式/,
     'docs media: the Chinese captions should translate the setup, provider, and mode narration');
   assert.doesNotMatch(captions, /no extra charge|fully integrated/i,
     'docs media: captions should not retain the removed guarantee claim');

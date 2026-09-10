@@ -1,7 +1,7 @@
 /**
  * Browser delegation tools for the user's real, already-authenticated session.
  *
- * Scope is task-level on purpose. WebBrain's permission gate lives in its agent
+ * Scope is task-level on purpose. KavachWeb's permission gate lives in its agent
  * loop, not in individual tool dispatch, so exposing low-level primitives over
  * a socket would move the trust boundary out of the browser. Delegating a goal
  * keeps every approval prompt intact.
@@ -106,7 +106,7 @@ function resultOf(snapshot: CloudSnapshot, timedOut = false): BrowserTaskResult 
           needsUserInput: true,
           promptKind,
           clarifyId: String(pending.clarifyId ?? pending.clarify_id ?? ""),
-          error: `WebBrain returned unsupported prompt kind '${promptKind}'.`,
+          error: `KavachWeb returned unsupported prompt kind '${promptKind}'.`,
           hint: "Do not send a free-form answer. Update the client before calling browser_respond.",
         };
     }
@@ -123,7 +123,7 @@ function resultOf(snapshot: CloudSnapshot, timedOut = false): BrowserTaskResult 
       question: String(pending.question ?? "(no question text supplied)"),
       clarifyId: String(pending.clarifyId ?? pending.clarify_id ?? ""),
       hint:
-        "WebBrain paused because a human decision is required. Ask the user this " +
+        "KavachWeb paused because a human decision is required. Ask the user this " +
         "question, then call browser_respond with this runId and clarifyId. Do not " +
         "guess on their behalf.",
     };
@@ -221,7 +221,7 @@ async function ensureConnected(
   if (bridge.isConnected()) return null;
   return {
     ok: false,
-    error: "WebBrain browser extension not connected.",
+    error: "KavachWeb browser extension not connected.",
     hint: bridge.notConnectedMessage(),
   };
 }
@@ -304,7 +304,7 @@ export async function browserStatus(
       ? {
           ok: false,
           runId,
-          error: "WebBrain browser extension not connected.",
+          error: "KavachWeb browser extension not connected.",
           hint: bridge.notConnectedMessage(),
         }
       : { connected: false, listeningOn: bridge.url, hint: bridge.notConnectedMessage() };

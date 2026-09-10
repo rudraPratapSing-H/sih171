@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Qwen 3.7 Plus OpenRouter WebBrain planner benchmark - WebBrain Blog</title>
-  <meta name="description" content="We ran qwen/qwen3.7-plus through WebBrain&#39;s frozen 100-case browser-agent planner benchmark on OpenRouter. It ties MiniMax M3 on all-case Sonnet alignment, beats it on tool-call discipline, and lands just below the Gemma 4 31B QAT, Qwen 3.6 27B, and MiniMax M2.7 cluster.">
-  <meta name="keywords" content="WebBrain, Qwen 3.7 Plus, OpenRouter, MiniMax M3, MiniMax M2.7, Gemma 4 31B, Qwen 3.6 27B, browser agent, planner benchmark, tool calling">
-  <meta property="og:title" content="Qwen 3.7 Plus challenges MiniMax M3 in WebBrain&#39;s planner benchmark">
+  <title>Qwen 3.7 Plus OpenRouter KavachWeb planner benchmark - KavachWeb Blog</title>
+  <meta name="description" content="We ran qwen/qwen3.7-plus through KavachWeb&#39;s frozen 100-case browser-agent planner benchmark on OpenRouter. It ties MiniMax M3 on all-case Sonnet alignment, beats it on tool-call discipline, and lands just below the Gemma 4 31B QAT, Qwen 3.6 27B, and MiniMax M2.7 cluster.">
+  <meta name="keywords" content="KavachWeb, Qwen 3.7 Plus, OpenRouter, MiniMax M3, MiniMax M2.7, Gemma 4 31B, Qwen 3.6 27B, browser agent, planner benchmark, tool calling">
+  <meta property="og:title" content="Qwen 3.7 Plus challenges MiniMax M3 in KavachWeb&#39;s planner benchmark">
   <meta property="og:description" content="Qwen 3.7 Plus ties MiniMax M3 on all-case Sonnet alignment, beats it on parsed calls and ideal tool-name matches, and stays close to the top Gemma and Qwen rows.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://webbrain.one/blog/qwen37-plus-openrouter-planner-benchmark">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Qwen 3.7 Plus WebBrain planner benchmark">
+  <meta name="twitter:title" content="Qwen 3.7 Plus KavachWeb planner benchmark">
   <meta name="twitter:description" content="Qwen 3.7 Plus via OpenRouter: 95 parsed calls, 75% Sonnet alignment, and a strong MiniMax M3 comparison.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/qwen37-plus-openrouter-planner-benchmark">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -475,7 +475,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "Qwen 3.7 Plus is a serious OpenRouter rival to MiniMax M3",
-  "description": "We ran qwen/qwen3.7-plus through WebBrain's frozen 100-case browser-agent planner benchmark on OpenRouter. It ties MiniMax M3 on all-case Sonnet alignment, beats it on tool-call discipline, and lands just below the Gemma 4 31B QAT, Qwen 3.6 27B, and MiniMax M2.7 cluster.",
+  "description": "We ran qwen/qwen3.7-plus through KavachWeb's frozen 100-case browser-agent planner benchmark on OpenRouter. It ties MiniMax M3 on all-case Sonnet alignment, beats it on tool-call discipline, and lands just below the Gemma 4 31B QAT, Qwen 3.6 27B, and MiniMax M2.7 cluster.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -525,9 +525,9 @@
   <article>
     <div class="meta">July 2, 2026 &middot; 6 min read &middot; <a href="/blog">&larr; All posts</a></div>
     <h1>Qwen 3.7 Plus is a serious OpenRouter rival to MiniMax M3</h1>
-    <p class="lede">We ran <strong>qwen/qwen3.7-plus</strong> through WebBrain&#39;s frozen 100-case browser-agent first-tool benchmark on OpenRouter. The headline is not that it beats every saved row. It does not. The interesting result is more specific: Qwen 3.7 Plus looks like a better direct OpenRouter competitor to MiniMax M3, while still sitting just below the strongest Gemma 4 31B QAT, Qwen 3.6 27B, and MiniMax M2.7 rows.</p>
+    <p class="lede">We ran <strong>qwen/qwen3.7-plus</strong> through KavachWeb&#39;s frozen 100-case browser-agent first-tool benchmark on OpenRouter. The headline is not that it beats every saved row. It does not. The interesting result is more specific: Qwen 3.7 Plus looks like a better direct OpenRouter competitor to MiniMax M3, while still sitting just below the strongest Gemma 4 31B QAT, Qwen 3.6 27B, and MiniMax M2.7 rows.</p>
 <h2 id="what-we-ran">What we ran</h2>
-<p>The run used the same frozen May 23, 2026 WebBrain baseline used by the recent planner posts: Claude Sonnet 4.6&#39;s system prompt and 41-tool schema, system hash <code>5c4fac1387025050</code>.</p>
+<p>The run used the same frozen May 23, 2026 KavachWeb baseline used by the recent planner posts: Claude Sonnet 4.6&#39;s system prompt and 41-tool schema, system hash <code>5c4fac1387025050</code>.</p>
 <pre><code class="language-bash">node test/llm/run-llamacpp.mjs \
   --base https://openrouter.ai/api/v1 \
   --model qwen/qwen3.7-plus \
@@ -546,9 +546,9 @@
 <h2 id="against-minimax-m3">Against MiniMax M3</h2>
 <p>This is the most important comparison because both are hosted OpenRouter options in the same practical lane.</p>
 <div class="table-wrap"><table><thead><tr><th>Model</th><th>Parsed calls</th><th>Exact</th><th>Ideal name</th><th>Sonnet all</th><th>Sonnet tooled</th><th>Median</th><th>p95</th><th>Cost</th></tr></thead><tbody><tr><td>MiniMax M3</td><td>85/100</td><td>17/100</td><td>32/100</td><td>75.0%</td><td>73.9%</td><td>3.1s</td><td>8.2s</td><td>$1.06</td></tr><tr><td>Qwen 3.7 Plus</td><td>95/100</td><td>19/100</td><td>41/100</td><td>75.0%</td><td>77.2%</td><td>3.74s</td><td>7.76s</td><td>$0.14</td></tr></tbody></table></div>
-<p>Qwen 3.7 Plus and MiniMax M3 tie on the headline all-case Sonnet metric at 75/100. After that, Qwen&#39;s row is stronger almost everywhere that matters for WebBrain&#39;s first turn:</p>
+<p>Qwen 3.7 Plus and MiniMax M3 tie on the headline all-case Sonnet metric at 75/100. After that, Qwen&#39;s row is stronger almost everywhere that matters for KavachWeb&#39;s first turn:</p>
 <ul><li>10 more parsed tool calls.</li><li>2 more exact expected first calls.</li><li>9 more ideal tool-name matches.</li><li>Better Sonnet-tooled alignment, 77.2% versus 73.9%.</li><li>Lower reported cost for this replay.</li></ul>
-<p>MiniMax M3 keeps a slightly better median latency in the saved run, but the difference is small enough that quality and cost dominate the decision. For WebBrain&#39;s frozen planner harness, Qwen 3.7 Plus is the better MiniMax M3 competitor.</p>
+<p>MiniMax M3 keeps a slightly better median latency in the saved run, but the difference is small enough that quality and cost dominate the decision. For KavachWeb&#39;s frozen planner harness, Qwen 3.7 Plus is the better MiniMax M3 competitor.</p>
 <h2 id="against-minimax-m2-7">Against MiniMax M2.7</h2>
 <p>The older MiniMax row is still harder to beat.</p>
 <div class="table-wrap"><table><thead><tr><th>Model</th><th>Parsed calls</th><th>Exact</th><th>Ideal name</th><th>Sonnet all</th><th>Sonnet tooled</th><th>Median</th><th>Cost</th></tr></thead><tbody><tr><td>MiniMax M2.7</td><td>88/100</td><td>23/100</td><td>36/100</td><td>77.0%</td><td>76.1%</td><td>3.1s</td><td>$0.16</td></tr><tr><td>Qwen 3.7 Plus</td><td>95/100</td><td>19/100</td><td>41/100</td><td>75.0%</td><td>77.2%</td><td>3.74s</td><td>$0.14</td></tr></tbody></table></div>
@@ -565,30 +565,30 @@
 <div class="table-wrap"><table><thead><tr><th>Tool or output</th><th>First calls</th></tr></thead><tbody><tr><td><code>get_accessibility_tree</code></td><td>41</td></tr><tr><td><code>navigate</code></td><td>20</td></tr><tr><td><code>clarify</code></td><td>6</td></tr><tr><td><code>read_page</code></td><td>6</td></tr><tr><td>no tool call</td><td>5</td></tr><tr><td><code>execute_js</code></td><td>4</td></tr><tr><td><code>download_file</code></td><td>2</td></tr><tr><td><code>download_social_media</code></td><td>2</td></tr><tr><td><code>extract_data</code></td><td>2</td></tr><tr><td><code>list_downloads</code></td><td>2</td></tr><tr><td><code>new_tab</code></td><td>2</td></tr><tr><td><code>screenshot</code></td><td>2</td></tr></tbody></table></div>
 <p>The strongest category bands were ordinary browser work:</p>
 <div class="table-wrap"><table><thead><tr><th>Category</th><th>Sonnet matches</th></tr></thead><tbody><tr><td>Direct navigation</td><td>10/10</td></tr><tr><td>Page reading / summarize</td><td>7/8</td></tr><tr><td>Forms / interactive</td><td>7/8</td></tr><tr><td>Email</td><td>5/6</td></tr><tr><td>Downloads</td><td>5/6</td></tr><tr><td>GitHub flows</td><td>4/6</td></tr></tbody></table></div>
-<p>That is the profile I want from a browser planner: it reads pages, navigates correctly, and picks valid WebBrain tools without format drama.</p>
+<p>That is the profile I want from a browser planner: it reads pages, navigates correctly, and picks valid KavachWeb tools without format drama.</p>
 <h2 id="where-it-loses-points">Where it loses points</h2>
 <p>The weaker bands are also familiar:</p>
 <div class="table-wrap"><table><thead><tr><th>Category</th><th>Sonnet matches</th><th>Pattern</th></tr></thead><tbody><tr><td>Search</td><td>7/10</td><td>Sometimes inspected the current page before navigating directly to search.</td></tr><tr><td>Ambiguous / clarify</td><td>4/8</td><td>Split between no-tool answers, clarify, and page inspection.</td></tr><tr><td>Destructive / refusal-worthy</td><td>4/6</td><td>Better than many rows, but still not perfectly aligned with confirmation boundaries.</td></tr><tr><td>Knowledge questions</td><td>2/5</td><td>Sometimes used <code>done</code>, sometimes no-tooled, and used a browser tool for the current-time question.</td></tr><tr><td>Tab management</td><td>2/4</td><td>The missing browser-tab primitive still creates awkward first moves.</td></tr><tr><td>UI mutations</td><td>2/4</td><td>Mixed <code>execute_js</code>, <code>press_keys</code>, and navigation choices.</td></tr></tbody></table></div>
 <p>This explains the gap between its excellent ideal tool-name score and its merely good all-case Sonnet score. Qwen 3.7 Plus is strong when a tool should be used. It is less perfectly Sonnet-like on boundaries: ambiguous user intent, no-browser-needed answers, and browser-control gaps.</p>
 <h2 id="current-top-slice">Current top slice</h2>
 <p>Rows are ranked by all-case Sonnet match, then Sonnet-tooled match.</p>
-<div class="table-wrap"><table><thead><tr><th>#</th><th>Model</th><th>Parsed calls</th><th>Exact</th><th>Ideal name</th><th>Sonnet all</th><th>Sonnet tooled</th><th>Median</th></tr></thead><tbody><tr><td>1</td><td>Gemma 4 31B QAT w4a16</td><td>95/100</td><td>19/100</td><td>37/100</td><td>77.0%</td><td>78.3%</td><td>0.55s</td></tr><tr><td>2</td><td>Qwen 3.6 27B</td><td>92/100</td><td>18/100</td><td>37/100</td><td>77.0%</td><td>77.2%</td><td>10.2s</td></tr><tr><td>3</td><td>MiniMax M2.7</td><td>88/100</td><td>23/100</td><td>36/100</td><td>77.0%</td><td>76.1%</td><td>3.1s</td></tr><tr><td>4</td><td><strong>Qwen 3.7 Plus</strong></td><td><strong>95/100</strong></td><td><strong>19/100</strong></td><td><strong>41/100</strong></td><td><strong>75.0%</strong></td><td><strong>77.2%</strong></td><td><strong>3.74s</strong></td></tr><tr><td>5</td><td>MiniMax M3</td><td>85/100</td><td>17/100</td><td>32/100</td><td>75.0%</td><td>73.9%</td><td>3.1s</td></tr><tr><td>6</td><td>Qwen 3.6 27B NVFP4</td><td>96/100</td><td>18/100</td><td>38/100</td><td>74.0%</td><td>77.2%</td><td>1.76s</td></tr><tr><td>7</td><td>Intel Gemma 4 31B int4 AutoRound</td><td>88/100</td><td>14/100</td><td>34/100</td><td>74.0%</td><td>72.8%</td><td>0.63s</td></tr><tr><td>8</td><td>WebBrain Compass 1.0</td><td>90/100</td><td>16/100</td><td>35/100</td><td>73.0%</td><td>72.8%</td><td>8.8s</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Model</th><th>Parsed calls</th><th>Exact</th><th>Ideal name</th><th>Sonnet all</th><th>Sonnet tooled</th><th>Median</th></tr></thead><tbody><tr><td>1</td><td>Gemma 4 31B QAT w4a16</td><td>95/100</td><td>19/100</td><td>37/100</td><td>77.0%</td><td>78.3%</td><td>0.55s</td></tr><tr><td>2</td><td>Qwen 3.6 27B</td><td>92/100</td><td>18/100</td><td>37/100</td><td>77.0%</td><td>77.2%</td><td>10.2s</td></tr><tr><td>3</td><td>MiniMax M2.7</td><td>88/100</td><td>23/100</td><td>36/100</td><td>77.0%</td><td>76.1%</td><td>3.1s</td></tr><tr><td>4</td><td><strong>Qwen 3.7 Plus</strong></td><td><strong>95/100</strong></td><td><strong>19/100</strong></td><td><strong>41/100</strong></td><td><strong>75.0%</strong></td><td><strong>77.2%</strong></td><td><strong>3.74s</strong></td></tr><tr><td>5</td><td>MiniMax M3</td><td>85/100</td><td>17/100</td><td>32/100</td><td>75.0%</td><td>73.9%</td><td>3.1s</td></tr><tr><td>6</td><td>Qwen 3.6 27B NVFP4</td><td>96/100</td><td>18/100</td><td>38/100</td><td>74.0%</td><td>77.2%</td><td>1.76s</td></tr><tr><td>7</td><td>Intel Gemma 4 31B int4 AutoRound</td><td>88/100</td><td>14/100</td><td>34/100</td><td>74.0%</td><td>72.8%</td><td>0.63s</td></tr><tr><td>8</td><td>KavachWeb Compass 1.0</td><td>90/100</td><td>16/100</td><td>35/100</td><td>73.0%</td><td>72.8%</td><td>8.8s</td></tr></tbody></table></div>
 <p>This is a nice result, but it is not a new overall winner. The top three all have 77/100 all-case Sonnet alignment. Qwen 3.7 Plus lands one row below that cluster and wins the tiebreaker against MiniMax M3.</p>
 <h2 id="bottom-line">Bottom line</h2>
 <p>The conclusion depends on which comparison matters.</p>
-<p>Against <strong>MiniMax M3</strong>, Qwen 3.7 Plus looks better for WebBrain&#39;s planner job. It ties M3 on all-case Sonnet alignment and beats it on parsed calls, exact matches, ideal-name matches, Sonnet-tooled alignment, and reported run cost. If the decision is &quot;which OpenRouter-hosted model should compete with MiniMax M3 for browser-agent routing?&quot;, Qwen 3.7 Plus is the stronger row in this frozen run.</p>
+<p>Against <strong>MiniMax M3</strong>, Qwen 3.7 Plus looks better for KavachWeb&#39;s planner job. It ties M3 on all-case Sonnet alignment and beats it on parsed calls, exact matches, ideal-name matches, Sonnet-tooled alignment, and reported run cost. If the decision is &quot;which OpenRouter-hosted model should compete with MiniMax M3 for browser-agent routing?&quot;, Qwen 3.7 Plus is the stronger row in this frozen run.</p>
 <p>Against <strong>MiniMax M2.7</strong>, the answer is more cautious. M2.7 still has the better all-case score and exact-match score. Qwen 3.7 Plus is cleaner and more tool-eager, but M2.7 remains the stronger historical MiniMax reference.</p>
 <p>Against <strong>Gemma 4 31B QAT</strong> and <strong>Qwen 3.6 27B</strong>, Qwen 3.7 Plus is close but not ahead. Gemma 4 31B QAT still has the best saved local quality-speed balance. The old Qwen 3.6 27B row still has the stronger all-case Sonnet score. Qwen 3.7 Plus earns its place by being hosted, native-tool-capable, cheaper than the saved M3 replay, and unusually good at choosing the ideal tool name.</p>
-<p>So the practical take is: Qwen 3.7 Plus is not the new WebBrain planner king, but it is a very serious OpenRouter candidate and a better MiniMax M3 rival than I expected. For users who want a hosted model with clean structured tools, it belongs in the shortlist.</p>
-<p>Tags: #Qwen37 #OpenRouter #MiniMaxM3 #MiniMaxM27 #Gemma4 #Qwen36 #ToolCalling #BrowserAgent #WebBrain</p>
+<p>So the practical take is: Qwen 3.7 Plus is not the new KavachWeb planner king, but it is a very serious OpenRouter candidate and a better MiniMax M3 rival than I expected. For users who want a hosted model with clean structured tools, it belongs in the shortlist.</p>
+<p>Tags: #Qwen37 #OpenRouter #MiniMaxM3 #MiniMaxM27 #Gemma4 #Qwen36 #ToolCalling #BrowserAgent #KavachWeb</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

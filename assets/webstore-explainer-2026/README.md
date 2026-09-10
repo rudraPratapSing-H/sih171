@@ -6,7 +6,7 @@ Product Hunt gallery thumbnail (~300px wide, headline ~20px effective) the strok
 up and went grey. v5 keeps the same structure with a display face that survives
 downscaling.
 
-No product icon and no "WebBrain" corner wordmark on any slide. The hero keeps a small
+No product icon and no "KavachWeb" corner wordmark on any slide. The hero keeps a small
 mono "WEBBRAIN" kicker as the only brand mark.
 
 Type system:
@@ -27,7 +27,7 @@ Fonts are vendored in `fonts/` and inlined as base64 at render time, so output d
 depend on what is installed locally. Both families are OFL 1.1; the license texts in
 `fonts/OFL-*.txt` must stay with the binaries.
 
-The mock agent panel on 02 still reads "WebBrain is acting" — depicted product UI, not
+The mock agent panel on 02 still reads "KavachWeb is acting" — depicted product UI, not
 slide branding.
 
 v2–v4 are untouched; the versions are independent copies, so a copy change needs applying
@@ -39,7 +39,7 @@ Files (1280×800):
 - 03-ask-any-page.png: Ask mode, cropped to the answer panel
 - 04-any-llm.png: Model picker, cropped to the provider dropdown
 - 05-plan-before-act.png: Plan review with Approve/Adjust before actions run
-- 06-launch-offer.png: WebBrain Compass $5/mo (reg. $8), Save 35%
+- 06-launch-offer.png: KavachWeb Compass $5/mo (reg. $8), Save 35%
 - 07-social-proof.png: ~1000 GitHub stars, ~50 contributors, GPL — repo bar with contributor avatars
 
 Light-background alternates of the two dark slides (originals kept, use whichever fits the gallery):

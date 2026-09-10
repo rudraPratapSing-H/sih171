@@ -12,7 +12,7 @@ excerpt: >
 cardTitle: >
   Pruning Gemma 4 26B-A4B for small GPUs: Turkish-first, language-agnostic MoE surgery
 titleTag: >
-  Pruning Gemma 4 26B-A4B for Small GPUs: Turkish-First, Language-Agnostic — WebBrain Blog
+  Pruning Gemma 4 26B-A4B for Small GPUs: Turkish-First, Language-Agnostic — KavachWeb Blog
 ogTitle: >
   Pruning Gemma 4 26B-A4B for Small GPUs
 ogDescription: >
@@ -30,7 +30,7 @@ keywords:
   - IQ4_XS
   - LoRA
   - small GPU
-  - WebBrain
+  - KavachWeb
 html: true
 lede: >
   I’m pruning Google’s Gemma 4 26B-A4B for a Turkish + English deployment. The proof of concept is Turkish-first, but the method is language-agnostic: measure which experts are actually used, remove the long tail, then do a short LoRA heal to recover from the cuts.

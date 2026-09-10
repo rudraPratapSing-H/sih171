@@ -26,7 +26,7 @@ No LLM, no API keys, no network. Deterministic, ~5 seconds. Run on every PR.
 ### Real Chrome WebMCP smoke test
 
 `test/webmcp-e2e.mjs` verifies the experimental browser API and CDP domain
-against a local fixture, then loads the real unpacked WebBrain extension and
+against a local fixture, then loads the real unpacked KavachWeb extension and
 repeats discovery and invocation through its `Agent` and `CDPClient`. The
 coverage includes schema transport, default-off and Ask/Act gates, trusted frame
 metadata preparation, paginated and cross-frame discovery, asynchronous

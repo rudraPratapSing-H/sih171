@@ -1,7 +1,7 @@
 /**
  * Runtime configuration, all environment-driven.
  *
- * The bridge port intentionally defaults to 17374, NOT 17373. WebBrain Cloud's
+ * The bridge port intentionally defaults to 17374, NOT 17373. KavachWeb Cloud's
  * sidecar owns 17373, and `cloud-bridge.js` holds exactly one outbound socket —
  * so the extension can be pointed at Cloud or at this server, never both. Using
  * a distinct port keeps the failure mode obvious ("nothing connected") instead
@@ -46,7 +46,7 @@ export const config = {
   /** Port this process listens on for the extension's outbound bridge socket. */
   bridgePort: portFromEnv("WEBBRAIN_BRIDGE_PORT", 17374),
 
-  /** Path segment the extension connects to. Must match the URL set in WebBrain settings. */
+  /** Path segment the extension connects to. Must match the URL set in KavachWeb settings. */
   bridgePath: process.env.WEBBRAIN_BRIDGE_PATH || "/extension",
 
   /**

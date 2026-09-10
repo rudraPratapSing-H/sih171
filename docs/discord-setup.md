@@ -1,6 +1,6 @@
-# WebBrain Discord Server — Setup Guide
+# KavachWeb Discord Server — Setup Guide
 
-This is the single source of truth for configuring the WebBrain Discord server
+This is the single source of truth for configuring the KavachWeb Discord server
 (invite: https://discord.gg/cgC325ssfw). It exists so the server can be
 (re)created from scratch quickly, and so channel, role, and copy changes are
 reviewable like code. When the live server changes, update this file in the same
@@ -16,8 +16,8 @@ sync with it.
 
 | Setting                    | Value                                                                                          |
 | -------------------------- | ---------------------------------------------------------------------------------------------- |
-| Server name                | WebBrain                                                                                       |
-| Server description         | Official community for the WebBrain AI browser agent — chat, help, adapters, and contributions |
+| Server name                | KavachWeb                                                                                       |
+| Server description         | Official community for the KavachWeb AI browser agent — chat, help, adapters, and contributions |
 | Invite                     | `https://discord.gg/cgC325ssfw`                                                                |
 | Verification level         | Low (email verified)                                                                           |
 | Explicit content filter    | Keep it enabled at the default                                                                 |
@@ -47,8 +47,8 @@ Create channels in this order, under four categories.
 
 | Channel          | Type | Topic                                              |
 | ---------------- | ---- | -------------------------------------------------- |
-| `#general`       | text | Anything WebBrain: questions, ideas, conversation  |
-| `#introductions` | text | Say hi, tell us what you use WebBrain for          |
+| `#general`       | text | Anything KavachWeb: questions, ideas, conversation  |
+| `#introductions` | text | Say hi, tell us what you use KavachWeb for          |
 | `#show-and-tell` | text | Traces, workflows, adapters, runs you are proud of |
 
 ### Category: Support
@@ -73,7 +73,7 @@ Create channels in this order, under four categories.
 
 | Channel      | Type | Topic                     |
 | ------------ | ---- | ------------------------- |
-| `#off-topic` | text | Non-WebBrain conversation |
+| `#off-topic` | text | Non-KavachWeb conversation |
 
 `#help` is a good candidate for Discord **Forums** (per-topic threads) once
 traffic justifies it; start as a text channel to keep moderation simple.
@@ -112,7 +112,7 @@ it before posting. Reuse the same text as a pinned message in `#rules`.
 ```text
 1. Be civil. Disagree with the code, not with the person.
 2. No spam, self-promotion, or unsolicited DMs. The only exception is sharing
-   your own WebBrain workflows in #show-and-tell.
+   your own KavachWeb workflows in #show-and-tell.
 3. Never post credentials, API keys, or traces containing personal data.
    Scrub traces before sharing.
 4. Report security issues privately to a maintainer (see SECURITY.md).
@@ -129,9 +129,9 @@ it before posting. Reuse the same text as a pinned message in `#rules`.
 This is the pinned welcome message and the landing copy for the welcome screen.
 
 ```text
-Welcome to the WebBrain community.
+Welcome to the KavachWeb community.
 
-WebBrain is an open-source AI browser agent for Chrome and Firefox. It chats
+KavachWeb is an open-source AI browser agent for Chrome and Firefox. It chats
 with web pages, automates multi-step tasks, and runs on your choice of LLM —
 local (llama.cpp, Ollama, LM Studio) or cloud (OpenAI, Anthropic, Google,
 OpenRouter, and 100+ others).
@@ -142,7 +142,7 @@ Getting started
 - Docs: https://webbrain.one/docs
 
 Where to go
-- #help — questions about using WebBrain
+- #help — questions about using KavachWeb
 - #local-models / #providers — which models work, and how to set them up
 - #site-adapters — write guidance for a site you use; it is our highest-value
   contribution (see CONTRIBUTING.md)

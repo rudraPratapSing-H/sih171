@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DeepSeek V4 Flash Vision Exp benchmark on OpenRouter - WebBrain Blog</title>
-  <meta name="description" content="We tested DeepSeek V4 Flash Vision Exp on 200 WebBrain browser-agent cases. Its text planning beats Qwen3.8 Flash and GLM-5.3 Flash, but its experimental vision route trails both.">
-  <meta name="keywords" content="DeepSeek V4 Flash Vision Exp, DeepSeek V4 Flash 0731, OpenRouter, multimodal model benchmark, browser agent, mixture of experts, vision language model, tool calling, AI API pricing, WebBrain">
+  <title>DeepSeek V4 Flash Vision Exp benchmark on OpenRouter - KavachWeb Blog</title>
+  <meta name="description" content="We tested DeepSeek V4 Flash Vision Exp on 200 KavachWeb browser-agent cases. Its text planning beats Qwen3.8 Flash and GLM-5.3 Flash, but its experimental vision route trails both.">
+  <meta name="keywords" content="DeepSeek V4 Flash Vision Exp, DeepSeek V4 Flash 0731, OpenRouter, multimodal model benchmark, browser agent, mixture of experts, vision language model, tool calling, AI API pricing, KavachWeb">
   <meta property="og:title" content="DeepSeek V4 Flash Vision Exp: 200 browser-agent tests">
   <meta property="og:description" content="A 284B-total, 13B-active MoE wins our text-planning comparison but trails Qwen and GLM on browser vision. Architecture, dynamic pricing, latency, cost, and raw results.">
   <meta property="og:type" content="article">
@@ -15,12 +15,12 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta property="og:image:alt" content="KavachWeb — Open-source AI browser agent">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DeepSeek V4 Flash Vision Exp: fast planner, experimental eyes">
   <meta name="twitter:description" content="45 canonical-or-terminal planner outcomes, 16 exact routes, and a 2.60s median. Vision is quick at 5.13s median but reaches only 68/100 strict passes.">
   <meta name="twitter:image" content="https://webbrain.one/twitter-image.png">
-  <meta name="twitter:image:alt" content="WebBrain — Open-source AI browser agent">
+  <meta name="twitter:image:alt" content="KavachWeb — Open-source AI browser agent">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="canonical" href="https://webbrain.one/blog/deepseek-v4-flash-vision-openrouter">
   <!-- Blog is English-only; alternates point to locale homepages. -->
@@ -475,7 +475,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "DeepSeek V4 Flash Vision Exp tested: a great planner with experimental eyes",
-  "description": "We tested DeepSeek V4 Flash Vision Exp on 200 WebBrain browser-agent cases. Its text planning beats Qwen3.8 Flash and GLM-5.3 Flash, but its experimental vision route trails both.",
+  "description": "We tested DeepSeek V4 Flash Vision Exp on 200 KavachWeb browser-agent cases. Its text planning beats Qwen3.8 Flash and GLM-5.3 Flash, but its experimental vision route trails both.",
   "author": {
     "@type": "Person",
     "name": "Emre Sokullu",
@@ -485,7 +485,7 @@
   "image": "https://webbrain.one/og-image.png",
   "publisher": {
     "@type": "Organization",
-    "name": "WebBrain",
+    "name": "KavachWeb",
     "logo": {
       "@type": "ImageObject",
       "url": "https://webbrain.one/logo-github.png"
@@ -502,7 +502,7 @@
   <div class="glow-bg"></div>
   <nav>
     <div class="nav-inner">
-      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> WebBrain<span class="domain">.one</span></a>
+      <a href="/" class="nav-brand"><img class="brand-logo" src="/logo-github.png" alt="" aria-hidden="true"> KavachWeb<span class="domain">.one</span></a>
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/docs/">Docs</a>
@@ -525,7 +525,7 @@
   <article>
     <div class="meta">August 27, 2026 &middot; 9 min read &middot; <a href="/blog">&larr; All posts</a></div>
     <h1>DeepSeek V4 Flash Vision Exp tested: a great planner with experimental eyes</h1>
-    <p class="lede"><strong>DeepSeek&#39;s experimental multimodal route is a better browser planner than its name suggests—and a weaker vision model than the name might imply.</strong> We sent <code>deepseek/deepseek-v4-flash-vision-exp</code> through WebBrain&#39;s 100-case Chrome planning corpus and 100 production-prompt screenshots on OpenRouter. All 200 requests completed. DeepSeek produced more canonical first actions than Qwen3.8 Flash or GLM-5.3 Flash, matched Qwen&#39;s excellent planner latency, and delivered the best p95. On screenshots it was the fastest of the three, yet strict quality fell to <strong>68/100</strong>, eleven passes behind Qwen. This is a strong agentic text model with useful experimental eyes—not yet the best all-purpose multimodal default.</p>
+    <p class="lede"><strong>DeepSeek&#39;s experimental multimodal route is a better browser planner than its name suggests—and a weaker vision model than the name might imply.</strong> We sent <code>deepseek/deepseek-v4-flash-vision-exp</code> through KavachWeb&#39;s 100-case Chrome planning corpus and 100 production-prompt screenshots on OpenRouter. All 200 requests completed. DeepSeek produced more canonical first actions than Qwen3.8 Flash or GLM-5.3 Flash, matched Qwen&#39;s excellent planner latency, and delivered the best p95. On screenshots it was the fastest of the three, yet strict quality fell to <strong>68/100</strong>, eleven passes behind Qwen. This is a strong agentic text model with useful experimental eyes—not yet the best all-purpose multimodal default.</p>
 <h2 id="the-short-verdict">The short verdict</h2>
 <p>DeepSeek V4 Flash Vision Exp splits cleanly into two personalities:</p>
 <div class="table-wrap"><table><thead><tr><th>Role</th><th>DeepSeek result</th><th>Position among the three Flash models</th></tr></thead><tbody><tr><td>Text planning</td><td><strong>45</strong> ideal-name-or-terminal outcomes; <strong>16</strong> exact ideals</td><td><strong>Best routing conformity</strong></td></tr><tr><td>Planner latency</td><td>2.60s median; <strong>8.55s p95</strong></td><td>Essentially tied with Qwen at the median; best tail latency</td></tr><tr><td>Browser vision</td><td>68 strict passes; 89.5% mean rubric</td><td>Third, behind Qwen&#39;s 79 and GLM&#39;s 76</td></tr><tr><td>Vision latency</td><td><strong>5.13s median; 7.60s p95</strong></td><td><strong>Fastest</strong></td></tr><tr><td>Observed cost</td><td>$0.0942 for all 200 calls</td><td>Slightly below Qwen in our run; above promotional GLM</td></tr></tbody></table></div>
@@ -549,10 +549,10 @@
 <div class="table-wrap"><table><thead><tr><th>Workload</th><th>Prompt tokens</th><th>Completion tokens</th><th>Observed cost</th></tr></thead><tbody><tr><td>100 text-planner calls</td><td>2.587M</td><td>25.2K</td><td>$0.0495</td></tr><tr><td>100 production vision calls</td><td>75.1K</td><td>50.7K</td><td>$0.0447</td></tr><tr><td><strong>Total</strong></td><td><strong>2.662M</strong></td><td><strong>76.0K</strong></td><td><strong>$0.0942</strong></td></tr></tbody></table></div>
 <p>That total was about four percent lower than our Qwen run despite DeepSeek&#39;s higher list rates, largely because providers tokenize and meter images differently. It was 43% above GLM&#39;s promotional bill. Treat those observed totals as route-and-workload measurements, not a replacement for token pricing.</p>
 <h2 id="what-we-ran">What we ran</h2>
-<p>The <strong>regular LLM benchmark</strong> used WebBrain&#39;s 100-case Chrome first-action corpus at Full tier. Each case carries the current system prompt, page context, and production OpenAI-compatible tool schemas. The runner captures one response and does not execute the action. We used the same temperature and no reasoning-effort override as the Qwen3.8 Flash and GLM-5.3 Flash comparison.</p>
+<p>The <strong>regular LLM benchmark</strong> used KavachWeb&#39;s 100-case Chrome first-action corpus at Full tier. Each case carries the current system prompt, page context, and production OpenAI-compatible tool schemas. The runner captures one response and does not execute the action. We used the same temperature and no reasoning-effort override as the Qwen3.8 Flash and GLM-5.3 Flash comparison.</p>
 <p>The canonical <code>idealFirstToolCall</code> is intentionally a routing hint, not a complete task grade. A cautious model may inspect the accessibility tree where the fixture expects an immediate click and still behave well in a live loop. Exact matches are useful for regression testing, but they are not equivalent to end-to-end browser success.</p>
-<p>The <strong>vision benchmark</strong> sent 100 browser screenshots through WebBrain&#39;s exact production vision contract: fixed six-section system prompt, temperature 0, an 800-token maximum, weighted fact checks, and critical-fact gating. A strict pass requires both the score threshold and every critical fact.</p>
-<p>DeepSeek recommends temperature 1.0 and larger reasoning budgets for its hardest agent tasks. We intentionally did not adopt those settings: this run measures the model under WebBrain&#39;s normal fast planner and screenshot paths, apples-to-apples with the other two models—not DeepSeek&#39;s maximum-reasoning ceiling.</p>
+<p>The <strong>vision benchmark</strong> sent 100 browser screenshots through KavachWeb&#39;s exact production vision contract: fixed six-section system prompt, temperature 0, an 800-token maximum, weighted fact checks, and critical-fact gating. A strict pass requires both the score threshold and every critical fact.</p>
+<p>DeepSeek recommends temperature 1.0 and larger reasoning budgets for its hardest agent tasks. We intentionally did not adopt those settings: this run measures the model under KavachWeb&#39;s normal fast planner and screenshot paths, apples-to-apples with the other two models—not DeepSeek&#39;s maximum-reasoning ceiling.</p>
 <p>All 200 requests returned successfully. No API key or authorization header is present in the saved results.</p>
 <h2 id="text-planning-deepseek-takes-the-lead">Text planning: DeepSeek takes the lead</h2>
 <div class="table-wrap"><table><thead><tr><th>Model</th><th>Tool calls</th><th>Ideal name or terminal answer</th><th>Exact ideal</th><th>Tree first</th><th>Median</th><th>p95</th><th>Observed cost</th></tr></thead><tbody><tr><td><strong>DeepSeek V4 Flash Vision Exp</strong></td><td>93 + 7 prose responses</td><td><strong>45</strong></td><td><strong>16</strong></td><td><strong>43</strong></td><td>2.60s</td><td><strong>8.55s</strong></td><td>$0.0495</td></tr><tr><td>GLM-5.3 Flash</td><td><strong>100</strong></td><td>41</td><td>13</td><td>48</td><td>7.24s</td><td>16.49s</td><td><strong>$0.0446 promo</strong></td></tr><tr><td>Qwen3.8 Flash</td><td>97 + 3 prose responses</td><td>36</td><td>12</td><td>54</td><td><strong>2.55s</strong></td><td>11.54s</td><td>$0.0572</td></tr></tbody></table></div>
@@ -569,21 +569,21 @@
 <p>Some of those failures are shared. Qwen and GLM also scored 0/5 on modal overlays and 1/5 on form validation in the same run. The vision route is not uniquely broken there. The sharper concern is the challenging band, where Qwen retains 15 passes, GLM 13, and DeepSeek 11.</p>
 <p>At 68 strict passes, DeepSeek lands exactly alongside the older Qwen3-VL-30B-A3B result and one behind Qwen3-VL-32B from our <a href="/blog/qwen-budget-vision-openrouter">budget vision comparison</a>. That is respectable for a newly attached experimental capability, but it does not reset the budget vision tier the way Qwen3.8 Flash and GLM-5.3 Flash did.</p>
 <h2 id="the-right-way-to-deploy-it">The right way to deploy it</h2>
-<ul><li><strong>Best reason to choose DeepSeek:</strong> text-heavy browser agents. It leads canonical routing, nearly matches Qwen&#39;s median, and has the best p95.</li><li><strong>Best single multimodal default:</strong> Qwen3.8 Flash. Its planner is just as responsive at the median and its vision quality is materially stronger.</li><li><strong>Best current value for frequent screenshots:</strong> GLM-5.3 Flash while the launch discount lasts. It keeps most of Qwen&#39;s quality, approaches DeepSeek&#39;s vision speed, and costs much less today.</li><li><strong>Best split configuration:</strong> DeepSeek as the main planner, with Qwen or GLM handling screenshot description. WebBrain can configure the two roles separately.</li></ul>
+<ul><li><strong>Best reason to choose DeepSeek:</strong> text-heavy browser agents. It leads canonical routing, nearly matches Qwen&#39;s median, and has the best p95.</li><li><strong>Best single multimodal default:</strong> Qwen3.8 Flash. Its planner is just as responsive at the median and its vision quality is materially stronger.</li><li><strong>Best current value for frequent screenshots:</strong> GLM-5.3 Flash while the launch discount lasts. It keeps most of Qwen&#39;s quality, approaches DeepSeek&#39;s vision speed, and costs much less today.</li><li><strong>Best split configuration:</strong> DeepSeek as the main planner, with Qwen or GLM handling screenshot description. KavachWeb can configure the two roles separately.</li></ul>
 <p>DeepSeek V4 Flash Vision Exp is still useful as a one-model endpoint when images are occasional and switching providers is undesirable. It accepts the image, produces a structured description quickly, and keeps the excellent V4 Flash agent backbone available for the rest of the loop. The model ID&#39;s <code>exp</code> suffix should simply be taken seriously: the vision stack is measurable and functional, but not yet as mature as the text side.</p>
 <h2 id="raw-results">Raw results</h2>
 <pre><code class="language-text">test/llm/results/2026-08-27-openrouter-full_chrome_deepseek_deepseek-v4-flash-vision-exp
 test/vision/results/2026-08-27-openrouter-full_deepseek_deepseek-v4-flash-vision-exp_production</code></pre>
 <p>The benchmark harness, screenshots, rubrics, and complete result files live in <a href="https://github.com/esokullu/webbrain/tree/main/test/llm" target="_blank" rel="noopener"><code>test/llm</code></a> and <a href="https://github.com/esokullu/webbrain/tree/main/test/vision" target="_blank" rel="noopener"><code>test/vision</code></a>. The directly comparable Qwen3.8 Flash and GLM-5.3 Flash analysis is in <a href="/blog/qwen38-flash-vs-glm53-flash">our previous post</a>.</p>
-<p>Tags: #DeepSeekV4 #DeepSeekFlash #OpenRouter #MultimodalAI #MixtureOfExperts #VisionLanguageModel #ToolCalling #BrowserAgent #WebBrain</p>
+<p>Tags: #DeepSeekV4 #DeepSeekFlash #OpenRouter #MultimodalAI #MixtureOfExperts #VisionLanguageModel #ToolCalling #BrowserAgent #KavachWeb</p>
 
     <div class="author-box">
-      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. WebBrain 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
+      Written by <a href="https://emresokullu.com" target="_blank" rel="noopener">Emre Sokullu</a>. KavachWeb 33.0.0 and later is GPL-3.0-or-later and open on <a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a>.
     </div>
   </article>
 
   <footer>
-    <div>&copy; 2026 WebBrain &middot; <a href="/privacy">Privacy</a></div>
+    <div>&copy; 2026 KavachWeb &middot; <a href="/privacy">Privacy</a></div>
     <div><a href="https://github.com/webbrain-one/webbrain" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
   <script>

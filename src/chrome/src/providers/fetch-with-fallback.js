@@ -137,7 +137,7 @@ export async function fetchWithFallback(url, options = {}) {
 
     // Network error (Failed to fetch) — try offscreen proxy
     console.warn(
-      `[WebBrain] Direct fetch to ${url} failed (${directError.message}), trying offscreen proxy...`
+      `[KavachWeb] Direct fetch to ${url} failed (${directError.message}), trying offscreen proxy...`
     );
 
     try {

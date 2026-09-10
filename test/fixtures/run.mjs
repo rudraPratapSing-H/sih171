@@ -325,7 +325,7 @@ async function setupSelectionShortcut(page, sourcePath, { enabled = true, requir
   await page.setViewportSize({ width: 360, height: 280 });
   await page.setContent(`<!doctype html>
     <style>body{margin:0;font:18px/1.5 sans-serif} #copy{position:absolute;right:2px;bottom:2px;width:210px}</style>
-    <p id="copy">Selected words near the viewport edge for WebBrain.</p>
+    <p id="copy">Selected words near the viewport edge for KavachWeb.</p>
     <div id="editor" contenteditable="true">Editable selection text.</div>`);
   await page.addScriptTag({ content: `
     window.__selectionMessages = [];
@@ -1196,7 +1196,7 @@ for (const [label, sourcePath, manualOpen] of [
     if (!state.selectionRect || rect.bottom > state.selectionRect.top) {
       throw new Error(`shortcut should prefer the top of the selected text: ${JSON.stringify(state)}`);
     }
-    if (state.shortcutLabel !== 'Ask WebBrain about this'
+    if (state.shortcutLabel !== 'Ask KavachWeb about this'
         || state.shortcutBackground !== 'rgb(255, 255, 255)'
         || state.shortcutColor !== 'rgb(108, 99, 255)'
         || state.shortcutBoxShadow === 'none') {
@@ -1585,8 +1585,8 @@ const gmailThreadScopeFixture = `<!doctype html>
     <button aria-label="Expand all">Unrelated background control</button>
     <div role="listitem">Unrelated inbox conversation that must never enter trusted thread coverage</div>
   </main>
-  <main id="active-thread" aria-label="A chat about WebBrain and your work">
-    <h1>A chat about WebBrain and your work</h1>
+  <main id="active-thread" aria-label="A chat about KavachWeb and your work">
+    <h1>A chat about KavachWeb and your work</h1>
     <button id="real-collapse" aria-label="Collapse all">Collapse all</button>
     ${Array.from({ length: 72 }, (_, index) => {
       const number = String(index + 1).padStart(3, '0');

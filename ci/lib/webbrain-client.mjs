@@ -27,7 +27,7 @@ export class WebBrainCloudClient {
     let value;
     try { value = text ? JSON.parse(text) : null; } catch { value = text; }
     if (!response.ok) {
-      const error = new Error(value?.error || `WebBrain Cloud returned HTTP ${response.status}.`);
+      const error = new Error(value?.error || `KavachWeb Cloud returned HTTP ${response.status}.`);
       error.status = response.status;
       error.body = value;
       throw error;

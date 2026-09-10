@@ -192,7 +192,7 @@ export function describeSnapshot(snapshot: CloudSnapshot, timedOut = false): str
     const clarifyId = pending.clarifyId || pending.clarify_id || "";
     const question = pending.question || "(no question text supplied)";
     lines.push("");
-    lines.push("WebBrain is waiting on a human decision before it continues.");
+    lines.push("KavachWeb is waiting on a human decision before it continues.");
     lines.push(`prompt_kind: ${promptKind}`);
     lines.push(`clarify_id: ${clarifyId}`);
     let supported = true;

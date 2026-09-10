@@ -1,4 +1,4 @@
-name: WebBrain Cloud Smoke
+name: KavachWeb Cloud Smoke
 
 on:
   workflow_dispatch:
@@ -29,7 +29,7 @@ jobs:
       - run: npm ci
       - run: npm run test:ci
 
-      - name: Run WebBrain Cloud smoke tests
+      - name: Run KavachWeb Cloud smoke tests
         env:
           WEBBRAIN_API_KEY: ${{ secrets.WEBBRAIN_API_KEY }}
           WEBBRAIN_BASE_URL: ${{ vars.WEBBRAIN_BASE_URL }}
@@ -46,7 +46,7 @@ jobs:
           if [[ -n "$summary" ]]; then
             cat "$summary" >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "No WebBrain Cloud smoke summary was produced." >> "$GITHUB_STEP_SUMMARY"
+            echo "No KavachWeb Cloud smoke summary was produced." >> "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: Upload sanitized smoke artifacts

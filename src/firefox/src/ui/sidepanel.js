@@ -1,5 +1,5 @@
 /**
- * WebBrain Side Panel — Chat UI logic.
+ * KavachWeb Side Panel — Chat UI logic.
  * Default: compact history in chat plus the live label; click for status-only mode.
  * Verbose mode: always-open tool calls with arguments and results.
  */
@@ -107,7 +107,7 @@ if (globalThis.browser?.storage?.onChanged) {
 
 // ─── Onboarding (first-launch wizard) ───────────────────────────────
 (async function initOnboarding() {
-  const stored = await browser.storage.local.get(['onboardingComplete', 'helpImproveWebBrain']);
+  const stored = await browser.storage.local.get(['onboardingComplete', 'helpImproveKavachWeb']);
   if (stored.onboardingComplete) return;
 
   const overlay = document.getElementById('onboarding');
@@ -136,7 +136,7 @@ if (globalThis.browser?.storage?.onChanged) {
   let localModelChoices = [];
   let selectedLocalModelIndex = 0;
   let cloudReady = false;
-  let persistedHelpImprove = stored.helpImproveWebBrain !== false;
+  let persistedHelpImprove = stored.helpImproveKavachWeb !== false;
   let helpImproveSavePromise = Promise.resolve(true);
 
   if (helpImproveCheckbox) {
@@ -371,7 +371,7 @@ if (globalThis.browser?.storage?.onChanged) {
         // running" as the same generic network error, so we can't tell them
         // apart — the hint is phrased conditionally. Log the real underlying
         // errors so they're visible in the console for debugging.
-        console.warn('[WebBrain] onboarding local-model scan failed:', errors);
+        console.warn('[KavachWeb] onboarding local-model scan failed:', errors);
         showProviderFallback('ob.tokens.none_blocked');
       } else {
         showProviderFallback();
@@ -2063,7 +2063,7 @@ function migrateLegacyEmptyStateFromRestoredChat(tabId, root = messagesEl) {
   if (Number.isFinite(numericTabId)) {
     tabChats.set(numericTabId, migratedHtml);
     void persistTabChat(numericTabId, migratedHtml, { allowHidden: true }).catch((error) => {
-      console.warn('[WebBrain] failed to persist restored empty-state migration:', error);
+      console.warn('[KavachWeb] failed to persist restored empty-state migration:', error);
     });
   }
   return true;
@@ -2203,7 +2203,7 @@ async function persistChatHistorySnapshot(tabId, { refreshTabInfo = false } = {}
     updatedAt: Date.now(),
     messages,
   }).catch((error) => {
-    console.warn('[WebBrain] failed to save chat history:', error);
+    console.warn('[KavachWeb] failed to save chat history:', error);
   });
 }
 
@@ -2217,7 +2217,7 @@ async function repairRestoredChatHistorySnapshot(tabId) {
   const messages = extractChatHistoryMessages(messagesEl);
   if (!messages.some((message) => message.role === 'user')) return;
   await repairChatHistoryRecordMessages(recordId, messages).catch((error) => {
-    console.warn('[WebBrain] failed to repair restored chat history:', error);
+    console.warn('[KavachWeb] failed to repair restored chat history:', error);
   });
 }
 
@@ -2264,7 +2264,7 @@ async function resetChatHistoryStateForTab(tabId) {
   ].filter(Boolean));
   await Promise.all(Array.from(recordIdsToDelete).map((recordId) => (
     deleteChatHistoryRecord(recordId).catch((error) => {
-      console.warn('[WebBrain] failed to delete chat history:', error);
+      console.warn('[KavachWeb] failed to delete chat history:', error);
     })
   )));
   chatHistoryRecordIdsByTab.delete(numericTabId);
@@ -3044,7 +3044,7 @@ async function refreshScheduledJobs({ tabId = null } = {}) {
     renderScheduledJobs(jobs);
     return jobs;
   } catch (e) {
-    console.warn('[WebBrain] failed to refresh scheduled jobs:', e);
+    console.warn('[KavachWeb] failed to refresh scheduled jobs:', e);
     return [];
   }
 }
@@ -4456,7 +4456,7 @@ if (verboseBtn) {
       try {
         const response = await sendToBackground('get_debug_log');
         if (response?.log?.length) {
-          console.group('%c[WebBrain Deep Verbose] %d entries', 'color:#7c3aed;font-weight:bold', response.log.length);
+          console.group('%c[KavachWeb Deep Verbose] %d entries', 'color:#7c3aed;font-weight:bold', response.log.length);
           for (const entry of response.log) {
             const label = entry.type || 'unknown';
             const ts = entry.timestamp || '';
@@ -4479,10 +4479,10 @@ if (verboseBtn) {
           }
           console.groupEnd();
         } else {
-          console.log('%c[WebBrain Deep Verbose] No entries yet — run a query first.', 'color:#7c3aed');
+          console.log('%c[KavachWeb Deep Verbose] No entries yet — run a query first.', 'color:#7c3aed');
         }
       } catch (err) {
-        console.error('[WebBrain Deep Verbose] Failed to fetch debug log:', err);
+        console.error('[KavachWeb Deep Verbose] Failed to fetch debug log:', err);
       }
       return; // don't toggle verbose mode
     }
@@ -6791,7 +6791,7 @@ function appendProviderPickerOption(id, name, meta, iconProviderId = id) {
   btn.setAttribute('aria-selected', 'false');
 
   // Icons only in the open menu — closed header stays text-only so the
-  // WebBrain mark (and other brand chips) don't compete with the chrome.
+  // KavachWeb mark (and other brand chips) don't compete with the chrome.
   const iconSrc = providerIconUrl(iconProviderId);
   if (iconSrc) {
     const img = document.createElement('img');
@@ -7005,8 +7005,8 @@ async function loadProviders() {
     providerPickerMenu?.replaceChildren();
     providerPickerLabelById.clear();
 
-    const cloudConfig = res.providers.webbrain_cloud || { label: 'WebBrain Compass' };
-    const cloudLabel = cloudConfig.label || 'WebBrain Compass';
+    const cloudConfig = res.providers.webbrain_cloud || { label: 'KavachWeb Compass' };
+    const cloudLabel = cloudConfig.label || 'KavachWeb Compass';
     const cloudGroup = document.createElement('optgroup');
     cloudGroup.label = t('sp.providers.no_setup_group');
     const cloudOption = document.createElement('option');
@@ -8090,7 +8090,7 @@ async function parseSlashCommands(text, tabId = currentTabId, options = {}) {
   if (command.value === '/export' && action === 'conversation') {
     const messages = messagesEl.querySelectorAll('.message');
     const webbrainVersion = browser.runtime.getManifest().version || 'unknown';
-    let md = `# WebBrain Conversation\n\n_Exported with WebBrain v${webbrainVersion}_\n\n`;
+    let md = `# KavachWeb Conversation\n\n_Exported with KavachWeb v${webbrainVersion}_\n\n`;
     for (const msg of messages) {
       const textEl = msg.querySelector('.message-text');
       if (!textEl) continue;
@@ -8099,7 +8099,7 @@ async function parseSlashCommands(text, tabId = currentTabId, options = {}) {
       if (msg.classList.contains('user')) {
         md += `**You:** ${content}\n\n`;
       } else if (msg.classList.contains('assistant')) {
-        md += `**WebBrain:** ${content}\n\n`;
+        md += `**KavachWeb:** ${content}\n\n`;
       } else if (msg.classList.contains('system')) {
         md += `*${content}*\n\n`;
       }
@@ -9026,7 +9026,7 @@ function handleAgentUpdateMessage(msg) {
   }
   if (msg.type === 'scheduled_job') {
     handleScheduledJobEvent(msg.data, msg.tabId).catch((err) => {
-      console.warn('[WebBrain] failed to handle scheduled job event:', err);
+      console.warn('[KavachWeb] failed to handle scheduled job event:', err);
     });
     return;
   }
@@ -9490,7 +9490,7 @@ function renderClarifyCard(data) {
     card.dataset.submitConfirmation = '1';
     const submit = data.submitConfirmation || {};
     const host = String(submit.host || '').slice(0, 300) || 'this site';
-    qEl.textContent = String(data.question || `WebBrain wants to submit this form on ${host}.`).slice(0, 600);
+    qEl.textContent = String(data.question || `KavachWeb wants to submit this form on ${host}.`).slice(0, 600);
 
     const summary = String(submit.summary || '').trim();
     if (summary) {
@@ -10086,7 +10086,7 @@ function submitPlanReview(card, tabId, planId, action, editedText) {
   note.className = 'plan-review-note';
   const expiredText = () => (typeof t === 'function' ? t('sp.plan.expired') : 'This plan is no longer awaiting review — the run was cancelled.');
   const failureText = (error) => isBackgroundConnectionError(error)
-    ? 'WebBrain reloaded or the background worker stopped before this plan could be approved. Reload the sidebar and try again.'
+    ? 'KavachWeb reloaded or the background worker stopped before this plan could be approved. Reload the sidebar and try again.'
     : expiredText();
 
   sendPlanReviewDecisionWithReconnect(
@@ -10651,9 +10651,9 @@ function clearTransientAssistantTextForToolCall() {
 // UI Helpers
 // ==========================================================================
 
-// WebBrain Compass returns a 402 with one trailing billing action. Keep the
+// KavachWeb Compass returns a 402 with one trailing billing action. Keep the
 // matcher narrow so ordinary subscription text is not converted into billing UI.
-const SUBSCRIBE_ERROR_RE = /(Subscribe for more usage|Upgrade to WebBrain Plus):\s*(https?:\/\/\S+)/i;
+const SUBSCRIBE_ERROR_RE = /(Subscribe for more usage|Upgrade to KavachWeb Plus):\s*(https?:\/\/\S+)/i;
 const COST_ALLOWANCE_ERROR_RE = /Cloud cost allowance reached:\s*(this session|total cloud\/router usage)\s+is\s+\$[\d.]+\s+against\s+the\s+\$([\d.]+)\s+limit\./i;
 const COST_ALLOWANCE_BUMP_USD = 10;
 
@@ -12410,10 +12410,10 @@ async function sendRunWithReconnect(initialAction, payload, recoveryOptions = {}
 
 function formatBackgroundSendError(action, message) {
   if (String(message || '').trim() === `Unknown action: ${action}`) {
-    return `WebBrain's sidebar and background are out of sync. Reload WebBrain from your browser's extension manager, reopen the sidebar, and try again.`;
+    return `KavachWeb's sidebar and background are out of sync. Reload KavachWeb from your browser's extension manager, reopen the sidebar, and try again.`;
   }
   if (isBackgroundConnectionError(message)) {
-    return `WebBrain extension connection was lost while sending "${action}". Reload the sidebar/extension and try again.`;
+    return `KavachWeb extension connection was lost while sending "${action}". Reload the sidebar/extension and try again.`;
   }
   return message;
 }
@@ -12428,7 +12428,7 @@ async function sendToBackground(action, data = {}) {
     throw new Error(formatBackgroundSendError(action, error?.message || String(error || 'Unknown background error')));
   }
   if (response == null) {
-    throw new Error(`No response from WebBrain background for "${action}". The background script may have restarted or crashed; reload the sidebar/extension and check the Firefox extension console for the original error.`);
+    throw new Error(`No response from KavachWeb background for "${action}". The background script may have restarted or crashed; reload the sidebar/extension and check the Firefox extension console for the original error.`);
   }
   if (response?.error) {
     throw new Error(formatBackgroundSendError(action, response.error));

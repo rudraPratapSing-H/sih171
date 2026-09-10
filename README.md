@@ -1,17 +1,17 @@
 <p align="center">
-  <img src="assets/logo-mark.png" alt="WebBrain logo" width="92">
+  <img src="assets/logo-mark.png" alt="KavachWeb logo" width="92">
 </p>
 
-<h1 align="center">WebBrain</h1>
+<h1 align="center">KavachWeb</h1>
 
 <p align="center">
   Open-source AI browser agent for chatting with pages, automating tasks, and running multi-step workflows with your choice of LLM.
 </p>
 
 <p align="center">
-  <a href="https://chromewebstore.google.com/detail/webbrain/ljhijonmfahplgbbacgcfnaihbjljhhb"><img src="https://img.shields.io/badge/Chrome-Install-4285F4?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white" alt="Install WebBrain from the Chrome Web Store"></a>
-  <a href="https://addons.mozilla.org/firefox/addon/webbrain/"><img src="https://img.shields.io/badge/Firefox-Install-FF7139?style=for-the-badge&amp;logo=firefoxbrowser&amp;logoColor=white" alt="Install WebBrain from Firefox Browser Add-ons"></a>
-  <a href="https://microsoftedge.microsoft.com/addons/detail/dfbioajafcijomhljabppcelecgdgfeo"><img src="https://img.shields.io/badge/Edge-Install-0A84FF?style=for-the-badge&amp;logo=microsoftedge&amp;logoColor=white" alt="Install WebBrain from Microsoft Edge Add-ons"></a>
+  <a href="https://chromewebstore.google.com/detail/webbrain/ljhijonmfahplgbbacgcfnaihbjljhhb"><img src="https://img.shields.io/badge/Chrome-Install-4285F4?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white" alt="Install KavachWeb from the Chrome Web Store"></a>
+  <a href="https://addons.mozilla.org/firefox/addon/webbrain/"><img src="https://img.shields.io/badge/Firefox-Install-FF7139?style=for-the-badge&amp;logo=firefoxbrowser&amp;logoColor=white" alt="Install KavachWeb from Firefox Browser Add-ons"></a>
+  <a href="https://microsoftedge.microsoft.com/addons/detail/dfbioajafcijomhljabppcelecgdgfeo"><img src="https://img.shields.io/badge/Edge-Install-0A84FF?style=for-the-badge&amp;logo=microsoftedge&amp;logoColor=white" alt="Install KavachWeb from Microsoft Edge Add-ons"></a>
 </p>
 
 <p align="center">
@@ -24,9 +24,9 @@
   <a href="LICENSE">GPL-3.0-or-later</a>
 </p>
 
-![WebBrain reading a page, filling in a form, and fetching a file](assets/webbrain-demo.gif)
+![KavachWeb reading a page, filling in a form, and fetching a file](assets/webbrain-demo.gif)
 
-WebBrain is a web browser extension that puts an AI agent in a side panel next to
+KavachWeb is a web browser extension that puts an AI agent in a side panel next to
 your tabs. Ask it about the page you're on, or hand it a task and let it click,
 type, and navigate its way through. It runs on the model you choose — a local
 llama.cpp or Ollama server, a frontier cloud API, or the managed default that
@@ -57,7 +57,7 @@ are removed when Firefox restarts; permanent installation requires signing via
 
 ## Use it
 
-Click the WebBrain icon to open the side panel, then type something like:
+Click the KavachWeb icon to open the side panel, then type something like:
 
 - "Summarize this page"
 - "Find all links about pricing"
@@ -74,9 +74,9 @@ Three modes control what the agent is allowed to do:
 
 ## Pick a model
 
-**WebBrain Compass 1.0** is the default and needs no API key or local setup.
+**KavachWeb Compass 1.0** is the default and needs no API key or local setup.
 
-**Local models** need no API key either. Point WebBrain at any OpenAI-compatible
+**Local models** need no API key either. Point KavachWeb at any OpenAI-compatible
 server:
 
 ```bash
@@ -95,7 +95,7 @@ port and `sk-unsloth-` API key configured by the user; see the
 [Unsloth Studio setup](docs/providers-and-models.md#unsloth-studio).
 Load a model with **at least a 16k-token context window** — 8k works only
 with the Compact tier, and 4k is too small for the system prompt plus tool
-schemas. WebBrain auto-detects the real window for llama.cpp, Ollama, and LM
+schemas. KavachWeb auto-detects the real window for llama.cpp, Ollama, and LM
 Studio, and auto-compacts the conversation as it fills up. For Ollama,
 llama.cpp, LM Studio, and LocalAI, it also reads native server metadata before
 adding screenshots; Settings provides Auto, Force on, and Off overrides. When
@@ -139,7 +139,7 @@ see the [full catalog](docs/providers-and-models.md#extended-provider-catalog).
 
 ## Agent tools
 
-WebBrain separates **tier** from **mode**. Tier (`compact`, `mid`, `full`) is a
+KavachWeb separates **tier** from **mode**. Tier (`compact`, `mid`, `full`) is a
 per-provider setting controlling how many tools a model sees — Compact suits
 small local models, Full unlocks hover, drag-drop, frames, and shadow DOM. Mode
 (`ask`, `act`, `dev`) controls what the user is allowing.
@@ -175,7 +175,7 @@ suffixes: [slash commands](docs/slash-commands.md).
 
 ## Keyboard Shortcuts
 
-Chrome side panel shortcuts work when the WebBrain side panel has focus.
+Chrome side panel shortcuts work when the KavachWeb side panel has focus.
 
 | Shortcut                        | What it does                                                                 |
 | ------------------------------- | ---------------------------------------------------------------------------- |
@@ -184,7 +184,7 @@ Chrome side panel shortcuts work when the WebBrain side panel has focus.
 | `Ctrl+Shift+X` or `Cmd+Shift+X` | Switch to Act mode                                                           |
 | `Ctrl+Shift+D` or `Cmd+Shift+D` | Switch to Dev mode                                                           |
 | `Escape`                        | Stop the active run, unless it is only dismissing slash-command autocomplete |
-| `Escape` twice                  | Stop an active recording from WebBrain or browser pages                      |
+| `Escape` twice                  | Stop an active recording from KavachWeb or browser pages                      |
 
 ## Documentation
 
@@ -208,9 +208,9 @@ Also available in [中文](docs/zh-CN/) and [Français](docs/fr/).
 
 ## Community
 
-Chat about everything WebBrain — help, local and cloud model setups, site
+Chat about everything KavachWeb — help, local and cloud model setups, site
 adapters, show-and-tell, and contributor coordination — on the
-[WebBrain Discord](https://discord.gg/cgC325ssfw). See
+[KavachWeb Discord](https://discord.gg/cgC325ssfw). See
 [community](docs/community.md) for how the server is organized, and
 [discord-setup](docs/discord-setup.md) for the channel, role, and welcome-screen
 configuration. Bug reports and feature requests belong in
@@ -260,7 +260,7 @@ Recent changes are in [CHANGELOG.md](CHANGELOG.md).
 ## MCP server
 
 Let a coding agent use *your* browser. Claude Code, Codex, Cursor and OpenClaw
-can delegate a task to WebBrain running in the session you are already signed
+can delegate a task to KavachWeb running in the session you are already signed
 into — cookies present, SSO already passed. A headless framework starts logged
 out and stalls at the first login wall; this does not.
 
@@ -276,7 +276,7 @@ open (press `Ctrl+C` to stop it):
 npx -y @webbrain/mcp-server
 ```
 
-Once the server is running, open **WebBrain → Settings → General → Advanced →
+Once the server is running, open **KavachWeb → Settings → General → Advanced →
 MCP**, set the URL to `ws://127.0.0.1:17374/extension`, and enable it.
 **Chromium only** — the control and bridge runtime use the extension's off-screen
 document, which the Firefox build does not have.
@@ -299,7 +299,7 @@ connection diagnostics.
 
 `mode='ask'` is read-only. `mode='act'` can click and type, gated by the same
 in-browser approval prompts a human gets. The server exposes task delegation
-rather than the ~50 low-level browser primitives: WebBrain's permission gate
+rather than the ~50 low-level browser primitives: KavachWeb's permission gate
 lives in the agent loop, so per-primitive access over a socket would sit below
 the gate and bypass it. Details in [`mcp-server/`](mcp-server/).
 
@@ -307,7 +307,7 @@ The complete client setup, tool arguments, run lifecycle, structured-output
 examples, safety boundaries, and troubleshooting guide live at
 [`web/docs/mcp/`](web/docs/mcp/).
 
-> The extension holds **one** bridge socket at a time — WebBrain Cloud (17373),
+> The extension holds **one** bridge socket at a time — KavachWeb Cloud (17373),
 > the MCP server (17374), or the LM Studio plugin (17375). Switch by changing
 > the URL under **Settings → General → Advanced → MCP**.
 
@@ -341,7 +341,7 @@ Source: [`lmstudio-plugin/`](lmstudio-plugin/).
 ```bibtex
 @software{webbrain2026,
   author = {Sokullu, Emre},
-  title = {WebBrain: Open-source AI browser agent for chatting with pages},
+  title = {KavachWeb: Open-source AI browser agent for chatting with pages},
   year = {2026},
   publisher = {GitHub},
   url = {https://github.com/webbrain-one/webbrain}
@@ -350,7 +350,7 @@ Source: [`lmstudio-plugin/`](lmstudio-plugin/).
 
 ## License
 
-WebBrain 33.0.0 and later is licensed under
+KavachWeb 33.0.0 and later is licensed under
 [GPL-3.0-or-later](LICENSE) because the distributed browser extension bundles
 and integrates the GPL-licensed Xapian/libzim WebAssembly runtime. Releases
 before 33.0.0 remain MIT-licensed under the license that applied when they were

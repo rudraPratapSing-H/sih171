@@ -297,7 +297,7 @@ export async function persistTabChatToSession(storageArea, key, html, warn = con
 
     try {
       warn(
-        '[WebBrain] persistTabChat: session storage write failed after compacting the stored copy; chat may not survive a panel reopen:',
+        '[KavachWeb] persistTabChat: session storage write failed after compacting the stored copy; chat may not survive a panel reopen:',
         retryError?.message || retryError || initialError?.message || initialError,
       );
       return { ok: false, error: retryError || initialError };

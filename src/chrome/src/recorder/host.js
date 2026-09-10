@@ -95,7 +95,7 @@ function scheduleRecordingSafetyWatchdog(state = recordingState) {
   const delay = Math.max(0, dueAt - Date.now());
   recordingSafetyTimeout = setTimeout(() => {
     stopRecordingForSafetyCap().catch((e) => {
-      console.warn('[WebBrain] recording safety cap failed:', e);
+      console.warn('[KavachWeb] recording safety cap failed:', e);
     });
   }, delay);
   try { chrome.alarms?.create?.(RECORDING_SAFETY_ALARM_NAME, { when: dueAt }); } catch {}
@@ -123,7 +123,7 @@ try {
   chrome.alarms?.onAlarm?.addListener?.((alarm) => {
     if (alarm?.name !== RECORDING_SAFETY_ALARM_NAME) return;
     stopRecordingForSafetyCap().catch((e) => {
-      console.warn('[WebBrain] recording safety alarm failed:', e);
+      console.warn('[KavachWeb] recording safety alarm failed:', e);
     });
   });
 } catch {}
@@ -223,7 +223,7 @@ async function beforeRecordingFinalize(beforeFinalizeRecording) {
   try {
     await beforeFinalizeRecording();
   } catch (e) {
-    console.warn('[WebBrain] recording finalize provider preload failed:', e);
+    console.warn('[KavachWeb] recording finalize provider preload failed:', e);
   }
 }
 
@@ -576,7 +576,7 @@ export async function stopTabRecording(opts = {}) {
       mimeType: res.mimeType,
       baseFilename: filename.replace(/\.webm$/, ''),
     }).catch((e) => {
-      console.error('[WebBrain] runTranscription crashed:', e);
+      console.error('[KavachWeb] runTranscription crashed:', e);
     });
   }
 

@@ -1,4 +1,4 @@
-/* WebBrain Side Panel Styles */
+/* KavachWeb Side Panel Styles */
 
 /* Theme tokens — dark defaults on :root, cream-light overrides on
    :root[data-theme="light"]. The theme bootstrap in sidepanel.html /
@@ -3732,7 +3732,7 @@ html[data-ui-scale="175"] .conversation-action-label {
   color: var(--text-primary);
 }
 
-/* WebBrain Compass quota / subscribe prompt — bare URL upgraded to a button */
+/* KavachWeb Compass quota / subscribe prompt — bare URL upgraded to a button */
 .message-text.subscribe-error {
   display: flex;
   flex-direction: column;

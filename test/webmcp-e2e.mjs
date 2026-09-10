@@ -360,7 +360,7 @@ async function runExtensionClientSmoke(context, fixtureUrl) {
     assert.match(extensionId, /^[a-p]{32}$/, 'Chrome did not return a valid unpacked extension ID.');
     const installed = await browserCdp.send('Extensions.getExtensions');
     const webBrain = installed.extensions.find(extension => extension.id === extensionId);
-    assert.equal(webBrain?.enabled, true, 'Chrome loaded the WebBrain extension in a disabled state.');
+    assert.equal(webBrain?.enabled, true, 'Chrome loaded the KavachWeb extension in a disabled state.');
     assert.equal(path.resolve(webBrain.path), EXTENSION_PATH);
 
     harness = await context.newPage();
@@ -505,7 +505,7 @@ async function runExtensionClientSmoke(context, fixtureUrl) {
     assert.equal(stalePreparation.error?.noDispatch, true);
 
     console.log(
-      `PASS: WebBrain extension ${webBrain.version} enforced feature/mode gates and exercised `
+      `PASS: KavachWeb extension ${webBrain.version} enforced feature/mode gates and exercised `
       + 'paginated, cross-frame WebMCP discovery, invocation, failure, and stale IDs '
       + 'through Agent + CDPClient.',
     );
@@ -557,7 +557,7 @@ async function main() {
     );
     await withPhaseTimeout(
       () => runExtensionClientSmoke(context, fixtureServer.url),
-      'WebBrain extension WebMCP smoke test',
+      'KavachWeb extension WebMCP smoke test',
     );
   } finally {
     if (context) await context.close();

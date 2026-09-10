@@ -1,7 +1,7 @@
 # Compétences
 
 Une compétence est un texte d'instructions de confiance — éventuellement
-accompagné de son propre manifeste d'outils — que WebBrain charge dans une
+accompagné de son propre manifeste d'outils — que KavachWeb charge dans une
 exécution **uniquement quand c'est pertinent**. Gérez-les dans Paramètres →
 Compétences, où vous pouvez importer un texte ou une URL de compétence, ou
 retirer n'importe quelle compétence intégrée.
@@ -32,19 +32,19 @@ correspondance littérale de mots-clés. Les compétences sans métadonnées
 déduisent leur résumé du premier paragraphe de prose, n'ont aucune intention
 déduite, et utilisent Act/Dev par défaut.
 
-WebBrain reconnaît également les métadonnées YAML obligatoires `name` et
+KavachWeb reconnaît également les métadonnées YAML obligatoires `name` et
 `description` d'un fichier
 [Agent Skills `SKILL.md`](https://agentskills.io/specification) importé. Le nom
 et la description alimentent le catalogue de routage, et les métadonnées sont
 retirées avant le chargement du corps Markdown. Un nom saisi dans Paramètres et
 un bloc `webbrain-skill` restent prioritaires.
 
-Cette compatibilité concerne uniquement les instructions. WebBrain importe un
+Cette compatibilité concerne uniquement les instructions. KavachWeb importe un
 seul document texte ; il ne récupère pas les répertoires `scripts/`,
 `references/` ou `assets/`, n'exécute pas le code de la compétence et ne traite
 pas le champ Agent Skills `allowed-tools` comme une permission ou un manifeste
-d'outils WebBrain. Utilisez `webbrain-tools` pour les outils HTTP WebBrain.
-WebBrain ne reconnaît les blocs `webbrain-skill` et `webbrain-tools` que dans
+d'outils KavachWeb. Utilisez `webbrain-tools` pour les outils HTTP KavachWeb.
+KavachWeb ne reconnaît les blocs `webbrain-skill` et `webbrain-tools` que dans
 le corps Markdown après des métadonnées valides ; du texte ressemblant à un
 bloc dans les métadonnées ne peut ni autoriser le routage ni enregistrer
 d'outil.
@@ -115,7 +115,7 @@ ces traces.
 
 #### Humanizer
 
-Réécrit la prose que WebBrain rédige pour vous, par exemple une réponse à un
+Réécrit la prose que KavachWeb rédige pour vous, par exemple une réponse à un
 e-mail ou une publication, afin qu'elle se lise comme un texte humain. Elle ne
 déclare aucun outil réseau et n'ajoute aucun outil.
 
