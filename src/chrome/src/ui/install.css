@@ -22,21 +22,21 @@
 }
 
 :root {
-  color-scheme: dark;
-  --page: #121525;
-  --page-glow: rgba(103, 87, 255, 0.18);
-  --surface: #191c2d;
-  --surface-strong: #22263a;
-  --text: #f8f8fc;
-  --muted: #b3b9c9;
-  --quiet: #8c94aa;
-  --accent: #8d86ff;
-  --accent-strong: #6757ff;
-  --accent-soft: rgba(141, 134, 255, 0.15);
-  --line: rgba(255, 255, 255, 0.12);
-  --success: #65d69d;
-  --error: #ff8b8b;
-  --shadow: 0 30px 90px rgba(3, 5, 18, 0.38);
+  color-scheme: light;
+  --page: #E1D5C6;
+  --page-glow: rgba(158, 122, 136, 0.13);
+  --surface: #F5EDE4;
+  --surface-strong: #EDE3D6;
+  --text: #2C1810;
+  --muted: #6B5B47;
+  --quiet: #8B7D6E;
+  --accent: #9E7A88;
+  --accent-strong: #8A6475;
+  --accent-soft: rgba(158, 122, 136, 0.10);
+  --line: rgba(89, 55, 25, 0.13);
+  --success: #7A9460;
+  --error: #B04349;
+  --shadow: 0 30px 90px rgba(89, 55, 25, 0.17);
   --display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
   --ui: "Instrument Sans", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -44,20 +44,20 @@
 
 :root[data-theme="light"] {
   color-scheme: light;
-  --page: #f7f9ff;
-  --page-glow: rgba(214, 65, 127, 0.13);
-  --surface: #ffffff;
-  --surface-strong: #f1f4fb;
-  --text: #141828;
-  --muted: #586074;
-  --quiet: #70788d;
-  --accent: #7869ff;
-  --accent-strong: #6757ff;
-  --accent-soft: rgba(103, 87, 255, 0.1);
-  --line: rgba(28, 34, 64, 0.13);
-  --success: #12865c;
-  --error: #a43b3b;
-  --shadow: 0 30px 90px rgba(40, 44, 80, 0.17);
+  --page: #E1D5C6;
+  --page-glow: rgba(158, 122, 136, 0.13);
+  --surface: #F5EDE4;
+  --surface-strong: #EDE3D6;
+  --text: #2C1810;
+  --muted: #6B5B47;
+  --quiet: #8B7D6E;
+  --accent: #9E7A88;
+  --accent-strong: #8A6475;
+  --accent-soft: rgba(158, 122, 136, 0.10);
+  --line: rgba(89, 55, 25, 0.13);
+  --success: #7A9460;
+  --error: #B04349;
+  --shadow: 0 30px 90px rgba(89, 55, 25, 0.17);
 }
 
 * {

@@ -112,6 +112,7 @@ import {
   startChromeWebStoreOAuth,
 } from './chrome-web-store-release.js';
 
+
 /**
  * KavachWeb Service Worker (Background Script)
  * Routes messages between side panel, content scripts, and the agent.
@@ -2791,6 +2792,7 @@ async function handleMessage(msg, sender) {
     'clear_tab_chat',
     'release_context_menu_prompt_claim',
     'capture_screenshot_redaction_snapshot',
+    'append_accessibility_tree_to_google_doc',
     'cancel_pdf_ocr',
     'ensure_offscreen_offline_rag_host',
     EMERGENCY_DOWNLOAD_ACTION,
@@ -2813,6 +2815,7 @@ async function handleMessage(msg, sender) {
   }
 
   switch (msg.action) {
+
     case 'ensure_offscreen_offline_rag_host':
       await ensureOffscreen();
       return { ready: true };

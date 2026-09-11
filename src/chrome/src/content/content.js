@@ -7131,20 +7131,36 @@
       return value;
     };
 
+    const logAccessibilityTreeResult = (value) => {
+      if (msg.action !== 'get_accessibility_tree' || window.__wbAxContentDebug !== true) {
+        return value;
+      }
+      try {
+        console.groupCollapsed('[KavachWeb AX] get_accessibility_tree');
+        console.log('params:', msg.params || {});
+        console.log('result:', value);
+        if (typeof value?.pageContent === 'string') {
+          console.log('pageContent:\n' + value.pageContent);
+        }
+        console.groupEnd();
+      } catch { /* logging must never affect the tool response */ }
+      return value;
+    };
+
     const result = handler();
     if (result instanceof Promise) {
       // Always settle sendResponse — a rejecting handler (e.g. a throwing
       // DOM API) must not leave the caller's await hanging forever.
       result.then(
-        (value) => sendResponse(withLiveDocumentScope(value)),
-        (err) => sendResponse(withLiveDocumentScope({
+        (value) => sendResponse(logAccessibilityTreeResult(withLiveDocumentScope(value))),
+        (err) => sendResponse(logAccessibilityTreeResult(withLiveDocumentScope({
           success: false,
           error: `${msg.action} failed: ${err?.message || String(err)}`,
-        })),
+        }))),
       );
       return true; // async
     }
-    sendResponse(withLiveDocumentScope(result));
+    sendResponse(logAccessibilityTreeResult(withLiveDocumentScope(result)));
   });
 
   // ─── Tab attention flash ────────────────────────────────────────────

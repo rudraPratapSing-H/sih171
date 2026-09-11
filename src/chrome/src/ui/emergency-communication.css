@@ -1,42 +1,42 @@
 :root {
-  --bg: #101a20;
-  --panel: #18252c;
-  --panel-strong: #20323a;
-  --panel-soft: #142229;
-  --text: #edf2ee;
-  --muted: #a8b6b2;
-  --border: rgba(227, 238, 230, .13);
-  --signal: #f0a85f;
-  --signal-soft: rgba(240, 168, 95, .11);
-  --signal-border: rgba(240, 168, 95, .42);
-  --field: #65c7a5;
-  --field-soft: rgba(101, 199, 165, .10);
-  --field-border: rgba(101, 199, 165, .36);
-  --danger: #ef767a;
+  --bg: #1E1A1C;
+  --panel: #2A2428;
+  --panel-strong: #3A3035;
+  --panel-soft: #1A1618;
+  --text: #E8E2DC;
+  --muted: #B0A8A0;
+  --border: rgba(225, 213, 198, .13);
+  --signal: #D3C19D;
+  --signal-soft: rgba(211, 193, 157, .11);
+  --signal-border: rgba(211, 193, 157, .42);
+  --field: #AAB787;
+  --field-soft: rgba(170, 183, 135, .10);
+  --field-border: rgba(170, 183, 135, .36);
+  --danger: #D4726B;
   --shadow: rgba(0, 0, 0, .3);
-  --focus: rgba(240, 168, 95, .45);
-  --topbar: rgba(16, 26, 32, .96);
+  --focus: rgba(211, 193, 157, .45);
+  --topbar: rgba(30, 26, 28, .96);
   color-scheme: dark;
 }
 
 :root[data-theme="light"] {
-  --bg: #eef0e8;
-  --panel: #fbfaf2;
-  --panel-strong: #f1efe2;
-  --panel-soft: #f7f5eb;
-  --text: #18221f;
-  --muted: #64716b;
-  --border: rgba(36, 57, 48, .17);
-  --signal: #9b4f19;
-  --signal-soft: rgba(155, 79, 25, .08);
-  --signal-border: rgba(155, 79, 25, .35);
-  --field: #176f5b;
-  --field-soft: rgba(23, 111, 91, .08);
-  --field-border: rgba(23, 111, 91, .32);
-  --danger: #b8323c;
-  --shadow: rgba(40, 54, 47, .12);
-  --focus: rgba(155, 79, 25, .28);
-  --topbar: rgba(238, 240, 232, .96);
+  --bg: #E1D5C6;
+  --panel: #F5EDE4;
+  --panel-strong: #EDE3D6;
+  --panel-soft: #D6C9B8;
+  --text: #2C1810;
+  --muted: #6B5B47;
+  --border: rgba(89, 55, 25, .17);
+  --signal: #A08A58;
+  --signal-soft: rgba(160, 138, 88, .08);
+  --signal-border: rgba(160, 138, 88, .35);
+  --field: #7A9460;
+  --field-soft: rgba(122, 148, 96, .08);
+  --field-border: rgba(122, 148, 96, .32);
+  --danger: #C5363C;
+  --shadow: rgba(89, 55, 25, .12);
+  --focus: rgba(160, 138, 88, .28);
+  --topbar: rgba(225, 213, 198, .96);
   color-scheme: light;
 }
 

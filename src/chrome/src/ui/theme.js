@@ -18,7 +18,7 @@
 const LS_KEY = 'wbTheme';
 
 export const THEME_MODES = ['system', 'light', 'dark'];
-export const DEFAULT_MODE = 'system';
+export const DEFAULT_MODE = 'light';
 
 function readLocal() {
   try {

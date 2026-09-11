@@ -21,6 +21,7 @@
     "offscreen",
     "privateNetworkAccess",
     "tabCapture",
+    "identity",
     "clipboardWrite",
     "clipboardRead"
   ],
