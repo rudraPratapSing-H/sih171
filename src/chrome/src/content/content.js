@@ -246,7 +246,7 @@
     try {
       const descriptor = window.__wbSiteInteractions?.describe?.(el);
       if (descriptor?.name) return descriptor.name;
-    } catch {}
+    } catch { }
     return (el?.innerText || el?.value || el?.placeholder || el?.title || el?.ariaLabel || '').trim();
   }
 
@@ -340,7 +340,7 @@
     while (cur) {
       try {
         if (cur.nodeType === Node.ELEMENT_NODE && cur.matches(selector)) return cur;
-      } catch {}
+      } catch { }
       cur = _composedParent(cur);
     }
     return null;
@@ -376,7 +376,7 @@
             const lrect = label.getBoundingClientRect();
             if (lrect.width > 0 && lrect.height > 0) return true;
           }
-        } catch {}
+        } catch { }
       }
       // Walk up a couple of levels looking for a visible wrapper.
       let p = el.parentElement;
@@ -393,7 +393,7 @@
   function showAgentWorkingTarget(el, source = 'interaction') {
     try {
       window.__webbrainAgentIndicator?.showTarget?.(el, source);
-    } catch {}
+    } catch { }
   }
 
   function rememberInteractionPoint(el, source = 'interaction') {
@@ -424,7 +424,7 @@
     if (!dialog) return false;
     try {
       if (dialog.matches(':modal')) return true;
-    } catch {}
+    } catch { }
     return dialog.getAttribute('aria-modal') === 'true';
   }
 
@@ -449,7 +449,7 @@
         if (node.matches?.(selector) && _hasVisibleBox(node, 20, 20)) return node;
         const match = node.querySelector?.(selector);
         if (match && _hasVisibleBox(match, 20, 20)) return match;
-      } catch {}
+      } catch { }
       return null;
     };
 
@@ -564,7 +564,7 @@
       try {
         const lbl = document.querySelector('label[for="' + CSS.escape(el.id) + '"]');
         if (lbl) return lbl.innerText.trim().slice(0, 50);
-      } catch {}
+      } catch { }
     }
     // 2. Wrapping <label>
     const parent = el.closest('label');
@@ -603,7 +603,7 @@
             try {
               const lbl = document.querySelector('label[for="' + CSS.escape(el.id) + '"]');
               if (lbl) { const lr = lbl.getBoundingClientRect(); if (lr.width > 0 && lr.height > 0) fallbackRect = lr; }
-            } catch {}
+            } catch { }
           }
           // Try wrapping label
           if (!fallbackRect) {
@@ -709,7 +709,7 @@
         const name = window.__wb_ax_name(el);
         if (name) return String(name).trim().slice(0, 160);
       }
-    } catch {}
+    } catch { }
     try {
       const labelledBy = String(el?.getAttribute?.('aria-labelledby') || '').trim();
       const labelledText = labelledBy
@@ -784,7 +784,7 @@
         surfaces.push({ signature, title, actions });
         if (surfaces.length >= 8) break;
       }
-    } catch {}
+    } catch { }
     return surfaces;
   }
 
@@ -805,7 +805,7 @@
       const name = String(el?.getAttribute?.('name') || '').trim();
       const value = String(el?.getAttribute?.('value') || '').trim();
       if (name) return `name:${name}|value:${value}`;
-    } catch {}
+    } catch { }
     return `ref:${String(refId || '')}`;
   }
 
@@ -818,7 +818,7 @@
           : id.replace(/["\\]/g, '\\$&');
         return `#${escaped}`;
       }
-    } catch {}
+    } catch { }
     return '';
   }
 
@@ -1117,27 +1117,27 @@
    */
   function safeQuerySelector(selector) {
     if (typeof selector !== 'string' || !selector) return null;
-    try { return document.querySelector(selector); } catch {}
+    try { return document.querySelector(selector); } catch { }
     // Bare ID form: "#raw-id-with-:-in-it"
     if (selector.startsWith('#') && !/[\s>+~,\[\]\.:]/.test(selector.slice(1).replace(/\\:/g, ''))) {
       const rawId = selector.slice(1).replace(/\\:/g, ':');
       try {
         const byId = document.getElementById(rawId);
         if (byId) return byId;
-      } catch {}
-      try { return document.querySelector(`[id="${rawId.replace(/"/g, '\\"')}"]`); } catch {}
+      } catch { }
+      try { return document.querySelector(`[id="${rawId.replace(/"/g, '\\"')}"]`); } catch { }
     }
     // Last resort: escape unescaped colons and retry once
     try {
       const escaped = selector.replace(/(^|[^\\]):/g, '$1\\:');
       return document.querySelector(escaped);
-    } catch {}
+    } catch { }
     return null;
   }
 
   function safeQuerySelectorAll(selector) {
     if (typeof selector !== 'string' || !selector) return [];
-    try { return Array.from(document.querySelectorAll(selector)); } catch {}
+    try { return Array.from(document.querySelectorAll(selector)); } catch { }
     const fallback = safeQuerySelector(selector);
     return fallback ? [fallback] : [];
   }
@@ -1162,7 +1162,7 @@
       const visit = (root) => {
         try { matches.push(...root.querySelectorAll(selector)); } catch { return; }
         let elements = [];
-        try { elements = root.querySelectorAll('*'); } catch {}
+        try { elements = root.querySelectorAll('*'); } catch { }
         for (const element of elements) {
           if (element.shadowRoot) visit(element.shadowRoot);
         }
@@ -1198,7 +1198,7 @@
         if (byPath) return byPath;
         node = parent;
       }
-    } catch {}
+    } catch { }
     return null;
   }
 
@@ -1235,7 +1235,7 @@
     };
     const installPageShowPickerGuard = () => {
       const root = document.documentElement;
-      if (!root) return () => {};
+      if (!root) return () => { };
       const guardAttr = 'data-webbrain-file-picker-guard';
       const blockedAttr = 'data-webbrain-file-picker-blocked';
       const blockedEvent = 'webbrain:file-picker-guard-blocked';
@@ -1252,7 +1252,7 @@
               ? payload.selector
               : null,
           };
-        } catch {}
+        } catch { }
       };
       document.addEventListener(blockedEvent, onBlocked, true);
       armPageGuard();
@@ -1511,7 +1511,7 @@
               rect = { x: Math.round(r.x), y: Math.round(r.y), w: Math.round(r.width), h: Math.round(r.height) };
               cx = Math.round(r.x + r.width / 2);
               cy = Math.round(r.y + r.height / 2);
-            } catch {}
+            } catch { }
             let ancestor = '';
             try {
               const container = e.closest('[role=dialog],[role=alertdialog],[aria-modal="true"],form,section,nav,header,footer,aside,[role=region]');
@@ -1520,14 +1520,14 @@
                 const labelledby = container.getAttribute('aria-labelledby');
                 let labelledText = '';
                 if (labelledby) {
-                  try { labelledText = (document.getElementById(labelledby) || {}).innerText || ''; } catch {}
+                  try { labelledText = (document.getElementById(labelledby) || {}).innerText || ''; } catch { }
                 }
                 const headingEl = container.querySelector('h1,h2,h3,h4,[role=heading]');
                 const heading = headingEl ? (headingEl.innerText || '').trim().slice(0, 40) : '';
                 const role = container.getAttribute('role') || container.tagName.toLowerCase();
                 ancestor = [role, label || labelledText || heading].filter(Boolean).join(': ').trim().slice(0, 80);
               }
-            } catch {}
+            } catch { }
             return {
               index: idx,
               tag: e.tagName.toLowerCase(),
@@ -1735,7 +1735,7 @@
                 const heading = h ? (h.innerText || '').trim().slice(0, 40) : (container.getAttribute('aria-label') || '');
                 if (heading) blockerContainer = ` inside dialog "${heading}"`;
               }
-            } catch {}
+            } catch { }
             return {
               success: false,
               dispatched: false,
@@ -1745,7 +1745,7 @@
             };
           }
         }
-      } catch {}
+      } catch { }
     }
 
     if (actionDeadlineExpired()) return deadlineFailure();
@@ -2210,7 +2210,7 @@
       const currentIndex = focusables.indexOf(active);
       const nextIndex = (currentIndex + 1 + focusables.length) % focusables.length;
       if (actionDeadlineExpired()) return false;
-      try { focusables[nextIndex].focus(); } catch (e) {}
+      try { focusables[nextIndex].focus(); } catch (e) { }
       return !actionDeadlineExpired();
     };
 
@@ -2429,7 +2429,7 @@
       try {
         const r = el.getBoundingClientRect();
         rect = { x: Math.round(r.x), y: Math.round(r.y), w: Math.round(r.width), h: Math.round(r.height) };
-      } catch {}
+      } catch { }
       return {
         tag: el.tagName ? el.tagName.toLowerCase() : '',
         role: el.getAttribute?.('role') || '',
@@ -3090,7 +3090,7 @@
             // Use wrapper rect for zero-dimension form inputs
             if ((rect.width < 2 || rect.height < 2) && /^(INPUT|SELECT|TEXTAREA)$/i.test(el.tagName)) {
               let fb = null;
-              if (el.id) { try { const lbl = document.querySelector('label[for="'+CSS.escape(el.id)+'"]'); if (lbl) { const lr = lbl.getBoundingClientRect(); if (lr.width > 0 && lr.height > 0) fb = lr; } } catch {} }
+              if (el.id) { try { const lbl = document.querySelector('label[for="' + CSS.escape(el.id) + '"]'); if (lbl) { const lr = lbl.getBoundingClientRect(); if (lr.width > 0 && lr.height > 0) fb = lr; } } catch { } }
               if (!fb) { const wl = el.closest('label'); if (wl) { const lr = wl.getBoundingClientRect(); if (lr.width > 0 && lr.height > 0) fb = lr; } }
               if (!fb) { let p = el.parentElement; for (let i = 0; i < 3 && p; i++, p = p.parentElement) { const pr = p.getBoundingClientRect(); if (pr.width > 0 && pr.height > 0) { fb = pr; break; } } }
               if (fb) rect = fb;
@@ -3099,14 +3099,14 @@
             seen.add(el);
             collected.push({ el, rect, inShadow: root !== document });
           });
-        } catch (e) {}
+        } catch (e) { }
       });
       // Recurse into open shadow roots.
       try {
         root.querySelectorAll('*').forEach(host => {
           if (host.shadowRoot) pierceShadow(host.shadowRoot);
         });
-      } catch (e) {}
+      } catch (e) { }
     };
 
     pierceShadow(document);
@@ -3138,7 +3138,7 @@
         root.querySelectorAll('*').forEach(host => {
           if (host.shadowRoot) appendOmittedFileInputs(host.shadowRoot);
         });
-      } catch (e) {}
+      } catch (e) { }
     };
     appendOmittedFileInputs(document);
 
@@ -3180,7 +3180,7 @@
       let part = String(node.tagName || '').toLowerCase();
       if (!part) break;
       if (node.id) {
-        try { part += `#${CSS.escape(node.id)}`; } catch {}
+        try { part += `#${CSS.escape(node.id)}`; } catch { }
         parts.unshift(part);
         break;
       }
@@ -3198,7 +3198,7 @@
     if (!(el instanceof HTMLInputElement) || el.type !== 'file') return '';
     const candidates = [];
     if (el.id) {
-      try { candidates.push(`#${CSS.escape(el.id)}`); } catch {}
+      try { candidates.push(`#${CSS.escape(el.id)}`); } catch { }
     }
     if (el.name) candidates.push(`input[type="file"][name="${_cssString(el.name)}"]`);
     const accept = el.getAttribute('accept');
@@ -3244,7 +3244,7 @@
         root.querySelectorAll('*').forEach(host => {
           if (host.shadowRoot) visit(host.shadowRoot, true);
         });
-      } catch {}
+      } catch { }
     };
     visit(document);
     return targets;
@@ -3646,7 +3646,7 @@
       try {
         if (record.hadAttribute) record.el.setAttribute(DEV_TARGET_MARKER_ATTR, record.previousValue || '');
         else record.el.removeAttribute(DEV_TARGET_MARKER_ATTR);
-      } catch {}
+      } catch { }
     }
     devTargetMarkerRegistry.delete(groupId);
     return { success: true, groupId, removed: records.length };
@@ -3656,7 +3656,7 @@
     const resolved = resolveDevTarget(params);
     if (!resolved.success) return resolved;
     const el = resolved.target;
-    try { el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'instant' }); } catch {}
+    try { el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'instant' }); } catch { }
     if (activeDevHighlightCleanup) activeDevHighlightCleanup();
 
     const durationMs = Math.max(250, Math.min(15000, Math.round(Number(params?.durationMs) || 2500)));
@@ -3700,7 +3700,7 @@
     const interval = setInterval(update, 50);
     const cleanup = () => {
       clearInterval(interval);
-      try { overlay.remove(); } catch {}
+      try { overlay.remove(); } catch { }
       if (activeDevHighlightCleanup === cleanup) activeDevHighlightCleanup = null;
     };
     activeDevHighlightCleanup = cleanup;
@@ -4055,7 +4055,7 @@
           const wrappingLabel = el.closest('label');
           if (wrappingLabel) labelText = (wrappingLabel.textContent || '').trim().slice(0, 120);
         }
-      } catch {}
+      } catch { }
       const meta = {
         tag,
         type: fieldType,
@@ -4135,7 +4135,7 @@
       const semanticToolbar = _composedClosestElement(el, '[role="toolbar"]');
       if (semanticToolbar) {
         let toolbarRegionRef = '';
-        try { if (typeof window.__wb_ax_ref === 'function') toolbarRegionRef = window.__wb_ax_ref(semanticToolbar) || ''; } catch {}
+        try { if (typeof window.__wb_ax_ref === 'function') toolbarRegionRef = window.__wb_ax_ref(semanticToolbar) || ''; } catch { }
         return {
           toolbarContext: true,
           toolbarRegionRef,
@@ -4174,7 +4174,7 @@
     while (active && !seen.has(active)) {
       seen.add(active);
       let inner = null;
-      try { inner = active.shadowRoot?.activeElement || null; } catch {}
+      try { inner = active.shadowRoot?.activeElement || null; } catch { }
       if (!inner || inner === active) break;
       active = inner;
     }
@@ -4238,9 +4238,9 @@
       .map(value => {
         const legacy = typeof value === 'string' || typeof value === 'number';
         const identity = String(legacy ? value : (value?.identity ?? value?.recipient) ?? '')
-        .replace(/[\u200b-\u200d\ufeff]/g, '')
-        .replace(/\s+/g, ' ')
-        .trim();
+          .replace(/[\u200b-\u200d\ufeff]/g, '')
+          .replace(/\s+/g, ' ')
+          .trim();
         const role = String(legacy ? 'to' : value?.role || '').trim().toLowerCase();
         return identity && /^(?:to|cc|bcc)$/.test(role) ? `${role}:${identity}` : '';
       })
@@ -4276,10 +4276,10 @@
       adapterName: String(dispatch.adapterName || ''),
       expectedRecipients: Array.isArray(dispatch.expectedRecipients)
         ? dispatch.expectedRecipients.map(value => (
-            value && typeof value === 'object'
-              ? { identity: String(value.identity || ''), role: String(value.role || '') }
-              : { identity: String(value || ''), role: 'to' }
-          )).filter(value => value.identity && /^(?:to|cc|bcc)$/.test(value.role)).slice(0, 16)
+          value && typeof value === 'object'
+            ? { identity: String(value.identity || ''), role: String(value.role || '') }
+            : { identity: String(value || ''), role: 'to' }
+        )).filter(value => value.identity && /^(?:to|cc|bcc)$/.test(value.role)).slice(0, 16)
         : [],
       supportsRecipientSets: dispatch.supportsRecipientSets === true,
       identityKey,
@@ -4309,7 +4309,7 @@
     const pointX = Number(params.dispatchPoint?.x);
     const pointY = Number(params.dispatchPoint?.y);
     if (Number.isFinite(pointX) && Number.isFinite(pointY)) {
-      try { pointTarget = document.elementFromPoint(pointX, pointY); } catch {}
+      try { pointTarget = document.elementFromPoint(pointX, pointY); } catch { }
     }
     const dispatchedTarget = actualTarget || pointTarget;
     if (!expected || !expected.composer?.isConnected || !expected.actionTarget?.isConnected
@@ -4395,10 +4395,10 @@
     const expectedLength = typeof before === 'string'
       ? before.length + inserted.length
       : (() => {
-          const separator = String(beforeSignature || '').indexOf(':');
-          const beforeLength = separator > 0 ? Number(beforeSignature.slice(0, separator)) : NaN;
-          return Number.isInteger(beforeLength) ? beforeLength + inserted.length : NaN;
-        })();
+        const separator = String(beforeSignature || '').indexOf(':');
+        const beforeLength = separator > 0 ? Number(beforeSignature.slice(0, separator)) : NaN;
+        return Number.isInteger(beforeLength) ? beforeLength + inserted.length : NaN;
+      })();
     if (after.length !== expectedLength) return false;
     const matches = candidate => (typeof before === 'string'
       ? candidate === before
@@ -4536,7 +4536,7 @@
       try {
         el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'instant' });
       } catch {
-        try { el.scrollIntoView(); } catch {}
+        try { el.scrollIntoView(); } catch { }
       }
     }
     let previous = el.getBoundingClientRect();
@@ -4551,7 +4551,7 @@
           resolve();
         };
         setTimeout(finish, 40);
-        try { requestAnimationFrame(finish); } catch {}
+        try { requestAnimationFrame(finish); } catch { }
       });
       if (!el.isConnected) return null;
       const next = el.getBoundingClientRect();
@@ -4646,7 +4646,7 @@
       );
       if (!rect) return { resolved: false };
       let refId = '';
-      try { if (typeof window.__wb_ax_ref === 'function') refId = window.__wb_ax_ref(el) || ''; } catch {}
+      try { if (typeof window.__wb_ax_ref === 'function') refId = window.__wb_ax_ref(el) || ''; } catch { }
       const toolbarContext = _richTextToolbarContextForElement(el);
       const probedTag = String(el.tagName || '').toLowerCase();
       const dispatchBindingToken = (toolName === 'click' || (
@@ -4793,7 +4793,7 @@
           .map(line => line.replace(/\s+/g, ' ').trim())
           .filter(Boolean)
           .join('\n');
-        try { text = text.normalize('NFKC'); } catch {}
+        try { text = text.normalize('NFKC'); } catch { }
         return text.length <= 20000 ? text : '';
       };
       const composerMessageBody = (el) => {
@@ -4827,21 +4827,21 @@
           );
           const ariaLabel = normalizedIdentity(current.getAttribute?.('aria-label'));
           if (/\b(?:outgoing|sent|self|own|user|from-me)\b/.test(direction)
-              || booleanOutgoing === 'true'
-              || /(?:^|[-_\s])(?:outgoing|message-out|sent-message|is-sent|from-me|own-message|self-message)(?:$|[-_\s])/.test(className)
-              || /^(?:you(?:\s+sent\b|[:,])|outgoing message\b|sent by you\b)/.test(ariaLabel)) {
+            || booleanOutgoing === 'true'
+            || /(?:^|[-_\s])(?:outgoing|message-out|sent-message|is-sent|from-me|own-message|self-message)(?:$|[-_\s])/.test(className)
+            || /^(?:you(?:\s+sent\b|[:,])|outgoing message\b|sent by you\b)/.test(ariaLabel)) {
             return current;
           }
           if (params.adapterName === 'gmail'
-              && expectedRecipientIdentities.length > 0
-              && (current.hasAttribute?.('data-message-id')
-                || current.hasAttribute?.('data-legacy-message-id'))) {
+            && expectedRecipientIdentities.length > 0
+            && (current.hasAttribute?.('data-message-id')
+              || current.hasAttribute?.('data-legacy-message-id'))) {
             let recipientNodes = [];
             try {
               recipientNodes = Array.from(current.querySelectorAll?.(
                 '[email],[data-email],[data-hovercard-id]'
               ) || []);
-            } catch {}
+            } catch { }
             const observedRecipients = new Set(recipientNodes.flatMap(node => [
               node.getAttribute?.('email'),
               node.getAttribute?.('data-email'),
@@ -4871,7 +4871,7 @@
             if (el.closest?.('button,[role="button"],[role="alert"],[role="status"],[aria-live],nav,[role="navigation"]')) {
               return false;
             }
-          } catch {}
+          } catch { }
           return normalizedMessageBody(el.innerText || el.textContent || '') === expected;
         });
         // Nested wrappers often repeat the same innerText. Count only the
@@ -4901,7 +4901,7 @@
         targetResolved = !!target;
       } else if (tool === 'click') {
         if (typeof args.selector === 'string' && args.selector) {
-          try { target = document.querySelector(args.selector); } catch {}
+          try { target = document.querySelector(args.selector); } catch { }
         } else if (Number.isInteger(args.index) && args.index >= 0) {
           target = queryInteractiveForToolIndex()[args.index] || null;
         } else if (Number.isFinite(args.x) && Number.isFinite(args.y)) {
@@ -4928,7 +4928,7 @@
         for (const el of document.querySelectorAll('textarea,[contenteditable="true"],[role="textbox"]')) {
           addComposer(el);
         }
-      } catch {}
+      } catch { }
       composerCandidates.sort((a, b) => {
         const ar = a.getBoundingClientRect();
         const br = b.getBoundingClientRect();
@@ -4956,7 +4956,7 @@
             const scrollable = /^(auto|scroll|overlay)$/.test(overflowY)
               && Number(node.scrollHeight) > Number(node.clientHeight) + 1;
             if (scrollable && !(typeof node.contains === 'function' && node.contains(excluded))) return node;
-          } catch {}
+          } catch { }
           node = node.parentElement;
         }
         return null;
@@ -5207,7 +5207,7 @@
               // A nearest row containing one role marker can classify its
               // chips. A shared ancestor containing multiple rows cannot.
               if (descendantRoles.size === 1) return [...descendantRoles][0];
-            } catch {}
+            } catch { }
           }
           return '';
         };
@@ -5285,12 +5285,12 @@
         // remain; duplicate display names therefore fail closed.
         const expectedRecipients = Array.isArray(params.expectedRecipients)
           ? params.expectedRecipients.map(value => {
-              const legacy = typeof value === 'string' || typeof value === 'number';
-              return {
-                identity: compact(legacy ? value : (value?.identity ?? value?.recipient), 240),
-                role: compact(legacy ? 'to' : value?.role, 12).toLowerCase(),
-              };
-            }).filter(value => value.identity && /^(?:to|cc|bcc)$/.test(value.role)).slice(0, 16)
+            const legacy = typeof value === 'string' || typeof value === 'number';
+            return {
+              identity: compact(legacy ? value : (value?.identity ?? value?.recipient), 240),
+              role: compact(legacy ? 'to' : value?.role, 12).toLowerCase(),
+            };
+          }).filter(value => value.identity && /^(?:to|cc|bcc)$/.test(value.role)).slice(0, 16)
           : [];
         if (expectedRecipients.length > 0 && recipients.size === expectedRecipients.length) {
           const claimed = new Set();
@@ -5372,10 +5372,10 @@
       // region. Page-wide text would also match a message that quotes it.
       const composerStatusMessages = composeContainer
         ? Array.from(composeContainer.querySelectorAll?.('[aria-live],[role="status"],[role="alert"]') || [])
-            .filter(visible)
-            .map(el => compact(el.innerText || el.textContent, 200))
-            .filter(Boolean)
-            .slice(0, 6)
+          .filter(visible)
+          .map(el => compact(el.innerText || el.textContent, 200))
+          .filter(Boolean)
+          .slice(0, 6)
         : [];
       const gmailComposeFlow = gmailRecipientMode
         && !!composer.closest?.('[role="dialog"]');
@@ -5390,23 +5390,23 @@
           ? strongRecipients.length > 0
           : strongRecipients.length === 1)
         ? _rememberMessageRecipientDispatchBinding(composer, strongRecipients, {
-            tool,
-            args,
-            actionTarget: dispatchTarget,
-            adapterName: params.adapterName,
-            expectedRecipients: params.expectedRecipients,
-            supportsRecipientSets: params.supportsRecipientSets,
-            messageBody,
-            messageBodyBaselineCount,
-            gmailComposeFlow,
-            composerSubject,
-            composerSubjectAvailable,
+          tool,
+          args,
+          actionTarget: dispatchTarget,
+          adapterName: params.adapterName,
+          expectedRecipients: params.expectedRecipients,
+          supportsRecipientSets: params.supportsRecipientSets,
+          messageBody,
+          messageBodyBaselineCount,
+          gmailComposeFlow,
+          composerSubject,
+          composerSubjectAvailable,
         })
         : '';
       let composerRef = '';
       try {
         if (typeof window.__wb_ax_ref === 'function') composerRef = window.__wb_ax_ref(composer) || '';
-      } catch {}
+      } catch { }
       return {
         success: true,
         messageSend: observationOnly ? false : messageSend === true,
@@ -5567,8 +5567,8 @@
           const requestedDepth = maxDepth == null ? 15 : Number(maxDepth);
           let conversationAutoExpanded = false;
           if (ref_id && requestedPage === 1 && (filter || 'all') === 'all'
-              && Number.isFinite(requestedDepth) && requestedDepth >= 15
-              && typeof window.__wb_expand_gmail_conversation_for_read === 'function') {
+            && Number.isFinite(requestedDepth) && requestedDepth >= 15
+            && typeof window.__wb_expand_gmail_conversation_for_read === 'function') {
             const prepared = await window.__wb_expand_gmail_conversation_for_read(ref_id);
             conversationAutoExpanded = prepared?.attempted === true && prepared?.expanded === true;
           }
@@ -5641,7 +5641,7 @@
           const el = window.__wb_ax_lookup(ref_id);
           if (!el) {
             let suggestions = [];
-            try { if (typeof window.__wb_ax_suggest === 'function') suggestions = window.__wb_ax_suggest(ref_id, 6); } catch {}
+            try { if (typeof window.__wb_ax_suggest === 'function') suggestions = window.__wb_ax_suggest(ref_id, 6); } catch { }
             const refStr = String(ref_id);
             const looksLikeDomId = !/^ref_\d+$/.test(refStr);
             const formatNote = looksLikeDomId
@@ -5665,9 +5665,9 @@
             );
           }
           if (!_isFullyVisibleForInteraction(el)) {
-            try { el.scrollIntoView({ block: 'center', inline: 'center' }); } catch {}
+            try { el.scrollIntoView({ block: 'center', inline: 'center' }); } catch { }
           }
-          try { el.focus({ preventScroll: true }); } catch {}
+          try { el.focus({ preventScroll: true }); } catch { }
           const rect = el.getBoundingClientRect();
           if (!el.isConnected || rect.width < 1 || rect.height < 1) {
             return failure(
@@ -5755,7 +5755,7 @@
             popupRole = (el.getAttribute('role') || '').toLowerCase();
             popupHasPopup = el.getAttribute('aria-haspopup');
             isPopupOpener = popupRole === 'combobox' || !!popupHasPopup;
-          } catch {}
+          } catch { }
           let anchorMeta = null;
           if (tag === 'a') {
             try {
@@ -5791,7 +5791,7 @@
                   }
                 }
               }
-            } catch {}
+            } catch { }
           }
           if (actionDeadlineExpired()) {
             return failure(
@@ -5899,7 +5899,7 @@
             // from an open modal, silently destroying in-progress form state.
             try {
               if (targetName) resp.name = targetName;
-            } catch {}
+            } catch { }
             if (tag === 'a') {
               try {
                 const href = anchorMeta?.href || el.getAttribute('href') || '';
@@ -5933,7 +5933,7 @@
                   resp.targetUrl = anchorMeta.targetUrl || href;
                   resp.hint = `This <a> click is navigating to ${anchorMeta.targetUrl || href}. If that's not what you intended, the ref_id was stale — re-read the accessibility tree to get fresh ids. Any unsaved form input on the previous page has been lost.`;
                 }
-              } catch {}
+              } catch { }
             }
             if (isTextEntry) {
               resp.focused = true;
@@ -5954,7 +5954,7 @@
                   resp.opened_popup_likely = true;
                   resp.hint = `This element is a combobox / popup-opener (role="${popupRole}"${popupHasPopup ? `, aria-haspopup="${popupHasPopup}"` : ''}). The popup is almost always rendered in a React portal at the end of <body>, OUTSIDE this button's subtree. Next step: call get_accessibility_tree({filter: "visible"}) — do NOT pass a ref_id (subtree filter will miss the portal). Look for a newly-appeared listbox / searchbox / menu. Then either (a) set_field({ref_id: <new search textbox ref>, text: "<query>", submit: true}), or (b) press_keys(["<first letter>"]) then press_keys(["Enter"]). Do NOT click this same ref_id again — it will just toggle the popup closed.`;
                 }
-              } catch {}
+              } catch { }
             }
             return resp;
           };
@@ -6046,9 +6046,9 @@
             return failure(`set_checked only supports native input[type="checkbox"] controls; ${ref_id} resolved to ${tag || 'unknown'}${inputType ? `[type="${inputType}"]` : ''}.`);
           }
           if (actionDeadlineExpired()) return deadlineFailure();
-          try { el.scrollIntoView({ block: 'center', inline: 'center' }); } catch {}
+          try { el.scrollIntoView({ block: 'center', inline: 'center' }); } catch { }
           if (actionDeadlineExpired()) return deadlineFailure();
-          try { el.focus({ preventScroll: true }); } catch {}
+          try { el.focus({ preventScroll: true }); } catch { }
           if (actionDeadlineExpired()) return deadlineFailure();
           const rect = el.getBoundingClientRect();
           if (!el.isConnected || rect.width < 1 || rect.height < 1) {
@@ -6106,7 +6106,7 @@
                 );
               }
               setTimeout(() => {
-                try { removeSetCheckedMarkers(marker); } catch {}
+                try { removeSetCheckedMarkers(marker); } catch { }
               }, SET_CHECKED_MARKER_TTL_MS);
             }
             return {
@@ -6182,7 +6182,7 @@
           const el = window.__wb_ax_lookup(ref_id);
           if (!el) {
             let suggestions = [];
-            try { if (typeof window.__wb_ax_suggest === 'function') suggestions = window.__wb_ax_suggest(ref_id, 6); } catch {}
+            try { if (typeof window.__wb_ax_suggest === 'function') suggestions = window.__wb_ax_suggest(ref_id, 6); } catch { }
             const refStr = String(ref_id);
             const looksLikeDomId = !/^ref_\d+$/.test(refStr);
             const formatNote = looksLikeDomId
@@ -6194,9 +6194,9 @@
             return failure(`ref_id ${ref_id} not found.${formatNote} The element may have been removed or the page replaced.${hint} Re-read the accessibility tree to get fresh ids — do NOT guess ref numbers or invent placeholders.`, { suggestions });
           }
           if (actionDeadlineExpired()) return deadlineFailure();
-          try { el.scrollIntoView({ block: 'center', inline: 'center' }); } catch {}
+          try { el.scrollIntoView({ block: 'center', inline: 'center' }); } catch { }
           if (actionDeadlineExpired()) return deadlineFailure();
-          try { el.focus({ preventScroll: true }); } catch {}
+          try { el.focus({ preventScroll: true }); } catch { }
           if (actionDeadlineExpired()) return deadlineFailure();
           showAgentWorkingTarget(el, 'type_ax');
           // Capture the element's on-screen rect so the background can
@@ -6350,8 +6350,8 @@
         const deadlineFailure = () => failure(
           dispatched
             ? (submissionDispatched
-                ? 'The page action deadline expired during submission dispatch. The field or submission outcome may be incomplete.'
-                : 'The page action deadline expired during field dispatch. The value may be incomplete, but no submit action was sent.')
+              ? 'The page action deadline expired during submission dispatch. The field or submission outcome may be incomplete.'
+              : 'The page action deadline expired during field dispatch. The value may be incomplete, but no submit action was sent.')
             : 'The page action deadline expired before field dispatch.',
           {
             deadlineExpired: true,
@@ -6369,7 +6369,7 @@
           const el = window.__wb_ax_lookup(ref_id);
           if (!el) {
             let suggestions = [];
-            try { if (typeof window.__wb_ax_suggest === 'function') suggestions = window.__wb_ax_suggest(ref_id, 6); } catch {}
+            try { if (typeof window.__wb_ax_suggest === 'function') suggestions = window.__wb_ax_suggest(ref_id, 6); } catch { }
             const refStr = String(ref_id);
             const looksLikeDomId = !/^ref_\d+$/.test(refStr);
             const formatNote = looksLikeDomId
@@ -6381,9 +6381,9 @@
             return failure(`ref_id ${ref_id} not found.${formatNote} The element may have been removed or the page replaced.${hint} Re-read the accessibility tree to get fresh ids — do NOT guess ref numbers or invent placeholders.`, { suggestions });
           }
           if (actionDeadlineExpired()) return deadlineFailure();
-          try { el.scrollIntoView({ block: 'center', inline: 'center' }); } catch {}
+          try { el.scrollIntoView({ block: 'center', inline: 'center' }); } catch { }
           if (actionDeadlineExpired()) return deadlineFailure();
-          try { el.focus({ preventScroll: true }); } catch {}
+          try { el.focus({ preventScroll: true }); } catch { }
           if (actionDeadlineExpired()) return deadlineFailure();
           showAgentWorkingTarget(el, 'set_field');
           const rect = (() => {
@@ -6478,7 +6478,7 @@
                 || (el.getAttribute && el.getAttribute('aria-autocomplete'))
                 || (el.getAttribute && el.getAttribute('aria-expanded') === 'true');
               if (!isCombobox && controls) {
-                try { if (document.getElementById(controls)) isCombobox = true; } catch {}
+                try { if (document.getElementById(controls)) isCombobox = true; } catch { }
               }
               if (!isCombobox) {
                 // Last-resort check: any visible listbox on the page?
@@ -6488,7 +6488,7 @@
                     const r = lb.getBoundingClientRect();
                     if (r.width > 0 && r.height > 0) { isCombobox = true; break; }
                   }
-                } catch {}
+                } catch { }
               }
               const dispatchKeySequence = (key, keyCode, includeKeypress = false) => {
                 const result = { dispatched: false, completedWithinDeadline: false };
@@ -6524,7 +6524,7 @@
                   });
                 }
               }
-              let removeSubmitObserver = () => {};
+              let removeSubmitObserver = () => { };
               let submitEvent = null;
               if (form && typeof form.addEventListener === 'function') {
                 const onSubmit = event => {
@@ -6557,7 +6557,7 @@
                   submissionDispatched = true;
                   try {
                     form.requestSubmit();
-                  } catch {}
+                  } catch { }
                   if (actionDeadlineExpired()) return deadlineFailure();
                 } else {
                   // Comboboxes, contenteditables, and form-less widgets are
@@ -6633,8 +6633,8 @@
           if (!el || !el.isConnected) return { success: false, error: `ref_id ${ref_id} is stale` };
           const typeable = el.isContentEditable || el.tagName === 'INPUT' || el.tagName === 'TEXTAREA';
           if (!typeable) return { success: false, error: `ref_id ${ref_id} is not a text field` };
-          try { el.scrollIntoView({ block: 'center', inline: 'center' }); } catch {}
-          try { el.focus({ preventScroll: true }); } catch {}
+          try { el.scrollIntoView({ block: 'center', inline: 'center' }); } catch { }
+          try { el.focus({ preventScroll: true }); } catch { }
           if (el.isContentEditable) {
             const selection = window.getSelection();
             const range = document.createRange();
@@ -6689,12 +6689,12 @@
             verified: verifiesAppend && !expected.endsWith(appendText)
               ? false
               : _setFieldValueMatches(
-                  actual,
-                  expectedPrefix,
-                  verifiesAppend ? appendText : expected,
-                  !verifiesAppend,
-                  el.isContentEditable,
-                ),
+                actual,
+                expectedPrefix,
+                verifiesAppend ? appendText : expected,
+                !verifiesAppend,
+                el.isContentEditable,
+              ),
             actual: actual.slice(0, 200),
             fieldMeta: _fieldMeta(el),
           };
@@ -6780,11 +6780,11 @@
           const semanticTarget = window.__wb_ax_resolve_visual_target(x, y);
           return semanticTarget
             ? {
-                success: true,
-                semanticTarget,
-                documentToken: _axDocumentToken(),
-                refScopeUrl: location.href,
-              }
+              success: true,
+              semanticTarget,
+              documentToken: _axDocumentToken(),
+              refScopeUrl: location.href,
+            }
             : { success: true };
         } catch (e) {
           return { success: false, error: e?.message || String(e) };
@@ -6806,7 +6806,7 @@
           const el = window.__wb_ax_lookup(ref_id);
           if (!el) {
             let suggestions = [];
-            try { if (typeof window.__wb_ax_suggest === 'function') suggestions = window.__wb_ax_suggest(ref_id, 6); } catch {}
+            try { if (typeof window.__wb_ax_suggest === 'function') suggestions = window.__wb_ax_suggest(ref_id, 6); } catch { }
             const refStr = String(ref_id);
             const looksLikeDomId = !/^ref_\d+$/.test(refStr);
             const formatNote = looksLikeDomId
@@ -6817,7 +6817,7 @@
               : '';
             return { success: false, error: `ref_id ${ref_id} not found.${formatNote} The element may have been removed or the page replaced.${hint} Re-read the accessibility tree to get fresh ids.`, suggestions };
           }
-          try { el.scrollIntoView({ block: 'center', inline: 'center' }); } catch {}
+          try { el.scrollIntoView({ block: 'center', inline: 'center' }); } catch { }
           showAgentWorkingTarget(el, 'ax_resolve_rect');
           const r = el.getBoundingClientRect();
           const cx = r.left + r.width / 2;
@@ -6838,7 +6838,7 @@
             hasStatefulSemantics,
           } = fallbackStatic;
           let topmost = null;
-          try { if (forClickFallback && inViewport) topmost = document.elementFromPoint(cx, cy); } catch {}
+          try { if (forClickFallback && inViewport) topmost = document.elementFromPoint(cx, cy); } catch { }
           const hitOk = !forClickFallback || (!!topmost && (
             topmost === el
             || el.contains?.(topmost)
@@ -6924,8 +6924,8 @@
           // BOTH rects against that frame is what drag_drop wants.
           // Source may end up partly off-screen if the two are far
           // apart vertically — flagged via inViewport on the return.
-          try { fromEl.scrollIntoView({ block: 'center', inline: 'center' }); } catch {}
-          try { toEl.scrollIntoView({ block: 'center', inline: 'center' }); } catch {}
+          try { fromEl.scrollIntoView({ block: 'center', inline: 'center' }); } catch { }
+          try { toEl.scrollIntoView({ block: 'center', inline: 'center' }); } catch { }
           showAgentWorkingTarget(toEl, 'ax_resolve_two_rects');
 
           const fr = fromEl.getBoundingClientRect();
@@ -6941,7 +6941,7 @@
               name = (el.getAttribute && (el.getAttribute('aria-label') || el.getAttribute('title')))
                 || (el.innerText && el.innerText.trim().slice(0, 80))
                 || '';
-            } catch {}
+            } catch { }
             return {
               ref_id: refId,
               tag: el.tagName ? el.tagName.toLowerCase() : '',
@@ -7122,7 +7122,7 @@
     // debt). Attach on every return path, including failures.
     const withLiveDocumentScope = (value) => {
       if ((msg.action === 'field_value_digest' || msg.action === 'ax_verify_field_value')
-          && value && typeof value === 'object') {
+        && value && typeof value === 'object') {
         try {
           if (!value.documentToken) value.documentToken = _axDocumentToken();
           if (!value.refScopeUrl) value.refScopeUrl = location.href;
@@ -7132,18 +7132,42 @@
     };
 
     const logAccessibilityTreeResult = (value) => {
-      if (msg.action !== 'get_accessibility_tree' || window.__wbAxContentDebug !== true) {
+      if (msg.action !== 'get_accessibility_tree') {
         return value;
       }
       try {
-        console.groupCollapsed('[KavachWeb AX] get_accessibility_tree');
-        console.log('params:', msg.params || {});
-        console.log('result:', value);
+        console.group('[KavachWeb AX] get_accessibility_tree');
+        // console.log('params:', msg.params || {});
+        // console.log('Original Accessibility Tree Result:', value);
         if (typeof value?.pageContent === 'string') {
-          console.log('pageContent:\n' + value.pageContent);
+          // console.log('[KavachWeb AX] Original pageContent:\n', value.pageContent);
+          const sanitize = window.sanitizeForDemo || (typeof sanitizeForDemo === 'function' ? sanitizeForDemo : null);
+          if (typeof sanitize === 'function') {
+            // console.log('[KavachWeb Privacy] Invoking sanitizeForDemo()...');
+            sanitize(value.pageContent)
+              .then((data) => {
+                console.log('[KavachWeb Privacy] sanitizeForDemo() mapping result:', data);
+                let sanitizedPageContent = value.pageContent;
+                if (data && typeof data === 'object') {
+                  for (const [orig, rep] of Object.entries(data)) {
+                    if (orig && typeof rep === 'string') {
+                      sanitizedPageContent = sanitizedPageContent.split(orig).join(rep);
+                    }
+                  }
+                }
+                // console.log('[KavachWeb Privacy] Sanitized Accessibility Tree (pageContent):\n', sanitizedPageContent);
+              })
+              .catch((err) => {
+                console.error('[KavachWeb Privacy] sanitizeForDemo() error:', err);
+              });
+          } else {
+            console.warn('[KavachWeb Privacy] sanitizeForDemo function is not available on window');
+          }
         }
         console.groupEnd();
-      } catch { /* logging must never affect the tool response */ }
+      } catch (err) {
+        console.error('[KavachWeb AX] Logging error:', err);
+      }
       return value;
     };
 

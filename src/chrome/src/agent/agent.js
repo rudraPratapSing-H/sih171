@@ -24,6 +24,7 @@ import {
   richTextToolbarTextShape,
   richTextToolbarUsesFocusedTarget,
 } from './rich-text-toolbar-guard.js';
+
 import { RichTextToolbarProbe } from './rich-text-toolbar-probe.js';
 import { isCredentialField, CREDENTIAL_NOTE_STRICT, STRICT_SECRET_SYSTEM_NOTE } from './credential-fields.js';
 import { detectProgressAction, formatLedgerRow, formatLedgerSummary, isBlockedLedgerDowngrade, isTerminalLedgerStatus, isValidLedgerStatus, ledgerDoneBlock, ledgerRowKey, normalizeLedgerStatus, progressCounts, progressIdentitiesAreUnique, progressIdentityKeys, reconcileLedgerItems, reconcilePersistedLedgerRows, selectLedgerRows, unresolvedLedgerRows, upsertLedgerItems } from './progress-ledger.js';
@@ -185,7 +186,7 @@ function savedWorkflowProtectedMessagingStepIndex(workflow, startUrl = '') {
     let protectedMessaging = false;
     try {
       protectedMessaging = getMessageRecipientGuardPolicy(scopedUrl)?.verifyActiveRecipient === true;
-    } catch {}
+    } catch { }
     if (protectedMessaging && savedWorkflowStepMayDispatchMessage(step)) return index;
     if (step?.tool === 'navigate' && typeof step?.args?.url === 'string') {
       inferredUrl = step.args.url;
@@ -261,9 +262,9 @@ function offlineSourcesForStandaloneQuery(value, runOptions = {}) {
       .filter(source => source === 'wikipedia' || source === 'emergency-box'))]
     : ['wikipedia', 'emergency-box'];
   if (selectedSources.includes('wikipedia')
-      && selectedSources.includes('emergency-box')
-      && shouldRetrieveLocalWikipedia(value)
-      && !isStandaloneEmergencyOrHealthQuery(value)) {
+    && selectedSources.includes('emergency-box')
+    && shouldRetrieveLocalWikipedia(value)
+    && !isStandaloneEmergencyOrHealthQuery(value)) {
     return ['wikipedia'];
   }
   return hasExplicitSources ? selectedSources : undefined;
@@ -1004,9 +1005,9 @@ export class Agent extends LoopDetector {
       // Coverage completes against whatever conversation root the run is on.
       // Only the conversation the job selected answers for that job.
       if (guard?.enabled
-          && guard.workflowRequiredJobEvidence === 'terminal_read_coverage'
-          && this._workflowJobScopeIdentity(this._workflowObservationUrl(tabId, result))
-            === String(guard.workflowJobScopeIdentity || '')) {
+        && guard.workflowRequiredJobEvidence === 'terminal_read_coverage'
+        && this._workflowJobScopeIdentity(this._workflowObservationUrl(tabId, result))
+        === String(guard.workflowJobScopeIdentity || '')) {
         guard.workflowJobEvidenceSatisfied = true;
       }
     }
@@ -1029,7 +1030,7 @@ export class Agent extends LoopDetector {
   _readWindowLimits(provider = null) {
     let activeProvider = provider;
     if (!activeProvider) {
-      try { activeProvider = this.providerManager.getActive(); } catch {}
+      try { activeProvider = this.providerManager.getActive(); } catch { }
     }
     return readWindowLimits(
       this._resolvePromptTier(activeProvider),
@@ -1148,7 +1149,7 @@ export class Agent extends LoopDetector {
     const listeners = [];
     const dispose = () => {
       for (const [signal, listener] of listeners.splice(0)) {
-        try { signal.removeEventListener('abort', listener); } catch {}
+        try { signal.removeEventListener('abort', listener); } catch { }
       }
     };
     controller.signal.addEventListener('abort', dispose, { once: true });
@@ -1180,14 +1181,14 @@ export class Agent extends LoopDetector {
     timeoutError.code = 'vision_timeout';
     const timeout = new Promise((_, reject) => {
       timeoutId = setTimeout(() => {
-        try { controller.abort(timeoutError); } catch { try { controller.abort(); } catch {} }
+        try { controller.abort(timeoutError); } catch { try { controller.abort(); } catch { } }
         reject(timeoutError);
       }, VISION_SUB_CALL_TIMEOUT_MS);
     });
     const started = Promise.resolve(
       typeof operation === 'function' ? operation(controller.signal) : operation,
     );
-    started.catch(() => {});
+    started.catch(() => { });
     try {
       return await Promise.race([started, timeout]);
     } finally {
@@ -1235,14 +1236,14 @@ export class Agent extends LoopDetector {
     CONTENT_ACTION_SIGNAL_DEADLINES.set(controller.signal, { deadlineAt, error: timeoutError });
     const timeout = new Promise((_, reject) => {
       timeoutId = setTimeout(() => {
-        try { controller.abort(timeoutError); } catch { try { controller.abort(); } catch {} }
+        try { controller.abort(timeoutError); } catch { try { controller.abort(); } catch { } }
         reject(timeoutError);
       }, timeoutMs);
     });
     const started = Promise.resolve().then(() => operation(controller.signal));
     // The page response may settle after the timeout. Observe that settlement
     // so it cannot become an unhandled rejection after this race has returned.
-    started.catch(() => {});
+    started.catch(() => { });
     try {
       return await Promise.race([started, timeout]);
     } finally {
@@ -1466,13 +1467,13 @@ export class Agent extends LoopDetector {
       const observedAxScope = this._lastAxScopes.get(tabId);
       const observedUrl = COMPLETION_DOCUMENT_URL_TOOLS.has(name)
         ? [
-            result?.currentUrl,
-            result?.pageUrl,
-            result?.url,
-            result?.finalUrl,
-            result?.page?.url,
-            observedAxScope?.pageUrl,
-          ].find(value => typeof value === 'string' && value.trim()) || ''
+          result?.currentUrl,
+          result?.pageUrl,
+          result?.url,
+          result?.finalUrl,
+          result?.page?.url,
+          observedAxScope?.pageUrl,
+        ].find(value => typeof value === 'string' && value.trim()) || ''
         : '';
       const observedDocument = String(observedAxScope?.documentToken || '');
       const completionSignalObserved = [
@@ -1563,7 +1564,7 @@ export class Agent extends LoopDetector {
     const isSubmit = name === 'execute_js'
       ? this._formValidationActionHasStrongSubmitEvidence(name, args, result, detectedSubmit)
       : !!detectedSubmit?.isSubmit
-        || this._formValidationActionLooksSubmit(name, args, result, detectedSubmit);
+      || this._formValidationActionLooksSubmit(name, args, result, detectedSubmit);
     if (!isSubmit) return null;
     const before = this._normalizeUrl(beforeUrl || '');
     const after = this._normalizeUrl(afterUrl || beforeUrl || '');
@@ -1584,7 +1585,7 @@ export class Agent extends LoopDetector {
       detectedSubmit,
     );
     if (workflowBinding?.verificationKind === 'published_resource'
-        && Array.isArray(detectedSubmit?.publicationResourceUrls)) {
+      && Array.isArray(detectedSubmit?.publicationResourceUrls)) {
       workflowBinding.preDispatchPublishedResourceIdentities = this._workflowPublishedResourceIdentities(
         workflowBinding,
         detectedSubmit.publicationResourceUrls,
@@ -1807,19 +1808,19 @@ export class Agent extends LoopDetector {
       && verifiedReplacement
       && commitMessageVerified
       ? {
-          ...githubEditScope,
-          expectedLength: verifiedReplacement.expectedLength,
-          expectedSha256: verifiedReplacement.expectedSha256,
-          commitMessageVerified,
-          // Chromium's contenteditable readback deterministically expands
-          // newline runs (see _contentEditableValueMatches), so a verified
-          // proof is not always byte-exact. Requiring byte-exact readback
-          // here would permanently block every newline-terminated file;
-          // record which notion of exactness authorized the binding instead.
-          // The byte-exact raw-blob check after the commit stays fail-closed.
-          readbackByteExact: verifiedReplacement.readbackLength === verifiedReplacement.expectedLength
-            && verifiedReplacement.readbackSha256 === verifiedReplacement.expectedSha256,
-        }
+        ...githubEditScope,
+        expectedLength: verifiedReplacement.expectedLength,
+        expectedSha256: verifiedReplacement.expectedSha256,
+        commitMessageVerified,
+        // Chromium's contenteditable readback deterministically expands
+        // newline runs (see _contentEditableValueMatches), so a verified
+        // proof is not always byte-exact. Requiring byte-exact readback
+        // here would permanently block every newline-terminated file;
+        // record which notion of exactness authorized the binding instead.
+        // The byte-exact raw-blob check after the commit stays fail-closed.
+        readbackByteExact: verifiedReplacement.readbackLength === verifiedReplacement.expectedLength
+          && verifiedReplacement.readbackSha256 === verifiedReplacement.expectedSha256,
+      }
       : null;
     const verificationKind = this._workflowVerificationKind(siteWorkflow);
     const normalizeOrderIdentities = values => [...new Set((Array.isArray(values) ? values : [])
@@ -1855,9 +1856,9 @@ export class Agent extends LoopDetector {
       ...(messageBody ? { composerBody: messageBody } : {}),
       ...(executionContext?.messageRecipientSubjectAvailable === true
         ? {
-            messageSubject: this._workflowMetadataValue(executionContext.messageRecipientSubject),
-            messageSubjectAvailable: true,
-          }
+          messageSubject: this._workflowMetadataValue(executionContext.messageRecipientSubject),
+          messageSubjectAvailable: true,
+        }
         : {}),
       ...(metadataRequirements.length || metadataIncomplete ? {
         metadataRequirements: metadataRequirements.map(requirement => ({ ...requirement })),
@@ -1881,7 +1882,7 @@ export class Agent extends LoopDetector {
   async _workflowPreSubmitDispatchBlock(tabId, name, args = {}, detectedSubmit = null) {
     const guard = this._planExecutionGuards.get(tabId);
     if (guard?.siteWorkflow?.adapterName !== 'github'
-        || guard.siteWorkflow?.job?.id !== 'edit-file-and-commit') return null;
+      || guard.siteWorkflow?.job?.id !== 'edit-file-and-commit') return null;
     const looksLikeSubmit = detectedSubmit?.isSubmit === true
       || this._formValidationActionLooksSubmit(name, args, null, detectedSubmit);
     // Fail closed when submit detection is inconclusive: a click_ax carrying
@@ -1971,7 +1972,7 @@ export class Agent extends LoopDetector {
       .map(line => line.replace(/\s+/g, ' ').trim())
       .filter(Boolean)
       .join('\n');
-    try { text = text.normalize('NFKC'); } catch {}
+    try { text = text.normalize('NFKC'); } catch { }
     return text.length <= 20000 ? text : '';
   }
 
@@ -2081,7 +2082,7 @@ export class Agent extends LoopDetector {
       if (requirement?.field === 'subject') {
         return binding?.messageSubjectAvailable === true
           && this._workflowMetadataValue(binding.messageSubject)
-            === this._workflowMetadataValue(requirement.value);
+          === this._workflowMetadataValue(requirement.value);
       }
       if (requirement?.field === 'body') {
         const want = this._workflowMessageBody(requirement.value);
@@ -2101,11 +2102,11 @@ export class Agent extends LoopDetector {
   _rememberWorkflowEmptyCollectionSignal(tabId, name, result) {
     const guard = this._planExecutionGuards.get(tabId);
     if (!guard?.enabled
-        || guard.workflowRequiredJobEvidence !== 'reconciled_collection'
-        || !this._workflowAllowsEmptyCollection(guard.siteWorkflow)
-        || !this.constructor.WORKFLOW_CONTENT_READ_TOOLS.has(name)
-        || !this._isSuccessfulExecutionEvidence(result)
-        || !this._workflowObservationStaysInJobScope(tabId, guard, result)) return;
+      || guard.workflowRequiredJobEvidence !== 'reconciled_collection'
+      || !this._workflowAllowsEmptyCollection(guard.siteWorkflow)
+      || !this.constructor.WORKFLOW_CONTENT_READ_TOOLS.has(name)
+      || !this._isSuccessfulExecutionEvidence(result)
+      || !this._workflowObservationStaysInJobScope(tabId, guard, result)) return;
     const text = [result?.pageContent, result?.text, result?.data?.text]
       .find(value => typeof value === 'string' && value.trim()) || '';
     if (this._workflowEmptyCollectionSignal(text)) guard.workflowEmptyCollectionObserved = true;
@@ -2117,12 +2118,12 @@ export class Agent extends LoopDetector {
 
   _workflowMetadataFieldKey(value) {
     let text = String(value || '');
-    try { text = text.normalize('NFKC'); } catch {}
+    try { text = text.normalize('NFKC'); } catch { }
     text = text.toLowerCase().replace(/[_-]+/g, ' ').replace(/[^\p{L}\p{N}\s]/gu, ' ')
       .replace(/\s+/g, ' ').trim();
     const normalizeAlias = (alias) => {
       let normalized = String(alias || '');
-      try { normalized = normalized.normalize('NFKC'); } catch {}
+      try { normalized = normalized.normalize('NFKC'); } catch { }
       return normalized.toLowerCase().replace(/[_-]+/g, ' ')
         .replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim();
     };
@@ -2168,7 +2169,7 @@ export class Agent extends LoopDetector {
   _workflowMetadataValue(value) {
     let text = String(value ?? '').replace(/\r\n?/g, '\n')
       .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, '');
-    try { text = text.normalize('NFKC'); } catch {}
+    try { text = text.normalize('NFKC'); } catch { }
     return text.trim().slice(0, 10000);
   }
 
@@ -2201,7 +2202,7 @@ export class Agent extends LoopDetector {
     let discarded = 0;
     for (const value of values) {
       if (!value || typeof value !== 'object' || Array.isArray(value)
-          || !Object.prototype.hasOwnProperty.call(value, 'value')) {
+        || !Object.prototype.hasOwnProperty.call(value, 'value')) {
         discarded += 1;
         continue;
       }
@@ -2236,20 +2237,20 @@ export class Agent extends LoopDetector {
 
   _workflowMetadataRequirementsMatchInventory(requirements, evidence, submitSequence = 0) {
     if (!Array.isArray(requirements) || requirements.length < 1
-        || requirements.incomplete === true
-        || evidence?.complete !== true
-        || !evidence.documents || Object.keys(evidence.documents).length < 1
-        || !Object.values(evidence.documents).every(document => (
-          document?.complete === true
-          && Number(document.rootObservationSequence || 0) > Number(submitSequence || 0)
-        ))
-        || !Array.isArray(evidence.items)) return false;
+      || requirements.incomplete === true
+      || evidence?.complete !== true
+      || !evidence.documents || Object.keys(evidence.documents).length < 1
+      || !Object.values(evidence.documents).every(document => (
+        document?.complete === true
+        && Number(document.rootObservationSequence || 0) > Number(submitSequence || 0)
+      ))
+      || !Array.isArray(evidence.items)) return false;
     const observed = new Map();
     for (const item of evidence.items) {
       const field = this._workflowMetadataFieldKey(item?.label);
       if (!field
-          || Number(item?.observationSequence || 0) <= Number(submitSequence || 0)
-          || !Object.prototype.hasOwnProperty.call(item || {}, 'value')) continue;
+        || Number(item?.observationSequence || 0) <= Number(submitSequence || 0)
+        || !Object.prototype.hasOwnProperty.call(item || {}, 'value')) continue;
       const values = observed.get(field) || [];
       values.push({
         value: this._workflowMetadataValue(item.value),
@@ -2320,7 +2321,7 @@ export class Agent extends LoopDetector {
     const match = /^github:github\.com\/([^/]+\/[^/]+)\/releases\/tag\/(.+)$/i.exec(String(identity || ''));
     if (!match) return null;
     let tag = match[2];
-    try { tag = decodeURIComponent(tag); } catch {}
+    try { tag = decodeURIComponent(tag); } catch { }
     return { repository: match[1].toLowerCase(), tag: this._workflowMetadataValue(tag) };
   }
 
@@ -2364,7 +2365,7 @@ export class Agent extends LoopDetector {
       if (requestedPath) {
         const pathParts = requestedPath.split('/');
         if (rest.length <= pathParts.length
-            || rest.slice(-pathParts.length).join('/') !== requestedPath) return null;
+          || rest.slice(-pathParts.length).join('/') !== requestedPath) return null;
         const branchParts = rest.slice(0, -pathParts.length);
         branch = branchParts.join('/');
         if (requestedBranch && branch !== requestedBranch) return null;
@@ -2448,7 +2449,7 @@ export class Agent extends LoopDetector {
   async _githubCommittedFileVerification(tabId, pageState, pageUrl, submissionEvidence) {
     const state = this._planExecutionGuards.get(tabId);
     if (state?.siteWorkflow?.adapterName !== 'github'
-        || state.siteWorkflow?.job?.id !== 'edit-file-and-commit') return null;
+      || state.siteWorkflow?.job?.id !== 'edit-file-and-commit') return null;
     const submit = submissionEvidence?.submit;
     const binding = submit?.workflowBinding;
     const expected = binding?.githubFileCommit;
@@ -2614,7 +2615,7 @@ export class Agent extends LoopDetector {
           && text.length === expected.expectedLength
           && actualSha256 === expected.expectedSha256;
         if (contentMatches
-            && ((naiveAttempt && !scopeAmbiguous) || commitBlobPaths.size === 0 || commitBlobPaths.has(attempt.path))) {
+          && ((naiveAttempt && !scopeAmbiguous) || commitBlobPaths.size === 0 || commitBlobPaths.has(attempt.path))) {
           if (attempt.branch !== expected.branch || attempt.path !== expected.path) {
             binding.githubFileCommit = { ...expected, branch: attempt.branch, path: attempt.path };
           }
@@ -2715,7 +2716,7 @@ export class Agent extends LoopDetector {
 
   _workflowPublishedResourcePayloadMatch(binding, state, pageState, pageUrl, submit) {
     if (state?.siteWorkflow?.adapterName === 'github'
-        && state.siteWorkflow?.job?.id === 'edit-file-and-commit') {
+      && state.siteWorkflow?.job?.id === 'edit-file-and-commit') {
       const proof = pageState?.githubCommittedFileVerification;
       const requirements = Array.isArray(binding?.metadataRequirements)
         ? binding.metadataRequirements
@@ -2770,7 +2771,7 @@ export class Agent extends LoopDetector {
 
   _workflowTransactionOrderRecords(value) {
     let text = String(value || '').replace(/\s+/g, ' ').trim().slice(0, 50000);
-    try { text = text.normalize('NFKC'); } catch {}
+    try { text = text.normalize('NFKC'); } catch { }
     const orderPattern = /\b(?:order|booking|ticket)\s*(?:number|no\.?|id|reference)\s*[:#-]?\s*([A-Z0-9][A-Z0-9-]{3,})|(?:订单号|訂單號|订单编号|車票訂單|车票订单|取票号|取票號)\s*[:：]?\s*([A-Z0-9][A-Z0-9-]{3,})/ig;
     const matches = [...text.matchAll(orderPattern)].map(match => ({
       identity: String(match[1] || match[2] || '').toUpperCase(),
@@ -2816,7 +2817,7 @@ export class Agent extends LoopDetector {
     const record = this._workflowTransactionFulfilledRecord(text, binding?.transactionOrderIdentity);
     if (!record) return false;
     let observed = String(record.text || '');
-    try { observed = observed.normalize('NFKC'); } catch {}
+    try { observed = observed.normalize('NFKC'); } catch { }
     observed = observed.toLowerCase();
     return requirements.every((requirement) => {
       const want = this._workflowMetadataValue(requirement.value).toLowerCase();
@@ -2881,7 +2882,7 @@ export class Agent extends LoopDetector {
     const addCandidate = (candidate) => {
       let resolved = String(candidate || '').trim().replace(/[),.;]+$/, '');
       if (!resolved) return;
-      try { resolved = new URL(resolved, baseUrl || undefined).href; } catch {}
+      try { resolved = new URL(resolved, baseUrl || undefined).href; } catch { }
       const identity = this._workflowPublishedResourceIdentity(siteWorkflow, resolved);
       if (identity) identities.add(identity);
     };
@@ -2910,7 +2911,7 @@ export class Agent extends LoopDetector {
     // A draft job has no dispatched submit to bind to, so its evidence binds
     // to the live adapter job and the observed composer instead.
     if (!draftJob
-        && (!binding || binding.bindingKey !== this._adapterWorkflowBindingKey(siteWorkflow))) return null;
+      && (!binding || binding.bindingKey !== this._adapterWorkflowBindingKey(siteWorkflow))) return null;
     const live = resolveAdapterWorkflowJob(pageUrl, siteWorkflow.job.id);
     if (!this._sameAdapterWorkflowBinding(siteWorkflow, live)) return null;
     const verificationKind = this._workflowVerificationKind(siteWorkflow);
@@ -3047,11 +3048,11 @@ export class Agent extends LoopDetector {
         pageState?.workflowPageText,
       ], pageUrl);
       if (!binding.publishedResourceIdentity
-          && siteWorkflow.adapterName === 'linkedin'
-          && Array.isArray(binding.preDispatchPublishedResourceIdentities)
-          && submissionEvidence?.verifiedFinalSubmit === true
-          && Number(this.completionInvariants.get(tabId)?.lastAction?.sequence || 0)
-            === Number(submit?.actionSequence || 0)) {
+        && siteWorkflow.adapterName === 'linkedin'
+        && Array.isArray(binding.preDispatchPublishedResourceIdentities)
+        && submissionEvidence?.verifiedFinalSubmit === true
+        && Number(this.completionInvariants.get(tabId)?.lastAction?.sequence || 0)
+        === Number(submit?.actionSequence || 0)) {
         const existing = new Set(binding.preDispatchPublishedResourceIdentities);
         const newlyObserved = observedResourceIdentities.filter(identity => !existing.has(identity));
         const livePublishStatusObserved = (Array.isArray(pageState?.successMessages)
@@ -3099,8 +3100,8 @@ export class Agent extends LoopDetector {
     const pendingSubmitVerification = explicitlyReadOnly
       ? submit?.dispatched === true
       : !!submit
-        || executionGuard?.requiresSubmission === true
-        || (executionGuard?.requiresSubmission == null && executionGuard?.requiresStateChange === true);
+      || executionGuard?.requiresSubmission === true
+      || (executionGuard?.requiresSubmission == null && executionGuard?.requiresStateChange === true);
     const documentKey = this._normalizeUrl(pageUrl || pageState.url || '') || 'unknown-document';
     if (dialogs > 0 && (pendingSubmitVerification || !executionGuard)) {
       const titles = Array.isArray(pageState.dialogTitles) && pageState.dialogTitles.length
@@ -3154,37 +3155,37 @@ export class Agent extends LoopDetector {
     );
     const compactPageState = pageState && typeof pageState === 'object'
       ? {
-          ...(pageState.url ? { url: boundedText(pageState.url, 800) } : {}),
-          ...(pageState.title ? { title: boundedText(pageState.title, 200) } : {}),
-          openDialogCount: Number(pageState.openDialogCount || 0),
-          dialogTitles: boundedStrings(pageState.dialogTitles, 4, 80),
-          visibleFormCount: Number(pageState.visibleFormCount || 0),
-          relevantFormCount: Number(pageState.relevantFormCount || 0),
-          formDescriptors: Array.isArray(pageState.formDescriptors)
-            ? pageState.formDescriptors.slice(0, 10).map(form => ({
-                label: boundedText(form?.label, 80),
-                relevant: !!form?.relevant,
-                utility: !!form?.utility,
-                utilityReason: boundedText(form?.utilityReason, 40),
-                editableCount: Number(form?.editableCount || 0),
-                submitCount: Number(form?.submitCount || 0),
-              }))
-            : [],
-          liveRegionMessages: boundedStrings(pageState.liveRegionMessages, 6, 120),
-          successMessages: boundedStrings(pageState.successMessages, 4, 120),
-        }
+        ...(pageState.url ? { url: boundedText(pageState.url, 800) } : {}),
+        ...(pageState.title ? { title: boundedText(pageState.title, 200) } : {}),
+        openDialogCount: Number(pageState.openDialogCount || 0),
+        dialogTitles: boundedStrings(pageState.dialogTitles, 4, 80),
+        visibleFormCount: Number(pageState.visibleFormCount || 0),
+        relevantFormCount: Number(pageState.relevantFormCount || 0),
+        formDescriptors: Array.isArray(pageState.formDescriptors)
+          ? pageState.formDescriptors.slice(0, 10).map(form => ({
+            label: boundedText(form?.label, 80),
+            relevant: !!form?.relevant,
+            utility: !!form?.utility,
+            utilityReason: boundedText(form?.utilityReason, 40),
+            editableCount: Number(form?.editableCount || 0),
+            submitCount: Number(form?.submitCount || 0),
+          }))
+          : [],
+        liveRegionMessages: boundedStrings(pageState.liveRegionMessages, 6, 120),
+        successMessages: boundedStrings(pageState.successMessages, 4, 120),
+      }
       : null;
     const compactPage = page && typeof page === 'object'
       ? {
-          ...(page.url ? { url: boundedText(page.url, 800) } : {}),
-          ...(page.title ? { title: boundedText(page.title, 200) } : {}),
-          ...(page.readyState ? { readyState: boundedText(page.readyState, 40) } : {}),
-          ...(page.visibility ? { visibility: boundedText(page.visibility, 40) } : {}),
-          ...Object.fromEntries([
-            'domNodes', 'imageCount', 'iframes', 'scrollX', 'scrollY', 'innerWidth',
-            'innerHeight', 'scrollHeight', 'dpr', 'documentTextChars', 'visibleTextChars',
-          ].filter(key => Number.isFinite(Number(page[key]))).map(key => [key, Number(page[key])])),
-        }
+        ...(page.url ? { url: boundedText(page.url, 800) } : {}),
+        ...(page.title ? { title: boundedText(page.title, 200) } : {}),
+        ...(page.readyState ? { readyState: boundedText(page.readyState, 40) } : {}),
+        ...(page.visibility ? { visibility: boundedText(page.visibility, 40) } : {}),
+        ...Object.fromEntries([
+          'domNodes', 'imageCount', 'iframes', 'scrollX', 'scrollY', 'innerWidth',
+          'innerHeight', 'scrollHeight', 'dpr', 'documentTextChars', 'visibleTextChars',
+        ].filter(key => Number.isFinite(Number(page[key]))).map(key => [key, Number(page[key])])),
+      }
       : null;
     return {
       pageUrl: boundedText(pageUrl, 800),
@@ -3477,7 +3478,7 @@ export class Agent extends LoopDetector {
       conversationId: this.conversationIds.get(tabId) || null,
       sourceGrounding: selectionGrounded
         ? normalizeSelectionScopeSourceGrounding(scope?.sourceGrounding, scope?.action)
-          || SELECTION_ONLY_SOURCE_GROUNDING
+        || SELECTION_ONLY_SOURCE_GROUNDING
         : null,
       persistenceDegraded: this.persistenceDegradedTabs.has(tabId),
       persistenceDegradedReason: this.persistenceDegradedTabs.get(tabId)?.reason || null,
@@ -3523,7 +3524,7 @@ export class Agent extends LoopDetector {
    */
   _runtimeTraceConfig(provider, { tabId = null, mode = null } = {}) {
     let extensionVersion = '';
-    try { extensionVersion = chrome.runtime.getManifest().version || ''; } catch {}
+    try { extensionVersion = chrome.runtime.getManifest().version || ''; } catch { }
     const effectiveMode = mode || (tabId != null ? this._effectiveRunMode(tabId) : null);
     const selectionScope = tabId != null ? this.selectionGroundingScopes.get(tabId) : null;
     return normalizeRuntimeTraceConfig({
@@ -3708,7 +3709,7 @@ export class Agent extends LoopDetector {
     const height = Number(snapshot.viewport?.height);
     if (!(Number.isFinite(width) && width > 0 && Number.isFinite(height) && height > 0)) return null;
     if (!Array.isArray(snapshot.regions)
-        || snapshot.regions.length > STAGED_SCREENSHOT_REDACTION_MAX_REGIONS) return null;
+      || snapshot.regions.length > STAGED_SCREENSHOT_REDACTION_MAX_REGIONS) return null;
     const regions = snapshot.regions.map((region) => {
       const x = Number(region?.rect?.x);
       const y = Number(region?.rect?.y);
@@ -3752,8 +3753,8 @@ export class Agent extends LoopDetector {
           params: { coordinateSpace: frame.frameId === 0 ? coordinateSpace : 'viewport' },
         }, { frameId: frame.frameId });
         if (!resp || resp.complete !== true || resp.overflowed === true
-            || !Array.isArray(resp.elements) || !Array.isArray(resp.childFrames)
-            || !(Number(resp.viewport?.width) > 0 && Number(resp.viewport?.height) > 0)) {
+          || !Array.isArray(resp.elements) || !Array.isArray(resp.childFrames)
+          || !(Number(resp.viewport?.width) > 0 && Number(resp.viewport?.height) > 0)) {
           return { ...frameMetadata, inspectionFailed: true };
         }
         return { ...resp, ...frameMetadata };
@@ -4132,14 +4133,14 @@ export class Agent extends LoopDetector {
       const nextTotal = state.totalSpentUsd + costUsd;
       if (costState) costState.spentUsd = this._normalizeCostSpent(costState.spentUsd) + costUsd;
       this.meteredProviderCostSpentUsd = nextTotal;
-      try { await chrome.storage.local.set({ [CLOUD_COST_SPENT_KEY]: nextTotal }); } catch {}
+      try { await chrome.storage.local.set({ [CLOUD_COST_SPENT_KEY]: nextTotal }); } catch { }
       return this._checkCostAllowanceState({ ...state, totalSpentUsd: nextTotal }, costState);
     });
   }
 
   _enqueueCostUpdate(fn) {
     const run = this._costUpdateQueue.then(fn, fn);
-    this._costUpdateQueue = run.catch(() => {});
+    this._costUpdateQueue = run.catch(() => { });
     return run;
   }
 
@@ -4188,8 +4189,8 @@ export class Agent extends LoopDetector {
     const inferredCode = reason === 'cost_limit'
       ? 'COST_LIMIT'
       : (['empty_output', 'incomplete_output', 'placeholder_output', 'required_tool_missing'].includes(reason)
-          ? 'EMPTY_RESPONSE'
-          : (reason === 'error' ? 'UNKNOWN' : null));
+        ? 'EMPTY_RESPONSE'
+        : (reason === 'error' ? 'UNKNOWN' : null));
     const code = failureCode || inferredCode;
     const detail = extra && typeof extra === 'object' ? extra : {};
     return { status: reason, reason, ...(code ? { code } : {}), ...detail };
@@ -4214,8 +4215,8 @@ export class Agent extends LoopDetector {
   _estimateAskStreamUsage(messages, options, content, reasoningContent, toolCalls) {
     let toolSchemaChars = 0;
     let toolCallChars = 0;
-    try { toolSchemaChars = JSON.stringify(options?.tools || []).length; } catch {}
-    try { toolCallChars = JSON.stringify(toolCalls || []).length; } catch {}
+    try { toolSchemaChars = JSON.stringify(options?.tools || []).length; } catch { }
+    try { toolCallChars = JSON.stringify(toolCalls || []).length; } catch { }
     const promptTokens = Math.max(
       1,
       Math.ceil((this._estimateContextChars(Array.isArray(messages) ? messages : []) + toolSchemaChars) / 4),
@@ -4302,7 +4303,7 @@ export class Agent extends LoopDetector {
     return this._shouldFallbackAskStream(error);
   }
 
-  async _chatStreamWithCostAllowance(provider, messages, options, costState, requestContext = null, onTextDelta = () => {}) {
+  async _chatStreamWithCostAllowance(provider, messages, options, costState, requestContext = null, onTextDelta = () => { }) {
     const before = await this._checkCostAllowance(provider, costState);
     if (before) throw this._costAllowanceError(before);
 
@@ -4384,10 +4385,10 @@ export class Agent extends LoopDetector {
           if (chunk.usage) usage = chunk.usage;
           finishReason = String(
             chunk.finishReason
-              ?? chunk.finish_reason
-              ?? chunk.stopReason
-              ?? chunk.stop_reason
-              ?? '',
+            ?? chunk.finish_reason
+            ?? chunk.stopReason
+            ?? chunk.stop_reason
+            ?? '',
           );
           if (chunk.raw) terminalRaw = chunk.raw;
           sawCompleted = true;
@@ -4404,7 +4405,7 @@ export class Agent extends LoopDetector {
       // Incomplete Responses streams can still report billable usage. Record
       // that once before the caller either propagates or retries the failure.
       estimateUsageIfMissing(false);
-      try { await recordUsage(); } catch {}
+      try { await recordUsage(); } catch { }
       throw error;
     }
 
@@ -4788,9 +4789,9 @@ export class Agent extends LoopDetector {
     const inventory = await this._readCompactUploadFileInputs(tabId);
     const current = inventory?.ok
       ? inventory.usable.find(element => (
-          element.selector.trim() === saved.selector
-          && this._compactUploadTargetKey(element) === saved.key
-        ))
+        element.selector.trim() === saved.selector
+        && this._compactUploadTargetKey(element) === saved.key
+      ))
       : null;
     if (this._normalizeUrl(pageUrl) !== this._normalizeUrl(state.pageUrl) || !current) {
       return {
@@ -4870,7 +4871,7 @@ export class Agent extends LoopDetector {
         for (const [key, entry] of map) {
           if (!entry?.documentToken) {
             if (!entry?.pageUrl || !next.pageUrl
-                || this._normalizeUrl(entry.pageUrl) !== this._normalizeUrl(next.pageUrl)) map.delete(key);
+              || this._normalizeUrl(entry.pageUrl) !== this._normalizeUrl(next.pageUrl)) map.delete(key);
             continue;
           }
           if (!keep.has(entry.documentToken)) map.delete(key);
@@ -4932,29 +4933,29 @@ export class Agent extends LoopDetector {
       if (knownRefBlock) return knownRefBlock;
       return DISPATCH_BINDING_TOOLS.has(toolName)
         ? {
-            success: false,
-            dispatched: false,
-            noDispatch: true,
-            retryable: true,
-            ...(probe?.ambiguous === true
-              ? {
-                  ambiguous: true,
-                  searchedFrames: probe.matchCount,
-                  frameUrls: probe.matchedFrameUrls || [],
-                }
-              : {}),
-            error: toolName === 'iframe_click'
-              ? 'Could not resolve one matching iframe click target safely while a rich-text editor recovery is required. Re-read the iframe and retry with a specific urlFilter and selector after correcting the editor-body edit.'
-              : toolName === 'iframe_type'
-                ? probe?.ambiguous === true
-                  ? `Several frames matched this selector (${probe.matchCount}) while a rich-text editor recovery is pending, so none was typed into. Retry with a urlFilter naming exactly one of: ${(probe.matchedFrameUrls || []).join(', ') || 'the intended frame'}.`
-                  : 'Could not resolve one matching iframe target safely before typing. Re-read the iframe and retry with a specific urlFilter and selector.'
+          success: false,
+          dispatched: false,
+          noDispatch: true,
+          retryable: true,
+          ...(probe?.ambiguous === true
+            ? {
+              ambiguous: true,
+              searchedFrames: probe.matchCount,
+              frameUrls: probe.matchedFrameUrls || [],
+            }
+            : {}),
+          error: toolName === 'iframe_click'
+            ? 'Could not resolve one matching iframe click target safely while a rich-text editor recovery is required. Re-read the iframe and retry with a specific urlFilter and selector after correcting the editor-body edit.'
+            : toolName === 'iframe_type'
+              ? probe?.ambiguous === true
+                ? `Several frames matched this selector (${probe.matchCount}) while a rich-text editor recovery is pending, so none was typed into. Retry with a urlFilter naming exactly one of: ${(probe.matchedFrameUrls || []).join(', ') || 'the intended frame'}.`
+                : 'Could not resolve one matching iframe target safely before typing. Re-read the iframe and retry with a specific urlFilter and selector.'
               : toolName === 'click'
                 ? 'Could not resolve the click target safely while a rich-text editor recovery is required. Re-read the page and retry with one specific target.'
                 : toolName === 'type_text'
                   ? 'Could not resolve the typing target safely while a rich-text editor recovery is required. Re-read the page or re-focus the intended editor body, then retry the correction.'
                   : 'Could not resolve the focused target safely while a rich-text editor recovery is required. Re-focus the intended editor body and correct the blocked edit before sending keyboard input.',
-          }
+        }
         : null;
     }
     const evaluation = this._richTextToolbarGuard.evaluateProbe(tabId, toolName, args, probe);
@@ -5153,27 +5154,27 @@ export class Agent extends LoopDetector {
       const ambiguousIframeTarget = toolName === 'iframe_type' && probe?.ambiguous === true;
       return ambiguousIframeTarget || (toolName === 'iframe_type' && recoveryPending) || selectorBackedType || focusedType
         ? {
-            block: {
-              success: false,
-              dispatched: false,
-              noDispatch: true,
-              retryable: true,
-              ...(ambiguousIframeTarget ? {
-                ambiguous: true,
-                matchCount: probe.matchCount,
-                frameUrls: probe.matchedFrameUrls || [],
-                candidateFrames: probe.candidateFrames || [],
-              } : {}),
-              error: toolName === 'iframe_type'
-                ? ambiguousIframeTarget
-                  ? `The iframe selector matched ${probe.matchCount} elements, so nothing was typed. Call iframe_read with this selector, then retry with a specific urlFilter and the intended matchIndex.`
-                  : 'Could not resolve one matching iframe target for the rich-text toolbar safety preflight. Re-read the iframe and retry with a specific urlFilter and selector.'
-                : focusedType
-                  ? 'Could not preserve the focused target for the rich-text toolbar safety preflight. Focus the intended field again and retry.'
-                  : 'Could not resolve the selector target for the rich-text toolbar safety preflight. Re-read the page and retry.',
-            },
-            shot: null,
-          }
+          block: {
+            success: false,
+            dispatched: false,
+            noDispatch: true,
+            retryable: true,
+            ...(ambiguousIframeTarget ? {
+              ambiguous: true,
+              matchCount: probe.matchCount,
+              frameUrls: probe.matchedFrameUrls || [],
+              candidateFrames: probe.candidateFrames || [],
+            } : {}),
+            error: toolName === 'iframe_type'
+              ? ambiguousIframeTarget
+                ? `The iframe selector matched ${probe.matchCount} elements, so nothing was typed. Call iframe_read with this selector, then retry with a specific urlFilter and the intended matchIndex.`
+                : 'Could not resolve one matching iframe target for the rich-text toolbar safety preflight. Re-read the iframe and retry with a specific urlFilter and selector.'
+              : focusedType
+                ? 'Could not preserve the focused target for the rich-text toolbar safety preflight. Focus the intended field again and retry.'
+                : 'Could not resolve the selector target for the rich-text toolbar safety preflight. Re-read the page and retry.',
+          },
+          shot: null,
+        }
         // The content-script probe already swept every frame; tell executeTool
         // so its fallback can move directly to the browser-level census.
         : { block: null, shot: null, iframeTargetUnresolved: toolName === 'iframe_type' };
@@ -5183,9 +5184,9 @@ export class Agent extends LoopDetector {
       : focusedType
         ? !probe.dispatchBinding?.token
         : selectorBackedType && !(
-            Number.isInteger(Number(probe.dispatchBinding?.backendNodeId))
-            && Number(probe.dispatchBinding.backendNodeId) > 0
-          );
+          Number.isInteger(Number(probe.dispatchBinding?.backendNodeId))
+          && Number(probe.dispatchBinding.backendNodeId) > 0
+        );
     if (identityMissing) {
       await this._releaseRichTextToolbarProbeTarget(tabId, probe);
       // Without the trusted resolver the same call fails the same way every
@@ -6132,12 +6133,12 @@ export class Agent extends LoopDetector {
       if (!targetUrl || targetUrl === 'about:blank' || isBrowserNewTabUrl(targetUrl)) {
         // We saw a new tab but never got a real URL out of it. Close it
         // and move on — redirecting to about:blank would make things worse.
-        try { await chrome.tabs.remove(newTab.id); } catch {}
+        try { await chrome.tabs.remove(newTab.id); } catch { }
         return null;
       }
       const closedTabId = newTab.id;
-      try { await chrome.tabs.remove(newTab.id); } catch {}
-      try { await chrome.tabs.update(tabId, { url: targetUrl }); } catch {}
+      try { await chrome.tabs.remove(newTab.id); } catch { }
+      try { await chrome.tabs.update(tabId, { url: targetUrl }); } catch { }
       // Give the source tab a beat to commit the navigation so follow-up
       // screenshots/reads don't race the load.
       await new Promise(r => setTimeout(r, 600));
@@ -6722,7 +6723,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
   // grounding failed and whether the topic needs the stronger health warning.
   _standaloneOfflineGroundingGap(localWikipediaRag, runOptions = {}) {
     if (!this._isStandaloneWebgpuRun(runOptions) || localWikipediaRag?.attempted !== true
-        || localWikipediaRag.status === 'matched') return null;
+      || localWikipediaRag.status === 'matched') return null;
     const health = localWikipediaRag.healthContext === true;
     const status = STANDALONE_GAP_STATUSES.includes(localWikipediaRag.status)
       ? localWikipediaRag.status
@@ -6825,8 +6826,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     for (let index = 1; index <= currentIndex; index += 1) {
       const message = messages[index];
       if (message?.role === 'user'
-          && message.webbrainStandaloneChat !== true
-          && !this._isAgentInjectedUserMessage(message)) {
+        && message.webbrainStandaloneChat !== true
+        && !this._isAgentInjectedUserMessage(message)) {
         previousSidepanelUser = index;
       }
     }
@@ -7148,7 +7149,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           let dirtyFields = 0;
           for (const el of document.querySelectorAll('input, textarea')) {
             const t = (el.type || '').toLowerCase();
-            if (['file','hidden','submit','button','reset','search','checkbox','radio'].includes(t)) continue;
+            if (['file', 'hidden', 'submit', 'button', 'reset', 'search', 'checkbox', 'radio'].includes(t)) continue;
             if (el.getClientRects().length === 0) continue;
             if (el.closest('[role="search"],search') || el.getAttribute('role') === 'searchbox') continue;
             if (el.value && el.value !== el.defaultValue) dirtyFields++;
@@ -7572,7 +7573,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     }
 
     let tab = null;
-    try { tab = await chrome.tabs.get(tabId); } catch {}
+    try { tab = await chrome.tabs.get(tabId); } catch { }
     const activeUrl = this._normalizedChromeProtectedGalleryUrl(tab?.url || '');
     const normalizedTarget = this._normalizedChromeProtectedGalleryUrl(targetUrl);
     if (!tab?.active || !activeUrl || activeUrl !== normalizedTarget) {
@@ -7588,7 +7589,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
 
     const activeProvider = this.providerManager?.getActive?.();
     let visionProvider = null;
-    try { visionProvider = await this.providerManager?.getVisionProvider?.(); } catch {}
+    try { visionProvider = await this.providerManager?.getVisionProvider?.(); } catch { }
     if (!activeProvider?.supportsVision && !visionProvider) {
       return {
         ...failure,
@@ -7650,7 +7651,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       ? String(args?.url || result?.url || '')
       : '';
     let tab = null;
-    try { tab = await chrome.tabs.get(tabId); } catch {}
+    try { tab = await chrome.tabs.get(tabId); } catch { }
     const targetUrl = explicitUrl || String(tab?.url || result?.url || '');
     const protectedPage = chromeProtectedPageForUrl(targetUrl);
 
@@ -7801,7 +7802,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       } else {
         await chrome.storage.session.remove(key);
       }
-    } catch {}
+    } catch { }
   }
 
   async _applyCloudflareManagedChallengeTransition(tabId, transition) {
@@ -8025,10 +8026,10 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const candidate = visibleCandidates.find(entry => entry.visible === true);
     return candidate
       ? {
-          ...candidate.challenge,
-          frameId: candidate.frameId,
-          frameUrl: candidate.frameUrl || '',
-        }
+        ...candidate.challenge,
+        frameId: candidate.frameId,
+        frameUrl: candidate.frameUrl || '',
+      }
       : null;
   }
 
@@ -8045,7 +8046,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         navigationFrames = discoveredFrames;
         navigationInspectionComplete = true;
       }
-    } catch {}
+    } catch { }
     if (!navigationFrames.length) {
       navigationFrames = [{ frameId: 0, parentFrameId: -1, url: '' }];
     }
@@ -8084,16 +8085,16 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       const challenge = this._visibleChallengeDialogFromFrames(entries, navigationFrames);
       return includeStatus
         ? {
-            challenge,
-            challengeHidden: hiddenChallenges.length > 0,
-            hiddenChallenges,
-            // With no expected frame, "complete" still requires at least one
-            // frame to have actually been inspected.
-            inspectionComplete: expectedFrameId === null
-              ? inspectedFrameIds.size > 0
-              : (inspectedFrameIds.has(expectedFrameId)
-                || (navigationInspectionComplete && !expectedFrameStillExists)),
-          }
+          challenge,
+          challengeHidden: hiddenChallenges.length > 0,
+          hiddenChallenges,
+          // With no expected frame, "complete" still requires at least one
+          // frame to have actually been inspected.
+          inspectionComplete: expectedFrameId === null
+            ? inspectedFrameIds.size > 0
+            : (inspectedFrameIds.has(expectedFrameId)
+              || (navigationInspectionComplete && !expectedFrameStillExists)),
+        }
         : challenge;
     };
     try {
@@ -8106,11 +8107,11 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       } catch {
         return includeStatus
           ? {
-              challenge: null,
-              challengeHidden: false,
-              hiddenChallenges: [],
-              inspectionComplete: false,
-            }
+            challenge: null,
+            challengeHidden: false,
+            hiddenChallenges: [],
+            inspectionComplete: false,
+          }
           : null;
       }
     }
@@ -8138,7 +8139,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         : null;
     if (!challenge?.label) return null;
     let pageUrl = '';
-    try { pageUrl = await this._currentUrl(tabId); } catch {}
+    try { pageUrl = await this._currentUrl(tabId); } catch { }
     this._throwIfAborted(abortSignal);
     const observation = await this._observeCaptchaChallenge(
       tabId,
@@ -8213,7 +8214,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     }
     let pageUrl = String(toolResult.currentUrl || toolResult.pageUrl || '');
     if (!pageUrl) {
-      try { pageUrl = await this._currentUrl(tabId); } catch {}
+      try { pageUrl = await this._currentUrl(tabId); } catch { }
     }
     let detection = null;
     let detectionFailed = false;
@@ -8327,9 +8328,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       || activeGate?.publicGate?.languageNeutralFrameTrigger === true;
     const loopCheck = challenge || (authoritativeRootRead && !directCaptchaEvidence)
       ? this._checkVerificationChallengeLoop(tabId, {
-          pageUrl,
-          dialogLabel: challenge?.normalizedLabel || '',
-        })
+        pageUrl,
+        dialogLabel: challenge?.normalizedLabel || '',
+      })
       : { kind: 'none' };
     if (
       postSolveTokenState?.responseTokenPresent === true
@@ -8520,9 +8521,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       ...(captchaCandidateIdentity ? { captchaCandidateIdentity } : {}),
       ...(Number.isInteger(observedChallengeFrameId)
         ? {
-            challengeFrameId: observedChallengeFrameId,
-            challengeFrameUrl: observedChallengeFrameUrl,
-          }
+          challengeFrameId: observedChallengeFrameId,
+          challengeFrameUrl: observedChallengeFrameUrl,
+        }
         : {}),
     });
     toolResult.captchaGate = publicGate;
@@ -8763,7 +8764,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               result: timeoutResult,
               latencyMs: 0,
             });
-          } catch {}
+          } catch { }
         }
         onUpdate('warning', { message: 'Page action preparation timed out before dispatch.' });
         if (loopCheck.kind === 'nudge') {
@@ -8837,7 +8838,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               ? '\n[TRUSTED CAPTCHA GATE: Stop automation and ask the user to complete the verification manually. Do not dismiss, close, or resubmit it.]'
               : captchaGateBlock.captchaVerificationRequired
                 ? '\n[TRUSTED CAPTCHA GATE: Read the root accessibility tree to verify whether the one solved challenge cleared. Do not submit, dismiss, or call solve_captcha again.]'
-              : '\n[TRUSTED CAPTCHA GATE: Call solve_captcha once now. Do not dismiss or close the verification dialog and do not click Continue/Submit.]'),
+                : '\n[TRUSTED CAPTCHA GATE: Call solve_captcha once now. Do not dismiss or close the verification dialog and do not click Continue/Submit.]'),
         });
         const runId = this.currentRunId.get(tabId);
         if (runId) {
@@ -8854,7 +8855,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             ? 'Page-changing action blocked; manual verification is required.'
             : captchaGateBlock.captchaVerificationRequired
               ? 'Page-changing action blocked until a read-only check confirms the solved challenge cleared.'
-            : 'Page-changing action blocked; solve_captcha is required.',
+              : 'Page-changing action blocked; solve_captcha is required.',
         });
         this._persist(tabId);
         if (captchaGateBlock.manualCompletionRequired) {
@@ -8938,11 +8939,11 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       const clarificationAuthorizationBlock = protectedPageFailure
         ? null
         : this._clarificationAuthorizationBlock(
-            tabId,
-            fnName,
-            fnArgs,
-            capabilities,
-          );
+          tabId,
+          fnName,
+          fnArgs,
+          capabilities,
+        );
       if (clarificationAuthorizationBlock) {
         const blockedResult = clarificationAuthorizationBlock.result;
         onUpdate('tool_call', { name: fnName, args: fnArgs, outcomeUnknown: false });
@@ -9065,10 +9066,10 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             const shouldDetectSubmit = ['click', 'click_ax', 'iframe_click', 'press_keys', 'execute_js'].includes(fnName);
             const detected = shouldDetectSubmit
               ? await this._detectLikelySubmitAction(tabId, fnName, fnArgs, {
-                  ...(Array.isArray(coordinateFrames)
-                    ? { coordinateFrames }
-                    : {}),
-                })
+                ...(Array.isArray(coordinateFrames)
+                  ? { coordinateFrames }
+                  : {}),
+              })
               : null;
             this._throwIfAborted(abortSignal);
             const currentValidationBlock = this._formValidationBlocks.get(tabId) || null;
@@ -9511,7 +9512,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       if (missingResponseOutcomeUnknown && typeof runOptions?.beforeConsequentialTool === 'function') {
         try {
           await runOptions.beforeConsequentialTool({ name: fnName });
-        } catch {}
+        } catch { }
       }
       const _toolStart = Date.now();
       let toolbarPreflight = { block: null };
@@ -9529,97 +9530,97 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       } else {
         const actionDispatchState = { started: false };
         const runActionPipeline = async abortSignal => {
-            const pipelineToolbarPreflight = await this._preflightRichTextToolbarTarget(
-              tabId,
+          const pipelineToolbarPreflight = await this._preflightRichTextToolbarTarget(
+            tabId,
+            fnName,
+            fnArgs,
+            provider,
+            { onUpdate },
+          );
+          this._throwIfAborted(abortSignal);
+          const pipelineRawToolResult = pipelineToolbarPreflight.block || await this.executeTool(
+            tabId,
+            fnName,
+            fnArgs,
+            onUpdate,
+            {
+              completionBatchStartState,
+              promptTier,
+              dispatchBinding: pipelineToolbarPreflight.probe?.dispatchBinding || null,
+              ...messageRecipientExecutionContext,
+              iframeTargetUnresolved: pipelineToolbarPreflight.iframeTargetUnresolved === true,
+              _contentActionAbortSignal: abortSignal,
+              _contentActionDispatchState: actionDispatchState,
+            },
+          );
+          if (pipelineRawToolResult?.dispatched === false || pipelineRawToolResult?.noDispatch === true) {
+            actionDispatchState.started = false;
+          } else if (
+            Agent.STATE_CHANGE_TOOLS.has(fnName)
+            && (pipelineRawToolResult?.dispatched === true || pipelineRawToolResult?.success === true)
+          ) {
+            actionDispatchState.started = true;
+          }
+          this._throwIfAborted(abortSignal);
+          let pipelineToolResult = this._normalizeToolResult(
+            fnName,
+            pipelineRawToolResult,
+            missingResponseOutcomeUnknown,
+          );
+          pipelineToolResult = await this._maybePromoteChromeProtectedGalleryResult(
+            tabId,
+            fnName,
+            fnArgs,
+            pipelineToolResult,
+          );
+          this._throwIfAborted(abortSignal);
+          const inspectFormValidationAfter = formValidationCandidate
+            && this._formValidationActionLooksSubmit(
               fnName,
               fnArgs,
-              provider,
-              { onUpdate },
+              pipelineToolResult,
+              detectedSubmitAction,
             );
-            this._throwIfAborted(abortSignal);
-            const pipelineRawToolResult = pipelineToolbarPreflight.block || await this.executeTool(
+          if (
+            inspectFormValidationAfter
+            && pipelineToolResult
+            && typeof pipelineToolResult === 'object'
+            && !pipelineToolResult.done
+            && pipelineToolResult.dispatched !== false
+          ) {
+            actionDispatchState.started = true;
+            const formValidationFailure = await this._waitForFormValidationFailure(
               tabId,
-              fnName,
-              fnArgs,
-              onUpdate,
+              formValidationBefore,
               {
-                completionBatchStartState,
-                promptTier,
-                dispatchBinding: pipelineToolbarPreflight.probe?.dispatchBinding || null,
-                ...messageRecipientExecutionContext,
-                iframeTargetUnresolved: pipelineToolbarPreflight.iframeTargetUnresolved === true,
-                _contentActionAbortSignal: abortSignal,
-                _contentActionDispatchState: actionDispatchState,
+                toolName: fnName,
+                args: fnArgs,
+                result: pipelineToolResult,
+                detectedSubmit: detectedSubmitAction,
+                priorValidationFailure,
+                correctedPriorValidationFailure,
               },
+              { allFrames: formValidationAllFrames, abortSignal },
             );
-            if (pipelineRawToolResult?.dispatched === false || pipelineRawToolResult?.noDispatch === true) {
-              actionDispatchState.started = false;
-            } else if (
-              Agent.STATE_CHANGE_TOOLS.has(fnName)
-              && (pipelineRawToolResult?.dispatched === true || pipelineRawToolResult?.success === true)
-            ) {
-              actionDispatchState.started = true;
+            this._throwIfAborted(abortSignal);
+            if (formValidationFailure) {
+              this._applyFormValidationFailure(tabId, pipelineToolResult, formValidationFailure);
+              onUpdate('warning', { message: 'Form validation failed; the page error was returned to the agent.' });
             }
-            this._throwIfAborted(abortSignal);
-            let pipelineToolResult = this._normalizeToolResult(
-              fnName,
-              pipelineRawToolResult,
-              missingResponseOutcomeUnknown,
-            );
-            pipelineToolResult = await this._maybePromoteChromeProtectedGalleryResult(
-              tabId,
-              fnName,
-              fnArgs,
-              pipelineToolResult,
-            );
-            this._throwIfAborted(abortSignal);
-            const inspectFormValidationAfter = formValidationCandidate
-              && this._formValidationActionLooksSubmit(
-                fnName,
-                fnArgs,
-                pipelineToolResult,
-                detectedSubmitAction,
-              );
-            if (
-              inspectFormValidationAfter
-              && pipelineToolResult
-              && typeof pipelineToolResult === 'object'
-              && !pipelineToolResult.done
-              && pipelineToolResult.dispatched !== false
-            ) {
-              actionDispatchState.started = true;
-              const formValidationFailure = await this._waitForFormValidationFailure(
-                tabId,
-                formValidationBefore,
-                {
-                  toolName: fnName,
-                  args: fnArgs,
-                  result: pipelineToolResult,
-                  detectedSubmit: detectedSubmitAction,
-                  priorValidationFailure,
-                  correctedPriorValidationFailure,
-                },
-                { allFrames: formValidationAllFrames, abortSignal },
-              );
-              this._throwIfAborted(abortSignal);
-              if (formValidationFailure) {
-                this._applyFormValidationFailure(tabId, pipelineToolResult, formValidationFailure);
-                onUpdate('warning', { message: 'Form validation failed; the page error was returned to the agent.' });
-              }
-            }
-            await this._auditRichTextToolbarTarget(
-              tabId,
-              fnName,
-              fnArgs,
-              pipelineToolResult,
-              pipelineToolbarPreflight.probe,
-            );
-            this._throwIfAborted(abortSignal);
-            return {
-              toolbarPreflight: pipelineToolbarPreflight,
-              rawToolResult: pipelineRawToolResult,
-              toolResult: pipelineToolResult,
-            };
+          }
+          await this._auditRichTextToolbarTarget(
+            tabId,
+            fnName,
+            fnArgs,
+            pipelineToolResult,
+            pipelineToolbarPreflight.probe,
+          );
+          this._throwIfAborted(abortSignal);
+          return {
+            toolbarPreflight: pipelineToolbarPreflight,
+            rawToolResult: pipelineRawToolResult,
+            toolResult: pipelineToolResult,
+          };
         };
         const needsSharedActionPipelineDeadline = this._needsSharedActionPipelineDeadline(
           tabId,
@@ -9641,13 +9642,13 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             rawToolResult = actionDispatchState.started
               ? this._contentActionTimeoutResult(fnName, error)
               : {
-                  success: false,
-                  dispatched: false,
-                  noDispatch: true,
-                  outcomeUnknown: false,
-                  retryable: true,
-                  error: `${error.message} No ${fnName} action was sent because target preparation did not finish. Re-observe the page before retrying.`,
-                };
+                success: false,
+                dispatched: false,
+                noDispatch: true,
+                outcomeUnknown: false,
+                retryable: true,
+                error: `${error.message} No ${fnName} action was sent because target preparation did not finish. Re-observe the page before retrying.`,
+              };
             toolResult = this._normalizeToolResult(fnName, rawToolResult, missingResponseOutcomeUnknown);
           }
         } else {
@@ -9836,7 +9837,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               name: fnName, args: fnArgs, result, latencyMs: _toolLatency,
             });
           }
-        } catch {}
+        } catch { }
       };
       if (!toolResult?.done) {
         // Always await: this used to float on the common path, so a trace
@@ -9850,7 +9851,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               toolbarPreflight.traceCapture.dataUrl,
               toolbarPreflight.traceCapture.caption,
             );
-          } catch {}
+          } catch { }
         }
       }
 
@@ -10073,8 +10074,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         resultContent += captchaGateDecision.cloudflareManagedChallenge === true
           ? '\n[TRUSTED CAPTCHA GATE: A response-backed full-page Cloudflare managed challenge is active. Stop automation and ask the user to complete it manually. Do not submit or call solve_captcha; the network/navigation monitor will clear the gate when Cloudflare resumes the destination.]'
           : captchaGateDecision.activeChallengeAfterSolve === true
-          ? '\n[TRUSTED CAPTCHA GATE: The active challenge frame is visible again after the one automatic solve. The site may have rejected the token. Do not call solve_captcha again; stop automation and ask the user to complete the challenge manually.]'
-          : '\n[TRUSTED CAPTCHA GATE: A verification challenge is active, but no safely selectable supported widget was detected. Stop automation and ask the user to complete it manually. Do not dismiss, close, or resubmit the challenge.]';
+            ? '\n[TRUSTED CAPTCHA GATE: The active challenge frame is visible again after the one automatic solve. The site may have rejected the token. Do not call solve_captcha again; stop automation and ask the user to complete the challenge manually.]'
+            : '\n[TRUSTED CAPTCHA GATE: A verification challenge is active, but no safely selectable supported widget was detected. Stop automation and ask the user to complete it manually. Do not dismiss, close, or resubmit the challenge.]';
         onUpdate('warning', { message: 'Verification challenge requires manual completion.' });
       } else if (captchaGateDecision?.status === 'cleared') {
         if (captchaGateDecision.clearedByResponseToken === true) {
@@ -10149,7 +10150,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         if (conversationDurable === true || conversationDurable?.ok === true) {
           try {
             await runOptions.afterConsequentialTool({ name: fnName });
-          } catch {}
+          } catch { }
         }
       }
 
@@ -10165,9 +10166,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         return { action: 'return', value, status: 'captcha_manual_required' };
       }
       if (captchaGateDecision?.status === 'solve_required'
-          || captchaGateDecision?.status === 'cleared'
-          || captchaGateDecision?.status === 'verification_pending'
-          || captchaSolveOutcome?.status === 'verification_pending') {
+        || captchaGateDecision?.status === 'cleared'
+        || captchaGateDecision?.status === 'verification_pending'
+        || captchaSolveOutcome?.status === 'verification_pending') {
         this._appendSyntheticToolResults(
           tabId, toolCalls, toolIndex + 1, messages, onUpdate, step,
           () => ({ success: false, skipped: true, error: 'skipped: CAPTCHA routing requires a fresh verification turn' }),
@@ -10656,7 +10657,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const cleanupTarget = async () => {
       try {
         await cdpClient.evaluate(tabId, `delete globalThis[${JSON.stringify(targetSlot)}]`);
-      } catch {}
+      } catch { }
     };
     const focusExactTarget = async () => {
       throwIfAborted();
@@ -10921,7 +10922,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     } finally {
       if (needsRestore) {
         try {
-          chrome.tabs.sendMessage(tabId, { type: 'WB_SHOW_AFTER_TOOL_USE' }).catch(() => {});
+          chrome.tabs.sendMessage(tabId, { type: 'WB_SHOW_AFTER_TOOL_USE' }).catch(() => { });
         } catch { /* ignore */ }
       }
     }
@@ -10934,7 +10935,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         type: 'WB_SHOW_AGENT_TARGET',
         rect,
         source,
-      }).catch(() => {});
+      }).catch(() => { });
     } catch { /* decorative only */ }
   }
 
@@ -11044,7 +11045,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     } catch {
       return null;
     } finally {
-      try { bmp?.close?.(); } catch {}
+      try { bmp?.close?.(); } catch { }
     }
   }
 
@@ -11330,7 +11331,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     let imageWidth = opts.imageWidth;
     let imageHeight = opts.imageHeight;
     if (!(Number.isFinite(imageWidth) && imageWidth > 0 &&
-          Number.isFinite(imageHeight) && imageHeight > 0)) {
+      Number.isFinite(imageHeight) && imageHeight > 0)) {
       try {
         const m = await fetch(dataUrl);
         const bmp = await createImageBitmap(await m.blob());
@@ -11338,7 +11339,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           imageWidth = bmp.width;
           imageHeight = bmp.height;
         } finally {
-          try { bmp.close?.(); } catch {}
+          try { bmp.close?.(); } catch { }
         }
       } catch {
         return dataUrl;
@@ -11877,7 +11878,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         bytes: buf.byteLength,
       };
     } finally {
-      try { bmp?.close?.(); } catch {}
+      try { bmp?.close?.(); } catch { }
     }
   }
 
@@ -12144,7 +12145,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     } catch {
       return dataUrl;
     } finally {
-      try { bmp?.close?.(); } catch {}
+      try { bmp?.close?.(); } catch { }
     }
   }
 
@@ -12176,7 +12177,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     } catch {
       return dataUrl;
     } finally {
-      try { bmp?.close?.(); } catch {}
+      try { bmp?.close?.(); } catch { }
     }
   }
 
@@ -12257,7 +12258,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     } catch {
       return { dataUrl, width: origW, height: origH };
     } finally {
-      try { bmp?.close?.(); } catch {}
+      try { bmp?.close?.(); } catch { }
     }
   }
 
@@ -12485,10 +12486,10 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     };
     let contentArgs = axScope?.documentToken
       ? {
-          ...args,
-          expectedDocumentToken: axScope.documentToken,
-          ...(axScope.pageUrl ? { expectedPageUrl: axScope.pageUrl } : {}),
-        }
+        ...args,
+        expectedDocumentToken: axScope.documentToken,
+        ...(axScope.pageUrl ? { expectedPageUrl: axScope.pageUrl } : {}),
+      }
       : args;
     if (dispatchBinding?.token) {
       contentArgs = { ...contentArgs, dispatchBinding };
@@ -12708,13 +12709,13 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           result: dispatchState.started
             ? this._contentActionTimeoutResult('click', error)
             : {
-                success: false,
-                dispatched: false,
-                noDispatch: true,
-                outcomeUnknown: false,
-                retryable: true,
-                error: `${error.message} No click was sent because coordinate target resolution did not finish. Re-observe the page before retrying.`,
-              },
+              success: false,
+              dispatched: false,
+              noDispatch: true,
+              outcomeUnknown: false,
+              retryable: true,
+              error: `${error.message} No click was sent because coordinate target resolution did not finish. Re-observe the page before retrying.`,
+            },
           diagnostic: null,
         };
       }
@@ -12832,7 +12833,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     } catch {
       return fallbackToOriginal ? dataUrl : null;
     } finally {
-      try { bmp?.close?.(); } catch {}
+      try { bmp?.close?.(); } catch { }
     }
   }
 
@@ -13014,30 +13015,30 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       && clarificationGuard?.authorized === false
       && (!clarificationGuard.conversationId || clarificationGuard.conversationId === conversationId)
       ? {
-          source: 'timeout',
-          authorized: false,
-          conversationId,
-          blockedAttempts: Math.max(0, Number(clarificationGuard.blockedAttempts) || 0),
-          updatedAt: Number(clarificationGuard.updatedAt) || Date.now(),
-        }
+        source: 'timeout',
+        authorized: false,
+        conversationId,
+        blockedAttempts: Math.max(0, Number(clarificationGuard.blockedAttempts) || 0),
+        updatedAt: Number(clarificationGuard.updatedAt) || Date.now(),
+      }
       : null;
     const continuationLanguage = this._continuationResponseLanguagePolicies.get(tabId);
     const persistedContinuationLanguage = conversationId
       && continuationLanguage?.conversationId === conversationId
       ? {
-          conversationId,
-          policy: {
-            ...continuationLanguage.policy,
-            deliverable_locales: [...(continuationLanguage.policy?.deliverable_locales || [])],
-          },
-        }
+        conversationId,
+        policy: {
+          ...continuationLanguage.policy,
+          deliverable_locales: [...(continuationLanguage.policy?.deliverable_locales || [])],
+        },
+      }
       : null;
     const activeTaskBinding = messages ? this._activeTaskBinding(messages) : { pinnedIndices: [] };
     const serialized = messages
       ? serializeConversationForSession(messages, {
-          maxBytes: options.maxBytes || SESSION_CONVERSATION_BUDGET_BYTES,
-          preserveMessageIndices: activeTaskBinding.pinnedIndices,
-        })
+        maxBytes: options.maxBytes || SESSION_CONVERSATION_BUDGET_BYTES,
+        preserveMessageIndices: activeTaskBinding.pinnedIndices,
+      })
       : { messages: [], compacted: false, bytes: 2 };
     const captchaGateState = this._captchaGateStates.get(tabId) || null;
     return {
@@ -13445,7 +13446,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
 
   _clearClarifyTimer(entry) {
     if (!entry?.timer) return;
-    try { clearTimeout(entry.timer); } catch {}
+    try { clearTimeout(entry.timer); } catch { }
     entry.timer = null;
   }
 
@@ -13456,7 +13457,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     if (!entry || entry.settled) return false;
     entry.settled = true;
     this._clearClarifyTimer(entry);
-    try { entry.resolve(payload); } catch {}
+    try { entry.resolve(payload); } catch { }
     return true;
   }
 
@@ -13489,7 +13490,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         editedText: String(editedText || '').trim(),
         markdownMode: markdownMode === 'verbose' ? 'verbose' : 'compact',
       });
-    } catch {}
+    } catch { }
     return true;
   }
 
@@ -13497,7 +13498,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const tabPending = this._pendingPlans.get(tabId);
     if (!tabPending) return;
     for (const [, entry] of tabPending) {
-      try { entry.resolve({ action: 'reject', cancelled: true, reason }); } catch {}
+      try { entry.resolve({ action: 'reject', cancelled: true, reason }); } catch { }
     }
     this._pendingPlans.delete(tabId);
   }
@@ -13520,7 +13521,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     if (typeof onUpdate === 'function') {
       try {
         onUpdate('plan_review', { planId, plan, markdown, verboseMarkdown });
-      } catch {}
+      } catch { }
     }
     try {
       const response = await Promise.race([responsePromise, timeoutPromise]);
@@ -13530,7 +13531,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             planId,
             decision: response.reason === 'plan review timed out' ? 'timeout' : 'cancelled',
           });
-        } catch {}
+        } catch { }
       }
       return response;
     } finally {
@@ -13683,15 +13684,15 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const guard = this._planExecutionGuards.get(tabId);
     if (!guard?.enabled || !this._isSuccessfulExecutionEvidence(result)) return;
     if (guard.workflowRequiredJobEvidence === 'transcript_segments'
-        && name === 'read_youtube_transcript') {
+      && name === 'read_youtube_transcript') {
       // Calling the tool is not the evidence; a gap-free transcript of the
       // video this job selected, read from its start, is.
       guard.workflowJobEvidenceSatisfied = guard.workflowTranscriptCoverage?.complete === true
         && this._workflowObservationStaysInJobScope(tabId, guard, result);
     }
     if (guard.workflowRequiredJobEvidence === 'pull_request_diff_read'
-        && this.constructor.WORKFLOW_CONTENT_READ_TOOLS.has(name)
-        && this._workflowPullRequestDiffRead(guard, this._workflowObservationUrl(tabId, result))) {
+      && this.constructor.WORKFLOW_CONTENT_READ_TOOLS.has(name)
+      && this._workflowPullRequestDiffRead(guard, this._workflowObservationUrl(tabId, result))) {
       guard.workflowJobScopeObserved = true;
       // The diff has to be read out, not merely opened.
       guard.workflowJobEvidenceSatisfied = guard.workflowDiffCoverage?.complete === true;
@@ -13706,9 +13707,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
   _rememberWorkflowTranscriptCoverage(tabId, name, args, result) {
     const guard = this._planExecutionGuards.get(tabId);
     if (!guard?.enabled
-        || guard.workflowRequiredJobEvidence !== 'transcript_segments'
-        || name !== 'read_youtube_transcript'
-        || !this._isSuccessfulExecutionEvidence(result)) return;
+      || guard.workflowRequiredJobEvidence !== 'transcript_segments'
+      || name !== 'read_youtube_transcript'
+      || !this._isSuccessfulExecutionEvidence(result)) return;
     const window = this._workflowTranscriptWindow(args, result);
     // Offsets alone say nothing about which video they index. A chain that
     // begins on one video and ends on another is not that video's transcript,
@@ -13825,8 +13826,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
   _rememberWorkflowDiffCoverage(tabId, name, args, result) {
     const guard = this._planExecutionGuards.get(tabId);
     if (!guard?.enabled
-        || guard.workflowRequiredJobEvidence !== 'pull_request_diff_read'
-        || !this._isSuccessfulExecutionEvidence(result)) return;
+      || guard.workflowRequiredJobEvidence !== 'pull_request_diff_read'
+      || !this._isSuccessfulExecutionEvidence(result)) return;
     const window = this._workflowDiffReadWindow(name, args, result);
     if (!window) return;
     if (!this._workflowPullRequestDiffRead(guard, this._workflowObservationUrl(tabId, result))) return;
@@ -13982,10 +13983,10 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
   _rememberWorkflowComposerFieldEvidence(tabId, name, args, result, completionState) {
     const guard = this._planExecutionGuards.get(tabId);
     if (!guard?.enabled
-        || guard.siteWorkflow?.job?.template !== 'message'
-        || (name !== 'set_field' && name !== 'type_ax')
-        || result?.verified !== true
-        || !this._isSuccessfulExecutionEvidence(result)) return null;
+      || guard.siteWorkflow?.job?.template !== 'message'
+      || (name !== 'set_field' && name !== 'type_ax')
+      || result?.verified !== true
+      || !this._isSuccessfulExecutionEvidence(result)) return null;
     const field = this._workflowComposerFieldKey(result?.fieldMeta);
     if (!field) return null;
     const taskKey = this._progressTaskKeyHash(tabId);
@@ -13999,12 +14000,12 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const replacesValue = name === 'set_field' ? args?.clear !== false : args?.clear === true;
     fields[field] = replacesValue
       ? {
-          field,
-          value: field === 'body'
-            ? this._workflowMessageBody(args?.text)
-            : this._workflowMetadataValue(args?.text),
-          observationSequence,
-        }
+        field,
+        value: field === 'body'
+          ? this._workflowMessageBody(args?.text)
+          : this._workflowMetadataValue(args?.text),
+        observationSequence,
+      }
       : { field, unbound: true, observationSequence };
     guard.workflowComposerFieldEvidence = { taskKey, fields };
     return { field, bound: replacesValue };
@@ -14021,7 +14022,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
   // empty-inventory no-op report success without resolving anything.
   _workflowResolveThreadControlLabel(label) {
     let text = String(label || '');
-    try { text = text.normalize('NFKC'); } catch {}
+    try { text = text.normalize('NFKC'); } catch { }
     text = text.toLowerCase().replace(/\s+/g, ' ').trim();
     if (!text) return false;
     return /^(?:resolve (?:conversation|thread)|resolver (?:la )?(?:conversaci[oó]n|conversa|conversação)|r[ée]soudre (?:la )?(?:conversation|discussion)|(?:unterhaltung|konversation|diskussion) aufl[öo]sen|risolvi (?:la )?conversazione|conversa(?:zione)? risolta|konuşmayı çöz|çözümle|解决对话|解決對話|解决此对话|会話を解決(?:する)?|スレッドを解決(?:する)?|대화 ?해결|스레드 ?해결|разрешить (?:обсуждение|беседу))$/u.test(text);
@@ -14371,8 +14372,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       // unclassified failed cross-origin frames incomplete — they may be
       // the embedded application.
       if (frameItems.length === 0 && noisy
-          && !this._workflowIframeFrameIsApplicationScoped(frameUrl, pageUrl, args?.urlFilter)
-          && hasFormControls) {
+        && !this._workflowIframeFrameIsApplicationScoped(frameUrl, pageUrl, args?.urlFilter)
+        && hasFormControls) {
         continue;
       }
       // iframe_read pages its matches, so one page proves completeness only
@@ -14533,14 +14534,14 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
 
   _workflowReleaseAssetFileName(value) {
     let normalized = String(value || '').replace(/\\/g, '/').trim();
-    try { normalized = normalized.normalize('NFKC'); } catch {}
+    try { normalized = normalized.normalize('NFKC'); } catch { }
     return normalized.split('/').filter(Boolean).at(-1) || '';
   }
 
   _workflowReleaseAssetSignalCount(value, fileName) {
     const normalize = (input) => {
       let text = String(input || '').replace(/\s+/g, ' ').trim();
-      try { text = text.normalize('NFKC'); } catch {}
+      try { text = text.normalize('NFKC'); } catch { }
       return text;
     };
     const expected = normalize(fileName);
@@ -14562,8 +14563,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
   _rememberWorkflowReleaseAssetObservation(tabId, name, result) {
     const guard = this._planExecutionGuards.get(tabId);
     if (!this._isWorkflowReleaseAssetJob(guard)
-        || !COMPLETION_DOCUMENT_OBSERVATION_TOOLS.has(name)
-        || !this._isSuccessfulExecutionEvidence(result)) return null;
+      || !COMPLETION_DOCUMENT_OBSERVATION_TOOLS.has(name)
+      || !this._isSuccessfulExecutionEvidence(result)) return null;
     const pageUrl = [result?.pageUrl, result?.currentUrl, result?.url, this._lastAxScopes.get(tabId)?.pageUrl]
       .find(value => typeof value === 'string' && value.trim()) || '';
     if (!pageUrl) return null;
@@ -14581,7 +14582,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       }
       for (const [itemId, candidate] of Object.entries(pending)) {
         if (observationSequence <= Number(candidate?.actionSequence || 0)
-            || this._workflowReleaseAssetSignalCount(observationText, candidate?.fileName) < 1) continue;
+          || this._workflowReleaseAssetSignalCount(observationText, candidate?.fileName) < 1) continue;
         guard.workflowReleaseAssetEvidence[itemId] = {
           itemId,
           tool: 'upload_file',
@@ -14601,9 +14602,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
   _rememberWorkflowReleaseAssetActionEvidence(tabId, name, result, completionState = null) {
     const guard = this._planExecutionGuards.get(tabId);
     if (!this._isWorkflowReleaseAssetJob(guard)
-        || name !== 'upload_file'
-        || !this._isSuccessfulExecutionEvidence(result)
-        || !['input_attached', 'page_consumed'].includes(result?.attachmentState)) return null;
+      || name !== 'upload_file'
+      || !this._isSuccessfulExecutionEvidence(result)
+      || !['input_attached', 'page_consumed'].includes(result?.attachmentState)) return null;
     const fileName = this._workflowReleaseAssetFileName(result?.attached?.name);
     if (!fileName) return null;
     const rows = this._currentTaskLedgerRows(tabId);
@@ -14633,7 +14634,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
   _workflowAttachmentUiSignalCount(value, fileName, item = null) {
     const normalize = (input) => {
       let text = String(input || '').replace(/\s+/g, ' ').trim();
-      try { text = text.normalize('NFKC'); } catch {}
+      try { text = text.normalize('NFKC'); } catch { }
       return text.toLocaleLowerCase();
     };
     const expected = normalize(fileName);
@@ -14675,9 +14676,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         const nearest = distances.filter(entry => entry.distance === nearestDistance);
         if (nearestDistance <= 20 && nearest.length === 1 && matchesItem(nearest[0].control)) count += 1;
         else if (!fileControls.some(matchesItem)
-            && item?.labelUnique === true
-            && labelledWidgetSignal
-            && !fileControls.some(control => normalize(control.label) === itemLabel)) count += 1;
+          && item?.labelUnique === true
+          && labelledWidgetSignal
+          && !fileControls.some(control => normalize(control.label) === itemLabel)) count += 1;
       } else if (item?.labelUnique === true && labelledWidgetSignal) {
         count += 1;
       }
@@ -14719,8 +14720,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const guard = this._planExecutionGuards.get(tabId);
     const siteWorkflow = guard?.siteWorkflow;
     if (!guard?.enabled || siteWorkflow?.job?.requiresLedger !== true
-        || siteWorkflow.job.template !== 'form'
-        || !this._isSuccessfulExecutionEvidence(result)) return null;
+      || siteWorkflow.job.template !== 'form'
+      || !this._isSuccessfulExecutionEvidence(result)) return null;
     const inventoryItems = Array.isArray(guard.workflowInventoryEvidence?.items)
       ? guard.workflowInventoryEvidence.items
       : [];
@@ -14794,7 +14795,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       }
       const normalizeLabel = (value) => {
         let label = String(value || '').replace(/\s+/g, ' ').trim();
-        try { label = label.normalize('NFKC'); } catch {}
+        try { label = label.normalize('NFKC'); } catch { }
         return label.toLocaleLowerCase();
       };
       const itemLabel = normalizeLabel(item.label);
@@ -14845,9 +14846,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const guard = this._planExecutionGuards.get(tabId);
     const siteWorkflow = guard?.siteWorkflow;
     if (!guard?.enabled || siteWorkflow?.job?.requiresLedger !== true
-        || siteWorkflow.job.template !== 'form'
-        || !['get_accessibility_tree', 'iframe_read'].includes(name)
-        || !this._isSuccessfulExecutionEvidence(result)) return null;
+      || siteWorkflow.job.template !== 'form'
+      || !['get_accessibility_tree', 'iframe_read'].includes(name)
+      || !this._isSuccessfulExecutionEvidence(result)) return null;
     if (name === 'iframe_read') {
       return this._rememberWorkflowIframeInventoryObservation(tabId, args, result, guard, siteWorkflow);
     }
@@ -15021,10 +15022,10 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const guard = this._planExecutionGuards.get(tabId);
     const siteWorkflow = guard?.siteWorkflow;
     if (!guard?.workflowInventoryEvidence
-        || siteWorkflow?.job?.requiresLedger !== true
-        || siteWorkflow.job.template !== 'form'
-        || !shouldInvalidateFormInventoryAfterAction(name)
-        || !this._isSuccessfulExecutionEvidence(result)) return;
+      || siteWorkflow?.job?.requiresLedger !== true
+      || siteWorkflow.job.template !== 'form'
+      || !shouldInvalidateFormInventoryAfterAction(name)
+      || !this._isSuccessfulExecutionEvidence(result)) return;
     if (this._isWorkflowFormSubmitAction(name, args, result, detectedSubmit)) {
       // Preserving the inventory across a submit is right only where the
       // submit is the job. For a prepare-only job it is a contract violation.
@@ -15043,15 +15044,15 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const taskKey = this._progressTaskKeyHash(tabId);
     const evidence = guard?.workflowInventoryEvidence;
     const accessibilityInventory = evidence?.complete === true
-        && evidence.bindingKey === this._adapterWorkflowBindingKey(siteWorkflow)
-        && evidence.taskKey === taskKey
-        && Array.isArray(evidence.items)
-        && (evidence.items.length > 0 || this._workflowAllowsEmptyCompleteInventory(siteWorkflow))
+      && evidence.bindingKey === this._adapterWorkflowBindingKey(siteWorkflow)
+      && evidence.taskKey === taskKey
+      && Array.isArray(evidence.items)
+      && (evidence.items.length > 0 || this._workflowAllowsEmptyCompleteInventory(siteWorkflow))
       ? {
-          source: evidence.source,
-          itemIds: evidence.items.map(item => String(item.id)),
-          itemCount: evidence.items.length,
-        }
+        source: evidence.source,
+        itemIds: evidence.items.map(item => String(item.id)),
+        itemCount: evidence.items.length,
+      }
       : null;
     // Form workflows must reconcile the controls the app actually exposed.
     // Classifier/expected rows describe task scope, not screening questions,
@@ -15062,7 +15063,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       const expectedRows = rows.filter(row => Number.isInteger(Number(row?.fields?.expectedOrdinal)));
       const ordinals = expectedRows.map(row => Number(row.fields.expectedOrdinal)).sort((a, b) => a - b);
       if (expectedRows.length === expected.count
-          && ordinals.every((ordinal, index) => ordinal === index + 1)) {
+        && ordinals.every((ordinal, index) => ordinal === index + 1)) {
         return { source: 'expected_items', itemIds: expectedRows.map(row => String(row.id)), itemCount: expected.count };
       }
     }
@@ -15101,7 +15102,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         job: siteWorkflow.job.id,
         template: siteWorkflow.job.template,
       });
-    } catch {}
+    } catch { }
   }
 
   _adapterMatchTracePayload(adapter, notesInjected) {
@@ -15134,7 +15135,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const entries = this.adapterMatchTraceKeys.get(runId);
     if (!runId || !entries) return;
     for (const payload of entries.values()) {
-      try { await trace.recordNote(runId, 0, 'adapter_match', payload); } catch {}
+      try { await trace.recordNote(runId, 0, 'adapter_match', payload); } catch { }
     }
   }
 
@@ -15224,7 +15225,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       this.pendingVisionSubCallTraces.delete(tabId);
       for (const payload of pendingVisionSubCalls) trace.recordVisionSubCall(runId, payload);
       if (typeof runOptions?.onTraceStarted === 'function') {
-        try { runOptions.onTraceStarted(runId); } catch {}
+        try { runOptions.onTraceStarted(runId); } catch { }
       }
     } else {
       this.pendingAdapterMatchTraces.delete(tabId);
@@ -15246,7 +15247,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         const sessionId = this.conversationIds.get(tabId) || null;
         if (sessionId && provider?.config?.helpImproveKavachWeb !== false) {
           let extensionVersion = '';
-          try { extensionVersion = chrome.runtime.getManifest().version || ''; } catch {}
+          try { extensionVersion = chrome.runtime.getManifest().version || ''; } catch { }
           const item = buildTerminalRuntimeEvent({
             runId,
             status,
@@ -15262,7 +15263,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         // The durable write above is awaited; network delivery is deliberately
         // detached from UI completion and retried by the next Compass run.
         void flushCloudRuntimeOutbox(provider);
-      } catch {}
+      } catch { }
     }
     if (runId) {
       await this._flushAdapterMatchTraceRun(runId);
@@ -15271,7 +15272,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         if (this._rememberWorkflowDraftFromCapture(tabId, workflowCapture)) {
           await this._persistNow(tabId);
         }
-      } catch {}
+      } catch { }
       this.currentRunId.delete(tabId);
       this.adapterMatchTraceKeys.delete(runId);
     }
@@ -15331,7 +15332,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           const name = toolCall?.function?.name || toolCall?.name || '';
           if (!toolCall?.id || name !== 'done') continue;
           let args = null;
-          try { args = JSON.parse(toolCall.function?.arguments || toolCall.arguments || '{}'); } catch {}
+          try { args = JSON.parse(toolCall.function?.arguments || toolCall.arguments || '{}'); } catch { }
           doneCallById.set(toolCall.id, args);
         }
         continue;
@@ -15339,7 +15340,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       if (message?.role !== 'tool' || !doneCallById.has(message.tool_call_id)) continue;
       let result = null;
       const rawResult = this._unwrapUntrusted(message.content);
-      try { result = JSON.parse(rawResult); } catch {}
+      try { result = JSON.parse(rawResult); } catch { }
       const completed = result?.done === true
         || /^\s*\{\s*"done"\s*:\s*true(?:\s*[,}])/.test(String(rawResult || ''));
       if (!completed) continue;
@@ -15906,9 +15907,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         );
     }
     if (runOptions?.trustedContinuation === true
-        && gate?.proceed
-        && (gate.requestKind === 'execute' || gate.plannerFailedContinueAct === true)
-        && !gate.siteWorkflow) {
+      && gate?.proceed
+      && (gate.requestKind === 'execute' || gate.plannerFailedContinueAct === true)
+      && !gate.siteWorkflow) {
       const carriedWorkflow = this._continuationExecutionEvidence.get(tabId)?.siteWorkflow;
       const revalidatedWorkflow = await this._revalidateCarriedSiteWorkflow(tabId, carriedWorkflow);
       if (revalidatedWorkflow) gate.siteWorkflow = revalidatedWorkflow;
@@ -16051,7 +16052,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         tools: [],
         runtimeMode,
       });
-    } catch {}
+    } catch { }
   }
 
   async _tracePlannerAttemptResponse(runId, step, provider, result, phase, attempt, startedAt) {
@@ -16067,7 +16068,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         attempt,
         ...(attempt > 1 ? { repair: true } : {}),
       });
-    } catch {}
+    } catch { }
   }
 
   async _tracePlannerAttemptFailure(runId, phase, attempt, error) {
@@ -16083,7 +16084,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         attempt,
         failureKind: plannerRequestFailureKind(detail),
       });
-    } catch {}
+    } catch { }
   }
 
   _plannerPrefersNoThinkPrompt(provider) {
@@ -16131,9 +16132,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
 
   _shouldRecheckReadOnlyFollowUpIntent(plan, historyDigest = '', followUpContext = {}) {
     if (plan?.request_kind !== 'execute'
-        || plan.requires_state_change === true
-        || plan.requires_submission === true
-        || plan.scheduling) return false;
+      || plan.requires_state_change === true
+      || plan.requires_submission === true
+      || plan.scheduling) return false;
     if (!String(followUpContext?.priorUserTask || '').trim()) return false;
     if (!/(?:^|\n)Assistant:\s*\S/.test(String(historyDigest || ''))) return false;
     const recheckableTools = new Set([
@@ -16204,7 +16205,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
   _plannerIntentFailureMessage(runOptions = {}) {
     return sanitizePlannerText(
       runOptions?.intentFailureMessage
-        || 'Planning failed after two attempts. Continuing in Act mode with normal safeguards.',
+      || 'Planning failed after two attempts. Continuing in Act mode with normal safeguards.',
       500,
     );
   }
@@ -16224,7 +16225,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           continuingMode: 'act',
           reason,
         });
-      } catch {}
+      } catch { }
     }
     return {
       proceed: true,
@@ -16366,7 +16367,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         requirement: 'download',
         requiresStateChange: true,
       });
-    } catch {}
+    } catch { }
   }
 
   _plannerProgressLedgerGateFieldsFromApprovedPlanText(text) {
@@ -16503,7 +16504,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             tools: [],
             runtimeMode: this._effectiveRunMode(tabId),
           });
-        } catch {}
+        } catch { }
       }
       const startedAt = Date.now();
       let result;
@@ -16551,7 +16552,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             phase: 'read_scope',
             attempt: 1,
           });
-        } catch {}
+        } catch { }
       }
       if (this._checkAbort(tabId)) {
         return { proceed: false, message: '[Stopped by user]', reason: 'cancelled' };
@@ -16575,7 +16576,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               tools: [],
               runtimeMode: this._effectiveRunMode(tabId),
             });
-          } catch {}
+          } catch { }
         }
         const repairStartedAt = Date.now();
         result = await this._chatWithCostAllowance(
@@ -16597,7 +16598,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               attempt: 2,
               repair: true,
             });
-          } catch {}
+          } catch { }
         }
         readScope = parseReadScopeFromContent(result.content);
       }
@@ -16609,7 +16610,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               trace.recordNote(runId, 0, 'read_scope_classifier_failed_defaulted_complete_thread', {
                 attempts: 2,
               });
-            } catch {}
+            } catch { }
           }
         } else {
           return {
@@ -16635,7 +16636,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             trace.recordNote(runId, 0, 'read_scope_classifier_failed_defaulted_complete_thread', {
               requestError: true,
             });
-          } catch {}
+          } catch { }
         }
         return { proceed: true, readScope: 'complete_thread', classificationFailed: true };
       }
@@ -16864,7 +16865,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             await trace.recordNote(runId, 0, 'planner_post_validation_failed', {
               phase: 'intent',
             });
-          } catch {}
+          } catch { }
         }
         return this._plannerPostValidationFailure(e, onUpdate);
       }
@@ -17206,9 +17207,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       const approvedRequiresStateChange = approvedPlanEdited
         ? approvedRequiresSubmission === true || approvedRequiresDownload
         : !approvedRequiresDownload
-        && plan.completion_requirement_correction === 'download_requires_state_change'
-        ? false
-        : plan.requires_state_change === true;
+          && plan.completion_requirement_correction === 'download_requires_state_change'
+          ? false
+          : plan.requires_state_change === true;
       // A reviewed-text edit that changes the Steps section materially
       // re-scopes the operation (for example turning a 12306 booking plan into
       // search-only steps). Keep the app-owned workflow contract only when the
@@ -17254,7 +17255,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             await trace.recordNote(runId, 0, 'planner_post_validation_failed', {
               phase: 'planner',
             });
-          } catch {}
+          } catch { }
         }
         return this._plannerPostValidationFailure(e, onUpdate);
       }
@@ -17515,7 +17516,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           result: toolResult,
           latencyMs: 0,
         });
-      } catch {}
+      } catch { }
     }
     this._persist(tabId);
     return { content: finalResponse, status };
@@ -17603,7 +17604,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           tools: Array.isArray(tools) ? tools : [],
           runtimeMode: this._effectiveRunMode(tabId),
         });
-      } catch {}
+      } catch { }
     }
     const startedAt = Date.now();
     const result = await this._chatWithCostAllowance(
@@ -17630,7 +17631,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           model: provider?.model,
           phase,
         });
-      } catch {}
+      } catch { }
     }
     if (returnResult) return result;
     if (result?.toolCalls?.length) return '';
@@ -17798,7 +17799,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         ? ['selector', 'ref_id', 'index', 'key', 'keys']
         : name === 'execute_js'
           ? ['code']
-        : ['selector', 'ref_id', 'index', 'text', 'x', 'y', 'urlFilter'];
+          : ['selector', 'ref_id', 'index', 'text', 'x', 'y', 'urlFilter'];
     const identity = {};
     for (const field of fields) {
       const value = args?.[field];
@@ -18232,11 +18233,11 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         if (node.shadowRoot) roots.push(node.shadowRoot);
         node = walker.nextNode();
       }
-    } catch {}
+    } catch { }
     const queryAll = (selector) => {
       const found = [];
       for (const root of roots) {
-        try { found.push(...root.querySelectorAll(selector)); } catch {}
+        try { found.push(...root.querySelectorAll(selector)); } catch { }
       }
       return [...new Set(found)];
     };
@@ -18260,11 +18261,11 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           const label = document.querySelector(`label[for="${escaped}"]`);
           if (label) parts.push(label.innerText || label.textContent || '');
         }
-      } catch {}
+      } catch { }
       try {
         const wrappingLabel = el.closest?.('label');
         if (wrappingLabel) parts.push(wrappingLabel.innerText || wrappingLabel.textContent || '');
-      } catch {}
+      } catch { }
       parts.push(
         el.getAttribute?.('aria-label') || '',
         el.getAttribute?.('placeholder') || '',
@@ -18283,7 +18284,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           try {
             const message = root.getElementById?.(id);
             if (message) return message.innerText || message.textContent || '';
-          } catch {}
+          } catch { }
         }
         return '';
       }).filter(Boolean).join(' ');
@@ -18306,7 +18307,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     let active = document.activeElement;
     try {
       while (active?.shadowRoot?.activeElement) active = active.shadowRoot.activeElement;
-    } catch {}
+    } catch { }
     const activeInvalid = !!active && invalidControls.includes(active);
     const allInvalidControls = [...new Set([...invalidControls, ...ariaInvalidControls])];
     const errorMessageIds = new Set();
@@ -18403,9 +18404,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
 
   async _chatObservationParams(tabId) {
     let pageUrl = '';
-    try { pageUrl = await this._currentUrl(tabId); } catch {}
+    try { pageUrl = await this._currentUrl(tabId); } catch { }
     let policy = null;
-    try { policy = getMessageRecipientGuardPolicy(pageUrl); } catch {}
+    try { policy = getMessageRecipientGuardPolicy(pageUrl); } catch { }
     return {
       ...(policy?.adapterName ? { adapterName: policy.adapterName } : {}),
       supportsRecipientSets: policy?.supportsRecipientSets === true,
@@ -18709,8 +18710,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const previouslySeenIds = new Set(observed.session.seenMessageIds);
     const outgoingVerified = verifiedState.snapshot.messages.some(message => (
       message.direction === 'outgoing'
-        && message.text === decision.text
-        && !previouslySeenIds.has(message.id)
+      && message.text === decision.text
+      && !previouslySeenIds.has(message.id)
     )) && verifiedState.session.pendingOutbound === null;
     return {
       ...this._chatObservationResult(after, verifiedState),
@@ -18795,7 +18796,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     let policy = null;
     try {
       policy = getMessageRecipientGuardPolicy(pageUrl || await this._currentUrl(tabId));
-    } catch {}
+    } catch { }
     if (!policy?.verifyActiveRecipient) return { ok: true, target };
 
     const probe = await this._messageRecipientContentProbe(tabId, {
@@ -18816,7 +18817,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       };
     }
     if (policy.deferActiveConversationUntilComposer === true
-        && probe?.composerAvailable === false) {
+      && probe?.composerAvailable === false) {
       return {
         ok: true,
         target,
@@ -18841,7 +18842,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     let policy = null;
     try {
       policy = getMessageRecipientGuardPolicy(pageUrl || await this._currentUrl(tabId));
-    } catch {}
+    } catch { }
     if (!policy?.verifyActiveRecipient) return null;
 
     if (name === 'press_keys') {
@@ -18894,21 +18895,21 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const inAuthorizedConversation = !deferredConversationScope
       || this._workflowJobScopeIdentity(pageUrl) === deferredConversationScope;
     if (policy.deferActiveConversationUntilComposer === true
-        && target?.target_kind === 'active_conversation'
-        && inAuthorizedConversation
-        && probe?.composerAvailable === false
-        && probe?.composerSetup === true
-        && (name === 'click' || name === 'click_ax')) return null;
+      && target?.target_kind === 'active_conversation'
+      && inAuthorizedConversation
+      && probe?.composerAvailable === false
+      && probe?.composerSetup === true
+      && (name === 'click' || name === 'click_ax')) return null;
 
     if (policy.deferActiveConversationUntilComposer === true
-        && target?.target_kind === 'active_conversation'
-        && inAuthorizedConversation
-        && probe?.success === true
-        && probe?.conclusive === true
-        && probe?.messageSend === true) {
+      && target?.target_kind === 'active_conversation'
+      && inAuthorizedConversation
+      && probe?.success === true
+      && probe?.conclusive === true
+      && probe?.messageSend === true) {
       const recipients = this._messageRecipientCandidates(probe);
       if ((policy.supportsRecipientSets === true && recipients.length > 0)
-          || (policy.supportsRecipientSets !== true && recipients.length === 1)) {
+        || (policy.supportsRecipientSets !== true && recipients.length === 1)) {
         target = { target_kind: 'named', recipients };
         if (guard) guard.messaging = target;
       }
@@ -19124,7 +19125,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     let currentUrl = '';
     const fallbackHostForPrompt = async () => {
       if (!currentUrl) {
-        try { currentUrl = await this._currentUrl(tabId); } catch {}
+        try { currentUrl = await this._currentUrl(tabId); } catch { }
       }
       return normalizeHost(args?.urlFilter || currentUrl) || 'this site';
     };
@@ -19209,7 +19210,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       const resolvedEditable = (Array.isArray(rawResults) ? rawResults : [])
         .find(item => item && item.isSubmit !== true && item.resolvedEditableTarget === true);
       if (resolvedEditable
-          && (name === 'click' || name === 'click_ax' || name === 'iframe_click')) {
+        && (name === 'click' || name === 'click_ax' || name === 'iframe_click')) {
         return {
           isSubmit: false,
           host: normalizeHost(resolvedEditable.host || resolvedEditable.url || args?.urlFilter || currentUrl) || 'this site',
@@ -19224,7 +19225,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       const resolvedNavigation = (Array.isArray(rawResults) ? rawResults : [])
         .find(item => item && item.isSubmit !== true && item.resolvedNavigationTarget === true);
       if (resolvedNavigation
-          && (name === 'click' || name === 'click_ax' || name === 'iframe_click')) {
+        && (name === 'click' || name === 'click_ax' || name === 'iframe_click')) {
         return {
           isSubmit: false,
           host: normalizeHost(resolvedNavigation.host || resolvedNavigation.url || args?.urlFilter || currentUrl) || 'this site',
@@ -19277,7 +19278,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
                     url = parsed.href;
                     host = parsed.hostname;
                   }
-                } catch {}
+                } catch { }
                 return {
                   left: rect.left,
                   top: rect.top,
@@ -19366,19 +19367,19 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     };
     const safeQuerySelector = (root, selector) => {
       if (!root || typeof selector !== 'string' || !selector) return null;
-      try { return root.querySelector(selector); } catch {}
+      try { return root.querySelector(selector); } catch { }
       if (selector.startsWith('#') && !/[\s>+~,\[\]\.:]/.test(selector.slice(1).replace(/\\:/g, ''))) {
         const rawId = selector.slice(1).replace(/\\:/g, ':');
         try {
           const byId = typeof root.getElementById === 'function' ? root.getElementById(rawId) : null;
           if (byId) return byId;
-        } catch {}
-        try { return root.querySelector(`[id="${rawId.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"]`); } catch {}
+        } catch { }
+        try { return root.querySelector(`[id="${rawId.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"]`); } catch { }
       }
       try {
         const escaped = selector.replace(/(^|[^\\]):/g, '$1\\:');
         return root.querySelector(escaped);
-      } catch {}
+      } catch { }
       return null;
     };
     const deepQuerySelector = (root, selector) => {
@@ -19393,7 +19394,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             const inner = deepQuerySelector(node.shadowRoot, selector);
             if (inner) return inner;
           }
-        } catch {}
+        } catch { }
         node = walker.nextNode();
       }
       return null;
@@ -19410,11 +19411,11 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           const lbl = doc.querySelector(`label[for="${cssEscape(el.id)}"]`);
           if (lbl) parts.push(lbl.innerText || lbl.textContent || '');
         }
-      } catch {}
+      } catch { }
       try {
         const wrap = el.closest('label');
         if (wrap) parts.push(wrap.innerText || wrap.textContent || '');
-      } catch {}
+      } catch { }
       parts.push(
         el.getAttribute?.('aria-label') || '',
         el.getAttribute?.('placeholder') || '',
@@ -19501,13 +19502,13 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           const descriptor = `${field.getAttribute?.('name') || ''} ${field.id || ''} ${field.getAttribute?.('aria-label') || ''}`;
           if (!/(?:order|booking|ticket).*(?:number|no|id|reference)|(?:订单|訂單|車票訂單|车票订单|取票号|取票號)|sequence[_-]?no/i.test(descriptor)) continue;
           let fieldValue = String(field.value || '').trim();
-          try { fieldValue = fieldValue.normalize('NFKC'); } catch {}
+          try { fieldValue = fieldValue.normalize('NFKC'); } catch { }
           fieldValue = fieldValue.toUpperCase();
           if (/^[A-Z0-9][A-Z0-9-]{3,}$/.test(fieldValue)) fieldIds.push(fieldValue);
         }
       } catch { completeFields = false; }
       let text = parts.join('\n');
-      try { text = text.normalize('NFKC'); } catch {}
+      try { text = text.normalize('NFKC'); } catch { }
       const completeText = text.length <= 50000;
       text = text.slice(0, 50000);
       const pattern = /\b(?:order|booking|ticket)\s*(?:number|no\.?|id|reference)\s*[:#-]?\s*([A-Z0-9][A-Z0-9-]{3,})|(?:订单号|訂單號|订单编号|車票訂單|车票订单|取票号|取票號)\s*[:：]?\s*([A-Z0-9][A-Z0-9-]{3,})/ig;
@@ -19592,17 +19593,17 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       let target = null;
       try {
         if (el.htmlFor) target = doc.getElementById(el.htmlFor);
-      } catch {}
+      } catch { }
       try {
         if (!target) target = el.querySelector('button,input,textarea,select');
-      } catch {}
+      } catch { }
       try {
         if (!target && el.nextElementSibling) {
           const next = el.nextElementSibling;
           if (/^(BUTTON|INPUT|TEXTAREA|SELECT)$/i.test(next.tagName || '')) target = next;
           else target = next.querySelector?.('button,input,textarea,select') || null;
         }
-      } catch {}
+      } catch { }
       return target && target.nodeType === 1 ? target : null;
     };
     const submitControlEvidence = (el) => {
@@ -19729,7 +19730,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           if (typeof window.__wb_ax_lookup === 'function' && typeof args.ref_id === 'string') {
             return window.__wb_ax_lookup(args.ref_id);
           }
-        } catch {}
+        } catch { }
         return null;
       }
       if (toolName === 'press_keys') return doc.activeElement;
@@ -19759,7 +19760,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           if (typeof window.__wb_resolve_click_target_for_submit_probe === 'function') {
             return window.__wb_resolve_click_target_for_submit_probe(args);
           }
-        } catch {}
+        } catch { }
         const index = Number(args.index);
         const all = interactiveElements();
         return Number.isFinite(index) ? all[index] || null : null;
@@ -19776,7 +19777,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             const frameUrl = compact(frame?.url || '', 1000).toLowerCase();
             let frameHost = compact(frame?.host || '', 300).toLowerCase().replace(/^www\./, '');
             if (!frameHost && frameUrl) {
-              try { frameHost = new URL(frameUrl).hostname.toLowerCase().replace(/^www\./, ''); } catch {}
+              try { frameHost = new URL(frameUrl).hostname.toLowerCase().replace(/^www\./, ''); } catch { }
             }
             return (!!frameUrl && (currentUrl === frameUrl || currentUrl.startsWith(frameUrl)))
               || (!!frameHost && (currentHost === frameHost || currentHost.endsWith(`.${frameHost}`)));
@@ -19796,7 +19797,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               const target = doc.elementFromPoint(localX, localY);
               if (!fallbackTarget && target) fallbackTarget = target;
               if (isSubmitControl(target)) return target;
-            } catch {}
+            } catch { }
           }
           if (fallbackTarget) return fallbackTarget;
         }
@@ -19842,8 +19843,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         );
       }
       if (target
-          && (toolName === 'click' || toolName === 'click_ax' || toolName === 'iframe_click')
-          && isEditableActivationTarget(target)) {
+        && (toolName === 'click' || toolName === 'click_ax' || toolName === 'iframe_click')
+        && isEditableActivationTarget(target)) {
         return {
           isSubmit: false,
           host,
@@ -19854,8 +19855,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         };
       }
       if (target
-          && (toolName === 'click' || toolName === 'click_ax' || toolName === 'iframe_click')
-          && isNavigationLinkTarget(target)) {
+        && (toolName === 'click' || toolName === 'click_ax' || toolName === 'iframe_click')
+        && isNavigationLinkTarget(target)) {
         return {
           isSubmit: false,
           host,
@@ -19865,7 +19866,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           resolvedNavigationTarget: true,
         };
       }
-    } catch {}
+    } catch { }
     return null;
   };
 
@@ -19895,7 +19896,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           question: `KavachWeb wants to submit this form on ${host}.`,
           options: ['once', 'deny'],
         });
-      } catch {}
+      } catch { }
     }
 
     const response = await responsePromise;
@@ -19936,7 +19937,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         question: `Choose a replacement target for saved workflow step ${stepIndex + 1}. The workflow will update only if the action succeeds and its postcondition is verified.`,
         options: ['deny'],
       });
-    } catch {}
+    } catch { }
     const response = await responsePromise;
     tabPending.delete(clarifyId);
     if (tabPending.size === 0) this._pendingClarifications.delete(tabId);
@@ -20247,7 +20248,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const session = this._otpEmailSessions.get(sourceTabId);
     this._otpEmailSessions.delete(sourceTabId);
     if (session?.helperTabId != null) {
-      chrome.tabs.remove(session.helperTabId).catch(() => {});
+      chrome.tabs.remove(session.helperTabId).catch(() => { });
     }
   }
 
@@ -20338,8 +20339,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       }
       const expectedPage = Math.floor(Number(continuationArgs.page));
       if (next?.error || next?.treeRevisionMismatch === true
-          || typeof next?.pageContent !== 'string' || !next.pageContent.trim()
-          || !Number.isFinite(expectedPage) || Number(next?.page) !== expectedPage) {
+        || typeof next?.pageContent !== 'string' || !next.pageContent.trim()
+        || !Number.isFinite(expectedPage) || Number(next?.page) !== expectedPage) {
         return { success: false, error: otpRedactRefs(next?.error) || 'The verification message continuation changed, expired, or returned an unexpected page and was not used.' };
       }
       if (next?.depthTruncated === true || totalChars + next.pageContent.length > maxTotalChars) {
@@ -20397,11 +20398,11 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const completed = await this._otpEmailCompleteMessageTree(targetTabId, subtree, sourceTabId);
     return completed.success
       ? {
-          success: true,
-          tree: completed.tree,
-          detected: true,
-          detection: tree?.conversationRootRefId ? 'trusted_conversation_root' : 'provider_route_semantic_root',
-        }
+        success: true,
+        tree: completed.tree,
+        detected: true,
+        detection: tree?.conversationRootRefId ? 'trusted_conversation_root' : 'provider_route_semantic_root',
+      }
       : { ...completed, detected: true, incompleteMessage: true };
   }
 
@@ -20613,7 +20614,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       await new Promise(resolve => setTimeout(resolve, 450));
       try {
         await this.executeTool(helperTab.id, 'wait_for_stable', { timeout: 5000, quietMs: 350, checkNetwork: false });
-      } catch {}
+      } catch { }
 
       let opened = null;
       const openDeadline = Date.now() + 6000;
@@ -20621,9 +20622,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         opened = await this._otpEmailTree(sourceTabId, helperTab.id, session.provider, { timeoutMs: 1500 });
         if (!opened.success) return this._otpEmailOpenFailure(opened);
         if (opened.tree.documentToken !== helperRead.tree.documentToken
-            || opened.liveUrl !== helperRead.liveUrl
-            || opened.tree.pageContent !== helperRead.tree.pageContent
-            || opened.tree.conversationRootRefId) break;
+          || opened.liveUrl !== helperRead.liveUrl
+          || opened.tree.pageContent !== helperRead.tree.pageContent
+          || opened.tree.conversationRootRefId) break;
         await new Promise(resolve => setTimeout(resolve, 300));
       }
       if (!opened?.success || (
@@ -20664,7 +20665,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       session.helperTabId = null;
       this._otpEmailSessions.delete(sourceTabId);
       if (helperTabId != null) {
-        try { await chrome.tabs.remove(helperTabId); } catch {}
+        try { await chrome.tabs.remove(helperTabId); } catch { }
       }
     }
   }
@@ -21006,7 +21007,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     if (this._researchEscalationTabIds(tabId).size > 1) this.abort(tabId);
     // Tab removal can race the protocol teardown; the tab is already gone if
     // cleanup rejects, so there is no useful recovery for this fire-and-forget path.
-    void cdpClient.cleanupTab(tabId).catch(() => {});
+    void cdpClient.cleanupTab(tabId).catch(() => { });
     this._cancelPendingPlans(tabId, 'tab closed');
     this._isPdfTabCache.delete(tabId);
     this._lastTypeFieldIdent?.delete(tabId);
@@ -21076,7 +21077,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     if (preserveRunGuard) {
       this._activeCloudflareManagedChallengeGate(tabId);
     } else {
-      this._queueCloudflareManagedChallengeCleanup(tabId).catch(() => {});
+      this._queueCloudflareManagedChallengeCleanup(tabId).catch(() => { });
     }
     this._userAttachmentHandles.delete(tabId);
     this._clearResearchEscalationAuthorizations(tabId);
@@ -21137,7 +21138,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
 
   _textMutationFieldsProvenDistinct(previousMeta, nextMeta) {
     if (!previousMeta || typeof previousMeta !== 'object'
-        || !nextMeta || typeof nextMeta !== 'object') return false;
+      || !nextMeta || typeof nextMeta !== 'object') return false;
     const normalized = (meta, field) => String(meta?.[field] || '').trim().toLowerCase();
     const identityFields = ['id', 'name', 'ariaLabel', 'ariaLabelledByText', 'labelText', 'placeholder'];
     for (const field of identityFields) {
@@ -21146,8 +21147,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       if (previous && next && previous === next) return false;
     }
     if (typeof previousMeta.contentEditable === 'boolean'
-        && typeof nextMeta.contentEditable === 'boolean'
-        && previousMeta.contentEditable !== nextMeta.contentEditable) return true;
+      && typeof nextMeta.contentEditable === 'boolean'
+      && previousMeta.contentEditable !== nextMeta.contentEditable) return true;
     const differingIdentityCount = identityFields.reduce((count, field) => {
       const previous = normalized(previousMeta, field);
       const next = normalized(nextMeta, field);
@@ -21163,7 +21164,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
   // editability also agree. Anything less stays blocked (fail-closed).
   _focusedFieldIdentityMatches(previousMeta, nextMeta) {
     if (!previousMeta || typeof previousMeta !== 'object'
-        || !nextMeta || typeof nextMeta !== 'object') return false;
+      || !nextMeta || typeof nextMeta !== 'object') return false;
     const normalized = (meta, field) => String(meta?.[field] ?? '').trim().toLowerCase();
     const previousId = normalized(previousMeta, 'id');
     const nextId = normalized(nextMeta, 'id');
@@ -21213,9 +21214,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         },
       });
       if (response?.success !== true
-          || !Number.isInteger(response.valueLength)
-          || response.valueLength < 0
-          || !/^[0-9a-f]{64}$/i.test(String(response.valueSha256 || ''))) return null;
+        || !Number.isInteger(response.valueLength)
+        || response.valueLength < 0
+        || !/^[0-9a-f]{64}$/i.test(String(response.valueSha256 || ''))) return null;
       return {
         valueLength: response.valueLength,
         valueSha256: String(response.valueSha256).toLowerCase(),
@@ -21308,7 +21309,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
 
   _normalizeFocusedFieldMeta(focusedField = null, fallbackMeta = null) {
     if (focusedField && typeof focusedField === 'object'
-        && (focusedField.tag || focusedField.name || typeof focusedField.contentEditable === 'boolean')) {
+      && (focusedField.tag || focusedField.name || typeof focusedField.contentEditable === 'boolean')) {
       return {
         ...(fallbackMeta && typeof fallbackMeta === 'object' ? fallbackMeta : {}),
         tag: String(focusedField.tag || fallbackMeta?.tag || '').toLowerCase() || null,
@@ -21466,11 +21467,11 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           ? this._isGithubFileEditorRecord({ fieldMeta: current?.fieldMeta })
           : this._isGithubCommitMessageField(current?.fieldMeta);
         if (!current
-            || !record.readbackSha256
-            || !kindOk
-            || this._textMutationFieldsProvenDistinct(record.fieldMeta, current.fieldMeta)
-            || current.valueLength !== record.readbackLength
-            || current.valueSha256 !== record.readbackSha256) {
+          || !record.readbackSha256
+          || !kindOk
+          || this._textMutationFieldsProvenDistinct(record.fieldMeta, current.fieldMeta)
+          || current.valueLength !== record.readbackLength
+          || current.valueSha256 !== record.readbackSha256) {
           records.delete(key);
         }
         continue;
@@ -21495,11 +21496,11 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       // versa) would otherwise keep stale original metadata authorizing a
       // changed field — so require (editor, editor) or (message, message).
       if (!current
-          || !record.readbackSha256
-          || !((githubEditor && currentEditor) || (commitMessage && currentMessage))
-          || this._textMutationFieldsProvenDistinct(record.fieldMeta, current.fieldMeta)
-          || current.valueLength !== record.readbackLength
-          || current.valueSha256 !== record.readbackSha256) {
+        || !record.readbackSha256
+        || !((githubEditor && currentEditor) || (commitMessage && currentMessage))
+        || this._textMutationFieldsProvenDistinct(record.fieldMeta, current.fieldMeta)
+        || current.valueLength !== record.readbackLength
+        || current.valueSha256 !== record.readbackSha256) {
         records.delete(key);
       }
     }
@@ -21521,7 +21522,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     if (!liveScope || (!liveScope.documentToken && !liveScope.pageUrl)) return null;
     const cachedScope = this._lastAxScopes.get(tabId) || {};
     if (String(liveScope.documentToken || '') === String(cachedScope.documentToken || '')
-        && this._normalizeUrl(liveScope.pageUrl || '') === this._normalizeUrl(cachedScope.pageUrl || '')) {
+      && this._normalizeUrl(liveScope.pageUrl || '') === this._normalizeUrl(cachedScope.pageUrl || '')) {
       return null;
     }
     const bootstrappingFirstToken = !cachedScope.documentToken;
@@ -21536,9 +21537,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     if (bootstrappingFirstToken && debts instanceof Map) {
       for (const [key, candidate] of debts) {
         if (!candidate.documentToken
-            && candidate.pageUrl
-            && liveScope.pageUrl
-            && this._normalizeUrl(candidate.pageUrl) !== this._normalizeUrl(liveScope.pageUrl)) {
+          && candidate.pageUrl
+          && liveScope.pageUrl
+          && this._normalizeUrl(candidate.pageUrl) !== this._normalizeUrl(liveScope.pageUrl)) {
           debts.delete(key);
         }
       }
@@ -21560,8 +21561,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const recentSet = recentDocuments instanceof Array ? new Set(recentDocuments) : null;
     for (const [key, candidate] of debts) {
       if (candidate.documentToken && target.documentToken
-          && candidate.documentToken !== target.documentToken
-          && (!recentSet || !recentSet.has(candidate.documentToken))) debts.delete(key);
+        && candidate.documentToken !== target.documentToken
+        && (!recentSet || !recentSet.has(candidate.documentToken))) debts.delete(key);
     }
     if (debts.size === 0) {
       this._uncertainTextMutations.delete(tabId);
@@ -21602,7 +21603,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       if (focusedTargetMetaAttempted) return focusedTargetMeta;
       focusedTargetMetaAttempted = true;
       if (!(name === 'type_text' && !args.selector && args.index == null
-          && target.locatorType === 'focused')) return null;
+        && target.locatorType === 'focused')) return null;
       try {
         const readback = await this._textMutationValueDigest(tabId, { locatorType: 'focused', ambiguous: false });
         focusedTargetMeta = readback?.fieldMeta || null;
@@ -21637,7 +21638,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const selectDebt = async () => {
       for (const candidate of debts.values()) {
         if (candidate.documentToken && target.documentToken
-            && candidate.documentToken !== target.documentToken) continue;
+          && candidate.documentToken !== target.documentToken) continue;
         // Same locator instance: the recovery path below decides (with
         // positive same-field identity for focused pairs).
         if (candidate.key === target.key) return candidate;
@@ -21690,16 +21691,16 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     // blocked, and a proof is minted only for a classifiable editor or
     // commit-message kind.
     if (sameReplacement
-        && name === 'type_text' && !args.selector && args.index == null
-        && target.locatorType === 'focused' && debt.locatorType === 'focused'
-        && debt.key === target.key) {
+      && name === 'type_text' && !args.selector && args.index == null
+      && target.locatorType === 'focused' && debt.locatorType === 'focused'
+      && debt.key === target.key) {
       let focusedReadback = null;
       try {
         focusedReadback = await this._textMutationValueDigest(
           tabId, { locatorType: 'focused', ambiguous: false }, text);
       } catch { /* an unavailable readback leaves the write blocked */ }
       if (focusedReadback?.verified === true
-          && this._focusedFieldIdentityMatches(debt.fieldMeta, focusedReadback.fieldMeta)) {
+        && this._focusedFieldIdentityMatches(debt.fieldMeta, focusedReadback.fieldMeta)) {
         debts.delete(debt.key);
         if (debts.size === 0) this._uncertainTextMutations.delete(tabId);
         const normalizedFocusedMeta = this._normalizeFocusedFieldMeta(null, focusedReadback.fieldMeta);
@@ -21832,7 +21833,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         if (liveScope && (liveScope.documentToken || liveScope.pageUrl)) {
           const cachedScope = this._lastAxScopes.get(tabId) || {};
           if (String(liveScope.documentToken || '') !== String(cachedScope.documentToken || '')
-              || this._normalizeUrl(liveScope.pageUrl || '') !== this._normalizeUrl(cachedScope.pageUrl || '')) {
+            || this._normalizeUrl(liveScope.pageUrl || '') !== this._normalizeUrl(cachedScope.pageUrl || '')) {
             this._rememberAxScope(
               tabId,
               liveScope.documentToken || cachedScope.documentToken || '',
@@ -21846,10 +21847,10 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       if (verifiedReplacements instanceof Map) {
         if (target.ambiguous) verifiedReplacements.clear();
         else if (result?.fieldMeta?.contentEditable === true
-            || /contenteditable/i.test(target.key)) {
+          || /contenteditable/i.test(target.key)) {
           for (const [key, record] of verifiedReplacements) {
             if (record?.fieldMeta?.contentEditable === true
-                || /contenteditable/i.test(String(record?.key || key))) verifiedReplacements.delete(key);
+              || /contenteditable/i.test(String(record?.key || key))) verifiedReplacements.delete(key);
           }
         } else verifiedReplacements.delete(target.key);
       }
@@ -22024,7 +22025,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const t = this.persistTimers.get(tabId);
     if (t) { clearTimeout(t); this.persistTimers.delete(tabId); }
     try {
-      chrome.storage.session.remove(this._convKey(tabId)).catch(() => {});
+      chrome.storage.session.remove(this._convKey(tabId)).catch(() => { });
     } catch (e) { /* ignore */ }
   }
 
@@ -22800,15 +22801,15 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       && rows.length === 0
       && this._workflowAllowsEmptyCompleteInventory(guard?.siteWorkflow);
     if (!Number.isInteger(itemCount)
-        || (itemCount < 1 && !emptyComplete)
-        || itemCount !== rows.length
-        || itemCount !== inventory.itemCount) {
+      || (itemCount < 1 && !emptyComplete)
+      || itemCount !== rows.length
+      || itemCount !== inventory.itemCount) {
       return { ok: false, error: `progress_update: itemCount must exactly equal both the app-owned inventory (${inventory.itemCount}) and current-task ledger size (${rows.length}).` };
     }
     const inventoryIds = [...new Set(inventory.itemIds.map(id => String(id)))].sort();
     const rowIds = [...new Set(rows.map(row => String(row?.id || '')))].sort();
     if (inventoryIds.length !== rowIds.length
-        || inventoryIds.some((id, index) => id !== rowIds[index])) {
+      || inventoryIds.some((id, index) => id !== rowIds[index])) {
       return { ok: false, error: 'progress_update: ledger ids must exactly match the app-owned workflow inventory; missing, invented, or extra rows cannot be reconciled as complete.' };
     }
     if (!basis || basis.length > 240) {
@@ -22844,7 +22845,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     if (state?.siteWorkflow?.job?.requiresLedger !== true) return true;
     const record = state.workflowLedgerReconciliation;
     if (!record || record.job !== state.siteWorkflow.job.id
-        || record.taskKey !== this._progressTaskKeyHash(tabId)) return false;
+      || record.taskKey !== this._progressTaskKeyHash(tabId)) return false;
     const rows = record.sessionId
       ? this._rowsForProgressSession(tabId, record.sessionId)
       : (this.progressLedgers.get(tabId) || []).filter(
@@ -22990,7 +22991,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       observationOnlyRequirementIds.length
       && (
         Number(evidenceState?.lastObservation?.sequence || 0)
-          <= Number(evidenceState?.lastAction?.sequence || 0)
+        <= Number(evidenceState?.lastAction?.sequence || 0)
         || hasNewBatchAction
       )
     ) {
@@ -23071,7 +23072,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       executionGuard.workflowLedgerReconciliation = null;
       const record = workflowReconciliationValidation?.record;
       if (record && visibleRows.length === record.itemCount
-          && visibleRows.every(row => isTerminalLedgerStatus(row?.status))) {
+        && visibleRows.every(row => isTerminalLedgerStatus(row?.status))) {
         executionGuard.workflowLedgerReconciliation = record;
       }
     }
@@ -23124,7 +23125,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       ? (this.progressLedgers.get(tabId) || [])
       : explicitSessionId
         ? this._rowsForProgressSession(tabId, explicitSessionId)
-      : (session ? this._rowsForProgressSession(tabId, session.sessionId) : []);
+        : (session ? this._rowsForProgressSession(tabId, session.sessionId) : []);
     return {
       success: true,
       counts: progressCounts(rows),
@@ -23597,8 +23598,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const progressLedgerPolicy = expectedItems
       ? 'enabled'
       : ['enabled', 'disabled', 'auto'].includes(opts.progressLedgerPolicy)
-      ? opts.progressLedgerPolicy
-      : 'auto';
+        ? opts.progressLedgerPolicy
+        : 'auto';
     const plannerAction = normalizeProgressAction(opts.progressAction) || (expectedItems ? 'process_item' : '');
     if (progressLedgerPolicy === 'disabled') {
       const session = this._inactiveProgressSession(
@@ -23850,7 +23851,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const resultUrl = result.url || result.pageUrl || result.currentUrl || '';
     let url = resultUrl;
     if (!url && ['get_accessibility_tree', 'read_page', 'click', 'click_ax', 'set_field', 'navigate'].includes(name)) {
-      try { url = await this._currentUrl(tabId); } catch {}
+      try { url = await this._currentUrl(tabId); } catch { }
     }
     const previous = this.mastodonStates.get(tabId) || null;
     const state = analyzeMastodonPage({
@@ -24021,13 +24022,13 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const requiresStateChange = requiresDownload || siteWorkflow?.job?.stateChange === true
       ? true
       : typeof gateOutcome?.requiresStateChange === 'boolean'
-      ? gateOutcome.requiresStateChange
-      : null;
+        ? gateOutcome.requiresStateChange
+        : null;
     const requiresSubmission = siteWorkflow?.job?.requiresSubmission === true
       ? true
       : typeof gateOutcome?.requiresSubmission === 'boolean'
-      ? gateOutcome.requiresSubmission
-      : null;
+        ? gateOutcome.requiresSubmission
+        : null;
     const messaging = normalizeMessageTarget(gateOutcome?.messaging);
     // Requested addressees for a plan that sends nothing. Held apart from
     // messaging so no send path can read them as authorization.
@@ -24111,35 +24112,35 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         : null,
       workflowInventoryEvidence: carryMatches && carried.workflowInventoryEvidence
         ? {
-            ...carried.workflowInventoryEvidence,
-            items: [...(carried.workflowInventoryEvidence.items || [])].map(item => ({ ...item })),
-            documents: { ...(carried.workflowInventoryEvidence.documents || {}) },
-          }
+          ...carried.workflowInventoryEvidence,
+          items: [...(carried.workflowInventoryEvidence.items || [])].map(item => ({ ...item })),
+          documents: { ...(carried.workflowInventoryEvidence.documents || {}) },
+        }
         : null,
       workflowControlActionEvidence: carryMatches && carried.workflowControlActionEvidence
         ? Object.fromEntries(Object.entries(carried.workflowControlActionEvidence)
-            .map(([itemId, proof]) => [itemId, { ...proof }]))
+          .map(([itemId, proof]) => [itemId, { ...proof }]))
         : {},
       workflowReleaseAssetEvidence: carryMatches && carried.workflowReleaseAssetEvidence
         ? Object.fromEntries(Object.entries(carried.workflowReleaseAssetEvidence)
-            .map(([itemId, proof]) => [itemId, { ...proof }]))
+          .map(([itemId, proof]) => [itemId, { ...proof }]))
         : {},
       workflowPendingReleaseAssetEvidence: carryMatches && carried.workflowPendingReleaseAssetEvidence
         ? Object.fromEntries(Object.entries(carried.workflowPendingReleaseAssetEvidence)
-            .map(([itemId, proof]) => [itemId, { ...proof }]))
+          .map(([itemId, proof]) => [itemId, { ...proof }]))
         : {},
       workflowPendingUploadEvidence: carryMatches && carried.workflowPendingUploadEvidence
         ? Object.fromEntries(Object.entries(carried.workflowPendingUploadEvidence)
-            .map(([itemId, proof]) => [itemId, { ...proof }]))
+          .map(([itemId, proof]) => [itemId, { ...proof }]))
         : {},
       workflowComposerFieldEvidence: carryMatches && carried.workflowComposerFieldEvidence
         ? {
-            ...carried.workflowComposerFieldEvidence,
-            fields: Object.fromEntries(
-              Object.entries(carried.workflowComposerFieldEvidence.fields || {})
-                .map(([field, binding]) => [field, { ...binding }]),
-            ),
-          }
+          ...carried.workflowComposerFieldEvidence,
+          fields: Object.fromEntries(
+            Object.entries(carried.workflowComposerFieldEvidence.fields || {})
+              .map(([field, binding]) => [field, { ...binding }]),
+          ),
+        }
         : null,
       workflowRequiredJobEvidence: '',
       workflowJobScopeIdentity: '',
@@ -24194,16 +24195,16 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     if (result == null || result?.done) return false;
     if (typeof result !== 'object') return true;
     if (result.success === false
-        || result.denied
-        || result.cancelled
-        || result.skipped
-        || result.failed
-        || result.blocked
-        || result.blockedDone
-        || result.blockedUnsavedChanges
-        || result.invalidToolArguments
-        || result.missingToolResponse
-        || result.outcomeUnknown) return false;
+      || result.denied
+      || result.cancelled
+      || result.skipped
+      || result.failed
+      || result.blocked
+      || result.blockedDone
+      || result.blockedUnsavedChanges
+      || result.invalidToolArguments
+      || result.missingToolResponse
+      || result.outcomeUnknown) return false;
     if (result.error && result.success !== true) return false;
     return true;
   }
@@ -24277,9 +24278,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         .map(item => item.downloadId);
     }
     if (result.downloadId != null
-        && result.state !== 'complete'
-        && result.state !== 'interrupted'
-        && (result.pending === true || result.success === true)) {
+      && result.state !== 'complete'
+      && result.state !== 'interrupted'
+      && (result.pending === true || result.success === true)) {
       return [result.downloadId];
     }
     return [];
@@ -24287,10 +24288,10 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
 
   _confirmPendingDownloadEvidence(state, result) {
     if (!state?.requiresDownload
-        || !Array.isArray(state.pendingDownloadIds)
-        || state.pendingDownloadIds.length === 0
-        || !this._isSuccessfulExecutionEvidence(result)
-        || !Array.isArray(result?.downloads)) return false;
+      || !Array.isArray(state.pendingDownloadIds)
+      || state.pendingDownloadIds.length === 0
+      || !this._isSuccessfulExecutionEvidence(result)
+      || !Array.isArray(result?.downloads)) return false;
     const completedIds = new Set(
       result.downloads
         .filter(item => item?.id != null && item.state === 'complete')
@@ -24327,10 +24328,10 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const confirmedPendingDownload = name === 'list_downloads'
       && this._confirmPendingDownloadEvidence(state, result);
     if (!state?.enabled
-        || name === 'done'
-        || (this.constructor.EXECUTION_META_TOOLS.has(name) && !requestedAppStateTool)
-        || unverifiedFindText
-        || (!this._isSuccessfulExecutionEvidence(result) && !requiredScheduleSucceeded)) return;
+      || name === 'done'
+      || (this.constructor.EXECUTION_META_TOOLS.has(name) && !requestedAppStateTool)
+      || unverifiedFindText
+      || (!this._isSuccessfulExecutionEvidence(result) && !requiredScheduleSucceeded)) return;
     state.successfulTaskToolCalls += 1;
     if (state.taskKey) state.evidenceTaskKey = state.taskKey;
     // Only a content read can ground a contract. A screenshot, a scroll, or a
@@ -24349,12 +24350,12 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     // The count tool reports an exact number for whatever route it ran on and
     // says so itself. Bind it to a result set this run actually read.
     if (state.workflowRequiredJobEvidence === 'deterministic_count'
-        && name === 'gmail_count_results'
-        && result?.verified === true
-        && result?.exact === true
-        && Number.isInteger(Number(result?.count))
-        && (state.workflowObservedScopeIdentities || [])
-          .includes(this._workflowJobScopeIdentity(result?.countedUrl))) {
+      && name === 'gmail_count_results'
+      && result?.verified === true
+      && result?.exact === true
+      && Number.isInteger(Number(result?.count))
+      && (state.workflowObservedScopeIdentities || [])
+        .includes(this._workflowJobScopeIdentity(result?.countedUrl))) {
       state.workflowJobEvidenceSatisfied = true;
     }
     if (contentRead && this._workflowObservationStaysInJobScope(tabId, state, result)) {
@@ -24371,9 +24372,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       state.successfulDownloadToolCalls += 1;
     }
     if (consequential
-        || confirmedPendingDownload
-        || requiredScheduleSucceeded
-        || (requestedAppStateTool && this.constructor.EXECUTION_APP_STATE_WRITE_TOOLS.has(name))) {
+      || confirmedPendingDownload
+      || requiredScheduleSucceeded
+      || (requestedAppStateTool && this.constructor.EXECUTION_APP_STATE_WRITE_TOOLS.has(name))) {
       state.successfulConsequentialToolCalls += 1;
     }
   }
@@ -24459,10 +24460,10 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           : null,
         workflowInventoryEvidence: guard.workflowInventoryEvidence
           ? {
-              ...guard.workflowInventoryEvidence,
-              items: [...(guard.workflowInventoryEvidence.items || [])].map(item => ({ ...item })),
-              documents: { ...(guard.workflowInventoryEvidence.documents || {}) },
-            }
+            ...guard.workflowInventoryEvidence,
+            items: [...(guard.workflowInventoryEvidence.items || [])].map(item => ({ ...item })),
+            documents: { ...(guard.workflowInventoryEvidence.documents || {}) },
+          }
           : null,
         workflowControlActionEvidence: Object.fromEntries(
           Object.entries(guard.workflowControlActionEvidence || {})
@@ -24496,12 +24497,12 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         workflowMetadataRequirementsResolved: guard.workflowMetadataRequirementsResolved === true,
         workflowComposerFieldEvidence: guard.workflowComposerFieldEvidence
           ? {
-              ...guard.workflowComposerFieldEvidence,
-              fields: Object.fromEntries(
-                Object.entries(guard.workflowComposerFieldEvidence.fields || {})
-                  .map(([field, binding]) => [field, { ...binding }]),
-              ),
-            }
+            ...guard.workflowComposerFieldEvidence,
+            fields: Object.fromEntries(
+              Object.entries(guard.workflowComposerFieldEvidence.fields || {})
+                .map(([field, binding]) => [field, { ...binding }]),
+            ),
+          }
           : null,
         workflowJobScopeObserved: guard.workflowJobScopeObserved === true,
         workflowEmptyCollectionObserved: guard.workflowEmptyCollectionObserved === true,
@@ -24635,7 +24636,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     // not a claim that an unseen answer was delivered. Keep the recovery
     // narrow enough that these direct predicates can finish normally.
     if (/^(?:confirmed|checked)$/i.test(status[1])
-        && /\b(?:is|are|was|were|equals?|exists?|appears?|opens?|lives?|resides?|sits?|can\s+be\s+(?:found|accessed)|(?:is|are)\s+available)\b/i.test(remainder)) {
+      && /\b(?:is|are|was|were|equals?|exists?|appears?|opens?|lives?|resides?|sits?|can\s+be\s+(?:found|accessed)|(?:is|are)\s+available)\b/i.test(remainder)) {
       return false;
     }
     if (/\band\s+(?:found|identified|verified|determined|showed)\b/i.test(remainder)) return false;
@@ -24763,9 +24764,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const invalidDone = viaDone && (looksPlanOnly || missingEvidence || missingRequiredLedger);
     if (!invalidPlainFinal && !invalidDone) return null;
     if (runtimeModeContradiction
-        && !state.taskDrifted
-        && !missingRequiredSchedulingTool
-        && !state.runtimeModeCorrectionAttempted) {
+      && !state.taskDrifted
+      && !missingRequiredSchedulingTool
+      && !state.runtimeModeCorrectionAttempted) {
       state.recoveryAttempted = true;
       state.runtimeModeCorrectionAttempted = true;
       return {
@@ -24785,33 +24786,33 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         nudge: (state.taskDrifted
           ? '[PLAN EXECUTION BLOCK: The genuine user task changed after this run was authorized. Do not execute either the old or new task under stale authorization. Call done with outcome failed and report that a fresh run is required.]'
           : staleCancellation
-          ? '[PLAN EXECUTION BLOCK: No current user stop was received. The previous response echoed a stale local cancellation status from conversation history. That status is UI metadata, not an instruction or task result. Continue the active task with permitted tools. If complete or blocked, call done with an explicit outcome; do not repeat the cancellation status or return plain text.]'
-          : missingRequiredSchedulingTool
-          ? `[PLAN EXECUTION BLOCK: The approved plan requires a successful ${state.requiredSchedulingTool} call before this task can finish successfully. A one-time read, scroll, send, or other action does not create the scheduled work. Call ${state.requiredSchedulingTool} with the user's requested timing and verify success:true plus scheduled:true. If the schedule is unsupported or still lacks required timing, call done with outcome partial or failed and explain the exact limitation; do not claim it was scheduled.]`
-          : missingRequiredDownload
-          ? '[PLAN EXECUTION BLOCK: This task requires a file to be downloaded before it can finish successfully. Finding a URL, link, button, or media source is only read evidence. Use an authorized tool call with the DOWNLOAD capability and verify that it returned successful download evidence. If permission is denied or no file can be saved, call done with outcome partial or failed and explain the limitation; do not claim the file was downloaded.]'
-          : missingRequiredSubmission
-          ? (state.siteWorkflow?.job?.id
-            ? `[PLAN EXECUTION BLOCK: The selected ${state.siteWorkflow.job.id} job requires terminal evidence for its own submit/send/publish/commit contract. Filling fields, another site's submit, or an unrelated success signal is not completion. Dispatch the intended action and observe the job-specific terminal state (for example recipient-bound sent state, saved/published resource, form confirmation, or paid/ticket-issued transaction) before calling done again. If that cannot be verified, use outcome partial or failed and report the exact blocker.]`
-            // No site workflow was selected, so there is no job contract to
-            // point at. Naming one sent the model looking for the terminal
-            // state of something that does not exist.
-            : '[PLAN EXECUTION BLOCK: This task requires a submit/send/publish/commit action, and the page state read at completion does not yet show it took effect. Read the page that resulted from the action — the published item, the confirmation, or the changed state — in the same browser tab, then call done from there. If the action cannot be confirmed, use outcome partial or failed and report the exact blocker.]')
-          : forbiddenSubmission
-          ? `[PLAN EXECUTION BLOCK: The selected ${state.siteWorkflow?.job?.id || 'workflow'} job prepares the form and leaves it unsubmitted, but a submit action was dispatched. Do not submit again or try to undo it by submitting anything else. Call done with outcome partial or failed, state plainly that the form was submitted without authorization, and report what the page shows now.]`
-          : missingJobEvidence
-          ? `[PLAN EXECUTION BLOCK: The selected ${state.siteWorkflow?.job?.id || 'workflow'} job has its own success contract and an unrelated page read does not satisfy it. ${this._workflowJobEvidenceInstruction(state)} Produce that evidence, then call done. If it cannot be produced, call done with outcome partial or failed and report the exact blocker with whatever partial coverage you did verify.]`
-          : missingDraftEvidence
-          ? `[PLAN EXECUTION BLOCK: The selected ${state.siteWorkflow?.job?.id || 'workflow'} job finishes on the draft itself, not on a tool call. The intended recipients, the requested subject, and the complete body must all be readable in the open composer, and the provider must show its own saved-draft state. Re-read the composer once the app has saved the draft, then call done. If any field or the saved-draft state cannot be verified, call done with outcome partial or failed and report exactly what is unverified; do not send the message.]`
-          : missingRequiredLedger
-          ? `[PLAN EXECUTION BLOCK: The selected ${state.siteWorkflow.job.id} site workflow requires complete item-level reconciliation before success. Obtain a complete app-owned workflow inventory, use its exact item ids for one processed or intentionally skipped ledger row per item, then call progress_update with workflowReconciliation {job:"${state.siteWorkflow.job.id}", coverageComplete:true, itemCount:N, basis:"..."}. N and the row ids must exactly match that inventory; model-created rows alone are not coverage evidence, and any failed row requires a partial or failed outcome. If complete coverage cannot be verified, call done with outcome partial or failed and report completed versus unresolved work.]`
-          : unknownMutationIntent
-          ? '[PLAN EXECUTION BLOCK: Planning failed, so the runtime could not determine whether this task requires a state change. Continue with normally permitted tools. A success outcome now requires a verified consequential tool call; if the useful result is read-only or no safe consequential action is needed, deliver that result with done outcome partial instead of claiming success. Do not invent or perform a mutation merely to satisfy this guard.]'
-          : defaultPlanExecutionBlockNudge({
-            viaDone,
-            missingEvidence,
-            requiresStateChange: state.requiresStateChange,
-          })) + recoveryAnchor,
+            ? '[PLAN EXECUTION BLOCK: No current user stop was received. The previous response echoed a stale local cancellation status from conversation history. That status is UI metadata, not an instruction or task result. Continue the active task with permitted tools. If complete or blocked, call done with an explicit outcome; do not repeat the cancellation status or return plain text.]'
+            : missingRequiredSchedulingTool
+              ? `[PLAN EXECUTION BLOCK: The approved plan requires a successful ${state.requiredSchedulingTool} call before this task can finish successfully. A one-time read, scroll, send, or other action does not create the scheduled work. Call ${state.requiredSchedulingTool} with the user's requested timing and verify success:true plus scheduled:true. If the schedule is unsupported or still lacks required timing, call done with outcome partial or failed and explain the exact limitation; do not claim it was scheduled.]`
+              : missingRequiredDownload
+                ? '[PLAN EXECUTION BLOCK: This task requires a file to be downloaded before it can finish successfully. Finding a URL, link, button, or media source is only read evidence. Use an authorized tool call with the DOWNLOAD capability and verify that it returned successful download evidence. If permission is denied or no file can be saved, call done with outcome partial or failed and explain the limitation; do not claim the file was downloaded.]'
+                : missingRequiredSubmission
+                  ? (state.siteWorkflow?.job?.id
+                    ? `[PLAN EXECUTION BLOCK: The selected ${state.siteWorkflow.job.id} job requires terminal evidence for its own submit/send/publish/commit contract. Filling fields, another site's submit, or an unrelated success signal is not completion. Dispatch the intended action and observe the job-specific terminal state (for example recipient-bound sent state, saved/published resource, form confirmation, or paid/ticket-issued transaction) before calling done again. If that cannot be verified, use outcome partial or failed and report the exact blocker.]`
+                    // No site workflow was selected, so there is no job contract to
+                    // point at. Naming one sent the model looking for the terminal
+                    // state of something that does not exist.
+                    : '[PLAN EXECUTION BLOCK: This task requires a submit/send/publish/commit action, and the page state read at completion does not yet show it took effect. Read the page that resulted from the action — the published item, the confirmation, or the changed state — in the same browser tab, then call done from there. If the action cannot be confirmed, use outcome partial or failed and report the exact blocker.]')
+                  : forbiddenSubmission
+                    ? `[PLAN EXECUTION BLOCK: The selected ${state.siteWorkflow?.job?.id || 'workflow'} job prepares the form and leaves it unsubmitted, but a submit action was dispatched. Do not submit again or try to undo it by submitting anything else. Call done with outcome partial or failed, state plainly that the form was submitted without authorization, and report what the page shows now.]`
+                    : missingJobEvidence
+                      ? `[PLAN EXECUTION BLOCK: The selected ${state.siteWorkflow?.job?.id || 'workflow'} job has its own success contract and an unrelated page read does not satisfy it. ${this._workflowJobEvidenceInstruction(state)} Produce that evidence, then call done. If it cannot be produced, call done with outcome partial or failed and report the exact blocker with whatever partial coverage you did verify.]`
+                      : missingDraftEvidence
+                        ? `[PLAN EXECUTION BLOCK: The selected ${state.siteWorkflow?.job?.id || 'workflow'} job finishes on the draft itself, not on a tool call. The intended recipients, the requested subject, and the complete body must all be readable in the open composer, and the provider must show its own saved-draft state. Re-read the composer once the app has saved the draft, then call done. If any field or the saved-draft state cannot be verified, call done with outcome partial or failed and report exactly what is unverified; do not send the message.]`
+                        : missingRequiredLedger
+                          ? `[PLAN EXECUTION BLOCK: The selected ${state.siteWorkflow.job.id} site workflow requires complete item-level reconciliation before success. Obtain a complete app-owned workflow inventory, use its exact item ids for one processed or intentionally skipped ledger row per item, then call progress_update with workflowReconciliation {job:"${state.siteWorkflow.job.id}", coverageComplete:true, itemCount:N, basis:"..."}. N and the row ids must exactly match that inventory; model-created rows alone are not coverage evidence, and any failed row requires a partial or failed outcome. If complete coverage cannot be verified, call done with outcome partial or failed and report completed versus unresolved work.]`
+                          : unknownMutationIntent
+                            ? '[PLAN EXECUTION BLOCK: Planning failed, so the runtime could not determine whether this task requires a state change. Continue with normally permitted tools. A success outcome now requires a verified consequential tool call; if the useful result is read-only or no safe consequential action is needed, deliver that result with done outcome partial instead of claiming success. Do not invent or perform a mutation merely to satisfy this guard.]'
+                            : defaultPlanExecutionBlockNudge({
+                              viaDone,
+                              missingEvidence,
+                              requiresStateChange: state.requiresStateChange,
+                            })) + recoveryAnchor,
       };
     }
     if (state.taskDrifted) {
@@ -24879,8 +24880,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         failure: hasSuccessfulConsequentialEvidence
           ? 'The model still claimed Ask mode after a runtime-mode correction even though this was an Act/Dev run. Some consequential tools may already have completed, but final completion was not verified. Inspect the current page before retrying to avoid duplicate side effects.'
           : hasSuccessfulToolEvidence
-          ? 'The model still claimed Ask mode after a runtime-mode correction instead of using the available Act/Dev tools. Only read-only task evidence was recorded; no consequential page action was recorded, and nothing was verified as changed, submitted, or sent.'
-          : 'The model still claimed Ask mode after a runtime-mode correction instead of using the available Act/Dev tools. No successful page action was verified, and nothing was verified as changed, submitted, or sent.',
+            ? 'The model still claimed Ask mode after a runtime-mode correction instead of using the available Act/Dev tools. Only read-only task evidence was recorded; no consequential page action was recorded, and nothing was verified as changed, submitted, or sent.'
+            : 'The model still claimed Ask mode after a runtime-mode correction instead of using the available Act/Dev tools. No successful page action was verified, and nothing was verified as changed, submitted, or sent.',
         status: 'plan_only_output',
       };
     }
@@ -24888,8 +24889,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       failure: hasSuccessfulConsequentialEvidence
         ? 'Some task tools completed, but I could not verify a valid completion after the recovery attempt. Please inspect the current page before retrying to avoid duplicate side effects.'
         : hasSuccessfulToolEvidence
-        ? 'Some read-only task tools completed, but I could not verify the requested action after the recovery attempt. No consequential page action was recorded, and nothing was verified as changed, submitted, or sent.'
-        : 'I could not verify any requested page action after the recovery attempt, so I stopped without claiming completion. No successful action was verified, and nothing was verified as submitted or sent.',
+          ? 'Some read-only task tools completed, but I could not verify the requested action after the recovery attempt. No consequential page action was recorded, and nothing was verified as changed, submitted, or sent.'
+          : 'I could not verify any requested page action after the recovery attempt, so I stopped without claiming completion. No successful action was verified, and nothing was verified as submitted or sent.',
       status: 'plan_only_output',
     };
   }
@@ -25073,7 +25074,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     return nextArgs;
   }
 
-  async _scheduleAutoProgressResume(tabId, onUpdate = () => {}) {
+  async _scheduleAutoProgressResume(tabId, onUpdate = () => { }) {
     if (!this.scheduler) return null;
     const mode = this._effectiveRunMode(tabId);
     if (!this._isActionMode(mode)) return null;
@@ -25488,7 +25489,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         }
         return true;
       };
-      while (oldMessages.length < 4 && moveOldestRecentToSummary()) {}
+      while (oldMessages.length < 4 && moveOldestRecentToSummary()) { }
       const pinnedChars = this._estimateContextChars([systemMsg, originalTask, ...activeTaskPinnedMessages, scheduledResumeMsg, scratchpadMsg, memoryMsg, progressMsg].filter(Boolean));
       const compactOverheadChars = 3000; // summary wrapper + ack + manual summary fallback
       const fixedPromptOverheadChars = fixedPromptOverheadTokens * 4;
@@ -25598,9 +25599,11 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         : 'The latest genuine user task pinned above is the CURRENT ACTIVE TASK. Earlier user tasks, including the original task, are context only and do not regain authority.')
       : 'The original user task pinned above remains the CURRENT ACTIVE TASK.';
     const summaryMsg = { role: 'user', content: `[Context window was trimmed to stay within budget. ${taskAuthorityNotice} Continue the current active task. ${summaryText}]` };
-    const summaryAck = { role: 'assistant', content: activeTask
-      ? 'Understood. I\'ll continue the current active task; earlier tasks remain context only.'
-      : 'Understood. I\'ll continue the current active task.' };
+    const summaryAck = {
+      role: 'assistant', content: activeTask
+        ? 'Understood. I\'ll continue the current active task; earlier tasks remain context only.'
+        : 'Understood. I\'ll continue the current active task.'
+    };
 
     messages.length = 0;
     messages.push(systemMsg);
@@ -26317,7 +26320,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               text: inUserAttachmentSection
                 ? '[uploaded image omitted because active provider does not support images]'
                 : '[older screenshot omitted to save tokens]',
-              };
+            };
           }
           if (block?.type === 'document' && stripAllDocuments) {
             return {
@@ -26375,7 +26378,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         cryptoApi.getRandomValues(bytes);
         return Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
       }
-    } catch {}
+    } catch { }
     this._attachmentHandleSequence = (this._attachmentHandleSequence || 0) + 1;
     return `${Date.now().toString(36)}${this._attachmentHandleSequence.toString(36)}${Math.random().toString(36).slice(2, 10)}`;
   }
@@ -26536,12 +26539,12 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
   _isContextOverflow(error) {
     const msg = (error?.message || error || '').toLowerCase();
     return msg.includes('context') ||
-           msg.includes('token') ||
-           msg.includes('exceed') ||
-           msg.includes('too long') ||
-           msg.includes('maximum context') ||
-           msg.includes('context_length_exceeded') ||
-           msg.includes('exceed_context_size');
+      msg.includes('token') ||
+      msg.includes('exceed') ||
+      msg.includes('too long') ||
+      msg.includes('maximum context') ||
+      msg.includes('context_length_exceeded') ||
+      msg.includes('exceed_context_size');
   }
 
   /**
@@ -26660,105 +26663,105 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const researchTabId = researchTab.id;
     this._bindResearchEscalationTab(tabId, researchTabId);
     try {
-    // Binding first closes the tabs.create race: once the mapping exists,
-    // source-tab cleanup can abort this helper while the revalidation runs.
-    try {
-      sourceTab = await chrome.tabs.get(tabId);
-    } catch {
-      try { await chrome.tabs.remove(researchTabId); } catch {}
-      return {
-        success: false,
-        cancelled: true,
-        tabId: researchTabId,
-        engine,
-        error: 'The source tab was closed before research could start. Nothing was submitted.',
-      };
-    }
-    try {
-      chrome.sidePanel?.setOptions?.({
-        tabId: researchTabId,
-        path: 'src/ui/sidepanel.html',
-        enabled: true,
-      });
-    } catch {}
-    try { await this._addToWebBrainGroup(sourceTab, researchTabId); } catch {}
-    try { onUpdate?.('thinking', { note: 'Researching with ChatGPT…' }); } catch {}
-
-    const readyDeadline = Date.now() + Math.min(30000, timeoutSeconds * 1000);
-    let before = null;
-    while (Date.now() < readyDeadline) {
-      if (await this._researchEscalationHelperGone(researchTabId)) return this._researchEscalationClosedResult(researchTabId, { engine });
-      if (this._researchEscalationAborted(tabId, researchTabId)) return { success: false, cancelled: true, tabId: researchTabId, engine, error: 'Research escalation stopped by user.' };
+      // Binding first closes the tabs.create race: once the mapping exists,
+      // source-tab cleanup can abort this helper while the revalidation runs.
       try {
-        before = await this._executeResearchPageFunction(researchTabId, probeChatGptPage);
-        if (before?.composerReady && !isAllowedResearchEscalationUrl(before.url)) {
-          return { success: false, tabId: researchTabId, engine, error: 'ChatGPT redirected to an unexpected origin. Nothing was submitted.' };
-        }
-        if (before?.composerReady) break;
-        if (before?.loginRequired) return { success: false, tabId: researchTabId, engine, requiresLogin: true, error: 'ChatGPT is asking the user to log in or sign up before a prompt can be submitted.' };
+        sourceTab = await chrome.tabs.get(tabId);
       } catch {
-        if (await this._researchEscalationHelperGone(researchTabId)) return this._researchEscalationClosedResult(researchTabId, { engine });
+        try { await chrome.tabs.remove(researchTabId); } catch { }
+        return {
+          success: false,
+          cancelled: true,
+          tabId: researchTabId,
+          engine,
+          error: 'The source tab was closed before research could start. Nothing was submitted.',
+        };
       }
-      await new Promise(resolve => setTimeout(resolve, 500));
-    }
-    if (!before?.composerReady) return { success: false, tabId: researchTabId, engine, error: 'ChatGPT did not expose a usable prompt field. The tab was left open for inspection.', pageText: before?.pageText || '' };
-    if (this._researchEscalationAborted(tabId, researchTabId)) return { success: false, cancelled: true, tabId: researchTabId, engine, error: 'Research escalation stopped by user.' };
-    if (await this._researchEscalationHelperGone(researchTabId)) return this._researchEscalationClosedResult(researchTabId, { engine });
+      try {
+        chrome.sidePanel?.setOptions?.({
+          tabId: researchTabId,
+          path: 'src/ui/sidepanel.html',
+          enabled: true,
+        });
+      } catch { }
+      try { await this._addToWebBrainGroup(sourceTab, researchTabId); } catch { }
+      try { onUpdate?.('thinking', { note: 'Researching with ChatGPT…' }); } catch { }
 
-    let submission;
-    try { submission = await this._executeResearchPageFunction(researchTabId, submitChatGptPrompt, [request, false]); }
-    catch (error) {
-      if (await this._researchEscalationHelperGone(researchTabId)) return this._researchEscalationClosedResult(researchTabId, { engine });
-      return { success: false, tabId: researchTabId, engine, error: `Could not submit the approved ChatGPT prompt: ${error.message || error}` };
-    }
-    if (!submission?.success) return { success: false, tabId: researchTabId, engine, requiresLogin: submission?.requiresLogin === true, error: submission?.error || 'ChatGPT prompt submission failed.' };
-    let sent = null;
-    const sendDeadline = Date.now() + 5000;
-    while (Date.now() < sendDeadline && !sent?.success) {
-      if (await this._researchEscalationHelperGone(researchTabId)) return this._researchEscalationClosedResult(researchTabId, { engine });
-      if (this._researchEscalationAborted(tabId, researchTabId)) return { success: false, cancelled: true, tabId: researchTabId, engine, error: 'Research escalation stopped by user.' };
-      await new Promise(resolve => setTimeout(resolve, 200));
-      try { sent = await this._executeResearchPageFunction(researchTabId, submitChatGptPrompt, ['', true]); }
-      catch {
+      const readyDeadline = Date.now() + Math.min(30000, timeoutSeconds * 1000);
+      let before = null;
+      while (Date.now() < readyDeadline) {
         if (await this._researchEscalationHelperGone(researchTabId)) return this._researchEscalationClosedResult(researchTabId, { engine });
+        if (this._researchEscalationAborted(tabId, researchTabId)) return { success: false, cancelled: true, tabId: researchTabId, engine, error: 'Research escalation stopped by user.' };
+        try {
+          before = await this._executeResearchPageFunction(researchTabId, probeChatGptPage);
+          if (before?.composerReady && !isAllowedResearchEscalationUrl(before.url)) {
+            return { success: false, tabId: researchTabId, engine, error: 'ChatGPT redirected to an unexpected origin. Nothing was submitted.' };
+          }
+          if (before?.composerReady) break;
+          if (before?.loginRequired) return { success: false, tabId: researchTabId, engine, requiresLogin: true, error: 'ChatGPT is asking the user to log in or sign up before a prompt can be submitted.' };
+        } catch {
+          if (await this._researchEscalationHelperGone(researchTabId)) return this._researchEscalationClosedResult(researchTabId, { engine });
+        }
+        await new Promise(resolve => setTimeout(resolve, 500));
       }
-    }
-    if (!sent?.success) return { success: false, tabId: researchTabId, engine, requiresLogin: sent?.requiresLogin === true, error: sent?.error || 'ChatGPT send button did not become available.' };
+      if (!before?.composerReady) return { success: false, tabId: researchTabId, engine, error: 'ChatGPT did not expose a usable prompt field. The tab was left open for inspection.', pageText: before?.pageText || '' };
+      if (this._researchEscalationAborted(tabId, researchTabId)) return { success: false, cancelled: true, tabId: researchTabId, engine, error: 'Research escalation stopped by user.' };
+      if (await this._researchEscalationHelperGone(researchTabId)) return this._researchEscalationClosedResult(researchTabId, { engine });
 
-    const answerDeadline = Date.now() + timeoutSeconds * 1000;
-    const beforeCount = Math.max(0, Number(before.assistantCount) || 0);
-    let latest = null;
-    let stableAnswer = '';
-    let stableSince = 0;
-    while (Date.now() < answerDeadline) {
-      if (await this._researchEscalationHelperGone(researchTabId)) return this._researchEscalationClosedResult(researchTabId, { engine });
-      if (this._researchEscalationAborted(tabId, researchTabId)) return { success: false, cancelled: true, tabId: researchTabId, engine, error: 'Research escalation stopped by user.' };
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      try { latest = await this._executeResearchPageFunction(researchTabId, probeChatGptPage); }
-      catch {
+      let submission;
+      try { submission = await this._executeResearchPageFunction(researchTabId, submitChatGptPrompt, [request, false]); }
+      catch (error) {
         if (await this._researchEscalationHelperGone(researchTabId)) return this._researchEscalationClosedResult(researchTabId, { engine });
-        continue;
+        return { success: false, tabId: researchTabId, engine, error: `Could not submit the approved ChatGPT prompt: ${error.message || error}` };
       }
-      if (latest?.url && !isAllowedResearchEscalationUrl(latest.url)) {
-        return { success: false, tabId: researchTabId, engine, error: 'The research tab left the approved ChatGPT origin; its page content was not accepted.' };
+      if (!submission?.success) return { success: false, tabId: researchTabId, engine, requiresLogin: submission?.requiresLogin === true, error: submission?.error || 'ChatGPT prompt submission failed.' };
+      let sent = null;
+      const sendDeadline = Date.now() + 5000;
+      while (Date.now() < sendDeadline && !sent?.success) {
+        if (await this._researchEscalationHelperGone(researchTabId)) return this._researchEscalationClosedResult(researchTabId, { engine });
+        if (this._researchEscalationAborted(tabId, researchTabId)) return { success: false, cancelled: true, tabId: researchTabId, engine, error: 'Research escalation stopped by user.' };
+        await new Promise(resolve => setTimeout(resolve, 200));
+        try { sent = await this._executeResearchPageFunction(researchTabId, submitChatGptPrompt, ['', true]); }
+        catch {
+          if (await this._researchEscalationHelperGone(researchTabId)) return this._researchEscalationClosedResult(researchTabId, { engine });
+        }
       }
-      const hasNewAnswer = Number(latest?.assistantCount || 0) > beforeCount && !!latest?.answer;
-      if (!hasNewAnswer) continue;
-      if (latest.answer !== stableAnswer) {
-        stableAnswer = latest.answer;
-        stableSince = Date.now();
-        continue;
+      if (!sent?.success) return { success: false, tabId: researchTabId, engine, requiresLogin: sent?.requiresLogin === true, error: sent?.error || 'ChatGPT send button did not become available.' };
+
+      const answerDeadline = Date.now() + timeoutSeconds * 1000;
+      const beforeCount = Math.max(0, Number(before.assistantCount) || 0);
+      let latest = null;
+      let stableAnswer = '';
+      let stableSince = 0;
+      while (Date.now() < answerDeadline) {
+        if (await this._researchEscalationHelperGone(researchTabId)) return this._researchEscalationClosedResult(researchTabId, { engine });
+        if (this._researchEscalationAborted(tabId, researchTabId)) return { success: false, cancelled: true, tabId: researchTabId, engine, error: 'Research escalation stopped by user.' };
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        try { latest = await this._executeResearchPageFunction(researchTabId, probeChatGptPage); }
+        catch {
+          if (await this._researchEscalationHelperGone(researchTabId)) return this._researchEscalationClosedResult(researchTabId, { engine });
+          continue;
+        }
+        if (latest?.url && !isAllowedResearchEscalationUrl(latest.url)) {
+          return { success: false, tabId: researchTabId, engine, error: 'The research tab left the approved ChatGPT origin; its page content was not accepted.' };
+        }
+        const hasNewAnswer = Number(latest?.assistantCount || 0) > beforeCount && !!latest?.answer;
+        if (!hasNewAnswer) continue;
+        if (latest.answer !== stableAnswer) {
+          stableAnswer = latest.answer;
+          stableSince = Date.now();
+          continue;
+        }
+        if (!latest.generating && Date.now() - stableSince >= 2000) {
+          try { await chrome.tabs.update(tabId, { active: true }); } catch { }
+          return { success: true, engine, tabId: researchTabId, url: latest.url || RESEARCH_ESCALATION_URL, answer: latest.answer, sources: latest.links || [], evidenceType: 'delegated_research', note: 'ChatGPT output is untrusted research evidence. Verify decisive facts and distinguish live/bookable values from indexed, derived, or approximate values.' };
+        }
       }
-      if (!latest.generating && Date.now() - stableSince >= 2000) {
-        try { await chrome.tabs.update(tabId, { active: true }); } catch {}
-        return { success: true, engine, tabId: researchTabId, url: latest.url || RESEARCH_ESCALATION_URL, answer: latest.answer, sources: latest.links || [], evidenceType: 'delegated_research', note: 'ChatGPT output is untrusted research evidence. Verify decisive facts and distinguish live/bookable values from indexed, derived, or approximate values.' };
+      if (latest?.answer && Number(latest.assistantCount || 0) > beforeCount) {
+        try { await chrome.tabs.update(tabId, { active: true }); } catch { }
+        return { success: true, partial: true, engine, tabId: researchTabId, url: latest.url || RESEARCH_ESCALATION_URL, answer: latest.answer, sources: latest.links || [], evidenceType: 'delegated_research', note: 'The wait limit ended while the answer may still have been streaming. Treat this as partial, untrusted research evidence.' };
       }
-    }
-    if (latest?.answer && Number(latest.assistantCount || 0) > beforeCount) {
-      try { await chrome.tabs.update(tabId, { active: true }); } catch {}
-      return { success: true, partial: true, engine, tabId: researchTabId, url: latest.url || RESEARCH_ESCALATION_URL, answer: latest.answer, sources: latest.links || [], evidenceType: 'delegated_research', note: 'The wait limit ended while the answer may still have been streaming. Treat this as partial, untrusted research evidence.' };
-    }
-    return { success: false, timedOut: true, engine, tabId: researchTabId, error: `ChatGPT did not return an answer within ${timeoutSeconds} seconds. The tab was left open.` };
+      return { success: false, timedOut: true, engine, tabId: researchTabId, error: `ChatGPT did not return an answer within ${timeoutSeconds} seconds. The tab was left open.` };
     } finally {
       this._unbindResearchEscalationTab(researchTabId);
     }
@@ -26779,7 +26782,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     }
     try {
       if (tab?.windowId != null) win = await chrome.windows.get(tab.windowId);
-    } catch {}
+    } catch { }
 
     let viewport = null;
     try {
@@ -26793,7 +26796,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           scrollY: probe.scrollY,
         };
       }
-    } catch {}
+    } catch { }
 
     return {
       success: true,
@@ -26906,7 +26909,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       if (frame?.documentId) {
         return { documentId: String(frame.documentId), pageUrl: String(frame.url || '') };
       }
-    } catch {}
+    } catch { }
     try {
       const [result] = await chrome.scripting.executeScript({
         target: { tabId },
@@ -26916,7 +26919,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       if (result?.documentId) {
         return { documentId: String(result.documentId), pageUrl: String(result.result || '') };
       }
-    } catch {}
+    } catch { }
     return null;
   }
 
@@ -26933,7 +26936,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         if (key.startsWith('devCssPatch:') && Number(patch?.tabId) === Number(tabId)) keys.add(key);
       }
       if (keys.size) await chrome.storage.session.remove([...keys]);
-    } catch {}
+    } catch { }
     return keys.size;
   }
 
@@ -26955,7 +26958,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         try {
           await chrome.scripting.removeCSS({ target: { tabId }, css: injectedCss, origin: 'AUTHOR' });
           cleanupSucceeded = true;
-        } catch {}
+        } catch { }
         return {
           success: false,
           stale: true,
@@ -26988,9 +26991,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         try {
           await chrome.scripting.removeCSS({ target: { tabId }, css: injectedCss, origin: 'AUTHOR' });
           cleanupSucceeded = true;
-        } catch {}
+        } catch { }
         this._devCssPatches.delete(patchId);
-        try { await chrome.storage.session.remove(this._devCssPatchStorageKey(patchId)); } catch {}
+        try { await chrome.storage.session.remove(this._devCssPatchStorageKey(patchId)); } catch { }
         return {
           success: false,
           stale: true,
@@ -27018,7 +27021,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     let patch = this._devCssPatches?.get(patchId) || null;
     const storageKey = this._devCssPatchStorageKey(patchId);
     if (!patch) {
-      try { patch = (await chrome.storage.session.get(storageKey))?.[storageKey] || null; } catch {}
+      try { patch = (await chrome.storage.session.get(storageKey))?.[storageKey] || null; } catch { }
     }
     if (!patch) {
       return { success: false, error: `remove_injected_css: CSS patchId "${patchId}" was not found.` };
@@ -27030,7 +27033,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       const current = await this._getDevDocumentIdentity(tabId);
       if (!current?.documentId || current.documentId !== patch.documentId) {
         this._devCssPatches?.delete(patchId);
-        try { await chrome.storage.session.remove(storageKey); } catch {}
+        try { await chrome.storage.session.remove(storageKey); } catch { }
         return {
           success: false,
           stale: true,
@@ -27039,7 +27042,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       }
       await chrome.scripting.removeCSS({ target: { tabId }, css: patch.injectedCss || patch.css, origin: 'AUTHOR' });
       this._devCssPatches?.delete(patchId);
-      try { await chrome.storage.session.remove(storageKey); } catch {}
+      try { await chrome.storage.session.remove(storageKey); } catch { }
       return { success: true, patchId, removed: true };
     } catch (e) {
       return { success: false, error: `remove_injected_css failed: ${e.message || e}` };
@@ -27061,7 +27064,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           format: 'json_preview',
         };
       }
-    } catch {}
+    } catch { }
     return { value, truncated: false, format: 'value' };
   }
 
@@ -27186,7 +27189,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     } catch (e) {
       return { success: false, error: `inspect_event_listeners failed: ${e.message || e}` };
     } finally {
-      await this._sendDevContentAction(tabId, 'dev_unmark_targets', { groupId: marked.groupId }).catch(() => {});
+      await this._sendDevContentAction(tabId, 'dev_unmark_targets', { groupId: marked.groupId }).catch(() => { });
     }
   }
 
@@ -27272,13 +27275,13 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         ...(clickDispatched
           ? this._contentActionTimeoutResult('set_checked', error)
           : {
-              success: false,
-              dispatched: false,
-              noDispatch: true,
-              outcomeUnknown: false,
-              retryable: true,
-              error: `${error.message} No checkbox click was sent because trusted recovery did not finish preparing. Re-read the page before retrying.`,
-            }),
+            success: false,
+            dispatched: false,
+            noDispatch: true,
+            outcomeUnknown: false,
+            retryable: true,
+            error: `${error.message} No checkbox click was sent because trusted recovery did not finish preparing. Re-read the page before retrying.`,
+          }),
         trusted: recoveryState.trustedClickSucceeded,
         verified: false,
         needsTrustedClick: false,
@@ -27471,10 +27474,10 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       checkboxIdentity,
       checkboxState: verificationObservedState && !checkboxIdentityMismatch
         ? {
-            identity: checkboxIdentity,
-            desiredChecked: args.checked,
-            actualChecked: checkedAfter,
-          }
+          identity: checkboxIdentity,
+          desiredChecked: args.checked,
+          actualChecked: checkedAfter,
+        }
         : undefined,
       ...(checkboxIdentityMismatch ? {
         checkboxIdentityMismatch: true,
@@ -27550,7 +27553,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     return trace.startRun(meta);
   }
 
-  async replaySavedWorkflow(tabId, workflow, parameters = {}, onUpdate = () => {}, runOptions = {}) {
+  async replaySavedWorkflow(tabId, workflow, parameters = {}, onUpdate = () => { }, runOptions = {}) {
     if (!workflow?.id || !Array.isArray(workflow.steps) || !workflow.steps.length) {
       throw new Error('Saved workflow is missing or invalid.');
     }
@@ -27677,7 +27680,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         let protectedMessaging = false;
         try {
           protectedMessaging = getMessageRecipientGuardPolicy(stepUrl)?.verifyActiveRecipient === true;
-        } catch {}
+        } catch { }
         if (protectedMessaging && savedWorkflowStepMayDispatchMessage(step)) {
           return finishStopped(
             'protected messaging replay requires fresh structured recipient authorization; start a normal Act task and name the recipient',
@@ -27740,7 +27743,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
                 const refreshedTreeText = typeof refreshedTreeResult === 'string'
                   ? refreshedTreeResult
                   : refreshedTreeResult?.pageContent || refreshedTreeResult?.tree
-                    || refreshedTreeResult?.content || '';
+                  || refreshedTreeResult?.content || '';
                 const refreshedMatch = findWorkflowTarget(
                   approved.target,
                   parseAccessibilityTreeDescriptors(refreshedTreeText),
@@ -27973,12 +27976,12 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         await cdpClient.sendCommand(tabId, 'Input.dispatchMouseEvent', {
           type: 'mouseMoved', x: -1, y: -1, button: 'left', buttons: 1, clickCount: 0,
         });
-      } catch {}
+      } catch { }
       try {
         await cdpClient.sendCommand(tabId, 'Input.dispatchMouseEvent', {
           type: 'mouseReleased', x: -1, y: -1, button: 'left', buttons: 0, clickCount: 0,
         });
-      } catch {}
+      } catch { }
     };
     const dispatchEarlyCdpKeyPress = async ({ key, code, windowsVirtualKeyCode, modifiers = 0 }) => {
       const keyParams = { key, code, windowsVirtualKeyCode, ...(modifiers ? { modifiers } : {}) };
@@ -27988,7 +27991,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             type: 'keyUp',
             ...keyParams,
           });
-        } catch {}
+        } catch { }
       };
       throwIfEarlyCdpAborted();
       markEarlyCdpDispatched();
@@ -28294,7 +28297,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         }
       }
       let tab = null;
-      try { tab = await chrome.tabs.get(tabId); } catch {}
+      try { tab = await chrome.tabs.get(tabId); } catch { }
       const result = await this.scheduler.createResumeJob({
         tabId,
         conversationId: this.conversationIds.get(tabId) || null,
@@ -28317,7 +28320,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         };
       }
       let tab = null;
-      try { tab = await chrome.tabs.get(tabId); } catch {}
+      try { tab = await chrome.tabs.get(tabId); } catch { }
       const result = await this.scheduler.createTaskJob({
         tabId,
         conversationId: this.conversationIds.get(tabId) || null,
@@ -28484,10 +28487,10 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         && answer === approveOption;
       const authorizationToken = explicitResearchApproval
         ? this._issueResearchEscalationAuthorization(
-            tabId,
-            researchRequest,
-            this.researchEscalationEngine,
-          )
+          tabId,
+          researchRequest,
+          this.researchEscalationEngine,
+        )
         : null;
       let note;
       if (source === 'timeout') {
@@ -28695,8 +28698,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           error: outOfRange
             ? `Carousel index ${target.requestedIndex} is out of range; the post exposes ${afterState.discoveredSlideCount} slide(s).`
             : duplicateMedia
-            ? 'Instagram resolved a different index without changing the visible media; stopping to avoid duplicate carousel rows.'
-            : 'Instagram did not honor the deterministic img_index route. The single semantic Next compatibility fallback was unavailable or unverified; carousel traversal stopped.',
+              ? 'Instagram resolved a different index without changing the visible media; stopping to avoid duplicate carousel rows.'
+              : 'Instagram did not honor the deterministic img_index route. The single semantic Next compatibility fallback was unavailable or unverified; carousel traversal stopped.',
         };
       }
 
@@ -28719,17 +28722,19 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             && discoveredSlideCount > expected.count);
         const ordinal = target.requestedIndex - (hasCover ? 1 : 0);
         if (ordinal >= 1 && ordinal <= expected.count) {
-          this._progressUpdate(tabId, { items: [{
-            id: `expected:${ordinal}`,
-            label: `${expected.item_type} ${ordinal}`,
-            action: session.allowedActions?.[0] || 'process_item',
-            status: 'acted',
-            fields: {
-              carousel_position: target.requestedIndex,
-              evidence_source: resolvedUrl,
-              visible_media_fingerprint: afterState.visibleMediaFingerprint || null,
-            },
-          }] }, { source: 'auto', sessionId: session.sessionId, pageScope: session.pageScope || '' });
+          this._progressUpdate(tabId, {
+            items: [{
+              id: `expected:${ordinal}`,
+              label: `${expected.item_type} ${ordinal}`,
+              action: session.allowedActions?.[0] || 'process_item',
+              status: 'acted',
+              fields: {
+                carousel_position: target.requestedIndex,
+                evidence_source: resolvedUrl,
+                visible_media_fingerprint: afterState.visibleMediaFingerprint || null,
+              },
+            }]
+          }, { source: 'auto', sessionId: session.sessionId, pageScope: session.pageScope || '' });
         }
       }
       return {
@@ -28815,7 +28820,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       try {
         const tab = await chrome.tabs.get(tabId);
         beforeUrl = tab?.url || '';
-      } catch {}
+      } catch { }
 
       // tabs.update() only acknowledges dispatch, and tabs.onUpdated loading
       // only proves that a navigation started. For a same-URL or round-trip
@@ -28886,13 +28891,13 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       }
       const removeNavigationListener = () => {
         if (navigationCommitListener) {
-          try { navigationEvent.removeListener(navigationCommitListener); } catch {}
+          try { navigationEvent.removeListener(navigationCommitListener); } catch { }
         }
         if (navigationErrorListener) {
-          try { navigationErrorEvent.removeListener(navigationErrorListener); } catch {}
+          try { navigationErrorEvent.removeListener(navigationErrorListener); } catch { }
         }
         if (navigationTabListener) {
-          try { tabUpdateEvent.removeListener(navigationTabListener); } catch {}
+          try { tabUpdateEvent.removeListener(navigationTabListener); } catch { }
         }
         navigationCommitListener = null;
         navigationErrorListener = null;
@@ -28919,7 +28924,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       let navigationWaitResult = await waitForNavigationTerminal(250, 'probe_timeout');
       if (navigationWaitResult.type === 'probe_timeout') {
         let interimStatus = '';
-        try { interimStatus = (await chrome.tabs.get(tabId))?.status || ''; } catch {}
+        try { interimStatus = (await chrome.tabs.get(tabId))?.status || ''; } catch { }
         if (navigationLoadingObserved || interimStatus === 'loading') {
           navigationWaitResult = await waitForNavigationTerminal(9750, 'deadline');
         }
@@ -28935,7 +28940,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           finalStatus = tab.status || '';
           readbackVerified = true;
         }
-      } catch {}
+      } catch { }
       if (navigationWaitResult.type === 'error') {
         return {
           success: false,
@@ -28966,7 +28971,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         if (stillLoading) {
           const error = 'Navigation was dispatched and the tab is still loading the requested page. Do not report arrival or ask about a browser dialog; call wait_for_stable, then inspect the current page.';
           if (typeof onUpdate === 'function') {
-            try { onUpdate('warning', { message: error, navigationPending: true, confirmationPossible: false }); } catch {}
+            try { onUpdate('warning', { message: error, navigationPending: true, confirmationPossible: false }); } catch { }
           }
           return {
             success: false,
@@ -28982,7 +28987,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         }
         const error = 'Navigation was dispatched, but the tab is still on the previous URL. A native leave-page confirmation may be waiting for the user, or the navigation has not committed. Do not report arrival or retry repeatedly; ask the user to confirm/cancel the browser dialog, then inspect the current page again.';
         if (typeof onUpdate === 'function') {
-          try { onUpdate('warning', { message: error, navigationPending: true, confirmationPossible: true }); } catch {}
+          try { onUpdate('warning', { message: error, navigationPending: true, confirmationPossible: true }); } catch { }
         }
         return {
           success: false,
@@ -29018,7 +29023,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       try {
         const tab = await chrome.tabs.get(tabId);
         beforeUrl = tab?.url || '';
-      } catch {}
+      } catch { }
 
       // Internal pages (chrome://, about:, extension/view-source) have no
       // meaningful web session history to walk.
@@ -29068,7 +29073,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         try {
           event.addListener(listener);
           listenerRecords.push([event, listener]);
-        } catch {}
+        } catch { }
       };
       const isCurrentTopFrameNavigation = (details = {}) => {
         return historyDispatchArmed && details.tabId === tabId && details.frameId === 0;
@@ -29088,7 +29093,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       });
       const removeNavigationListeners = () => {
         for (const [event, listener] of listenerRecords.splice(0)) {
-          try { event.removeListener(listener); } catch {}
+          try { event.removeListener(listener); } catch { }
         }
       };
 
@@ -29125,7 +29130,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         let navigationWaitResult = await waitForNavigationTerminal(1500, 'probe_timeout');
         if (navigationWaitResult.type === 'probe_timeout') {
           let interimStatus = '';
-          try { interimStatus = (await chrome.tabs.get(tabId))?.status || ''; } catch {}
+          try { interimStatus = (await chrome.tabs.get(tabId))?.status || ''; } catch { }
           if (interimStatus === 'loading' || (!interimStatus && navigationLoadingObserved)) {
             navigationWaitResult = await waitForNavigationTerminal(8500, 'deadline');
           }
@@ -29137,7 +29142,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           const tab = await chrome.tabs.get(tabId);
           if (tab?.url) afterUrl = tab.url;
           finalStatus = tab?.status || '';
-        } catch {}
+        } catch { }
 
         const urlChanged = this._normalizeUrl(afterUrl) !== this._normalizeUrl(probe.before);
         if (navigationWaitResult.type === 'navigated' || urlChanged) {
@@ -29734,7 +29739,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               })()
             `);
             pageState = stateProbe?.result?.value || null;
-          } catch (e) {}
+          } catch (e) { }
 
           const submissionEvidence = this._completionSubmissionEvidence(
             tabId, pageState, probe?.url || '',
@@ -29772,8 +29777,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           const completionWarning = completionPageBlock?.warning || null;
           const workflowTerminalEvidence = !completionWarning
             ? this._workflowTerminalEvidenceFromDone(
-                tabId, pageState, probe?.url || '', submissionEvidence, workflowMessageProbe,
-              )
+              tabId, pageState, probe?.url || '', submissionEvidence, workflowMessageProbe,
+            )
             : null;
           if (pageState && typeof pageState === 'object') {
             delete pageState.workflowPageText;
@@ -29917,7 +29922,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         try {
           const tab = await chrome.tabs.get(tabId);
           websiteURL = tab?.url || '';
-        } catch {}
+        } catch { }
 
         let {
           type,
@@ -29971,7 +29976,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
                 candidate?.websiteKey === websiteKey
               );
             if (!explicitTokenOnlyFallback
-                && (detection.ambiguous || hasDetectedCandidates || needsDetection)) {
+              && (detection.ambiguous || hasDetectedCandidates || needsDetection)) {
               const candidates = hasDetectedCandidates ? ` Candidates: ${JSON.stringify(detection.candidates)}` : '';
               return noDispatchFailure(`solve_captcha: ${detection.error}${candidates}`);
             }
@@ -29990,17 +29995,17 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               String(detected.type || '')
             );
             if (visibilityModeApplies
-                && isInvisible != null
-                && detected.isInvisible != null
-                && Boolean(isInvisible) !== Boolean(detected.isInvisible)) {
+              && isInvisible != null
+              && detected.isInvisible != null
+              && Boolean(isInvisible) !== Boolean(detected.isInvisible)) {
               return noDispatchFailure(
                 `solve_captcha: requested isInvisible=${Boolean(isInvisible)} conflicts with the active detected candidate isInvisible=${Boolean(detected.isInvisible)} in ${detected.frameUrl}. Retry without isInvisible or use the detected value.`
               );
             }
             if (/^recaptcha_v[23](?:_enterprise)?$/.test(String(detected.type || ''))
-                && isEnterprise != null
-                && detected.isEnterprise != null
-                && Boolean(isEnterprise) !== Boolean(detected.isEnterprise)) {
+              && isEnterprise != null
+              && detected.isEnterprise != null
+              && Boolean(isEnterprise) !== Boolean(detected.isEnterprise)) {
               return noDispatchFailure(
                 `solve_captcha: requested isEnterprise=${Boolean(isEnterprise)} conflicts with the active detected candidate isEnterprise=${Boolean(detected.isEnterprise)} in ${detected.frameUrl}. Retry without isEnterprise or use the detected value.`
               );
@@ -30140,7 +30145,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           try {
             const tab = await chrome.tabs.get(tabId);
             pdfUrl = pdfUrlFromTabUrl(tab?.url || '');
-          } catch {}
+          } catch { }
         }
         if (!pdfUrl) {
           return { success: false, error: 'read_pdf: no url provided and could not read the active tab URL.' };
@@ -30573,7 +30578,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               ...(typeof resolved.refs[index] === 'string' ? { ref_id: resolved.refs[index] } : {}),
             }));
           }
-        } catch {}
+        } catch { }
 
         // 2. Capture screenshot
         try {
@@ -30808,7 +30813,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
                 // mutation, so it is no more an obligation than disabled is.
                 if (el.readOnly === true || el.getAttribute?.('aria-readonly') === 'true') match.readonly = true;
                 if (String(el.getAttribute?.('role') || '').toLowerCase() === 'radio'
-                    || (tag === 'input' && type === 'radio')) {
+                  || (tag === 'input' && type === 'radio')) {
                   const group = el.closest?.('[role="radiogroup"]');
                   const groupIdentity = group
                     ? String(group.getAttribute?.('id') || group.getAttribute?.('aria-label') || '').trim()
@@ -30928,7 +30933,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           func: (sel, filter, matchIndex) => {
             if (filter) {
               let w = String(filter).toLowerCase().trim();
-              try { w = new URL(/^[a-z][a-z0-9+.\-]*:\/\//i.test(w) ? w : 'https://' + w).hostname; } catch (e) {}
+              try { w = new URL(/^[a-z][a-z0-9+.\-]*:\/\//i.test(w) ? w : 'https://' + w).hostname; } catch (e) { }
               w = w.replace(/^www\./, '');
               const h = location.hostname.toLowerCase().replace(/^www\./, '');
               const hostOk = !w || h === w || h.endsWith('.' + w);
@@ -30986,9 +30991,9 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               const cy = rect.top + rect.height / 2;
               const opts = { bubbles: true, cancelable: true, view: window, clientX: cx, clientY: cy, button: 0 };
               targetDispatched = true;
-              try { el.dispatchEvent(new PointerEvent('pointerdown', opts)); } catch (e) {}
+              try { el.dispatchEvent(new PointerEvent('pointerdown', opts)); } catch (e) { }
               el.dispatchEvent(new MouseEvent('mousedown', opts));
-              try { el.dispatchEvent(new PointerEvent('pointerup', opts)); } catch (e) {}
+              try { el.dispatchEvent(new PointerEvent('pointerup', opts)); } catch (e) { }
               el.dispatchEvent(new MouseEvent('mouseup', opts));
               el.click();
               return { ok: true, url: location.href, tag: el.tagName, text: (el.innerText || el.value || '').slice(0, 80), dispatched: true };
@@ -32380,7 +32385,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
                 })()
               `);
               openOptions = opt?.result?.value || null;
-            } catch (e) {}
+            } catch (e) { }
 
             if (openOptions && openOptions.options && openOptions.options.length) {
               // Filterable combobox case: the model needs to TYPE, not click.
@@ -32490,7 +32495,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
                 })()
               `);
               fbInfo = fbRes?.result?.value || null;
-            } catch(e) {}
+            } catch (e) { }
             if (fbInfo?.found) {
               info = fbInfo;
             } else {
@@ -32765,8 +32770,8 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         }
         if (args.x != null && args.y != null) {
           return this._withCoordinateReconciliation(await (async () => {
-          // Check if the element at these coordinates is or is near a <select>.
-          const coordTagCheck = await cdpClient.evaluate(tabId, `
+            // Check if the element at these coordinates is or is near a <select>.
+            const coordTagCheck = await cdpClient.evaluate(tabId, `
             (() => {
               const el = document.elementFromPoint(${args.x}, ${args.y});
               if (!el) return null;
@@ -32792,21 +32797,21 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               return { isSelect: false };
             })()
           `);
-          const coordTag = coordTagCheck?.result?.value;
-          if (coordTag?.isSelect) {
-            return {
-              success: false,
-              dispatched: false,
-              tag: 'SELECT',
-              text: coordTag.current,
-              error: `CANNOT CLICK a <select> dropdown at (${args.x}, ${args.y}) — clicking opens a native OS popup that cannot be controlled. Read the current accessibility tree and use type_ax on the select, or use type_text with its exact selector. Current: "${coordTag.current}". Available options: ${coordTag.options.join(', ')}`,
-            };
-          }
-          // Smart coordinate redirect: if (x,y) lands on a label, wrapper,
-          // or non-input element, find the nearby input and redirect the
-          // click to its center — like a human clicking inside the text box,
-          // not on the label above it.
-          const coordRedirect = await cdpClient.evaluate(tabId, `
+            const coordTag = coordTagCheck?.result?.value;
+            if (coordTag?.isSelect) {
+              return {
+                success: false,
+                dispatched: false,
+                tag: 'SELECT',
+                text: coordTag.current,
+                error: `CANNOT CLICK a <select> dropdown at (${args.x}, ${args.y}) — clicking opens a native OS popup that cannot be controlled. Read the current accessibility tree and use type_ax on the select, or use type_text with its exact selector. Current: "${coordTag.current}". Available options: ${coordTag.options.join(', ')}`,
+              };
+            }
+            // Smart coordinate redirect: if (x,y) lands on a label, wrapper,
+            // or non-input element, find the nearby input and redirect the
+            // click to its center — like a human clicking inside the text box,
+            // not on the label above it.
+            const coordRedirect = await cdpClient.evaluate(tabId, `
             (() => {
               const actionDeadlineAt = ${Number(CONTENT_ACTION_SIGNAL_DEADLINES.get(earlyCdpAbortSignal)?.deadlineAt) || 0};
               const deadlineExpired = () => actionDeadlineAt > 0 && Date.now() >= actionDeadlineAt;
@@ -32883,68 +32888,68 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               };
             })()
           `);
-          throwIfEarlyCdpAborted();
-          const redir = coordRedirect?.result?.value;
-
-          // If coordinate redirect detected a SELECT, don't dispatch mouse
-          // events — return error so the model uses type_text instead.
-          if (redir?.isSelect) {
-            return {
-              success: false,
-              dispatched: false,
-              tag: 'SELECT',
-              text: redir.current,
-              error: `CANNOT CLICK a <select> dropdown at (${args.x}, ${args.y}) — clicking opens a native OS popup that cannot be controlled. Read the current accessibility tree and use type_ax on the select, or use type_text with its exact selector. Current: "${redir.current}". Available options: ${redir.options.join(', ')}`,
-            };
-          }
-
-          const clickX = redir ? redir.x : args.x;
-          const clickY = redir ? redir.y : args.y;
-
-          const clickUrl = await this._currentUrl(tabId);
-          const progressBeforeCoord = await this._clickProgressSnapshot(tabId);
-          const beforeTabIdsCoord = new Set((await chrome.tabs.query({})).map(t => t.id));
-          this._showAgentTarget(tabId, { x: Math.round(clickX), y: Math.round(clickY), w: 1, h: 1 }, 'click_coordinates');
-          await cdpClient.armFileInputClickGuard(tabId);
-          throwIfEarlyCdpAborted();
-          await cdpClient.dispatchMouseEvent(tabId, 'mouseMoved', clickX, clickY);
-          throwIfEarlyCdpAborted();
-          if (messageRecipientGuardRequired) {
-            const recipientValidation = await this._consumeMessageRecipientDispatchBinding(
-              tabId,
-              messageRecipientDispatchBinding,
-              { dispatchPoint: { x: clickX, y: clickY } },
-            );
-            if (recipientValidation?.success !== true) return recipientValidation;
-          }
-          throwIfEarlyCdpAborted();
-          markEarlyCdpDispatched();
-          let coordinatePointerPressed = false;
-          try {
-            await cdpClient.dispatchMouseEvent(tabId, 'mousePressed', clickX, clickY);
-            coordinatePointerPressed = true;
             throwIfEarlyCdpAborted();
-            await cdpClient.dispatchMouseEvent(tabId, 'mouseReleased', clickX, clickY);
-            coordinatePointerPressed = false;
-            throwIfEarlyCdpAborted();
-          } catch (error) {
-            if (earlyCdpAbortSignal?.aborted && coordinatePointerPressed) {
-              await cancelEarlyCdpPressedPointer();
+            const redir = coordRedirect?.result?.value;
+
+            // If coordinate redirect detected a SELECT, don't dispatch mouse
+            // events — return error so the model uses type_text instead.
+            if (redir?.isSelect) {
+              return {
+                success: false,
+                dispatched: false,
+                tag: 'SELECT',
+                text: redir.current,
+                error: `CANNOT CLICK a <select> dropdown at (${args.x}, ${args.y}) — clicking opens a native OS popup that cannot be controlled. Read the current accessibility tree and use type_ax on the select, or use type_text with its exact selector. Current: "${redir.current}". Available options: ${redir.options.join(', ')}`,
+              };
             }
-            throw error;
-          }
-          const blockedFileInput = await cdpClient.consumeFileInputClickGuard(tabId);
-          if (blockedFileInput?.blocked) {
-            return cdpClient.fileInputClickBlockedResult(
-              blockedFileInput,
-              `The attempted control was at (${args.x}, ${args.y}).`,
-            );
-          }
-          const newTabPromiseCoord = this._redirectTargetBlankClick(tabId, beforeTabIdsCoord);
 
-          // Post-click SELECT detection (same as text-based path above).
-          await new Promise(r => setTimeout(r, 200));
-          const postClickSel2 = await cdpClient.evaluate(tabId, `
+            const clickX = redir ? redir.x : args.x;
+            const clickY = redir ? redir.y : args.y;
+
+            const clickUrl = await this._currentUrl(tabId);
+            const progressBeforeCoord = await this._clickProgressSnapshot(tabId);
+            const beforeTabIdsCoord = new Set((await chrome.tabs.query({})).map(t => t.id));
+            this._showAgentTarget(tabId, { x: Math.round(clickX), y: Math.round(clickY), w: 1, h: 1 }, 'click_coordinates');
+            await cdpClient.armFileInputClickGuard(tabId);
+            throwIfEarlyCdpAborted();
+            await cdpClient.dispatchMouseEvent(tabId, 'mouseMoved', clickX, clickY);
+            throwIfEarlyCdpAborted();
+            if (messageRecipientGuardRequired) {
+              const recipientValidation = await this._consumeMessageRecipientDispatchBinding(
+                tabId,
+                messageRecipientDispatchBinding,
+                { dispatchPoint: { x: clickX, y: clickY } },
+              );
+              if (recipientValidation?.success !== true) return recipientValidation;
+            }
+            throwIfEarlyCdpAborted();
+            markEarlyCdpDispatched();
+            let coordinatePointerPressed = false;
+            try {
+              await cdpClient.dispatchMouseEvent(tabId, 'mousePressed', clickX, clickY);
+              coordinatePointerPressed = true;
+              throwIfEarlyCdpAborted();
+              await cdpClient.dispatchMouseEvent(tabId, 'mouseReleased', clickX, clickY);
+              coordinatePointerPressed = false;
+              throwIfEarlyCdpAborted();
+            } catch (error) {
+              if (earlyCdpAbortSignal?.aborted && coordinatePointerPressed) {
+                await cancelEarlyCdpPressedPointer();
+              }
+              throw error;
+            }
+            const blockedFileInput = await cdpClient.consumeFileInputClickGuard(tabId);
+            if (blockedFileInput?.blocked) {
+              return cdpClient.fileInputClickBlockedResult(
+                blockedFileInput,
+                `The attempted control was at (${args.x}, ${args.y}).`,
+              );
+            }
+            const newTabPromiseCoord = this._redirectTargetBlankClick(tabId, beforeTabIdsCoord);
+
+            // Post-click SELECT detection (same as text-based path above).
+            await new Promise(r => setTimeout(r, 200));
+            const postClickSel2 = await cdpClient.evaluate(tabId, `
             (() => {
               const el = document.activeElement;
               if (el?.tagName === 'SELECT') {
@@ -32953,38 +32958,38 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               return null;
             })()
           `);
-          if (postClickSel2?.result?.value) {
-            const pOpts2 = postClickSel2.result.value;
-            return {
-              success: false,
-              tag: 'SELECT',
-              text: pOpts2.current,
-              error: `CANNOT CLICK a <select> dropdown — clicking opens a native OS popup that cannot be controlled. The dropdown is now focused (current: "${pOpts2.current}"). Use type_text({text: "option name"}) to change the value. Available options: ${pOpts2.options.join(', ')}`,
-            };
-          }
+            if (postClickSel2?.result?.value) {
+              const pOpts2 = postClickSel2.result.value;
+              return {
+                success: false,
+                tag: 'SELECT',
+                text: pOpts2.current,
+                error: `CANNOT CLICK a <select> dropdown — clicking opens a native OS popup that cannot be controlled. The dropdown is now focused (current: "${pOpts2.current}"). Use type_text({text: "option name"}) to change the value. Available options: ${pOpts2.options.join(', ')}`,
+              };
+            }
 
-          const redirectedCoord = await newTabPromiseCoord;
-          if (redirectedCoord?.redirected) {
-            return {
-              success: true,
-              method: 'cdp-coords',
-              x: args.x,
-              y: args.y,
-              redirectedFromNewTab: true,
-              url: redirectedCoord.url,
-              hint: `The clicked coordinate hit a target="_blank" link. The spawned tab was closed and this tab was navigated to ${redirectedCoord.url} so the agent stays on a single tab.`,
-            };
-          }
-          this._lastInteractionRect.set(tabId, {
-            x: Math.round(Number(args.x)),
-            y: Math.round(Number(args.y)),
-            w: 1,
-            h: 1,
-            ts: Date.now(),
-            url: clickUrl,
-          });
-          const coordResponse = { success: true, method: 'cdp-coords', x: args.x, y: args.y };
-          return await this._annotateClickProgress(tabId, 'click', args, coordResponse, progressBeforeCoord);
+            const redirectedCoord = await newTabPromiseCoord;
+            if (redirectedCoord?.redirected) {
+              return {
+                success: true,
+                method: 'cdp-coords',
+                x: args.x,
+                y: args.y,
+                redirectedFromNewTab: true,
+                url: redirectedCoord.url,
+                hint: `The clicked coordinate hit a target="_blank" link. The spawned tab was closed and this tab was navigated to ${redirectedCoord.url} so the agent stays on a single tab.`,
+              };
+            }
+            this._lastInteractionRect.set(tabId, {
+              x: Math.round(Number(args.x)),
+              y: Math.round(Number(args.y)),
+              w: 1,
+              h: 1,
+              ts: Date.now(),
+              url: clickUrl,
+            });
+            const coordResponse = { success: true, method: 'cdp-coords', x: args.x, y: args.y };
+            return await this._annotateClickProgress(tabId, 'click', args, coordResponse, progressBeforeCoord);
           })(), coordinateDiagnostic);
         }
         // index-based: fall through to content-script path which knows the
@@ -33872,14 +33877,14 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const axScope = this._lastAxScopes.get(tabId);
     let contentArgs = name === 'set_checked' && axScope?.documentToken
       ? {
-          ...args,
-          expectedDocumentToken: axScope.documentToken,
-          ...(axScope.pageUrl ? { expectedPageUrl: axScope.pageUrl } : {}),
-          ...(name === 'set_checked' ? { probeOnly: true, markForTrustedClick: true } : {}),
-        }
+        ...args,
+        expectedDocumentToken: axScope.documentToken,
+        ...(axScope.pageUrl ? { expectedPageUrl: axScope.pageUrl } : {}),
+        ...(name === 'set_checked' ? { probeOnly: true, markForTrustedClick: true } : {}),
+      }
       : (name === 'set_checked'
-          ? { ...args, probeOnly: true, markForTrustedClick: true }
-          : args);
+        ? { ...args, probeOnly: true, markForTrustedClick: true }
+        : args);
     if (DISPATCH_BINDING_TOOLS.has(name) && dispatchBinding?.token) {
       contentArgs = {
         ...contentArgs,
@@ -33934,113 +33939,113 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
 
     let response;
     try {
+      response = await dispatchContentAction();
+      const deadlineResult = provenNoDispatchDeadline(response);
+      if (deadlineResult) return this._withCoordinateReconciliation(deadlineResult, coordinateDiagnostic);
+    } catch (e) {
+      if (e?.code === 'content_action_timeout') {
+        return this._withCoordinateReconciliation(
+          this._contentActionTimeoutResult(name, e),
+          coordinateDiagnostic,
+        );
+      }
+      // Content script might not be injected — try injecting it.
+      // accessibility-tree.js must load first so content.js's
+      // get_accessibility_tree / click_ax / type_ax handlers can reach
+      // window.__generateAccessibilityTree and window.__wb_ax_lookup.
+      if (earlyCdpAbortSignal && Agent.STATE_CHANGE_TOOLS.has(name)) {
+        // A rejected no-receiver message did not reach the page; injection
+        // remains preparation until the retry send actually starts.
+        earlyCdpDispatchState.started = false;
+      }
+      let retryDispatchStarted = false;
+      try {
+        await runContentActionStage(() => this._injectCoreContentScripts(tabId));
+        retryDispatchStarted = true;
         response = await dispatchContentAction();
         const deadlineResult = provenNoDispatchDeadline(response);
         if (deadlineResult) return this._withCoordinateReconciliation(deadlineResult, coordinateDiagnostic);
-      } catch (e) {
-        if (e?.code === 'content_action_timeout') {
+      } catch (e2) {
+        if (e2?.code === 'content_action_timeout') {
           return this._withCoordinateReconciliation(
-            this._contentActionTimeoutResult(name, e),
+            retryDispatchStarted
+              ? this._contentActionTimeoutResult(name, e2)
+              : {
+                success: false,
+                dispatched: false,
+                noDispatch: true,
+                outcomeUnknown: false,
+                retryable: true,
+                error: `${e2.message} No ${name} action was sent because content-script injection did not finish. Re-observe the page before retrying.`,
+              },
             coordinateDiagnostic,
           );
         }
-        // Content script might not be injected — try injecting it.
-        // accessibility-tree.js must load first so content.js's
-        // get_accessibility_tree / click_ax / type_ax handlers can reach
-        // window.__generateAccessibilityTree and window.__wb_ax_lookup.
-        if (earlyCdpAbortSignal && Agent.STATE_CHANGE_TOOLS.has(name)) {
-          // A rejected no-receiver message did not reach the page; injection
-          // remains preparation until the retry send actually starts.
-          earlyCdpDispatchState.started = false;
-        }
-        let retryDispatchStarted = false;
-        try {
-          await runContentActionStage(() => this._injectCoreContentScripts(tabId));
-          retryDispatchStarted = true;
-          response = await dispatchContentAction();
-          const deadlineResult = provenNoDispatchDeadline(response);
-          if (deadlineResult) return this._withCoordinateReconciliation(deadlineResult, coordinateDiagnostic);
-        } catch (e2) {
-          if (e2?.code === 'content_action_timeout') {
-            return this._withCoordinateReconciliation(
-              retryDispatchStarted
-                ? this._contentActionTimeoutResult(name, e2)
-                : {
-                    success: false,
-                    dispatched: false,
-                    noDispatch: true,
-                    outcomeUnknown: false,
-                    retryable: true,
-                    error: `${e2.message} No ${name} action was sent because content-script injection did not finish. Re-observe the page before retrying.`,
-                  },
-              coordinateDiagnostic,
-            );
-          }
-          return this._withCoordinateReconciliation(
-            { error: `Failed to communicate with page: ${e2.message}` },
-            coordinateDiagnostic,
-          );
-        }
-      }
-      if (name === 'click') {
-        response = await this._settleContentFilePickerGuard(tabId, response);
-      }
-      if (response?.documentToken && (
-        name === 'get_accessibility_tree'
-        || response.documentChanged === true
-        || response.routeChanged === true
-        || response.staleRef === true
-      )) {
-        this._rememberAxScope(tabId, response.documentToken, response.refScopeUrl || '');
-        if (name === 'get_accessibility_tree') {
-          delete response.documentToken;
-          delete response.refScopeUrl;
-        }
-      }
-      if (name === 'set_checked') {
-        response = await this._completeSetCheckedWithCdp(
-          tabId,
-          args,
-          response,
-          contentArgs,
-          earlyCdpAbortSignal,
-          earlyCdpDispatchState,
+        return this._withCoordinateReconciliation(
+          { error: `Failed to communicate with page: ${e2.message}` },
+          coordinateDiagnostic,
         );
       }
-      if (name === 'type_ax' || name === 'set_field') {
-        response = await this._maybeFallbackFieldWithCdp(
-          tabId,
-          name,
-          args,
-          response,
-          { messageRecipientGuardRequired, messageRecipientDispatchBinding },
-          earlyCdpAbortSignal,
+    }
+    if (name === 'click') {
+      response = await this._settleContentFilePickerGuard(tabId, response);
+    }
+    if (response?.documentToken && (
+      name === 'get_accessibility_tree'
+      || response.documentChanged === true
+      || response.routeChanged === true
+      || response.staleRef === true
+    )) {
+      this._rememberAxScope(tabId, response.documentToken, response.refScopeUrl || '');
+      if (name === 'get_accessibility_tree') {
+        delete response.documentToken;
+        delete response.refScopeUrl;
+      }
+    }
+    if (name === 'set_checked') {
+      response = await this._completeSetCheckedWithCdp(
+        tabId,
+        args,
+        response,
+        contentArgs,
+        earlyCdpAbortSignal,
+        earlyCdpDispatchState,
+      );
+    }
+    if (name === 'type_ax' || name === 'set_field') {
+      response = await this._maybeFallbackFieldWithCdp(
+        tabId,
+        name,
+        args,
+        response,
+        { messageRecipientGuardRequired, messageRecipientDispatchBinding },
+        earlyCdpAbortSignal,
+      );
+    }
+    try {
+      await runContentActionStage(abortSignal => this._annotateClickProgress(
+        tabId,
+        name,
+        args,
+        response,
+        clickProgressBefore,
+        { abortSignal },
+      ));
+    } catch (error) {
+      if (error?.code === 'content_action_timeout') {
+        return this._withCoordinateReconciliation(
+          this._contentActionTimeoutResult(name, error),
+          coordinateDiagnostic,
         );
       }
-      try {
-        await runContentActionStage(abortSignal => this._annotateClickProgress(
-          tabId,
-          name,
-          args,
-          response,
-          clickProgressBefore,
-          { abortSignal },
-        ));
-      } catch (error) {
-        if (error?.code === 'content_action_timeout') {
-          return this._withCoordinateReconciliation(
-            this._contentActionTimeoutResult(name, error),
-            coordinateDiagnostic,
-          );
-        }
-        throw error;
-      }
-      this._recordInteractionRect(tabId, name, response, interactionUrl);
-      this._annotateCredentialField(name, response);
-      if (name === 'read_page') {
-        response = applyReadPageWindow(response, args);
-      }
-      this._clearUploadSelectorRecoveryAfterInspection(tabId, name, response);
+      throw error;
+    }
+    this._recordInteractionRect(tabId, name, response, interactionUrl);
+    this._annotateCredentialField(name, response);
+    if (name === 'read_page') {
+      response = applyReadPageWindow(response, args);
+    }
+    this._clearUploadSelectorRecoveryAfterInspection(tabId, name, response);
     return this._withCoordinateReconciliation(response, coordinateDiagnostic);
   }
 
@@ -34106,7 +34111,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         chrome.downloads.onCreated.addListener(downloadListener);
         listeningDownloads = true;
       }
-    } catch {}
+    } catch { }
     try {
       if (chrome.webRequest?.onBeforeRequest?.addListener) {
         chrome.webRequest.onBeforeRequest.addListener(
@@ -34115,7 +34120,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         );
         listeningRequests = true;
       }
-    } catch {}
+    } catch { }
     return {
       created,
       requests,
@@ -34124,11 +34129,11 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       },
       stop() {
         if (listeningDownloads) {
-          try { chrome.downloads.onCreated.removeListener(downloadListener); } catch {}
+          try { chrome.downloads.onCreated.removeListener(downloadListener); } catch { }
           listeningDownloads = false;
         }
         if (listeningRequests) {
-          try { chrome.webRequest.onBeforeRequest.removeListener(requestListener); } catch {}
+          try { chrome.webRequest.onBeforeRequest.removeListener(requestListener); } catch { }
           listeningRequests = false;
         }
       },
@@ -35375,7 +35380,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
    * Continue processing from where we left off (after max steps).
    * Adds a "please continue" user message and resumes the agent loop.
    */
-  async continueProcessing(tabId, onUpdate = () => {}, mode = 'ask', runOptions = {}) {
+  async continueProcessing(tabId, onUpdate = () => { }, mode = 'ask', runOptions = {}) {
     return this.processMessage(
       tabId,
       'Please continue from where you left off.',
@@ -35436,7 +35441,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     return normalized === '[compressed]' || normalized === '[context compressed]';
   }
 
-  async processMessage(tabId, userMessage, onUpdate = () => {}, mode = 'ask', attachments = [], runOptions = {}) {
+  async processMessage(tabId, userMessage, onUpdate = () => { }, mode = 'ask', attachments = [], runOptions = {}) {
     await this._claimRunEntry(tabId, 'interactive', runOptions);
     let continuationEligible = false;
     const emitUpdate = onUpdate;
@@ -35462,7 +35467,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       : null;
     if (runOptions?.trustedContinuation !== true) this._continuationResponseLanguagePolicies.delete(tabId);
     if (hadContinuationResponseLanguagePolicy) {
-      try { await this._persistNow(tabId); } catch {}
+      try { await this._persistNow(tabId); } catch { }
     }
     runOptions = { ...runOptions, trustedContinuationResponseLanguagePolicy };
     this._resetActiveSkillsForRun(tabId, { refreshPrompt: false });
@@ -35515,7 +35520,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       else this._standaloneWebgpuRunTabs.delete(tabId);
       this.responseLanguagePolicies.delete(tabId);
       if (continuationResponseLanguagePolicyStored) {
-        try { await this._persistNow(tabId); } catch {}
+        try { await this._persistNow(tabId); } catch { }
       }
       this._resetActiveSkillsForRun(tabId);
       if (runOptions.cloudRun) {
@@ -35672,7 +35677,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
           // Refuse the send rather than push unredacted pixels, matching the
           // viewport guard in captureViewportScreenshotForUser.
           if (deferredFullPageRedaction.redactionSnapshot.regions.length > 0
-              && modelDataUrl === unredactedDataUrl) {
+            && modelDataUrl === unredactedDataUrl) {
             return {
               ok: false,
               error: 'Could not create the private model-facing copy of this screenshot. Run /screenshot again before sending it.',
@@ -35784,7 +35789,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     // Resolve model-bound local vision metadata before enrichment captures a
     // screenshot or attachment validation consults provider.supportsVision.
     // A metadata failure is non-fatal and leaves auto mode text-only this turn.
-    try { await this.providerManager.prepareActiveProviderCapabilities?.(); } catch {}
+    try { await this.providerManager.prepareActiveProviderCapabilities?.(); } catch { }
 
     const selectionOnly = isSelectionSourceGrounding(runOptions?.sourceGrounding);
     const standaloneChatRun = this._isStandaloneChatRun(runOptions);
@@ -35860,7 +35865,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     void flushCloudRuntimeOutbox(provider);
 
     if (typeof runOptions?.isDetachedStartCancelled === 'function'
-        && runOptions.isDetachedStartCancelled()) {
+      && runOptions.isDetachedStartCancelled()) {
       this.abortFlags.delete(tabId);
       const stopped = 'Stopped by user before the run started.';
       if (Array.isArray(attachments) && attachments.length) {
@@ -35886,7 +35891,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     const queueAskStreamingTraceWrite = (write) => {
       askStreamingTraceWrite = askStreamingTraceWrite
         .then(write)
-        .catch(() => {});
+        .catch(() => { });
       return askStreamingTraceWrite;
     };
 
@@ -35912,7 +35917,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     // action. Failure is non-fatal; the individual tool returns a focused CDP
     // error if the tab cannot be debug-attached.
     if (mode === 'dev' && !standaloneChatRun) {
-      try { await cdpClient.enableDevDiagnostics(tabId); } catch {}
+      try { await cdpClient.enableDevDiagnostics(tabId); } catch { }
     }
 
     // Validate attachments BEFORE the planner gate / trace start: an
@@ -35968,296 +35973,65 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     // agent loop — runs inside this try so the finally always ends the trace
     // run and clears currentRunId, even on an early throw during setup. (#2)
     try {
-    // When the planner gate runs, start the trace up-front so the planner LLM
-    // call is recorded under this run; otherwise it's started just before the
-    // loop. _startTraceRun is the single source of truth (no duplicate tab
-    // fetch / startRun payload). (#6)
-    let plannerTabInfo = null;
-    const readScopePreflight = !selectionOnly && !standaloneChatRun && this._readCompletenessNeedsScopeClassification(tabId);
-    if ((this._isActionMode(mode) && runOptions?.cloudRun !== true && !standaloneChatRun) || readScopePreflight) {
-      // Fetch once for trace metadata. The planner normally reuses it, but a
-      // source-bound selection must not receive page URL/title context.
-      const traceTabInfo = await this._getTabUrlTitle(tabId);
-      plannerTabInfo = selectionOnly || standaloneChatRun ? { tabUrl: '', tabTitle: '' } : traceTabInfo;
-      runId = await this._startTraceRun(
-        tabId, userMessage, mode, provider, traceTabInfo, runOptions,
-      );
-    }
-
-    const gateOutcome = await this._maybeRunPlannerGate(
-      tabId, messages, enriched, onUpdate, mode, costState, runId, plannerTabInfo, runOptions,
-    );
-    if (!gateOutcome.proceed) {
-      _traceStatus = gateOutcome.reason === 'cost_limit'
-        ? 'cost_limit'
-        : (gateOutcome.reason === 'plan_only' ? 'plan_only_output' : gateOutcome.reason || 'cancelled');
-      return (finalResponse = gateOutcome.message || 'More information is required.');
-    }
-    const responseLanguagePolicy = runOptions?.trustedContinuationResponseLanguagePolicy
-      || gateOutcome.responseLanguagePolicy
-      || (selectionOnly ? selectionScopedResponseLanguagePolicy(runOptions?.locale) : null);
-    this._setResponseLanguagePolicy(tabId, responseLanguagePolicy, runOptions?.locale || 'en', {
-      approvedPlanLanguageOverride: responseLanguagePolicy?.approved_plan_language_override === true
-        || gateOutcome.responseLanguageApprovedPlanOverride === true,
-      trustedContinuation: runOptions?.trustedContinuation === true,
-    });
-    if (gateOutcome.responseOnly === true) {
-      const responseOnly = await this._completeResponseOnlyTurn(
-        tabId, messages, onUpdate, provider, costState, runId,
-        runOptions, enriched, sourceBoundPriorMessages,
-      );
-      finalResponse = responseOnly.content;
-      _traceStatus = responseOnly.status;
-      return finalResponse;
-    }
-    if (this._consumeSelectionGroundingRestoration(tabId, enriched)) this._persist(tabId);
-    this._startPlanExecutionGuard(tabId, mode, gateOutcome, runOptions);
-
-    if (this._isActionMode(mode) && !selectionOnly && !standaloneChatRun) {
-      await this._ensureProgressSessionForCurrentTask(tabId, {
-        provider,
-        costState,
-        progressLedgerPolicy: gateOutcome.progressLedgerPolicy,
-        progressAction: gateOutcome.progressAction,
-        expectedItems: gateOutcome.expectedItems,
-      });
-    }
-    const tier = provider.promptTier;
-    const readWindow = this._readWindowLimits(provider);
-    let skillTools = this._skillToolDefinitions(tabId, mode, tier, this._activeSkillSiteAdapter(tabId));
-    const cloudRunContext = this.cloudRunContexts.get(tabId) || null;
-    let tools = getToolsForMode(mode, {
-      strictSecretMode: this.strictSecretMode,
-      tier,
-      accessibilityTreeMaxChars: readWindow.treePageChars,
-      webMcpAvailable: this.webMcpEnabled === true,
-      skillLoaderTool: this._skillLoaderDefinition(mode, tier),
-      skillTools,
-      otpEmailSkillActive: this._otpEmailSkillActive(tabId, mode, tier),
-      cloudRun: !!cloudRunContext,
-      outputSchema: cloudRunContext?.outputSchema ?? null,
-      watchBeep: this.scheduledRunPolicies.get(tabId)?.watch?.beep === true,
-      carouselNavigation: !!getCarouselNavigationPolicy(await this._currentUrl(tabId)),
-      gmailResultCounting: !!getGmailResultCountPolicy(await this._currentUrl(tabId)),
-      researchEscalationEnabled: this.researchEscalationEnabled,
-    });
-    // The selected text is already present in the trusted run envelope.
-    // Advertising page/network tools would let an injected selection induce a
-    // second source and defeat the selection-only boundary.
-    if (selectionOnly || standaloneChatRun) tools = [];
-    let allowedToolNames = new Set(tools.map(t => t.function.name));
-    let toolSchemas = new Map(tools.map(t => [t.function.name, t.function.parameters]));
-    const plannerTemperature = this._isActionMode(mode) ? 0.15 : 0.3;
-    const mainMaxTokens = this._providerMaxOutputTokens(provider);
-    let steps = 0;
-    // Tracks whether we've already nudged the model after an empty
-    // (no-content + no-tool-call) response. Used by the recovery branch
-    // in the main loop to avoid an infinite empty→nudge→empty→nudge loop.
-    let emptyOutputRecoveryAttempted = false;
-    let compressionPlaceholderRecoveryAttempted = false;
-    let structuredOutputRecoveryAttempted = false;
-    let completionPlainFinalRecoveryAttempted = 0;
-    let forceCompletionVerificationTurn = false;
-    let allowCompletionFailureTurn = false;
-    let forceCompletionDoneAfterVerification = false;
-    let forceCompletionDoneTurn = false;
-    let standaloneWikipediaModelSearchAttempted = false;
-    let standaloneIncompleteAnswerRecoveryAttempted = false;
-    let standaloneWebgpuBudgetRecoveryAttempted = false;
-    let askStreamingDisabledForRun = false;
-
-    // Keep trace persistence ordered without putting IndexedDB on the token
-    // delivery path. Once generation settles, later response/finalization
-    // writes flush this queue so lifecycle events cannot arrive afterward.
-    shouldOrderInteractiveAskTrace = mode === 'ask' && runOptions?.interactiveChat === true;
-    const recordAskStreaming = (payload) => {
-      const traceRunId = runId;
-      const traceStep = steps;
-      if (!traceRunId) return;
-      queueAskStreamingTraceWrite(
-        () => trace.recordStreaming(traceRunId, traceStep, payload),
-      );
-    };
-
-    const chatMainTurnRaw = async (chatMessages, chatOptions, requestContext) => {
-      const decision = this._interactiveAskStreamingDecision(
-        provider,
-        mode,
-        runOptions,
-        askStreamingDisabledForRun,
-      );
-      const protocol = this._interactiveAskStreamingProtocol(provider);
-      if (!decision.eligible) {
-        if (mode === 'ask' && runOptions?.interactiveChat === true) {
-          recordAskStreaming({
-            status: 'skipped',
-            reason: decision.reason,
-            protocol,
-          });
-        }
-        return this._chatWithCostAllowance(
-          provider,
-          chatMessages,
-          chatOptions,
-          costState,
-          requestContext,
+      // When the planner gate runs, start the trace up-front so the planner LLM
+      // call is recorded under this run; otherwise it's started just before the
+      // loop. _startTraceRun is the single source of truth (no duplicate tab
+      // fetch / startRun payload). (#6)
+      let plannerTabInfo = null;
+      const readScopePreflight = !selectionOnly && !standaloneChatRun && this._readCompletenessNeedsScopeClassification(tabId);
+      if ((this._isActionMode(mode) && runOptions?.cloudRun !== true && !standaloneChatRun) || readScopePreflight) {
+        // Fetch once for trace metadata. The planner normally reuses it, but a
+        // source-bound selection must not receive page URL/title context.
+        const traceTabInfo = await this._getTabUrlTitle(tabId);
+        plannerTabInfo = selectionOnly || standaloneChatRun ? { tabUrl: '', tabTitle: '' } : traceTabInfo;
+        runId = await this._startTraceRun(
+          tabId, userMessage, mode, provider, traceTabInfo, runOptions,
         );
       }
 
-      let firstDeltaMs = null;
-      let textDeltaCount = 0;
-      let textChars = 0;
-      let emittedText = false;
-      recordAskStreaming({
-        status: 'attempted',
-        reason: decision.reason,
-        protocol,
-      });
-      const streamStartedAt = Date.now();
-      const streamMetrics = () => ({
-        durationMs: Date.now() - streamStartedAt,
-        firstDeltaMs,
-        textDeltaCount,
-        textChars,
-      });
-      try {
-        const result = await this._chatStreamWithCostAllowance(
-          provider,
-          chatMessages,
-          chatOptions,
-          costState,
-          requestContext,
-          (delta) => {
-            emittedText = true;
-            if (firstDeltaMs == null) firstDeltaMs = Date.now() - streamStartedAt;
-            textDeltaCount += 1;
-            textChars += delta.length;
-            onUpdate('text_delta', { content: delta });
-          },
-        );
-        recordAskStreaming({
-          status: 'completed',
-          reason: 'terminal_event_received',
-          protocol,
-          ...streamMetrics(),
-          toolCallCount: Array.isArray(result?.toolCalls) ? result.toolCalls.length : 0,
-        });
-        return result;
-      } catch (error) {
-        error.webbrainOutputEmitted = emittedText;
-        const fallbackSafe = this._shouldFallbackAskStream(error);
-        recordAskStreaming({
-          status: fallbackSafe ? 'fallback' : 'failed',
-          protocol,
-          ...streamMetrics(),
-          ...this._interactiveAskStreamingFailure(error),
-        });
-        if (this._isCostAllowanceError(error)) throw error;
-        if (emittedText) onUpdate('text', { content: '', replace: true });
-        if (!fallbackSafe) throw error;
-        askStreamingDisabledForRun = true;
-        onUpdate('warning', {
-          code: 'ask_stream_fallback',
-          message: 'Response streaming was interrupted; retrying this Ask turn without streaming.',
-        });
-        this._logDebug({
-          type: 'llm_stream_fallback',
-          provider: provider.constructor?.name || provider.name,
-          error: error?.message || String(error),
-        });
-        return this._chatWithCostAllowance(
-          provider,
-          chatMessages,
-          chatOptions,
-          costState,
-          requestContext,
-        );
+      const gateOutcome = await this._maybeRunPlannerGate(
+        tabId, messages, enriched, onUpdate, mode, costState, runId, plannerTabInfo, runOptions,
+      );
+      if (!gateOutcome.proceed) {
+        _traceStatus = gateOutcome.reason === 'cost_limit'
+          ? 'cost_limit'
+          : (gateOutcome.reason === 'plan_only' ? 'plan_only_output' : gateOutcome.reason || 'cancelled');
+        return (finalResponse = gateOutcome.message || 'More information is required.');
       }
-    };
-
-    const chatMainTurn = async (chatMessages, chatOptions, requestContext) => {
-      const startedAt = Date.now();
-      let result;
-      try {
-        result = await chatMainTurnRaw(chatMessages, chatOptions, requestContext);
-      } catch (error) {
-        if (error?.webbrainOutputEmitted === true) throw error;
-        const fallbackMessages = await this._visionFallbackMessages(tabId, chatMessages, costState, error);
-        if (!fallbackMessages) throw error;
-        onUpdate('warning', {
-          code: 'vision_local_fallback_retry',
-          message: 'The active provider rejected the image; retrying once from the retained capture using a local LiquidAI description.',
-        });
-        result = await chatMainTurnRaw(fallbackMessages, chatOptions, requestContext);
-      }
-      messageCompletion = aggregateMessageCompletion(
-        messageCompletion,
-        result,
-        Date.now() - startedAt,
-      );
-      onUpdate('message_info', messageCompletion);
-      return result;
-    };
-
-    if (!runId) {
-      runId = await this._startTraceRun(
-        tabId, userMessage, mode, provider, null, runOptions,
-      );
-    }
-
-    let standaloneGroundingGap = this._standaloneOfflineGroundingGap(localWikipediaRag, runOptions);
-    if (standaloneGroundingGap) {
-      if (runId) trace.recordNote(runId, null, 'standalone_wikipedia_rag', { ...localWikipediaRag });
-      _traceStatus = 'grounding_unavailable';
-      this._appendStandaloneUngroundedPolicy(enriched, standaloneGroundingGap);
-    }
-
-    const recommendedFirstTool = await this._maybeExecuteRecommendedActionFirstTool(
-      tabId, runOptions, messages, onUpdate, provider, allowedToolNames, toolSchemas,
-    );
-    if (recommendedFirstTool?.action === 'return') {
-      finalResponse = recommendedFirstTool.value;
-      return finalResponse;
-    }
-    if (recommendedFirstTool?.action === 'abort') {
-      finalResponse = recommendedFirstTool.value;
-      _traceStatus = 'cancelled';
-      return finalResponse;
-    }
-    if (!recommendedFirstTool) {
-      const restorationFirstRead = await this._maybeExecuteSelectionRestorationFirstRead(
-        tabId, enriched, messages, onUpdate, provider, allowedToolNames, toolSchemas,
-      );
-      if (restorationFirstRead?.action === 'return') {
-        finalResponse = restorationFirstRead.value;
+      const responseLanguagePolicy = runOptions?.trustedContinuationResponseLanguagePolicy
+        || gateOutcome.responseLanguagePolicy
+        || (selectionOnly ? selectionScopedResponseLanguagePolicy(runOptions?.locale) : null);
+      this._setResponseLanguagePolicy(tabId, responseLanguagePolicy, runOptions?.locale || 'en', {
+        approvedPlanLanguageOverride: responseLanguagePolicy?.approved_plan_language_override === true
+          || gateOutcome.responseLanguageApprovedPlanOverride === true,
+        trustedContinuation: runOptions?.trustedContinuation === true,
+      });
+      if (gateOutcome.responseOnly === true) {
+        const responseOnly = await this._completeResponseOnlyTurn(
+          tabId, messages, onUpdate, provider, costState, runId,
+          runOptions, enriched, sourceBoundPriorMessages,
+        );
+        finalResponse = responseOnly.content;
+        _traceStatus = responseOnly.status;
         return finalResponse;
       }
-      if (restorationFirstRead?.action === 'abort') {
-        finalResponse = restorationFirstRead.value;
-        _traceStatus = 'cancelled';
-        return finalResponse;
-      }
-    }
+      if (this._consumeSelectionGroundingRestoration(tabId, enriched)) this._persist(tabId);
+      this._startPlanExecutionGuard(tabId, mode, gateOutcome, runOptions);
 
-    while (steps < this.maxSteps) {
-      // Check for abort before each step
-      if (this._checkAbort(tabId)) {
-        finalResponse = finalResponse || '[Stopped by user]';
-        _traceStatus = 'cancelled';
-        onUpdate('warning', { message: 'Stopped by user.' });
-        messages.push(this._localCancellationMessage(finalResponse));
-        break;
+      if (this._isActionMode(mode) && !selectionOnly && !standaloneChatRun) {
+        await this._ensureProgressSessionForCurrentTask(tabId, {
+          provider,
+          costState,
+          progressLedgerPolicy: gateOutcome.progressLedgerPolicy,
+          progressAction: gateOutcome.progressAction,
+          expectedItems: gateOutcome.expectedItems,
+        });
       }
-
-      // Re-inject adapter notes if the user navigated to a different
-      // high-traffic site mid-conversation (no-op on the first iteration
-      // because _enrichUserMessageWithCurrentPage already seeded lastSeenAdapter).
-      if (steps > 0 && !selectionOnly && !standaloneChatRun) {
-        await this._maybeReinjectAdapter(tabId, messages);
-      }
-
-      skillTools = this._skillToolDefinitions(tabId, mode, tier, this._activeSkillSiteAdapter(tabId));
-      tools = getToolsForMode(mode, {
+      const tier = provider.promptTier;
+      const readWindow = this._readWindowLimits(provider);
+      let skillTools = this._skillToolDefinitions(tabId, mode, tier, this._activeSkillSiteAdapter(tabId));
+      const cloudRunContext = this.cloudRunContexts.get(tabId) || null;
+      let tools = getToolsForMode(mode, {
         strictSecretMode: this.strictSecretMode,
         tier,
         accessibilityTreeMaxChars: readWindow.treePageChars,
@@ -36272,94 +36046,325 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         gmailResultCounting: !!getGmailResultCountPolicy(await this._currentUrl(tabId)),
         researchEscalationEnabled: this.researchEscalationEnabled,
       });
+      // The selected text is already present in the trusted run envelope.
+      // Advertising page/network tools would let an injected selection induce a
+      // second source and defeat the selection-only boundary.
       if (selectionOnly || standaloneChatRun) tools = [];
-      if (forceCompletionVerificationTurn) {
-        const completionState = this.completionInvariants.get(tabId);
-        if (!completionState?.verificationDebt && !completionState?.iframeFormVerificationDebt) {
-          forceCompletionVerificationTurn = false;
-          allowCompletionFailureTurn = false;
-          if (forceCompletionDoneAfterVerification) {
-            forceCompletionDoneAfterVerification = false;
-            forceCompletionDoneTurn = true;
+      let allowedToolNames = new Set(tools.map(t => t.function.name));
+      let toolSchemas = new Map(tools.map(t => [t.function.name, t.function.parameters]));
+      const plannerTemperature = this._isActionMode(mode) ? 0.15 : 0.3;
+      const mainMaxTokens = this._providerMaxOutputTokens(provider);
+      let steps = 0;
+      // Tracks whether we've already nudged the model after an empty
+      // (no-content + no-tool-call) response. Used by the recovery branch
+      // in the main loop to avoid an infinite empty→nudge→empty→nudge loop.
+      let emptyOutputRecoveryAttempted = false;
+      let compressionPlaceholderRecoveryAttempted = false;
+      let structuredOutputRecoveryAttempted = false;
+      let completionPlainFinalRecoveryAttempted = 0;
+      let forceCompletionVerificationTurn = false;
+      let allowCompletionFailureTurn = false;
+      let forceCompletionDoneAfterVerification = false;
+      let forceCompletionDoneTurn = false;
+      let standaloneWikipediaModelSearchAttempted = false;
+      let standaloneIncompleteAnswerRecoveryAttempted = false;
+      let standaloneWebgpuBudgetRecoveryAttempted = false;
+      let askStreamingDisabledForRun = false;
+
+      // Keep trace persistence ordered without putting IndexedDB on the token
+      // delivery path. Once generation settles, later response/finalization
+      // writes flush this queue so lifecycle events cannot arrive afterward.
+      shouldOrderInteractiveAskTrace = mode === 'ask' && runOptions?.interactiveChat === true;
+      const recordAskStreaming = (payload) => {
+        const traceRunId = runId;
+        const traceStep = steps;
+        if (!traceRunId) return;
+        queueAskStreamingTraceWrite(
+          () => trace.recordStreaming(traceRunId, traceStep, payload),
+        );
+      };
+
+      const chatMainTurnRaw = async (chatMessages, chatOptions, requestContext) => {
+        const decision = this._interactiveAskStreamingDecision(
+          provider,
+          mode,
+          runOptions,
+          askStreamingDisabledForRun,
+        );
+        const protocol = this._interactiveAskStreamingProtocol(provider);
+        if (!decision.eligible) {
+          if (mode === 'ask' && runOptions?.interactiveChat === true) {
+            recordAskStreaming({
+              status: 'skipped',
+              reason: decision.reason,
+              protocol,
+            });
+          }
+          return this._chatWithCostAllowance(
+            provider,
+            chatMessages,
+            chatOptions,
+            costState,
+            requestContext,
+          );
+        }
+
+        let firstDeltaMs = null;
+        let textDeltaCount = 0;
+        let textChars = 0;
+        let emittedText = false;
+        recordAskStreaming({
+          status: 'attempted',
+          reason: decision.reason,
+          protocol,
+        });
+        const streamStartedAt = Date.now();
+        const streamMetrics = () => ({
+          durationMs: Date.now() - streamStartedAt,
+          firstDeltaMs,
+          textDeltaCount,
+          textChars,
+        });
+        try {
+          const result = await this._chatStreamWithCostAllowance(
+            provider,
+            chatMessages,
+            chatOptions,
+            costState,
+            requestContext,
+            (delta) => {
+              emittedText = true;
+              if (firstDeltaMs == null) firstDeltaMs = Date.now() - streamStartedAt;
+              textDeltaCount += 1;
+              textChars += delta.length;
+              onUpdate('text_delta', { content: delta });
+            },
+          );
+          recordAskStreaming({
+            status: 'completed',
+            reason: 'terminal_event_received',
+            protocol,
+            ...streamMetrics(),
+            toolCallCount: Array.isArray(result?.toolCalls) ? result.toolCalls.length : 0,
+          });
+          return result;
+        } catch (error) {
+          error.webbrainOutputEmitted = emittedText;
+          const fallbackSafe = this._shouldFallbackAskStream(error);
+          recordAskStreaming({
+            status: fallbackSafe ? 'fallback' : 'failed',
+            protocol,
+            ...streamMetrics(),
+            ...this._interactiveAskStreamingFailure(error),
+          });
+          if (this._isCostAllowanceError(error)) throw error;
+          if (emittedText) onUpdate('text', { content: '', replace: true });
+          if (!fallbackSafe) throw error;
+          askStreamingDisabledForRun = true;
+          onUpdate('warning', {
+            code: 'ask_stream_fallback',
+            message: 'Response streaming was interrupted; retrying this Ask turn without streaming.',
+          });
+          this._logDebug({
+            type: 'llm_stream_fallback',
+            provider: provider.constructor?.name || provider.name,
+            error: error?.message || String(error),
+          });
+          return this._chatWithCostAllowance(
+            provider,
+            chatMessages,
+            chatOptions,
+            costState,
+            requestContext,
+          );
+        }
+      };
+
+      const chatMainTurn = async (chatMessages, chatOptions, requestContext) => {
+        const startedAt = Date.now();
+        let result;
+        try {
+          result = await chatMainTurnRaw(chatMessages, chatOptions, requestContext);
+        } catch (error) {
+          if (error?.webbrainOutputEmitted === true) throw error;
+          const fallbackMessages = await this._visionFallbackMessages(tabId, chatMessages, costState, error);
+          if (!fallbackMessages) throw error;
+          onUpdate('warning', {
+            code: 'vision_local_fallback_retry',
+            message: 'The active provider rejected the image; retrying once from the retained capture using a local LiquidAI description.',
+          });
+          result = await chatMainTurnRaw(fallbackMessages, chatOptions, requestContext);
+        }
+        messageCompletion = aggregateMessageCompletion(
+          messageCompletion,
+          result,
+          Date.now() - startedAt,
+        );
+        onUpdate('message_info', messageCompletion);
+        return result;
+      };
+
+      if (!runId) {
+        runId = await this._startTraceRun(
+          tabId, userMessage, mode, provider, null, runOptions,
+        );
+      }
+
+      let standaloneGroundingGap = this._standaloneOfflineGroundingGap(localWikipediaRag, runOptions);
+      if (standaloneGroundingGap) {
+        if (runId) trace.recordNote(runId, null, 'standalone_wikipedia_rag', { ...localWikipediaRag });
+        _traceStatus = 'grounding_unavailable';
+        this._appendStandaloneUngroundedPolicy(enriched, standaloneGroundingGap);
+      }
+
+      const recommendedFirstTool = await this._maybeExecuteRecommendedActionFirstTool(
+        tabId, runOptions, messages, onUpdate, provider, allowedToolNames, toolSchemas,
+      );
+      if (recommendedFirstTool?.action === 'return') {
+        finalResponse = recommendedFirstTool.value;
+        return finalResponse;
+      }
+      if (recommendedFirstTool?.action === 'abort') {
+        finalResponse = recommendedFirstTool.value;
+        _traceStatus = 'cancelled';
+        return finalResponse;
+      }
+      if (!recommendedFirstTool) {
+        const restorationFirstRead = await this._maybeExecuteSelectionRestorationFirstRead(
+          tabId, enriched, messages, onUpdate, provider, allowedToolNames, toolSchemas,
+        );
+        if (restorationFirstRead?.action === 'return') {
+          finalResponse = restorationFirstRead.value;
+          return finalResponse;
+        }
+        if (restorationFirstRead?.action === 'abort') {
+          finalResponse = restorationFirstRead.value;
+          _traceStatus = 'cancelled';
+          return finalResponse;
+        }
+      }
+
+      while (steps < this.maxSteps) {
+        // Check for abort before each step
+        if (this._checkAbort(tabId)) {
+          finalResponse = finalResponse || '[Stopped by user]';
+          _traceStatus = 'cancelled';
+          onUpdate('warning', { message: 'Stopped by user.' });
+          messages.push(this._localCancellationMessage(finalResponse));
+          break;
+        }
+
+        // Re-inject adapter notes if the user navigated to a different
+        // high-traffic site mid-conversation (no-op on the first iteration
+        // because _enrichUserMessageWithCurrentPage already seeded lastSeenAdapter).
+        if (steps > 0 && !selectionOnly && !standaloneChatRun) {
+          await this._maybeReinjectAdapter(tabId, messages);
+        }
+
+        skillTools = this._skillToolDefinitions(tabId, mode, tier, this._activeSkillSiteAdapter(tabId));
+        tools = getToolsForMode(mode, {
+          strictSecretMode: this.strictSecretMode,
+          tier,
+          accessibilityTreeMaxChars: readWindow.treePageChars,
+          webMcpAvailable: this.webMcpEnabled === true,
+          skillLoaderTool: this._skillLoaderDefinition(mode, tier),
+          skillTools,
+          otpEmailSkillActive: this._otpEmailSkillActive(tabId, mode, tier),
+          cloudRun: !!cloudRunContext,
+          outputSchema: cloudRunContext?.outputSchema ?? null,
+          watchBeep: this.scheduledRunPolicies.get(tabId)?.watch?.beep === true,
+          carouselNavigation: !!getCarouselNavigationPolicy(await this._currentUrl(tabId)),
+          gmailResultCounting: !!getGmailResultCountPolicy(await this._currentUrl(tabId)),
+          researchEscalationEnabled: this.researchEscalationEnabled,
+        });
+        if (selectionOnly || standaloneChatRun) tools = [];
+        if (forceCompletionVerificationTurn) {
+          const completionState = this.completionInvariants.get(tabId);
+          if (!completionState?.verificationDebt && !completionState?.iframeFormVerificationDebt) {
+            forceCompletionVerificationTurn = false;
+            allowCompletionFailureTurn = false;
+            if (forceCompletionDoneAfterVerification) {
+              forceCompletionDoneAfterVerification = false;
+              forceCompletionDoneTurn = true;
+            }
           }
         }
-      }
-      const completionRecoveryPolicy = this._completionRecoveryPolicy(tabId, tools, {
-        verification: forceCompletionVerificationTurn,
-        done: forceCompletionDoneTurn,
-        failure: allowCompletionFailureTurn,
-      });
-      const completionRecoveryStartState = completionRecoveryPolicy?.kind === 'verification'
-        ? this.completionInvariants.get(tabId)
-        : null;
-      if (completionRecoveryPolicy) {
-        tools = completionRecoveryPolicy.tools;
-      }
-      const completionToolChoice = completionRecoveryPolicy?.toolChoice || null;
-      allowedToolNames = new Set(tools.map(t => t.function.name));
-      toolSchemas = new Map(tools.map(t => [t.function.name, t.function.parameters]));
-
-      // Auto-compact mid-run when the conversation outgrows the budget — not
-      // just between user turns. Uses the previous step's reported token count,
-      // so it fires "when it's due" during long autonomous loops.
-      if (!selectionOnly && !standaloneChatRun) {
-        await this._manageContext(tabId, messages, onUpdate, costState);
-      }
-
-      steps++;
-      lastTraceStep = steps;
-      onUpdate('thinking', { step: steps });
-      if (runId) trace.recordStepStart(runId, steps, {});
-
-      let result;
-      try {
-        const useTools = provider.supportsTools && tools.length > 0;
-        const chatOpts = {
-          tools: useTools ? tools : undefined,
-          temperature: plannerTemperature,
-           maxTokens: mainMaxTokens,
-          ...(completionToolChoice ? { toolChoice: completionToolChoice } : {}),
-        };
-        const prunedMessages = this._pruneOldImages(modelMessagesForRun(), provider);
-        this._logDebug({ type: 'llm_request', step: steps, provider: provider.constructor.name, messages: prunedMessages, options: chatOpts });
-        if (runId) {
-          const writeRequestTrace = () => trace.recordLLMRequest(runId, steps, {
-            providerClass: provider.constructor.name,
-            model: provider.model,
-            messageCount: prunedMessages.length,
-            toolsCount: (chatOpts.tools || []).length,
-            requestedMaxTokens: chatOpts.maxTokens,
-            ...(runOptions?.localWikipediaRag ? { localWikipediaRag: runOptions.localWikipediaRag } : {}),
-            ...Agent._traceMediaCounts(prunedMessages),
-          }, {
-            messages: prunedMessages,
-            tools: chatOpts.tools || [],
-            runtimeMode: mode,
-          });
-          if (shouldOrderInteractiveAskTrace) queueAskStreamingTraceWrite(writeRequestTrace);
-          else writeRequestTrace();
+        const completionRecoveryPolicy = this._completionRecoveryPolicy(tabId, tools, {
+          verification: forceCompletionVerificationTurn,
+          done: forceCompletionDoneTurn,
+          failure: allowCompletionFailureTurn,
+        });
+        const completionRecoveryStartState = completionRecoveryPolicy?.kind === 'verification'
+          ? this.completionInvariants.get(tabId)
+          : null;
+        if (completionRecoveryPolicy) {
+          tools = completionRecoveryPolicy.tools;
         }
-        const _llmStart = Date.now();
-        result = await chatMainTurn(prunedMessages, chatOpts, { tabId, generationName: 'main' });
-        if (result?.usage?.prompt_tokens) {
-          this._lastInputTokens.set(tabId, result.usage.prompt_tokens);
-          // Snapshot the conversation size at this reading so the next
-          // _manageContext can add only the growth since (see its delta logic).
-          this._lastEstCharsAtReport.set(tabId, this._estimateContextChars(messages));
+        const completionToolChoice = completionRecoveryPolicy?.toolChoice || null;
+        allowedToolNames = new Set(tools.map(t => t.function.name));
+        toolSchemas = new Map(tools.map(t => [t.function.name, t.function.parameters]));
+
+        // Auto-compact mid-run when the conversation outgrows the budget — not
+        // just between user turns. Uses the previous step's reported token count,
+        // so it fires "when it's due" during long autonomous loops.
+        if (!selectionOnly && !standaloneChatRun) {
+          await this._manageContext(tabId, messages, onUpdate, costState);
         }
-        const _llmLatency = Date.now() - _llmStart;
-        this._logDebug({ type: 'llm_response', step: steps, content: result.content, toolCalls: result.toolCalls });
-        if (runId) {
-          const localSearchQueries = standaloneWebgpuRun
-            ? this._standaloneWikipediaSearchQueriesFromModelText(result.content, runOptions)
-            : [];
-          const writeResponseTrace = () => localSearchQueries.length
-            ? trace.recordNote(runId, steps, 'standalone_wikipedia_search_requested', {
+
+        steps++;
+        lastTraceStep = steps;
+        onUpdate('thinking', { step: steps });
+        if (runId) trace.recordStepStart(runId, steps, {});
+
+        let result;
+        try {
+          const useTools = provider.supportsTools && tools.length > 0;
+          const chatOpts = {
+            tools: useTools ? tools : undefined,
+            temperature: plannerTemperature,
+            maxTokens: mainMaxTokens,
+            ...(completionToolChoice ? { toolChoice: completionToolChoice } : {}),
+          };
+          const prunedMessages = this._pruneOldImages(modelMessagesForRun(), provider);
+          this._logDebug({ type: 'llm_request', step: steps, provider: provider.constructor.name, messages: prunedMessages, options: chatOpts });
+          if (runId) {
+            const writeRequestTrace = () => trace.recordLLMRequest(runId, steps, {
+              providerClass: provider.constructor.name,
+              model: provider.model,
+              messageCount: prunedMessages.length,
+              toolsCount: (chatOpts.tools || []).length,
+              requestedMaxTokens: chatOpts.maxTokens,
+              ...(runOptions?.localWikipediaRag ? { localWikipediaRag: runOptions.localWikipediaRag } : {}),
+              ...Agent._traceMediaCounts(prunedMessages),
+            }, {
+              messages: prunedMessages,
+              tools: chatOpts.tools || [],
+              runtimeMode: mode,
+            });
+            if (shouldOrderInteractiveAskTrace) queueAskStreamingTraceWrite(writeRequestTrace);
+            else writeRequestTrace();
+          }
+          const _llmStart = Date.now();
+          result = await chatMainTurn(prunedMessages, chatOpts, { tabId, generationName: 'main' });
+          if (result?.usage?.prompt_tokens) {
+            this._lastInputTokens.set(tabId, result.usage.prompt_tokens);
+            // Snapshot the conversation size at this reading so the next
+            // _manageContext can add only the growth since (see its delta logic).
+            this._lastEstCharsAtReport.set(tabId, this._estimateContextChars(messages));
+          }
+          const _llmLatency = Date.now() - _llmStart;
+          this._logDebug({ type: 'llm_response', step: steps, content: result.content, toolCalls: result.toolCalls });
+          if (runId) {
+            const localSearchQueries = standaloneWebgpuRun
+              ? this._standaloneWikipediaSearchQueriesFromModelText(result.content, runOptions)
+              : [];
+            const writeResponseTrace = () => localSearchQueries.length
+              ? trace.recordNote(runId, steps, 'standalone_wikipedia_search_requested', {
                 queryCount: localSearchQueries.length,
                 latencyMs: _llmLatency,
                 source: 'lfm_native_search_markup',
               })
-            : trace.recordLLMResponse(runId, steps, {
+              : trace.recordLLMResponse(runId, steps, {
                 content: result.content,
                 toolCalls: result.toolCalls,
                 usage: result.usage,
@@ -36370,571 +36375,573 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
                   recoveryAttempt: emptyOutputRecoveryAttempted ? 2 : 1,
                 }),
               });
-          if (shouldOrderInteractiveAskTrace) await queueAskStreamingTraceWrite(writeResponseTrace);
-          else writeResponseTrace();
+            if (shouldOrderInteractiveAskTrace) await queueAskStreamingTraceWrite(writeResponseTrace);
+            else writeResponseTrace();
+          }
+          if (runId) trace.recordStepEnd(runId, steps, this._traceStepEndForResult(result));
+        } catch (e) {
+          this._logDebug({ type: 'llm_error', step: steps, error: e.message });
+          if (this._isCostAllowanceError(e)) {
+            finalResponse = e.message;
+            _traceStatus = 'cost_limit';
+            traceFailureCode = 'COST_LIMIT';
+            if (runId) trace.recordStepEnd(runId, steps, { ok: false, code: 'COST_LIMIT' });
+            messages.push({ role: 'assistant', content: finalResponse });
+            onUpdate('warning', { message: finalResponse });
+            break;
+          }
+          // If context overflow, trim aggressively and retry once
+          if (this._isContextOverflow(e.message)) {
+            onUpdate('thinking', { step: steps, note: 'Context too large, trimming...' });
+            if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: 'CONTEXT_WINDOW_EXCEEDED' });
+            emergencyTrimMessagesForRun();
+            try {
+              const useTools = provider.supportsTools && tools.length > 0;
+              const chatOpts = {
+                tools: useTools ? tools : undefined,
+                temperature: plannerTemperature,
+                maxTokens: mainMaxTokens,
+                ...(completionToolChoice ? { toolChoice: completionToolChoice } : {}),
+              };
+              const prunedMessages = this._pruneOldImages(modelMessagesForRun(), provider);
+              this._logDebug({ type: 'llm_request_retry', step: steps, provider: provider.constructor.name, messages: prunedMessages, options: chatOpts });
+              result = await chatMainTurn(prunedMessages, chatOpts, { tabId, generationName: 'main' });
+              this._logDebug({ type: 'llm_response_retry', step: steps, content: result.content, toolCalls: result.toolCalls });
+              if (runId) trace.recordStepEnd(runId, steps, this._traceStepEndForResult(result, { retried: true }));
+            } catch (e2) {
+              this._logDebug({ type: 'llm_error_retry', step: steps, error: e2.message });
+              if (this._isCostAllowanceError(e2)) {
+                finalResponse = e2.message;
+                _traceStatus = 'cost_limit';
+                traceFailureCode = 'COST_LIMIT';
+                if (runId) trace.recordStepEnd(runId, steps, { ok: false, code: 'COST_LIMIT' });
+                messages.push({ role: 'assistant', content: finalResponse });
+                onUpdate('warning', { message: finalResponse });
+                break;
+              }
+              const retryCode = this._traceErrorCodeFor(e2);
+              traceFailureCode = retryCode;
+              _traceStatus = 'error';
+              if (runId) trace.recordStepEnd(runId, steps, { ok: false, code: retryCode });
+              onUpdate('error', { message: `Context still too large after trimming: ${e2.message}` });
+              finalResponse = 'The conversation got too long. Please start a new conversation (click the + button).';
+              messages.push({ role: 'assistant', content: finalResponse });
+              break;
+            }
+          } else {
+            if (e?.isAskStreamTerminalError === true) {
+              if (this._isWebgpuGenerationBudgetError(e)
+                && this._isStandaloneWebgpuRun(runOptions)
+                && !standaloneWebgpuBudgetRecoveryAttempted
+                && this._compactStandaloneWebgpuRagPrompt(enriched)) {
+                standaloneWebgpuBudgetRecoveryAttempted = true;
+                onUpdate('warning', { message: 'The on-device model ran out of reasoning budget; retrying with a shorter prompt.' });
+                this._persist(tabId);
+                if (runId) {
+                  const retryCode = this._traceErrorCodeFor(e);
+                  trace.recordStepEnd(runId, steps, { ok: false, code: retryCode });
+                  await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: retryCode });
+                }
+                continue;
+              }
+              traceFailureCode = this._traceErrorCodeFor(e);
+              _traceStatus = 'error';
+              if (runId) trace.recordStepEnd(runId, steps, { ok: false, code: traceFailureCode });
+              onUpdate('error', { message: e.message });
+              finalResponse = `Error communicating with LLM: ${e.message}`;
+              messages.push({ role: 'assistant', content: finalResponse });
+              break;
+            }
+            // Retry once after a short delay for transient errors (rate limits, network).
+            this._logDebug({ type: 'llm_error_retrying', step: steps, error: e.message });
+            if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 2000, code: this._traceErrorCodeFor(e) });
+            await new Promise(r => setTimeout(r, 2000));
+            try {
+              const useTools2 = provider.supportsTools && tools.length > 0;
+              const chatOpts2 = {
+                tools: useTools2 ? tools : undefined,
+                temperature: plannerTemperature,
+                maxTokens: mainMaxTokens,
+                ...(completionToolChoice ? { toolChoice: completionToolChoice } : {}),
+              };
+              result = await chatMainTurn(this._pruneOldImages(modelMessagesForRun(), provider), chatOpts2, { tabId, generationName: 'main' });
+              this._logDebug({ type: 'llm_response_after_retry', step: steps, content: result.content, toolCalls: result.toolCalls });
+              if (runId) trace.recordStepEnd(runId, steps, this._traceStepEndForResult(result, { retried: true }));
+            } catch (e2) {
+              this._logDebug({ type: 'llm_error_final', step: steps, error: e2.message });
+              if (this._isCostAllowanceError(e2)) {
+                finalResponse = e2.message;
+                _traceStatus = 'cost_limit';
+                traceFailureCode = 'COST_LIMIT';
+                if (runId) trace.recordStepEnd(runId, steps, { ok: false, code: 'COST_LIMIT' });
+                messages.push({ role: 'assistant', content: finalResponse });
+                onUpdate('warning', { message: finalResponse });
+                break;
+              }
+              traceFailureCode = this._traceErrorCodeFor(e2);
+              _traceStatus = 'error';
+              if (runId) trace.recordStepEnd(runId, steps, { ok: false, code: traceFailureCode });
+              onUpdate('error', { message: e2.message });
+              finalResponse = `Error communicating with LLM: ${e2.message}`;
+              messages.push({ role: 'assistant', content: finalResponse });
+              break;
+            }
+          }
         }
-        if (runId) trace.recordStepEnd(runId, steps, this._traceStepEndForResult(result));
-      } catch (e) {
-        this._logDebug({ type: 'llm_error', step: steps, error: e.message });
-        if (this._isCostAllowanceError(e)) {
-          finalResponse = e.message;
+
+        // Check for abort after LLM response
+        if (this._checkAbort(tabId)) {
+          const hadToolCalls = !!(result?.toolCalls && result.toolCalls.length > 0);
+          finalResponse = hadToolCalls
+            ? '[Stopped by user before executing requested tool calls.]'
+            : '[Stopped by user]';
+          _traceStatus = 'cancelled';
+          onUpdate('warning', { message: 'Stopped by user.' });
+          messages.push(this._localCancellationMessage(finalResponse));
+          break;
+        }
+
+        // LFM can emit native Google/Wikipedia search markup even though this
+        // profile advertises no tools. Treat it as a request to search the
+        // installed archive, never as permission to use the browser or network.
+        // The retry is bounded so a model that repeats the markup cannot loop.
+        if (standaloneWebgpuRun && result.content) {
+          const localSearchQueries = this._standaloneWikipediaSearchQueriesFromModelText(result.content, runOptions);
+          if (localSearchQueries.length && !standaloneWikipediaModelSearchAttempted) {
+            standaloneWikipediaModelSearchAttempted = true;
+            const fallbackRag = await this._applyStandaloneWikipediaModelSearch(enriched, result.content, runOptions, {
+              onReferences: references => {
+                standaloneWikipediaReferences = this._mergeStandaloneWikipediaReferences(
+                  standaloneWikipediaReferences,
+                  references,
+                );
+              },
+            });
+            if (fallbackRag) {
+              runOptions = { ...runOptions, localWikipediaRag: fallbackRag };
+              this._logDebug({
+                type: 'standalone_wikipedia_model_search',
+                step: steps,
+                queryCount: localSearchQueries.length,
+                status: fallbackRag.status,
+                matchCount: fallbackRag.matchCount,
+              });
+              if (fallbackRag.status === 'matched') continue;
+              // The model asked for a search and the archive still had nothing.
+              // standaloneWikipediaModelSearchAttempted already bounds this to one
+              // pass, so hand it the ungrounded policy and let it answer.
+              standaloneGroundingGap = this._standaloneOfflineGroundingGap(fallbackRag, runOptions)
+                || standaloneGroundingGap;
+              _traceStatus = 'grounding_unavailable';
+              if (runId) trace.recordNote(runId, steps, 'standalone_wikipedia_rag', { ...fallbackRag });
+              if (standaloneGroundingGap) {
+                this._appendStandaloneUngroundedPolicy(enriched, standaloneGroundingGap);
+                continue;
+              }
+            }
+          } else if (localSearchQueries.length) {
+            result.content = runOptions.localWikipediaRag?.status === 'matched'
+              ? 'I found relevant Offline Wikipedia references, but the on-device model could not turn them into a reliable answer. Please try rephrasing the question.'
+              : 'I could not find a matching entry in the installed Offline Wikipedia archive.';
+          }
+        }
+
+        // Fallback: if the LLM emitted tool calls as raw text instead of
+        // using the structured tool_calls field, try to parse them out.
+        if (
+          (!result.toolCalls || result.toolCalls.length === 0)
+          && result.content
+          && !this._containsProviderReplayState(result.responseItems)
+        ) {
+          const fallback = this._tryParseToolCallsFromText(result.content, allowedToolNames);
+          if (fallback.length > 0) {
+            this._logDebug({ type: 'llm_text_fallback_parse', step: steps, parsed: fallback.map(tc => tc.function.name) });
+            result.toolCalls = fallback;
+            result.content = null;
+          }
+        }
+
+        // Reset recovery flags whenever the model produces real progress. A
+        // placeholder is not progress, but a later tool call or genuine response
+        // should make the next placeholder eligible for its own recovery nudge.
+        const hasToolCallsAfterFallback = !!(result.toolCalls && result.toolCalls.length > 0);
+        const hasContentAfterFallback = !!(result.content && result.content.trim());
+        const isCompressionPlaceholderAfterFallback = this._isActionMode(mode) && this._isCompressionPlaceholderResponse(result.content);
+        if (hasToolCallsAfterFallback || hasContentAfterFallback) {
+          emptyOutputRecoveryAttempted = false;
+          if (hasToolCallsAfterFallback || !isCompressionPlaceholderAfterFallback) {
+            compressionPlaceholderRecoveryAttempted = false;
+          }
+        }
+
+        if (result.costAllowanceMessage && result.toolCalls && result.toolCalls.length > 0) {
+          finalResponse = result.costAllowanceMessage;
           _traceStatus = 'cost_limit';
-          traceFailureCode = 'COST_LIMIT';
-          if (runId) trace.recordStepEnd(runId, steps, { ok: false, code: 'COST_LIMIT' });
           messages.push({ role: 'assistant', content: finalResponse });
           onUpdate('warning', { message: finalResponse });
           break;
         }
-        // If context overflow, trim aggressively and retry once
-        if (this._isContextOverflow(e.message)) {
-          onUpdate('thinking', { step: steps, note: 'Context too large, trimming...' });
-          if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: 'CONTEXT_WINDOW_EXCEEDED' });
-          emergencyTrimMessagesForRun();
-          try {
-            const useTools = provider.supportsTools && tools.length > 0;
-            const chatOpts = {
-              tools: useTools ? tools : undefined,
-              temperature: plannerTemperature,
-                maxTokens: mainMaxTokens,
-              ...(completionToolChoice ? { toolChoice: completionToolChoice } : {}),
-            };
-            const prunedMessages = this._pruneOldImages(modelMessagesForRun(), provider);
-            this._logDebug({ type: 'llm_request_retry', step: steps, provider: provider.constructor.name, messages: prunedMessages, options: chatOpts });
-            result = await chatMainTurn(prunedMessages, chatOpts, { tabId, generationName: 'main' });
-            this._logDebug({ type: 'llm_response_retry', step: steps, content: result.content, toolCalls: result.toolCalls });
-            if (runId) trace.recordStepEnd(runId, steps, this._traceStepEndForResult(result, { retried: true }));
-          } catch (e2) {
-            this._logDebug({ type: 'llm_error_retry', step: steps, error: e2.message });
-            if (this._isCostAllowanceError(e2)) {
-              finalResponse = e2.message;
-              _traceStatus = 'cost_limit';
-              traceFailureCode = 'COST_LIMIT';
-              if (runId) trace.recordStepEnd(runId, steps, { ok: false, code: 'COST_LIMIT' });
-              messages.push({ role: 'assistant', content: finalResponse });
-              onUpdate('warning', { message: finalResponse });
-              break;
-            }
-            const retryCode = this._traceErrorCodeFor(e2);
-            traceFailureCode = retryCode;
-            _traceStatus = 'error';
-            if (runId) trace.recordStepEnd(runId, steps, { ok: false, code: retryCode });
-            onUpdate('error', { message: `Context still too large after trimming: ${e2.message}` });
-            finalResponse = 'The conversation got too long. Please start a new conversation (click the + button).';
-            messages.push({ role: 'assistant', content: finalResponse });
-            break;
+
+        if (result.toolCalls && result.toolCalls.length > 0) {
+          const suppressPlannerContent = this._isPlannerShapedJson(result.content);
+          const assistantToolContent = suppressPlannerContent ? null : (result.content || null);
+          if (suppressPlannerContent) {
+            this._logDebug({ type: 'planner_shaped_content_suppressed', step: steps, toolCallCount: result.toolCalls.length });
           }
-        } else {
-          if (e?.isAskStreamTerminalError === true) {
-            if (this._isWebgpuGenerationBudgetError(e)
-                && this._isStandaloneWebgpuRun(runOptions)
-                && !standaloneWebgpuBudgetRecoveryAttempted
-                && this._compactStandaloneWebgpuRagPrompt(enriched)) {
-              standaloneWebgpuBudgetRecoveryAttempted = true;
-              onUpdate('warning', { message: 'The on-device model ran out of reasoning budget; retrying with a shorter prompt.' });
-              this._persist(tabId);
-              if (runId) {
-                const retryCode = this._traceErrorCodeFor(e);
-                trace.recordStepEnd(runId, steps, { ok: false, code: retryCode });
-                await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: retryCode });
-              }
-              continue;
-            }
-            traceFailureCode = this._traceErrorCodeFor(e);
-            _traceStatus = 'error';
-            if (runId) trace.recordStepEnd(runId, steps, { ok: false, code: traceFailureCode });
-            onUpdate('error', { message: e.message });
-            finalResponse = `Error communicating with LLM: ${e.message}`;
-            messages.push({ role: 'assistant', content: finalResponse });
-            break;
-          }
-          // Retry once after a short delay for transient errors (rate limits, network).
-          this._logDebug({ type: 'llm_error_retrying', step: steps, error: e.message });
-          if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 2000, code: this._traceErrorCodeFor(e) });
-          await new Promise(r => setTimeout(r, 2000));
-          try {
-            const useTools2 = provider.supportsTools && tools.length > 0;
-            const chatOpts2 = {
-              tools: useTools2 ? tools : undefined,
-              temperature: plannerTemperature,
-                maxTokens: mainMaxTokens,
-              ...(completionToolChoice ? { toolChoice: completionToolChoice } : {}),
-            };
-            result = await chatMainTurn(this._pruneOldImages(modelMessagesForRun(), provider), chatOpts2, { tabId, generationName: 'main' });
-            this._logDebug({ type: 'llm_response_after_retry', step: steps, content: result.content, toolCalls: result.toolCalls });
-            if (runId) trace.recordStepEnd(runId, steps, this._traceStepEndForResult(result, { retried: true }));
-          } catch (e2) {
-            this._logDebug({ type: 'llm_error_final', step: steps, error: e2.message });
-            if (this._isCostAllowanceError(e2)) {
-              finalResponse = e2.message;
-              _traceStatus = 'cost_limit';
-              traceFailureCode = 'COST_LIMIT';
-              if (runId) trace.recordStepEnd(runId, steps, { ok: false, code: 'COST_LIMIT' });
-              messages.push({ role: 'assistant', content: finalResponse });
-              onUpdate('warning', { message: finalResponse });
-              break;
-            }
-            traceFailureCode = this._traceErrorCodeFor(e2);
-            _traceStatus = 'error';
-            if (runId) trace.recordStepEnd(runId, steps, { ok: false, code: traceFailureCode });
-            onUpdate('error', { message: e2.message });
-            finalResponse = `Error communicating with LLM: ${e2.message}`;
-            messages.push({ role: 'assistant', content: finalResponse });
-            break;
-          }
-        }
-      }
+          messages.push(this._withResponseItems({
+            role: 'assistant',
+            content: assistantToolContent,
+            tool_calls: result.toolCalls,
+          }, result.responseItems, result.reasoningContent, provider));
 
-      // Check for abort after LLM response
-      if (this._checkAbort(tabId)) {
-        const hadToolCalls = !!(result?.toolCalls && result.toolCalls.length > 0);
-        finalResponse = hadToolCalls
-          ? '[Stopped by user before executing requested tool calls.]'
-          : '[Stopped by user]';
-        _traceStatus = 'cancelled';
-        onUpdate('warning', { message: 'Stopped by user.' });
-        messages.push(this._localCancellationMessage(finalResponse));
-        break;
-      }
-
-      // LFM can emit native Google/Wikipedia search markup even though this
-      // profile advertises no tools. Treat it as a request to search the
-      // installed archive, never as permission to use the browser or network.
-      // The retry is bounded so a model that repeats the markup cannot loop.
-      if (standaloneWebgpuRun && result.content) {
-        const localSearchQueries = this._standaloneWikipediaSearchQueriesFromModelText(result.content, runOptions);
-        if (localSearchQueries.length && !standaloneWikipediaModelSearchAttempted) {
-          standaloneWikipediaModelSearchAttempted = true;
-          const fallbackRag = await this._applyStandaloneWikipediaModelSearch(enriched, result.content, runOptions, {
-            onReferences: references => {
-              standaloneWikipediaReferences = this._mergeStandaloneWikipediaReferences(
-                standaloneWikipediaReferences,
-                references,
-              );
-            },
-          });
-          if (fallbackRag) {
-            runOptions = { ...runOptions, localWikipediaRag: fallbackRag };
-            this._logDebug({
-              type: 'standalone_wikipedia_model_search',
-              step: steps,
-              queryCount: localSearchQueries.length,
-              status: fallbackRag.status,
-              matchCount: fallbackRag.matchCount,
-            });
-            if (fallbackRag.status === 'matched') continue;
-            // The model asked for a search and the archive still had nothing.
-            // standaloneWikipediaModelSearchAttempted already bounds this to one
-            // pass, so hand it the ungrounded policy and let it answer.
-            standaloneGroundingGap = this._standaloneOfflineGroundingGap(fallbackRag, runOptions)
-              || standaloneGroundingGap;
-            _traceStatus = 'grounding_unavailable';
-            if (runId) trace.recordNote(runId, steps, 'standalone_wikipedia_rag', { ...fallbackRag });
-            if (standaloneGroundingGap) {
-              this._appendStandaloneUngroundedPolicy(enriched, standaloneGroundingGap);
-              continue;
-            }
-          }
-        } else if (localSearchQueries.length) {
-          result.content = runOptions.localWikipediaRag?.status === 'matched'
-            ? 'I found relevant Offline Wikipedia references, but the on-device model could not turn them into a reliable answer. Please try rephrasing the question.'
-            : 'I could not find a matching entry in the installed Offline Wikipedia archive.';
-        }
-      }
-
-      // Fallback: if the LLM emitted tool calls as raw text instead of
-      // using the structured tool_calls field, try to parse them out.
-      if (
-        (!result.toolCalls || result.toolCalls.length === 0)
-        && result.content
-        && !this._containsProviderReplayState(result.responseItems)
-      ) {
-        const fallback = this._tryParseToolCallsFromText(result.content, allowedToolNames);
-        if (fallback.length > 0) {
-          this._logDebug({ type: 'llm_text_fallback_parse', step: steps, parsed: fallback.map(tc => tc.function.name) });
-          result.toolCalls = fallback;
-          result.content = null;
-        }
-      }
-
-      // Reset recovery flags whenever the model produces real progress. A
-      // placeholder is not progress, but a later tool call or genuine response
-      // should make the next placeholder eligible for its own recovery nudge.
-      const hasToolCallsAfterFallback = !!(result.toolCalls && result.toolCalls.length > 0);
-      const hasContentAfterFallback = !!(result.content && result.content.trim());
-      const isCompressionPlaceholderAfterFallback = this._isActionMode(mode) && this._isCompressionPlaceholderResponse(result.content);
-      if (hasToolCallsAfterFallback || hasContentAfterFallback) {
-        emptyOutputRecoveryAttempted = false;
-        if (hasToolCallsAfterFallback || !isCompressionPlaceholderAfterFallback) {
-          compressionPlaceholderRecoveryAttempted = false;
-        }
-      }
-
-      if (result.costAllowanceMessage && result.toolCalls && result.toolCalls.length > 0) {
-        finalResponse = result.costAllowanceMessage;
-        _traceStatus = 'cost_limit';
-        messages.push({ role: 'assistant', content: finalResponse });
-        onUpdate('warning', { message: finalResponse });
-        break;
-      }
-
-      if (result.toolCalls && result.toolCalls.length > 0) {
-        const suppressPlannerContent = this._isPlannerShapedJson(result.content);
-        const assistantToolContent = suppressPlannerContent ? null : (result.content || null);
-        if (suppressPlannerContent) {
-          this._logDebug({ type: 'planner_shaped_content_suppressed', step: steps, toolCallCount: result.toolCalls.length });
-        }
-        messages.push(this._withResponseItems({
-          role: 'assistant',
-          content: assistantToolContent,
-          tool_calls: result.toolCalls,
-        }, result.responseItems, result.reasoningContent, provider));
-
-        const batchResult = await this._executeToolBatch(
-          tabId, result.toolCalls, messages, onUpdate, provider, assistantToolContent, allowedToolNames, steps, runOptions, toolSchemas
-        );
-        if (batchResult.action === 'return') {
-          finalResponse = batchResult.value;
-          if (batchResult.status) {
-            _traceStatus = batchResult.status;
-            onUpdate('run_status', { status: batchResult.status, message: batchResult.value });
-          }
-          return finalResponse;
-        }
-        if (batchResult.action === 'deliver') {
-          const recovery = await this._recoverDeliveryCheckpointTurn(
-            tabId, messages, onUpdate, provider, costState, runId, steps,
-            batchResult.value, runOptions, enriched, sourceBoundPriorMessages,
-            batchResult.recovery,
+          const batchResult = await this._executeToolBatch(
+            tabId, result.toolCalls, messages, onUpdate, provider, assistantToolContent, allowedToolNames, steps, runOptions, toolSchemas
           );
-          finalResponse = recovery.content;
-          _traceStatus = recovery.status;
-          return finalResponse;
-        }
-        if (batchResult.action === 'recover') {
-          const recovery = await this._recoverLoopStoppedTurn(
-            tabId, messages, onUpdate, provider, costState, runId, steps,
-            batchResult.value, runOptions, enriched, sourceBoundPriorMessages,
-          );
-          finalResponse = recovery.content;
-          _traceStatus = recovery.status;
-          return finalResponse;
-        }
-        if (batchResult.action === 'abort') {
-          finalResponse = batchResult.value;
-          _traceStatus = 'cancelled';
-          return finalResponse;
-        }
-        if (completionRecoveryPolicy?.kind === 'verification') {
-          const completionState = this.completionInvariants.get(tabId);
-          const verificationPending = !!(
-            completionState?.verificationDebt
-            || completionState?.iframeFormVerificationDebt
-          );
-          allowCompletionFailureTurn = verificationPending
-            && !this._completionVerificationMadeProgress(completionRecoveryStartState, completionState);
-        }
-        if (batchResult.completionRecovery === 'verification') {
-          forceCompletionVerificationTurn = true;
-          forceCompletionDoneAfterVerification = true;
-          allowCompletionFailureTurn = false;
-        } else if (batchResult.completionRecovery === 'done') {
-          forceCompletionDoneTurn = true;
-          allowCompletionFailureTurn = false;
-        } else if (batchResult.completionRecovery === 'release') {
-          forceCompletionDoneTurn = false;
-          allowCompletionFailureTurn = false;
-        }
-        // 'continue' → fall through to next loop iteration
-        continue;
-      }
-
-      // No tool calls. Two sub-cases:
-      //   (a) Model returned non-empty content → genuine final answer.
-      //   (b) Model returned NEITHER content NOR tool calls. This is the
-      //       "model gave up mid-thought" failure mode (often after burning
-      //       its output budget on internal reasoning_tokens). We try to
-      //       recover ONCE with a mode-aware nudge; if the
-      //       second attempt also comes back empty we abandon the run with
-      //       a transparent failure message instead of silently recording
-      //       a "done" run with empty content (the previous behavior).
-      const isEmpty = !result.content || !result.content.trim();
-      if (isEmpty && result.costAllowanceMessage) {
-        finalResponse = result.costAllowanceMessage;
-        _traceStatus = 'cost_limit';
-        messages.push({ role: 'assistant', content: finalResponse });
-        onUpdate('warning', { message: finalResponse });
-        break;
-      }
-      if (this._isActionMode(mode) && this._isCompressionPlaceholderResponse(result.content)) {
-        if (!compressionPlaceholderRecoveryAttempted) {
-          compressionPlaceholderRecoveryAttempted = true;
-          messages.push(this._withResponseItems({ role: 'assistant', content: result.content }, result.responseItems, result.reasoningContent, provider));
-          messages.push({
-            role: 'user',
-            content: '[System nudge: your previous response was a context-compression placeholder, not a real final answer or tool call. Continue the active browser task with tool calls. Do not output "[compressed]".]',
-          });
-          onUpdate('warning', { message: 'Model returned a compression placeholder; continuing.' });
-          this._persist(tabId);
-          continue;
-        }
-        const scheduledResume = await this._scheduleAutoProgressResume(tabId, onUpdate);
-        if (scheduledResume) {
-          finalResponse = scheduledResume.message;
-          _traceStatus = 'scheduled_resume';
-          messages.push({ role: 'assistant', content: finalResponse });
-          this._persist(tabId);
-          break;
-        }
-        finalResponse = '[Agent stopped because the model returned a context-compression placeholder instead of a tool call or real final answer, even after a recovery nudge.]';
-        _traceStatus = 'placeholder_output';
-        messages.push({ role: 'assistant', content: finalResponse });
-        onUpdate('warning', { message: finalResponse });
-        break;
-      }
-      if (isEmpty) {
-        if (!emptyOutputRecoveryAttempted) {
-          emptyOutputRecoveryAttempted = true;
-          messages.push({
-            role: 'user',
-            content: this._emptyOutputRecoveryNudge(mode),
-          });
-          this._persist(tabId);
-          if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: 'EMPTY_RESPONSE' });
-          continue; // give the model one more turn to recover
-        }
-        const scheduledResume = await this._scheduleAutoProgressResume(tabId, onUpdate);
-        if (scheduledResume) {
-          finalResponse = scheduledResume.message;
-          _traceStatus = 'scheduled_resume';
-          messages.push({ role: 'assistant', content: finalResponse });
-          this._persist(tabId);
-          break;
-        }
-        // Second empty in a row: give up with a transparent message.
-        finalResponse = emptyOutputFailureMessage(modelOutputDiagnostics(result, {
-          requestedMaxTokens: mainMaxTokens,
-          recoveryAttempt: 2,
-        }));
-        _traceStatus = 'empty_output';
-        traceFailureCode = 'EMPTY_RESPONSE';
-        messages.push({ role: 'assistant', content: finalResponse });
-        onUpdate('warning', { message: finalResponse });
-        break;
-      }
-      if (mode === 'ask' && runOptions?.cloudRun === true && cloudRunContext?.outputSchema != null) {
-        if (!structuredOutputRecoveryAttempted) {
-          structuredOutputRecoveryAttempted = true;
-          messages.push(this._withResponseItems(
-            { role: 'assistant', content: result.content },
-            result.responseItems,
-            result.reasoningContent,
-            provider,
-          ));
-          messages.push({
-            role: 'user',
-            content: '[System nudge: this cloud run requires structured output. Do not return a prose final. Call done_json with a result that satisfies the supplied output schema.]',
-          });
-          onUpdate('warning', { message: 'Structured Ask output requires done_json; continuing.' });
-          this._persist(tabId);
-          continue;
-        }
-        finalResponse = '[Structured cloud run stopped because the model returned prose instead of calling done_json after a recovery nudge.]';
-        _traceStatus = 'required_tool_missing';
-        messages.push({ role: 'assistant', content: finalResponse });
-        onUpdate('warning', { message: finalResponse });
-        break;
-      }
-      // Genuine final answer — emit and exit. Repeated-item progress recovery
-      // takes priority so an unresolved ledger can still drive the next tool turn.
-      const clarificationFinalDecision = this._isActionMode(mode)
-        ? this._clarificationAuthorizationPlainFinalDecision(tabId)
-        : null;
-      if (clarificationFinalDecision?.retry && steps < this.maxSteps) {
-        messages.push(this._withResponseItems({ role: 'assistant', content: result.content }, result.responseItems, result.reasoningContent, provider));
-        messages.push(this._appOwnedUserMessage(
-          clarificationFinalDecision.nudge,
-          'clarification_authorization',
-        ));
-        onUpdate('warning', { message: 'Plain final completion blocked until the user answers the clarification explicitly.' });
-        await this._persistNow(tabId);
-        continue;
-      }
-      if (clarificationFinalDecision?.failure) {
-        finalResponse = clarificationFinalDecision.failure;
-        _traceStatus = clarificationFinalDecision.status;
-        messages.push({ role: 'assistant', content: finalResponse });
-        onUpdate('text', { content: finalResponse, replace: true });
-        onUpdate('warning', { message: 'Run stopped because explicit clarification authorization is still required.' });
-        onUpdate('run_status', { status: clarificationFinalDecision.status, message: finalResponse });
-        await this._persistNow(tabId);
-        return finalResponse;
-      }
-      const readFinalLimitation = this._readCompletenessLimitation(tabId);
-      if (readFinalLimitation) {
-        finalResponse = readFinalLimitation;
-        _traceStatus = 'read_scope_limited';
-        messages.push({ role: 'assistant', content: finalResponse });
-        onUpdate('text', { content: finalResponse, replace: true });
-        onUpdate('warning', { message: 'Ask mode could not verify that every Gmail message was expanded.' });
-        await this._persistNow(tabId);
-        return finalResponse;
-      }
-      const progressFinalBlock = this._plainFinalProgressBlock(tabId);
-      const completionFinalBlock = this._completionPlainFinalBlock(tabId);
-      const readFinalBlock = this._readCompletenessBlock(tabId);
-      const plainFinalBlocks = [progressFinalBlock, completionFinalBlock, readFinalBlock].filter(Boolean);
-      if (plainFinalBlocks.length) {
-        if (completionFinalBlock && completionPlainFinalRecoveryAttempted >= 2) {
-          finalResponse = this._completionPlainFinalPartial(tabId, result.content, {
-            progressBlocked: !!progressFinalBlock,
-            readBlocked: !!readFinalBlock,
-          });
-          _traceStatus = 'partial';
-          messages.push({ role: 'assistant', content: finalResponse });
-          onUpdate('text', { content: finalResponse, replace: true });
-          onUpdate('warning', { message: 'Run stopped after a repeated unstructured completion response.' });
-          onUpdate('run_status', { status: 'partial', message: finalResponse });
-          await this._persistNow(tabId);
-          return finalResponse;
-        }
-        if (completionFinalBlock) completionPlainFinalRecoveryAttempted++;
-        if (completionFinalBlock && completionPlainFinalRecoveryAttempted >= 2 && steps >= this.maxSteps) {
-          finalResponse = this._completionPlainFinalPartial(tabId, result.content, {
-            progressBlocked: !!progressFinalBlock,
-            readBlocked: !!readFinalBlock,
-          });
-          _traceStatus = 'partial';
-          messages.push({ role: 'assistant', content: finalResponse });
-          onUpdate('text', { content: finalResponse, replace: true });
-          onUpdate('warning', { message: 'Run stopped after a repeated unstructured completion response.' });
-          onUpdate('run_status', { status: 'partial', message: finalResponse });
-          await this._persistNow(tabId);
-          return finalResponse;
-        }
-        if (completionFinalBlock && !progressFinalBlock && !readFinalBlock && !this._richTextToolbarGuard.hasPending(tabId)) {
-          const completionState = this.completionInvariants.get(tabId);
-          if (completionState?.verificationDebt || completionState?.iframeFormVerificationDebt) {
+          if (batchResult.action === 'return') {
+            finalResponse = batchResult.value;
+            if (batchResult.status) {
+              _traceStatus = batchResult.status;
+              onUpdate('run_status', { status: batchResult.status, message: batchResult.value });
+            }
+            return finalResponse;
+          }
+          if (batchResult.action === 'deliver') {
+            const recovery = await this._recoverDeliveryCheckpointTurn(
+              tabId, messages, onUpdate, provider, costState, runId, steps,
+              batchResult.value, runOptions, enriched, sourceBoundPriorMessages,
+              batchResult.recovery,
+            );
+            finalResponse = recovery.content;
+            _traceStatus = recovery.status;
+            return finalResponse;
+          }
+          if (batchResult.action === 'recover') {
+            const recovery = await this._recoverLoopStoppedTurn(
+              tabId, messages, onUpdate, provider, costState, runId, steps,
+              batchResult.value, runOptions, enriched, sourceBoundPriorMessages,
+            );
+            finalResponse = recovery.content;
+            _traceStatus = recovery.status;
+            return finalResponse;
+          }
+          if (batchResult.action === 'abort') {
+            finalResponse = batchResult.value;
+            _traceStatus = 'cancelled';
+            return finalResponse;
+          }
+          if (completionRecoveryPolicy?.kind === 'verification') {
+            const completionState = this.completionInvariants.get(tabId);
+            const verificationPending = !!(
+              completionState?.verificationDebt
+              || completionState?.iframeFormVerificationDebt
+            );
+            allowCompletionFailureTurn = verificationPending
+              && !this._completionVerificationMadeProgress(completionRecoveryStartState, completionState);
+          }
+          if (batchResult.completionRecovery === 'verification') {
             forceCompletionVerificationTurn = true;
             forceCompletionDoneAfterVerification = true;
-          } else {
+            allowCompletionFailureTurn = false;
+          } else if (batchResult.completionRecovery === 'done') {
             forceCompletionDoneTurn = true;
+            allowCompletionFailureTurn = false;
+          } else if (batchResult.completionRecovery === 'release') {
+            forceCompletionDoneTurn = false;
+            allowCompletionFailureTurn = false;
           }
+          // 'continue' → fall through to next loop iteration
+          continue;
         }
-        messages.push(this._withResponseItems({ role: 'assistant', content: result.content }, result.responseItems, result.reasoningContent, provider));
-        messages.push(this._appOwnedUserMessage(plainFinalBlocks.join('\n\n'), 'plain_final_block'));
-        if (completionFinalBlock || readFinalBlock) onUpdate('text', { content: '', replace: true });
-        onUpdate('warning', { message: readFinalBlock
-          ? 'Whole-thread answer blocked until every read page is covered.'
-          : completionFinalBlock
-            ? 'Runtime completion invariant requires an explicit done outcome.'
-            : 'Progress ledger has unresolved rows; continuing.' });
-        this._persist(tabId);
-        continue;
-      }
-      const planOnlyDecision = this._planOnlyTerminalDecision(tabId, result.content);
-      if (planOnlyDecision?.retry) {
-        messages.push(this._withResponseItems(
-          {
-            role: 'assistant',
-            content: planOnlyDecision.retryAssistantContent ?? result.content,
-          },
-          planOnlyDecision.retryAssistantContent ? null : result.responseItems,
-          planOnlyDecision.retryAssistantContent ? '' : result.reasoningContent,
-          provider,
-        ));
-        messages.push(this._appOwnedUserMessage(planOnlyDecision.nudge, 'plan_execution_block'));
-        // Clear any already-rendered plan/promise so recovery does not leave
-        // rejected terminal text in the assistant bubble (and so run-complete
-        // can write the real summary into an empty bubble).
-        onUpdate('text', { content: '', replace: true });
-        onUpdate('warning', { message: 'Plan-only response was rejected; continuing into execution.' });
-        this._persist(tabId);
-        continue;
-      }
-      if (planOnlyDecision?.failure) {
-        finalResponse = planOnlyDecision.failure;
-        _traceStatus = planOnlyDecision.status || 'plan_only_output';
-        messages.push({ role: 'assistant', content: finalResponse });
-        onUpdate('warning', { message: finalResponse });
-        break;
-      }
-      if (this._isClearlyIncompleteStandaloneAnswer(result.content, runOptions)) {
-        if (!standaloneIncompleteAnswerRecoveryAttempted) {
-          standaloneIncompleteAnswerRecoveryAttempted = true;
+
+        // No tool calls. Two sub-cases:
+        //   (a) Model returned non-empty content → genuine final answer.
+        //   (b) Model returned NEITHER content NOR tool calls. This is the
+        //       "model gave up mid-thought" failure mode (often after burning
+        //       its output budget on internal reasoning_tokens). We try to
+        //       recover ONCE with a mode-aware nudge; if the
+        //       second attempt also comes back empty we abandon the run with
+        //       a transparent failure message instead of silently recording
+        //       a "done" run with empty content (the previous behavior).
+        const isEmpty = !result.content || !result.content.trim();
+        if (isEmpty && result.costAllowanceMessage) {
+          finalResponse = result.costAllowanceMessage;
+          _traceStatus = 'cost_limit';
+          messages.push({ role: 'assistant', content: finalResponse });
+          onUpdate('warning', { message: finalResponse });
+          break;
+        }
+        if (this._isActionMode(mode) && this._isCompressionPlaceholderResponse(result.content)) {
+          if (!compressionPlaceholderRecoveryAttempted) {
+            compressionPlaceholderRecoveryAttempted = true;
+            messages.push(this._withResponseItems({ role: 'assistant', content: result.content }, result.responseItems, result.reasoningContent, provider));
+            messages.push({
+              role: 'user',
+              content: '[System nudge: your previous response was a context-compression placeholder, not a real final answer or tool call. Continue the active browser task with tool calls. Do not output "[compressed]".]',
+            });
+            onUpdate('warning', { message: 'Model returned a compression placeholder; continuing.' });
+            this._persist(tabId);
+            continue;
+          }
+          const scheduledResume = await this._scheduleAutoProgressResume(tabId, onUpdate);
+          if (scheduledResume) {
+            finalResponse = scheduledResume.message;
+            _traceStatus = 'scheduled_resume';
+            messages.push({ role: 'assistant', content: finalResponse });
+            this._persist(tabId);
+            break;
+          }
+          finalResponse = '[Agent stopped because the model returned a context-compression placeholder instead of a tool call or real final answer, even after a recovery nudge.]';
+          _traceStatus = 'placeholder_output';
+          messages.push({ role: 'assistant', content: finalResponse });
+          onUpdate('warning', { message: finalResponse });
+          break;
+        }
+        if (isEmpty) {
+          if (!emptyOutputRecoveryAttempted) {
+            emptyOutputRecoveryAttempted = true;
+            messages.push({
+              role: 'user',
+              content: this._emptyOutputRecoveryNudge(mode),
+            });
+            this._persist(tabId);
+            if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: 'EMPTY_RESPONSE' });
+            continue; // give the model one more turn to recover
+          }
+          const scheduledResume = await this._scheduleAutoProgressResume(tabId, onUpdate);
+          if (scheduledResume) {
+            finalResponse = scheduledResume.message;
+            _traceStatus = 'scheduled_resume';
+            messages.push({ role: 'assistant', content: finalResponse });
+            this._persist(tabId);
+            break;
+          }
+          // Second empty in a row: give up with a transparent message.
+          finalResponse = emptyOutputFailureMessage(modelOutputDiagnostics(result, {
+            requestedMaxTokens: mainMaxTokens,
+            recoveryAttempt: 2,
+          }));
+          _traceStatus = 'empty_output';
+          traceFailureCode = 'EMPTY_RESPONSE';
+          messages.push({ role: 'assistant', content: finalResponse });
+          onUpdate('warning', { message: finalResponse });
+          break;
+        }
+        if (mode === 'ask' && runOptions?.cloudRun === true && cloudRunContext?.outputSchema != null) {
+          if (!structuredOutputRecoveryAttempted) {
+            structuredOutputRecoveryAttempted = true;
+            messages.push(this._withResponseItems(
+              { role: 'assistant', content: result.content },
+              result.responseItems,
+              result.reasoningContent,
+              provider,
+            ));
+            messages.push({
+              role: 'user',
+              content: '[System nudge: this cloud run requires structured output. Do not return a prose final. Call done_json with a result that satisfies the supplied output schema.]',
+            });
+            onUpdate('warning', { message: 'Structured Ask output requires done_json; continuing.' });
+            this._persist(tabId);
+            continue;
+          }
+          finalResponse = '[Structured cloud run stopped because the model returned prose instead of calling done_json after a recovery nudge.]';
+          _traceStatus = 'required_tool_missing';
+          messages.push({ role: 'assistant', content: finalResponse });
+          onUpdate('warning', { message: finalResponse });
+          break;
+        }
+        // Genuine final answer — emit and exit. Repeated-item progress recovery
+        // takes priority so an unresolved ledger can still drive the next tool turn.
+        const clarificationFinalDecision = this._isActionMode(mode)
+          ? this._clarificationAuthorizationPlainFinalDecision(tabId)
+          : null;
+        if (clarificationFinalDecision?.retry && steps < this.maxSteps) {
           messages.push(this._withResponseItems({ role: 'assistant', content: result.content }, result.responseItems, result.reasoningContent, provider));
           messages.push(this._appOwnedUserMessage(
-            this._standaloneIncompleteAnswerNudge(standaloneGroundingGap),
-            'standalone_answer_recovery',
+            clarificationFinalDecision.nudge,
+            'clarification_authorization',
           ));
-          onUpdate('warning', { message: 'The on-device response ended mid-sentence; retrying once.' });
+          onUpdate('warning', { message: 'Plain final completion blocked until the user answers the clarification explicitly.' });
+          await this._persistNow(tabId);
+          continue;
+        }
+        if (clarificationFinalDecision?.failure) {
+          finalResponse = clarificationFinalDecision.failure;
+          _traceStatus = clarificationFinalDecision.status;
+          messages.push({ role: 'assistant', content: finalResponse });
+          onUpdate('text', { content: finalResponse, replace: true });
+          onUpdate('warning', { message: 'Run stopped because explicit clarification authorization is still required.' });
+          onUpdate('run_status', { status: clarificationFinalDecision.status, message: finalResponse });
+          await this._persistNow(tabId);
+          return finalResponse;
+        }
+        const readFinalLimitation = this._readCompletenessLimitation(tabId);
+        if (readFinalLimitation) {
+          finalResponse = readFinalLimitation;
+          _traceStatus = 'read_scope_limited';
+          messages.push({ role: 'assistant', content: finalResponse });
+          onUpdate('text', { content: finalResponse, replace: true });
+          onUpdate('warning', { message: 'Ask mode could not verify that every Gmail message was expanded.' });
+          await this._persistNow(tabId);
+          return finalResponse;
+        }
+        const progressFinalBlock = this._plainFinalProgressBlock(tabId);
+        const completionFinalBlock = this._completionPlainFinalBlock(tabId);
+        const readFinalBlock = this._readCompletenessBlock(tabId);
+        const plainFinalBlocks = [progressFinalBlock, completionFinalBlock, readFinalBlock].filter(Boolean);
+        if (plainFinalBlocks.length) {
+          if (completionFinalBlock && completionPlainFinalRecoveryAttempted >= 2) {
+            finalResponse = this._completionPlainFinalPartial(tabId, result.content, {
+              progressBlocked: !!progressFinalBlock,
+              readBlocked: !!readFinalBlock,
+            });
+            _traceStatus = 'partial';
+            messages.push({ role: 'assistant', content: finalResponse });
+            onUpdate('text', { content: finalResponse, replace: true });
+            onUpdate('warning', { message: 'Run stopped after a repeated unstructured completion response.' });
+            onUpdate('run_status', { status: 'partial', message: finalResponse });
+            await this._persistNow(tabId);
+            return finalResponse;
+          }
+          if (completionFinalBlock) completionPlainFinalRecoveryAttempted++;
+          if (completionFinalBlock && completionPlainFinalRecoveryAttempted >= 2 && steps >= this.maxSteps) {
+            finalResponse = this._completionPlainFinalPartial(tabId, result.content, {
+              progressBlocked: !!progressFinalBlock,
+              readBlocked: !!readFinalBlock,
+            });
+            _traceStatus = 'partial';
+            messages.push({ role: 'assistant', content: finalResponse });
+            onUpdate('text', { content: finalResponse, replace: true });
+            onUpdate('warning', { message: 'Run stopped after a repeated unstructured completion response.' });
+            onUpdate('run_status', { status: 'partial', message: finalResponse });
+            await this._persistNow(tabId);
+            return finalResponse;
+          }
+          if (completionFinalBlock && !progressFinalBlock && !readFinalBlock && !this._richTextToolbarGuard.hasPending(tabId)) {
+            const completionState = this.completionInvariants.get(tabId);
+            if (completionState?.verificationDebt || completionState?.iframeFormVerificationDebt) {
+              forceCompletionVerificationTurn = true;
+              forceCompletionDoneAfterVerification = true;
+            } else {
+              forceCompletionDoneTurn = true;
+            }
+          }
+          messages.push(this._withResponseItems({ role: 'assistant', content: result.content }, result.responseItems, result.reasoningContent, provider));
+          messages.push(this._appOwnedUserMessage(plainFinalBlocks.join('\n\n'), 'plain_final_block'));
+          if (completionFinalBlock || readFinalBlock) onUpdate('text', { content: '', replace: true });
+          onUpdate('warning', {
+            message: readFinalBlock
+              ? 'Whole-thread answer blocked until every read page is covered.'
+              : completionFinalBlock
+                ? 'Runtime completion invariant requires an explicit done outcome.'
+                : 'Progress ledger has unresolved rows; continuing.'
+          });
           this._persist(tabId);
           continue;
         }
-        finalResponse = 'The on-device model ended its response unexpectedly twice. Please try again.';
-        _traceStatus = 'incomplete_output';
-        traceFailureCode = 'EMPTY_RESPONSE';
-        messages.push({ role: 'assistant', content: finalResponse });
+        const planOnlyDecision = this._planOnlyTerminalDecision(tabId, result.content);
+        if (planOnlyDecision?.retry) {
+          messages.push(this._withResponseItems(
+            {
+              role: 'assistant',
+              content: planOnlyDecision.retryAssistantContent ?? result.content,
+            },
+            planOnlyDecision.retryAssistantContent ? null : result.responseItems,
+            planOnlyDecision.retryAssistantContent ? '' : result.reasoningContent,
+            provider,
+          ));
+          messages.push(this._appOwnedUserMessage(planOnlyDecision.nudge, 'plan_execution_block'));
+          // Clear any already-rendered plan/promise so recovery does not leave
+          // rejected terminal text in the assistant bubble (and so run-complete
+          // can write the real summary into an empty bubble).
+          onUpdate('text', { content: '', replace: true });
+          onUpdate('warning', { message: 'Plan-only response was rejected; continuing into execution.' });
+          this._persist(tabId);
+          continue;
+        }
+        if (planOnlyDecision?.failure) {
+          finalResponse = planOnlyDecision.failure;
+          _traceStatus = planOnlyDecision.status || 'plan_only_output';
+          messages.push({ role: 'assistant', content: finalResponse });
+          onUpdate('warning', { message: finalResponse });
+          break;
+        }
+        if (this._isClearlyIncompleteStandaloneAnswer(result.content, runOptions)) {
+          if (!standaloneIncompleteAnswerRecoveryAttempted) {
+            standaloneIncompleteAnswerRecoveryAttempted = true;
+            messages.push(this._withResponseItems({ role: 'assistant', content: result.content }, result.responseItems, result.reasoningContent, provider));
+            messages.push(this._appOwnedUserMessage(
+              this._standaloneIncompleteAnswerNudge(standaloneGroundingGap),
+              'standalone_answer_recovery',
+            ));
+            onUpdate('warning', { message: 'The on-device response ended mid-sentence; retrying once.' });
+            this._persist(tabId);
+            continue;
+          }
+          finalResponse = 'The on-device model ended its response unexpectedly twice. Please try again.';
+          _traceStatus = 'incomplete_output';
+          traceFailureCode = 'EMPTY_RESPONSE';
+          messages.push({ role: 'assistant', content: finalResponse });
+          onUpdate('text', { content: finalResponse, replace: true });
+          onUpdate('warning', { message: finalResponse });
+          break;
+        }
+        const repairedFinalContent = repairAssistantDisplayText(result.content);
+        finalResponse = result.costAllowanceMessage
+          ? `${repairedFinalContent}\n\n${result.costAllowanceMessage}`
+          : repairedFinalContent;
+        finalResponse = this._withStandaloneWikipediaAttribution(
+          finalResponse,
+          standaloneWikipediaReferences,
+          runOptions,
+        );
+        finalResponse = this._withStandaloneUnverifiedNotice(finalResponse, standaloneGroundingGap, runOptions);
+        messages.push(this._withResponseItems({ role: 'assistant', content: finalResponse }, result.responseItems, result.reasoningContent, provider));
         onUpdate('text', { content: finalResponse, replace: true });
-        onUpdate('warning', { message: finalResponse });
         break;
       }
-      const repairedFinalContent = repairAssistantDisplayText(result.content);
-      finalResponse = result.costAllowanceMessage
-        ? `${repairedFinalContent}\n\n${result.costAllowanceMessage}`
-        : repairedFinalContent;
-      finalResponse = this._withStandaloneWikipediaAttribution(
-        finalResponse,
-        standaloneWikipediaReferences,
-        runOptions,
-      );
-      finalResponse = this._withStandaloneUnverifiedNotice(finalResponse, standaloneGroundingGap, runOptions);
-      messages.push(this._withResponseItems({ role: 'assistant', content: finalResponse }, result.responseItems, result.reasoningContent, provider));
-      onUpdate('text', { content: finalResponse, replace: true });
-      break;
-    }
 
-    if (steps >= this.maxSteps) {
-      _traceStatus = 'max_steps';
-      // The normal loop is over: expose no browser tools, but give the model
-      // one bounded chance to turn already-collected evidence into an explicit
-      // partial/failed done result. This applies to KavachWeb Cloud too without
-      // changing its deliberately advisory in-loop observation checkpoints.
-      let handoffCancelled = false;
-      if (!finalResponse || !finalResponse.trim()) {
-        const fallback = this._buildStepLimitSummary(messages, steps);
-        if (this._stepLimitRecoveryEligible(provider, runOptions)) {
-          const recovery = await this._recoverDeliveryCheckpointTurn(
-            tabId, messages, onUpdate, provider, costState, runId, steps,
-            fallback, runOptions, enriched, sourceBoundPriorMessages,
-            { phase: 'step_limit_recovery' },
-          );
-          finalResponse = recovery.content;
-          if (recovery.status === 'cancelled') {
-            _traceStatus = 'cancelled';
-            handoffCancelled = true;
+      if (steps >= this.maxSteps) {
+        _traceStatus = 'max_steps';
+        // The normal loop is over: expose no browser tools, but give the model
+        // one bounded chance to turn already-collected evidence into an explicit
+        // partial/failed done result. This applies to KavachWeb Cloud too without
+        // changing its deliberately advisory in-loop observation checkpoints.
+        let handoffCancelled = false;
+        if (!finalResponse || !finalResponse.trim()) {
+          const fallback = this._buildStepLimitSummary(messages, steps);
+          if (this._stepLimitRecoveryEligible(provider, runOptions)) {
+            const recovery = await this._recoverDeliveryCheckpointTurn(
+              tabId, messages, onUpdate, provider, costState, runId, steps,
+              fallback, runOptions, enriched, sourceBoundPriorMessages,
+              { phase: 'step_limit_recovery' },
+            );
+            finalResponse = recovery.content;
+            if (recovery.status === 'cancelled') {
+              _traceStatus = 'cancelled';
+              handoffCancelled = true;
+            } else {
+              // Keep the max_steps trace signal so Compass improvement traces
+              // still see the step-limit stop; the delivered handoff outcome
+              // travels separately in the turn_end payload (see finally).
+              traceTurnEndExtra = { handoffOutcome: recovery.status };
+            }
           } else {
-            // Keep the max_steps trace signal so Compass improvement traces
-            // still see the step-limit stop; the delivered handoff outcome
-            // travels separately in the turn_end payload (see finally).
-            traceTurnEndExtra = { handoffOutcome: recovery.status };
+            finalResponse = fallback;
+            messages.push({ role: 'assistant', content: finalResponse });
+            onUpdate('text', { content: finalResponse });
           }
-        } else {
-          finalResponse = fallback;
-          messages.push({ role: 'assistant', content: finalResponse });
-          onUpdate('text', { content: finalResponse });
         }
+        // This event enables Continue in the side panel. Emit it only after the
+        // awaited terminal handoff has settled so the user cannot start a second
+        // run while recovery still owns the tab. A Stop pressed during the
+        // handoff is the user's own terminal decision: emitting it there would
+        // relabel the run journal's last error as a step-limit stop and replay a
+        // cancelled run as completed after a background restart.
+        if (!handoffCancelled) onUpdate('max_steps_reached', { steps: this.maxSteps });
       }
-      // This event enables Continue in the side panel. Emit it only after the
-      // awaited terminal handoff has settled so the user cannot start a second
-      // run while recovery still owns the tab. A Stop pressed during the
-      // handoff is the user's own terminal decision: emitting it there would
-      // relabel the run journal's last error as a step-limit stop and replay a
-      // cancelled run as completed after a background restart.
-      if (!handoffCancelled) onUpdate('max_steps_reached', { steps: this.maxSteps });
-    }
 
-    this._persist(tabId);
-    return finalResponse;
+      this._persist(tabId);
+      return finalResponse;
     } catch (error) {
       const message = formatErrorMessage(error);
       _traceStatus = 'error';
@@ -36961,7 +36968,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
   /**
    * Process a message with streaming output.
    */
-  async processMessageStream(tabId, userMessage, onUpdate = () => {}, mode = 'ask', runOptions = {}) {
+  async processMessageStream(tabId, userMessage, onUpdate = () => { }, mode = 'ask', runOptions = {}) {
     await this._claimRunEntry(tabId, 'interactive', runOptions);
     let continuationEligible = false;
     const emitUpdate = onUpdate;
@@ -36987,7 +36994,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       : null;
     if (runOptions?.trustedContinuation !== true) this._continuationResponseLanguagePolicies.delete(tabId);
     if (hadContinuationResponseLanguagePolicy) {
-      try { await this._persistNow(tabId); } catch {}
+      try { await this._persistNow(tabId); } catch { }
     }
     runOptions = { ...runOptions, trustedContinuationResponseLanguagePolicy };
     this._resetActiveSkillsForRun(tabId, { refreshPrompt: false });
@@ -37040,7 +37047,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
       else this._standaloneWebgpuRunTabs.delete(tabId);
       this.responseLanguagePolicies.delete(tabId);
       if (continuationResponseLanguagePolicyStored) {
-        try { await this._persistNow(tabId); } catch {}
+        try { await this._persistNow(tabId); } catch { }
       }
       this._resetActiveSkillsForRun(tabId);
       if (runOptions.cloudRun) {
@@ -37086,7 +37093,7 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     this.permissions.beginTurn(tabId);
 
     // Keep the streaming path aligned with the non-streaming entrypoint.
-    try { await this.providerManager.prepareActiveProviderCapabilities?.(); } catch {}
+    try { await this.providerManager.prepareActiveProviderCapabilities?.(); } catch { }
 
     const selectionOnly = isSelectionSourceGrounding(runOptions?.sourceGrounding);
     const standaloneChatRun = this._isStandaloneChatRun(runOptions);
@@ -37193,149 +37200,75 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
     // Match the non-streaming path: diagnostics must be live before the first
     // Dev action so console and network tools include activity from this run.
     if (mode === 'dev' && !standaloneChatRun) {
-      try { await cdpClient.enableDevDiagnostics(tabId); } catch {}
+      try { await cdpClient.enableDevDiagnostics(tabId); } catch { }
     }
 
     // All throwing work — trace start, planner gate, run setup, and the agent
     // loop — runs inside this try so the finally always ends the trace run and
     // clears currentRunId, even on an early throw during setup. (#2)
     try {
-    let plannerTabInfo = null;
-    const readScopePreflight = !selectionOnly && !standaloneChatRun && this._readCompletenessNeedsScopeClassification(tabId);
-    if ((this._isActionMode(mode) && runOptions?.cloudRun !== true && !standaloneChatRun) || readScopePreflight) {
-      // Fetch once for trace metadata. The planner normally reuses it, but a
-      // source-bound selection must not receive page URL/title context.
-      const traceTabInfo = await this._getTabUrlTitle(tabId);
-      plannerTabInfo = selectionOnly || standaloneChatRun ? { tabUrl: '', tabTitle: '' } : traceTabInfo;
-      runId = await this._startTraceRun(
-        tabId, userMessage, mode, provider, traceTabInfo, runOptions,
-      );
-    }
-
-    const gateOutcome = await this._maybeRunPlannerGate(
-      tabId, messages, enriched, onUpdate, mode, costState, runId, plannerTabInfo, runOptions,
-    );
-    if (!gateOutcome.proceed) {
-      const status = gateOutcome.reason === 'cost_limit'
-        ? 'cost_limit'
-        : (gateOutcome.reason === 'plan_only' ? 'plan_only_output' : gateOutcome.reason || 'cancelled');
-      return finish(gateOutcome.message || 'More information is required.', status);
-    }
-    const responseLanguagePolicy = runOptions?.trustedContinuationResponseLanguagePolicy
-      || gateOutcome.responseLanguagePolicy
-      || (selectionOnly ? selectionScopedResponseLanguagePolicy(runOptions?.locale) : null);
-    this._setResponseLanguagePolicy(tabId, responseLanguagePolicy, runOptions?.locale || 'en', {
-      approvedPlanLanguageOverride: responseLanguagePolicy?.approved_plan_language_override === true
-        || gateOutcome.responseLanguageApprovedPlanOverride === true,
-      trustedContinuation: runOptions?.trustedContinuation === true,
-    });
-    if (gateOutcome.responseOnly === true) {
-      const responseOnly = await this._completeResponseOnlyTurn(
-        tabId, messages, onUpdate, provider, costState, runId,
-        runOptions, enriched, sourceBoundPriorMessages,
-      );
-      return finish(responseOnly.content, responseOnly.status);
-    }
-    if (this._consumeSelectionGroundingRestoration(tabId, enriched)) this._persist(tabId);
-    this._startPlanExecutionGuard(tabId, mode, gateOutcome, runOptions);
-
-    let standaloneGroundingGap = this._standaloneOfflineGroundingGap(localWikipediaRag, runOptions);
-    if (standaloneGroundingGap) {
-      if (!runId) {
-        runId = await this._startTraceRun(tabId, userMessage, mode, provider, null, runOptions);
+      let plannerTabInfo = null;
+      const readScopePreflight = !selectionOnly && !standaloneChatRun && this._readCompletenessNeedsScopeClassification(tabId);
+      if ((this._isActionMode(mode) && runOptions?.cloudRun !== true && !standaloneChatRun) || readScopePreflight) {
+        // Fetch once for trace metadata. The planner normally reuses it, but a
+        // source-bound selection must not receive page URL/title context.
+        const traceTabInfo = await this._getTabUrlTitle(tabId);
+        plannerTabInfo = selectionOnly || standaloneChatRun ? { tabUrl: '', tabTitle: '' } : traceTabInfo;
+        runId = await this._startTraceRun(
+          tabId, userMessage, mode, provider, traceTabInfo, runOptions,
+        );
       }
-      if (runId) trace.recordNote(runId, null, 'standalone_wikipedia_rag', { ...localWikipediaRag });
-      this._appendStandaloneUngroundedPolicy(enriched, standaloneGroundingGap);
-    }
 
-    if (this._isActionMode(mode) && !selectionOnly && !standaloneChatRun) {
-      await this._ensureProgressSessionForCurrentTask(tabId, {
-        provider,
-        costState,
-        progressLedgerPolicy: gateOutcome.progressLedgerPolicy,
-        progressAction: gateOutcome.progressAction,
-        expectedItems: gateOutcome.expectedItems,
+      const gateOutcome = await this._maybeRunPlannerGate(
+        tabId, messages, enriched, onUpdate, mode, costState, runId, plannerTabInfo, runOptions,
+      );
+      if (!gateOutcome.proceed) {
+        const status = gateOutcome.reason === 'cost_limit'
+          ? 'cost_limit'
+          : (gateOutcome.reason === 'plan_only' ? 'plan_only_output' : gateOutcome.reason || 'cancelled');
+        return finish(gateOutcome.message || 'More information is required.', status);
+      }
+      const responseLanguagePolicy = runOptions?.trustedContinuationResponseLanguagePolicy
+        || gateOutcome.responseLanguagePolicy
+        || (selectionOnly ? selectionScopedResponseLanguagePolicy(runOptions?.locale) : null);
+      this._setResponseLanguagePolicy(tabId, responseLanguagePolicy, runOptions?.locale || 'en', {
+        approvedPlanLanguageOverride: responseLanguagePolicy?.approved_plan_language_override === true
+          || gateOutcome.responseLanguageApprovedPlanOverride === true,
+        trustedContinuation: runOptions?.trustedContinuation === true,
       });
-    }
-    const tier = provider.promptTier;
-    const readWindow = this._readWindowLimits(provider);
-    let skillTools = this._skillToolDefinitions(tabId, mode, tier, this._activeSkillSiteAdapter(tabId));
-    const cloudRunContext = this.cloudRunContexts.get(tabId) || null;
-    let tools = getToolsForMode(mode, {
-      strictSecretMode: this.strictSecretMode,
-      tier,
-      accessibilityTreeMaxChars: readWindow.treePageChars,
-      webMcpAvailable: this.webMcpEnabled === true,
-      skillLoaderTool: this._skillLoaderDefinition(mode, tier),
-      skillTools,
-      otpEmailSkillActive: this._otpEmailSkillActive(tabId, mode, tier),
-      cloudRun: !!cloudRunContext,
-      outputSchema: cloudRunContext?.outputSchema ?? null,
-      watchBeep: this.scheduledRunPolicies.get(tabId)?.watch?.beep === true,
-      carouselNavigation: !!getCarouselNavigationPolicy(await this._currentUrl(tabId)),
-      gmailResultCounting: !!getGmailResultCountPolicy(await this._currentUrl(tabId)),
-      researchEscalationEnabled: this.researchEscalationEnabled,
-    });
-    // Match the non-streaming path: selection-grounded turns are tool-free so
-    // page or network content cannot be introduced after the source anchor.
-    if (selectionOnly || standaloneChatRun) tools = [];
-    let allowedToolNames = new Set(tools.map(t => t.function.name));
-    let toolSchemas = new Map(tools.map(t => [t.function.name, t.function.parameters]));
-    const plannerTemperature = this._isActionMode(mode) ? 0.15 : 0.3;
-    const mainMaxTokens = this._providerMaxOutputTokens(provider);
-    let steps = 0;
-    // See processMessage — used to break the empty-response→nudge cycle.
-    let emptyOutputRecoveryAttempted = false;
-    let compressionPlaceholderRecoveryAttempted = false;
-    let completionPlainFinalRecoveryAttempted = 0;
-    let forceCompletionVerificationTurn = false;
-    let allowCompletionFailureTurn = false;
-    let forceCompletionDoneAfterVerification = false;
-    let forceCompletionDoneTurn = false;
-    let standaloneWikipediaModelSearchAttempted = false;
-    let standaloneIncompleteAnswerRecoveryAttempted = false;
-    let standaloneWebgpuBudgetRecoveryAttempted = false;
-    let pendingVisionFallbackMessages = null;
-    let visionFallbackAttempted = false;
-    let streamEmittedOutput = false;
-    let currentStreamRequestMessages = null;
-
-    const recommendedFirstTool = await this._maybeExecuteRecommendedActionFirstTool(
-      tabId, runOptions, messages, onUpdate, provider, allowedToolNames, toolSchemas,
-    );
-    if (recommendedFirstTool?.action === 'return') {
-      return finish(recommendedFirstTool.value);
-    }
-    if (recommendedFirstTool?.action === 'abort') {
-      return finish(recommendedFirstTool.value, 'cancelled');
-    }
-    if (!recommendedFirstTool) {
-      const restorationFirstRead = await this._maybeExecuteSelectionRestorationFirstRead(
-        tabId, enriched, messages, onUpdate, provider, allowedToolNames, toolSchemas,
-      );
-      if (restorationFirstRead?.action === 'return') {
-        return finish(restorationFirstRead.value);
+      if (gateOutcome.responseOnly === true) {
+        const responseOnly = await this._completeResponseOnlyTurn(
+          tabId, messages, onUpdate, provider, costState, runId,
+          runOptions, enriched, sourceBoundPriorMessages,
+        );
+        return finish(responseOnly.content, responseOnly.status);
       }
-      if (restorationFirstRead?.action === 'abort') {
-        return finish(restorationFirstRead.value, 'cancelled');
-      }
-    }
+      if (this._consumeSelectionGroundingRestoration(tabId, enriched)) this._persist(tabId);
+      this._startPlanExecutionGuard(tabId, mode, gateOutcome, runOptions);
 
-    while (steps < this.maxSteps) {
-      if (this._checkAbort(tabId)) {
-        const content = '[Stopped by user]';
-        messages.push(this._localCancellationMessage(content));
-        this._persist(tabId);
-        onUpdate('warning', { message: 'Stopped by user.' });
-        return finish(content, 'cancelled');
+      let standaloneGroundingGap = this._standaloneOfflineGroundingGap(localWikipediaRag, runOptions);
+      if (standaloneGroundingGap) {
+        if (!runId) {
+          runId = await this._startTraceRun(tabId, userMessage, mode, provider, null, runOptions);
+        }
+        if (runId) trace.recordNote(runId, null, 'standalone_wikipedia_rag', { ...localWikipediaRag });
+        this._appendStandaloneUngroundedPolicy(enriched, standaloneGroundingGap);
       }
 
-      if (steps > 0 && !selectionOnly && !standaloneChatRun) {
-        await this._maybeReinjectAdapter(tabId, messages);
+      if (this._isActionMode(mode) && !selectionOnly && !standaloneChatRun) {
+        await this._ensureProgressSessionForCurrentTask(tabId, {
+          provider,
+          costState,
+          progressLedgerPolicy: gateOutcome.progressLedgerPolicy,
+          progressAction: gateOutcome.progressAction,
+          expectedItems: gateOutcome.expectedItems,
+        });
       }
-
-      skillTools = this._skillToolDefinitions(tabId, mode, tier, this._activeSkillSiteAdapter(tabId));
-      tools = getToolsForMode(mode, {
+      const tier = provider.promptTier;
+      const readWindow = this._readWindowLimits(provider);
+      let skillTools = this._skillToolDefinitions(tabId, mode, tier, this._activeSkillSiteAdapter(tabId));
+      const cloudRunContext = this.cloudRunContexts.get(tabId) || null;
+      let tools = getToolsForMode(mode, {
         strictSecretMode: this.strictSecretMode,
         tier,
         accessibilityTreeMaxChars: readWindow.treePageChars,
@@ -37350,243 +37283,394 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
         gmailResultCounting: !!getGmailResultCountPolicy(await this._currentUrl(tabId)),
         researchEscalationEnabled: this.researchEscalationEnabled,
       });
+      // Match the non-streaming path: selection-grounded turns are tool-free so
+      // page or network content cannot be introduced after the source anchor.
       if (selectionOnly || standaloneChatRun) tools = [];
-      if (forceCompletionVerificationTurn) {
-        const completionState = this.completionInvariants.get(tabId);
-        if (!completionState?.verificationDebt && !completionState?.iframeFormVerificationDebt) {
-          forceCompletionVerificationTurn = false;
-          allowCompletionFailureTurn = false;
-          if (forceCompletionDoneAfterVerification) {
-            forceCompletionDoneAfterVerification = false;
-            forceCompletionDoneTurn = true;
+      let allowedToolNames = new Set(tools.map(t => t.function.name));
+      let toolSchemas = new Map(tools.map(t => [t.function.name, t.function.parameters]));
+      const plannerTemperature = this._isActionMode(mode) ? 0.15 : 0.3;
+      const mainMaxTokens = this._providerMaxOutputTokens(provider);
+      let steps = 0;
+      // See processMessage — used to break the empty-response→nudge cycle.
+      let emptyOutputRecoveryAttempted = false;
+      let compressionPlaceholderRecoveryAttempted = false;
+      let completionPlainFinalRecoveryAttempted = 0;
+      let forceCompletionVerificationTurn = false;
+      let allowCompletionFailureTurn = false;
+      let forceCompletionDoneAfterVerification = false;
+      let forceCompletionDoneTurn = false;
+      let standaloneWikipediaModelSearchAttempted = false;
+      let standaloneIncompleteAnswerRecoveryAttempted = false;
+      let standaloneWebgpuBudgetRecoveryAttempted = false;
+      let pendingVisionFallbackMessages = null;
+      let visionFallbackAttempted = false;
+      let streamEmittedOutput = false;
+      let currentStreamRequestMessages = null;
+
+      const recommendedFirstTool = await this._maybeExecuteRecommendedActionFirstTool(
+        tabId, runOptions, messages, onUpdate, provider, allowedToolNames, toolSchemas,
+      );
+      if (recommendedFirstTool?.action === 'return') {
+        return finish(recommendedFirstTool.value);
+      }
+      if (recommendedFirstTool?.action === 'abort') {
+        return finish(recommendedFirstTool.value, 'cancelled');
+      }
+      if (!recommendedFirstTool) {
+        const restorationFirstRead = await this._maybeExecuteSelectionRestorationFirstRead(
+          tabId, enriched, messages, onUpdate, provider, allowedToolNames, toolSchemas,
+        );
+        if (restorationFirstRead?.action === 'return') {
+          return finish(restorationFirstRead.value);
+        }
+        if (restorationFirstRead?.action === 'abort') {
+          return finish(restorationFirstRead.value, 'cancelled');
+        }
+      }
+
+      while (steps < this.maxSteps) {
+        if (this._checkAbort(tabId)) {
+          const content = '[Stopped by user]';
+          messages.push(this._localCancellationMessage(content));
+          this._persist(tabId);
+          onUpdate('warning', { message: 'Stopped by user.' });
+          return finish(content, 'cancelled');
+        }
+
+        if (steps > 0 && !selectionOnly && !standaloneChatRun) {
+          await this._maybeReinjectAdapter(tabId, messages);
+        }
+
+        skillTools = this._skillToolDefinitions(tabId, mode, tier, this._activeSkillSiteAdapter(tabId));
+        tools = getToolsForMode(mode, {
+          strictSecretMode: this.strictSecretMode,
+          tier,
+          accessibilityTreeMaxChars: readWindow.treePageChars,
+          webMcpAvailable: this.webMcpEnabled === true,
+          skillLoaderTool: this._skillLoaderDefinition(mode, tier),
+          skillTools,
+          otpEmailSkillActive: this._otpEmailSkillActive(tabId, mode, tier),
+          cloudRun: !!cloudRunContext,
+          outputSchema: cloudRunContext?.outputSchema ?? null,
+          watchBeep: this.scheduledRunPolicies.get(tabId)?.watch?.beep === true,
+          carouselNavigation: !!getCarouselNavigationPolicy(await this._currentUrl(tabId)),
+          gmailResultCounting: !!getGmailResultCountPolicy(await this._currentUrl(tabId)),
+          researchEscalationEnabled: this.researchEscalationEnabled,
+        });
+        if (selectionOnly || standaloneChatRun) tools = [];
+        if (forceCompletionVerificationTurn) {
+          const completionState = this.completionInvariants.get(tabId);
+          if (!completionState?.verificationDebt && !completionState?.iframeFormVerificationDebt) {
+            forceCompletionVerificationTurn = false;
+            allowCompletionFailureTurn = false;
+            if (forceCompletionDoneAfterVerification) {
+              forceCompletionDoneAfterVerification = false;
+              forceCompletionDoneTurn = true;
+            }
           }
         }
-      }
-      const completionRecoveryPolicy = this._completionRecoveryPolicy(tabId, tools, {
-        verification: forceCompletionVerificationTurn,
-        done: forceCompletionDoneTurn,
-        failure: allowCompletionFailureTurn,
-      });
-      const completionRecoveryStartState = completionRecoveryPolicy?.kind === 'verification'
-        ? this.completionInvariants.get(tabId)
-        : null;
-      if (completionRecoveryPolicy) {
-        tools = completionRecoveryPolicy.tools;
-      }
-      const completionToolChoice = completionRecoveryPolicy?.toolChoice || null;
-      allowedToolNames = new Set(tools.map(t => t.function.name));
-      toolSchemas = new Map(tools.map(t => [t.function.name, t.function.parameters]));
+        const completionRecoveryPolicy = this._completionRecoveryPolicy(tabId, tools, {
+          verification: forceCompletionVerificationTurn,
+          done: forceCompletionDoneTurn,
+          failure: allowCompletionFailureTurn,
+        });
+        const completionRecoveryStartState = completionRecoveryPolicy?.kind === 'verification'
+          ? this.completionInvariants.get(tabId)
+          : null;
+        if (completionRecoveryPolicy) {
+          tools = completionRecoveryPolicy.tools;
+        }
+        const completionToolChoice = completionRecoveryPolicy?.toolChoice || null;
+        allowedToolNames = new Set(tools.map(t => t.function.name));
+        toolSchemas = new Map(tools.map(t => [t.function.name, t.function.parameters]));
 
-      // Auto-compact mid-run when the conversation outgrows the budget. The
-      // streaming path doesn't get a per-call token count, so this leans on
-      // the chars/4 estimate inside _manageContext.
-      if (!selectionOnly && !standaloneChatRun) {
-        await this._manageContext(tabId, messages, onUpdate, costState);
-      }
+        // Auto-compact mid-run when the conversation outgrows the budget. The
+        // streaming path doesn't get a per-call token count, so this leans on
+        // the chars/4 estimate inside _manageContext.
+        if (!selectionOnly && !standaloneChatRun) {
+          await this._manageContext(tabId, messages, onUpdate, costState);
+        }
 
-      steps++;
-      lastTraceStep = steps;
-      onUpdate('thinking', { step: steps });
-      if (runId) trace.recordStepStart(runId, steps, {});
-      let traceStepClosed = false;
-      const closeTraceStep = (payload) => {
-        if (traceStepClosed) return Promise.resolve();
-        traceStepClosed = true;
-        return runId ? trace.recordStepEnd(runId, steps, payload) : Promise.resolve();
-      };
+        steps++;
+        lastTraceStep = steps;
+        onUpdate('thinking', { step: steps });
+        if (runId) trace.recordStepStart(runId, steps, {});
+        let traceStepClosed = false;
+        const closeTraceStep = (payload) => {
+          if (traceStepClosed) return Promise.resolve();
+          traceStepClosed = true;
+          return runId ? trace.recordStepEnd(runId, steps, payload) : Promise.resolve();
+        };
 
-      try {
-        streamEmittedOutput = false;
-        let fullText = '';
-        let toolCallsAccumulator = {};
-        let hasToolCalls = false;
-        let responseItems = null;
-        let reasoningContent = '';
-        let streamUsage = null;
-        let finishReason = '';
+        try {
+          streamEmittedOutput = false;
+          let fullText = '';
+          let toolCallsAccumulator = {};
+          let hasToolCalls = false;
+          let responseItems = null;
+          let reasoningContent = '';
+          let streamUsage = null;
+          let finishReason = '';
 
-        const streamOpts = this._cloudGenerationOptions(provider, {
-          tools: provider.supportsTools && tools.length > 0 ? tools : undefined,
-          temperature: plannerTemperature,
+          const streamOpts = this._cloudGenerationOptions(provider, {
+            tools: provider.supportsTools && tools.length > 0 ? tools : undefined,
+            temperature: plannerTemperature,
             maxTokens: mainMaxTokens,
-          ...(completionToolChoice ? { toolChoice: completionToolChoice } : {}),
-        }, { tabId, generationName: 'main' });
-        const prunedMessages = pendingVisionFallbackMessages
-          || this._pruneOldImages(modelMessagesForRun(), provider);
-        pendingVisionFallbackMessages = null;
-        currentStreamRequestMessages = prunedMessages;
-        this._logDebug({ type: 'llm_stream_request', step: steps, provider: provider.constructor.name, messages: prunedMessages, options: streamOpts });
-        const beforeCost = await this._checkCostAllowance(provider, costState);
-        if (beforeCost) {
-          messages.push({ role: 'assistant', content: beforeCost });
-          onUpdate('warning', { message: beforeCost });
-          this._persist(tabId);
-          traceFailureCode = 'COST_LIMIT';
-          await closeTraceStep({ ok: false, code: 'COST_LIMIT' });
-          return finish(beforeCost, 'cost_limit');
-        }
-        if (runId) {
-          await trace.recordLLMRequest(runId, steps, {
-            providerClass: provider.constructor.name,
-            model: provider.model,
-            messageCount: prunedMessages.length,
-            toolsCount: (streamOpts.tools || []).length,
-            requestedMaxTokens: streamOpts.maxTokens,
-            ...(runOptions?.localWikipediaRag ? { localWikipediaRag: runOptions.localWikipediaRag } : {}),
-            ...Agent._traceMediaCounts(prunedMessages),
-          }, {
-            messages: prunedMessages,
-            tools: streamOpts.tools || [],
-            runtimeMode: mode,
-          });
-        }
-        const _llmStart = Date.now();
-        let costStopMessage = '';
+            ...(completionToolChoice ? { toolChoice: completionToolChoice } : {}),
+          }, { tabId, generationName: 'main' });
+          const prunedMessages = pendingVisionFallbackMessages
+            || this._pruneOldImages(modelMessagesForRun(), provider);
+          pendingVisionFallbackMessages = null;
+          currentStreamRequestMessages = prunedMessages;
+          this._logDebug({ type: 'llm_stream_request', step: steps, provider: provider.constructor.name, messages: prunedMessages, options: streamOpts });
+          const beforeCost = await this._checkCostAllowance(provider, costState);
+          if (beforeCost) {
+            messages.push({ role: 'assistant', content: beforeCost });
+            onUpdate('warning', { message: beforeCost });
+            this._persist(tabId);
+            traceFailureCode = 'COST_LIMIT';
+            await closeTraceStep({ ok: false, code: 'COST_LIMIT' });
+            return finish(beforeCost, 'cost_limit');
+          }
+          if (runId) {
+            await trace.recordLLMRequest(runId, steps, {
+              providerClass: provider.constructor.name,
+              model: provider.model,
+              messageCount: prunedMessages.length,
+              toolsCount: (streamOpts.tools || []).length,
+              requestedMaxTokens: streamOpts.maxTokens,
+              ...(runOptions?.localWikipediaRag ? { localWikipediaRag: runOptions.localWikipediaRag } : {}),
+              ...Agent._traceMediaCounts(prunedMessages),
+            }, {
+              messages: prunedMessages,
+              tools: streamOpts.tools || [],
+              runtimeMode: mode,
+            });
+          }
+          const _llmStart = Date.now();
+          let costStopMessage = '';
 
-        for await (const chunk of provider.chatStream(prunedMessages, streamOpts)) {
-          if (chunk.type === 'text') {
-            streamEmittedOutput = true;
-            fullText += chunk.content;
-            onUpdate('text_delta', { content: chunk.content });
-          } else if (chunk.type === 'reasoning') {
-            reasoningContent += String(chunk.content || '');
-          } else if (chunk.type === 'usage') {
-            streamUsage = chunk.usage || streamUsage;
-            costStopMessage = (await this._recordCostUsage(provider, chunk.usage, costState)) || costStopMessage;
-          } else if (chunk.type === 'tool_call') {
-            streamEmittedOutput = true;
-            hasToolCalls = true;
-            const calls = Array.isArray(chunk.content) ? chunk.content : [];
-            for (const tc of calls) {
-              const idx = tc.index ?? 0;
-              if (!toolCallsAccumulator[idx]) {
-                toolCallsAccumulator[idx] = { id: '', function: { name: '', arguments: '' } };
+          for await (const chunk of provider.chatStream(prunedMessages, streamOpts)) {
+            if (chunk.type === 'text') {
+              streamEmittedOutput = true;
+              fullText += chunk.content;
+              onUpdate('text_delta', { content: chunk.content });
+            } else if (chunk.type === 'reasoning') {
+              reasoningContent += String(chunk.content || '');
+            } else if (chunk.type === 'usage') {
+              streamUsage = chunk.usage || streamUsage;
+              costStopMessage = (await this._recordCostUsage(provider, chunk.usage, costState)) || costStopMessage;
+            } else if (chunk.type === 'tool_call') {
+              streamEmittedOutput = true;
+              hasToolCalls = true;
+              const calls = Array.isArray(chunk.content) ? chunk.content : [];
+              for (const tc of calls) {
+                const idx = tc.index ?? 0;
+                if (!toolCallsAccumulator[idx]) {
+                  toolCallsAccumulator[idx] = { id: '', function: { name: '', arguments: '' } };
+                }
+                if (tc.id) toolCallsAccumulator[idx].id = tc.id;
+                if (tc.function?.name) toolCallsAccumulator[idx].function.name += tc.function.name;
+                if (tc.function?.arguments) toolCallsAccumulator[idx].function.arguments += tc.function.arguments;
               }
-              if (tc.id) toolCallsAccumulator[idx].id = tc.id;
-              if (tc.function?.name) toolCallsAccumulator[idx].function.name += tc.function.name;
-              if (tc.function?.arguments) toolCallsAccumulator[idx].function.arguments += tc.function.arguments;
-            }
-          } else if (chunk.type === 'tool_call_start') {
-            streamEmittedOutput = true;
-            hasToolCalls = true;
-            const idx = Object.keys(toolCallsAccumulator).length;
-            toolCallsAccumulator[idx] = {
-              id: chunk.content?.id || '',
-              function: { name: chunk.content?.name || '', arguments: '' },
-            };
-          } else if (chunk.type === 'tool_call_delta') {
-            const idx = Object.keys(toolCallsAccumulator).length - 1;
-            if (idx >= 0 && toolCallsAccumulator[idx]) {
-              toolCallsAccumulator[idx].function.arguments += String(chunk.content ?? '');
-            }
-          } else if (chunk.type === 'done') {
-            if (Array.isArray(chunk.responseItems) && chunk.responseItems.length) {
-              responseItems = chunk.responseItems;
-            }
-            finishReason = String(
-              chunk.finishReason
+            } else if (chunk.type === 'tool_call_start') {
+              streamEmittedOutput = true;
+              hasToolCalls = true;
+              const idx = Object.keys(toolCallsAccumulator).length;
+              toolCallsAccumulator[idx] = {
+                id: chunk.content?.id || '',
+                function: { name: chunk.content?.name || '', arguments: '' },
+              };
+            } else if (chunk.type === 'tool_call_delta') {
+              const idx = Object.keys(toolCallsAccumulator).length - 1;
+              if (idx >= 0 && toolCallsAccumulator[idx]) {
+                toolCallsAccumulator[idx].function.arguments += String(chunk.content ?? '');
+              }
+            } else if (chunk.type === 'done') {
+              if (Array.isArray(chunk.responseItems) && chunk.responseItems.length) {
+                responseItems = chunk.responseItems;
+              }
+              finishReason = String(
+                chunk.finishReason
                 ?? chunk.finish_reason
                 ?? chunk.stopReason
                 ?? chunk.stop_reason
                 ?? '',
-            );
-            if (chunk.usage && !streamUsage) {
-              streamUsage = chunk.usage;
-              costStopMessage = (await this._recordCostUsage(provider, chunk.usage, costState)) || costStopMessage;
+              );
+              if (chunk.usage && !streamUsage) {
+                streamUsage = chunk.usage;
+                costStopMessage = (await this._recordCostUsage(provider, chunk.usage, costState)) || costStopMessage;
+              }
+              break;
             }
-            break;
           }
-        }
 
-        fullText = Agent._stripReasoningTags(fullText);
-        const streamedToolCalls = hasToolCalls ? Object.values(toolCallsAccumulator) : [];
-        const outputDiagnostics = modelOutputDiagnostics({
-          content: fullText,
-          toolCalls: streamedToolCalls,
-          reasoningContent,
-          usage: streamUsage,
-          finishReason,
-          responseItems,
-        }, {
-          requestedMaxTokens: streamOpts.maxTokens,
-          recoveryAttempt: emptyOutputRecoveryAttempted ? 2 : 1,
-        });
-        if (runId) {
-          await trace.recordLLMResponse(runId, steps, {
+          fullText = Agent._stripReasoningTags(fullText);
+          const streamedToolCalls = hasToolCalls ? Object.values(toolCallsAccumulator) : [];
+          const outputDiagnostics = modelOutputDiagnostics({
             content: fullText,
             toolCalls: streamedToolCalls,
+            reasoningContent,
             usage: streamUsage,
-            latencyMs: Date.now() - _llmStart,
-            model: provider.model,
-            ...outputDiagnostics,
+            finishReason,
+            responseItems,
+          }, {
+            requestedMaxTokens: streamOpts.maxTokens,
+            recoveryAttempt: emptyOutputRecoveryAttempted ? 2 : 1,
           });
-        }
-        closeTraceStep(this._traceStepEndForResult({
-          content: fullText,
-          toolCalls: streamedToolCalls,
-        }));
-
-        // Match the non-streaming standalone profile: reinterpret LFM's
-        // invented Google markup as one local Wikipedia lookup and clear any
-        // already-rendered markup before asking for a normal answer.
-        if (standaloneWebgpuRun && fullText) {
-          const localSearchQueries = this._standaloneWikipediaSearchQueriesFromModelText(fullText, runOptions);
-          if (localSearchQueries.length && !standaloneWikipediaModelSearchAttempted) {
-            standaloneWikipediaModelSearchAttempted = true;
-            const fallbackRag = await this._applyStandaloneWikipediaModelSearch(enriched, fullText, runOptions, {
-              onReferences: references => {
-                standaloneWikipediaReferences = this._mergeStandaloneWikipediaReferences(
-                  standaloneWikipediaReferences,
-                  references,
-                );
-              },
+          if (runId) {
+            await trace.recordLLMResponse(runId, steps, {
+              content: fullText,
+              toolCalls: streamedToolCalls,
+              usage: streamUsage,
+              latencyMs: Date.now() - _llmStart,
+              model: provider.model,
+              ...outputDiagnostics,
             });
-            if (fallbackRag) {
-              runOptions = { ...runOptions, localWikipediaRag: fallbackRag };
-              this._logDebug({
-                type: 'standalone_wikipedia_model_search',
-                step: steps,
-                queryCount: localSearchQueries.length,
-                status: fallbackRag.status,
-                matchCount: fallbackRag.matchCount,
+          }
+          closeTraceStep(this._traceStepEndForResult({
+            content: fullText,
+            toolCalls: streamedToolCalls,
+          }));
+
+          // Match the non-streaming standalone profile: reinterpret LFM's
+          // invented Google markup as one local Wikipedia lookup and clear any
+          // already-rendered markup before asking for a normal answer.
+          if (standaloneWebgpuRun && fullText) {
+            const localSearchQueries = this._standaloneWikipediaSearchQueriesFromModelText(fullText, runOptions);
+            if (localSearchQueries.length && !standaloneWikipediaModelSearchAttempted) {
+              standaloneWikipediaModelSearchAttempted = true;
+              const fallbackRag = await this._applyStandaloneWikipediaModelSearch(enriched, fullText, runOptions, {
+                onReferences: references => {
+                  standaloneWikipediaReferences = this._mergeStandaloneWikipediaReferences(
+                    standaloneWikipediaReferences,
+                    references,
+                  );
+                },
               });
-              if (fallbackRag.status === 'matched') {
-                onUpdate('text', { content: '', replace: true });
-                continue;
+              if (fallbackRag) {
+                runOptions = { ...runOptions, localWikipediaRag: fallbackRag };
+                this._logDebug({
+                  type: 'standalone_wikipedia_model_search',
+                  step: steps,
+                  queryCount: localSearchQueries.length,
+                  status: fallbackRag.status,
+                  matchCount: fallbackRag.matchCount,
+                });
+                if (fallbackRag.status === 'matched') {
+                  onUpdate('text', { content: '', replace: true });
+                  continue;
+                }
+                standaloneGroundingGap = this._standaloneOfflineGroundingGap(fallbackRag, runOptions)
+                  || standaloneGroundingGap;
+                _traceStatus = 'grounding_unavailable';
+                if (runId) trace.recordNote(runId, steps, 'standalone_wikipedia_rag', { ...fallbackRag });
+                if (standaloneGroundingGap) {
+                  this._appendStandaloneUngroundedPolicy(enriched, standaloneGroundingGap);
+                  onUpdate('text', { content: '', replace: true });
+                  continue;
+                }
               }
-              standaloneGroundingGap = this._standaloneOfflineGroundingGap(fallbackRag, runOptions)
-                || standaloneGroundingGap;
-              _traceStatus = 'grounding_unavailable';
-              if (runId) trace.recordNote(runId, steps, 'standalone_wikipedia_rag', { ...fallbackRag });
-              if (standaloneGroundingGap) {
-                this._appendStandaloneUngroundedPolicy(enriched, standaloneGroundingGap);
-                onUpdate('text', { content: '', replace: true });
-                continue;
-              }
+            } else if (localSearchQueries.length) {
+              fullText = runOptions.localWikipediaRag?.status === 'matched'
+                ? 'I found relevant Offline Wikipedia references, but the on-device model could not turn them into a reliable answer. Please try rephrasing the question.'
+                : 'I could not find a matching entry in the installed Offline Wikipedia archive.';
+              onUpdate('text', { content: fullText, replace: true });
             }
-          } else if (localSearchQueries.length) {
-            fullText = runOptions.localWikipediaRag?.status === 'matched'
-              ? 'I found relevant Offline Wikipedia references, but the on-device model could not turn them into a reliable answer. Please try rephrasing the question.'
-              : 'I could not find a matching entry in the installed Offline Wikipedia archive.';
-            onUpdate('text', { content: fullText, replace: true });
           }
-        }
 
-        // Fallback: parse tool calls from streamed text if structured calls are missing.
-        if (!hasToolCalls && fullText && !this._containsProviderReplayState(responseItems)) {
-          const fallback = this._tryParseToolCallsFromText(fullText, allowedToolNames);
-          if (fallback.length > 0) {
-            this._logDebug({ type: 'llm_text_fallback_parse', step: steps, parsed: fallback.map(tc => tc.function.name) });
-            hasToolCalls = true;
-            fallback.forEach((tc, i) => { toolCallsAccumulator[i] = tc; });
-            fullText = '';
+          // Fallback: parse tool calls from streamed text if structured calls are missing.
+          if (!hasToolCalls && fullText && !this._containsProviderReplayState(responseItems)) {
+            const fallback = this._tryParseToolCallsFromText(fullText, allowedToolNames);
+            if (fallback.length > 0) {
+              this._logDebug({ type: 'llm_text_fallback_parse', step: steps, parsed: fallback.map(tc => tc.function.name) });
+              hasToolCalls = true;
+              fallback.forEach((tc, i) => { toolCallsAccumulator[i] = tc; });
+              fullText = '';
+            }
           }
-        }
 
-        if (hasToolCalls) {
-          emptyOutputRecoveryAttempted = false;
-          compressionPlaceholderRecoveryAttempted = false;
-          if (costStopMessage) {
+          if (hasToolCalls) {
+            emptyOutputRecoveryAttempted = false;
+            compressionPlaceholderRecoveryAttempted = false;
+            if (costStopMessage) {
+              messages.push({ role: 'assistant', content: costStopMessage });
+              onUpdate('warning', { message: costStopMessage });
+              this._persist(tabId);
+              traceFailureCode = 'COST_LIMIT';
+              closeTraceStep({ ok: false, code: 'COST_LIMIT' });
+              return finish(costStopMessage, 'cost_limit');
+            }
+            const toolCalls = Object.values(toolCallsAccumulator);
+            const suppressPlannerContent = this._isPlannerShapedJson(fullText);
+            if (suppressPlannerContent) {
+              this._logDebug({ type: 'planner_shaped_content_suppressed', step: steps, toolCallCount: toolCalls.length });
+              fullText = '';
+              onUpdate('text', { content: '', replace: true });
+            }
+            this._logDebug({ type: 'llm_stream_response', step: steps, content: fullText, toolCalls });
+            messages.push(this._withResponseItems({
+              role: 'assistant',
+              content: fullText || null,
+              tool_calls: toolCalls,
+            }, responseItems, reasoningContent, provider));
+
+            const batchResult = await this._executeToolBatch(
+              tabId, toolCalls, messages, onUpdate, provider, fullText, allowedToolNames, steps, runOptions, toolSchemas
+            );
+            if (batchResult.action === 'return') {
+              if (batchResult.status) {
+                onUpdate('run_status', { status: batchResult.status, message: batchResult.value });
+              }
+              return finish(batchResult.value, batchResult.status);
+            }
+            if (batchResult.action === 'deliver') {
+              const recovery = await this._recoverDeliveryCheckpointTurn(
+                tabId, messages, onUpdate, provider, costState, runId, steps,
+                batchResult.value, runOptions, enriched, sourceBoundPriorMessages,
+                batchResult.recovery,
+              );
+              return finish(recovery.content, recovery.status);
+            }
+            if (batchResult.action === 'recover') {
+              const recovery = await this._recoverLoopStoppedTurn(
+                tabId, messages, onUpdate, provider, costState, runId, steps,
+                batchResult.value, runOptions, enriched, sourceBoundPriorMessages,
+              );
+              return finish(recovery.content, recovery.status);
+            }
+            if (batchResult.action === 'abort') {
+              return finish(batchResult.value, 'cancelled');
+            }
+            if (completionRecoveryPolicy?.kind === 'verification') {
+              const completionState = this.completionInvariants.get(tabId);
+              const verificationPending = !!(
+                completionState?.verificationDebt
+                || completionState?.iframeFormVerificationDebt
+              );
+              allowCompletionFailureTurn = verificationPending
+                && !this._completionVerificationMadeProgress(completionRecoveryStartState, completionState);
+            }
+            if (batchResult.completionRecovery === 'verification') {
+              forceCompletionVerificationTurn = true;
+              forceCompletionDoneAfterVerification = true;
+              allowCompletionFailureTurn = false;
+            } else if (batchResult.completionRecovery === 'done') {
+              forceCompletionDoneTurn = true;
+              allowCompletionFailureTurn = false;
+            } else if (batchResult.completionRecovery === 'release') {
+              forceCompletionDoneTurn = false;
+              allowCompletionFailureTurn = false;
+            }
+            closeTraceStep({ ok: true });
+            continue;
+          }
+
+          // No tool calls — final response. Detect the "empty output"
+          // failure mode (no text + no tool call after non-trivial reasoning)
+          // and recover once via a mode-aware nudge before giving up.
+          this._logDebug({ type: 'llm_stream_response', step: steps, content: fullText, toolCalls: null });
+          if ((!fullText || !fullText.trim()) && costStopMessage) {
             messages.push({ role: 'assistant', content: costStopMessage });
             onUpdate('warning', { message: costStopMessage });
             this._persist(tabId);
@@ -37594,376 +37678,301 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             closeTraceStep({ ok: false, code: 'COST_LIMIT' });
             return finish(costStopMessage, 'cost_limit');
           }
-          const toolCalls = Object.values(toolCallsAccumulator);
-          const suppressPlannerContent = this._isPlannerShapedJson(fullText);
-          if (suppressPlannerContent) {
-            this._logDebug({ type: 'planner_shaped_content_suppressed', step: steps, toolCallCount: toolCalls.length });
-            fullText = '';
-            onUpdate('text', { content: '', replace: true });
-          }
-          this._logDebug({ type: 'llm_stream_response', step: steps, content: fullText, toolCalls });
-          messages.push(this._withResponseItems({
-            role: 'assistant',
-            content: fullText || null,
-            tool_calls: toolCalls,
-          }, responseItems, reasoningContent, provider));
-
-          const batchResult = await this._executeToolBatch(
-            tabId, toolCalls, messages, onUpdate, provider, fullText, allowedToolNames, steps, runOptions, toolSchemas
-          );
-          if (batchResult.action === 'return') {
-            if (batchResult.status) {
-              onUpdate('run_status', { status: batchResult.status, message: batchResult.value });
+          if (!fullText || !fullText.trim()) {
+            if (!emptyOutputRecoveryAttempted) {
+              emptyOutputRecoveryAttempted = true;
+              messages.push({
+                role: 'user',
+                content: this._emptyOutputRecoveryNudge(mode),
+              });
+              this._persist(tabId);
+              if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: 'EMPTY_RESPONSE' });
+              continue;
             }
-            return finish(batchResult.value, batchResult.status);
-          }
-          if (batchResult.action === 'deliver') {
-            const recovery = await this._recoverDeliveryCheckpointTurn(
-              tabId, messages, onUpdate, provider, costState, runId, steps,
-              batchResult.value, runOptions, enriched, sourceBoundPriorMessages,
-              batchResult.recovery,
-            );
-            return finish(recovery.content, recovery.status);
-          }
-          if (batchResult.action === 'recover') {
-            const recovery = await this._recoverLoopStoppedTurn(
-              tabId, messages, onUpdate, provider, costState, runId, steps,
-              batchResult.value, runOptions, enriched, sourceBoundPriorMessages,
-            );
-            return finish(recovery.content, recovery.status);
-          }
-          if (batchResult.action === 'abort') {
-            return finish(batchResult.value, 'cancelled');
-          }
-          if (completionRecoveryPolicy?.kind === 'verification') {
-            const completionState = this.completionInvariants.get(tabId);
-            const verificationPending = !!(
-              completionState?.verificationDebt
-              || completionState?.iframeFormVerificationDebt
-            );
-            allowCompletionFailureTurn = verificationPending
-              && !this._completionVerificationMadeProgress(completionRecoveryStartState, completionState);
-          }
-          if (batchResult.completionRecovery === 'verification') {
-            forceCompletionVerificationTurn = true;
-            forceCompletionDoneAfterVerification = true;
-            allowCompletionFailureTurn = false;
-          } else if (batchResult.completionRecovery === 'done') {
-            forceCompletionDoneTurn = true;
-            allowCompletionFailureTurn = false;
-          } else if (batchResult.completionRecovery === 'release') {
-            forceCompletionDoneTurn = false;
-            allowCompletionFailureTurn = false;
-          }
-          closeTraceStep({ ok: true });
-          continue;
-        }
-
-        // No tool calls — final response. Detect the "empty output"
-        // failure mode (no text + no tool call after non-trivial reasoning)
-        // and recover once via a mode-aware nudge before giving up.
-        this._logDebug({ type: 'llm_stream_response', step: steps, content: fullText, toolCalls: null });
-        if ((!fullText || !fullText.trim()) && costStopMessage) {
-          messages.push({ role: 'assistant', content: costStopMessage });
-          onUpdate('warning', { message: costStopMessage });
-          this._persist(tabId);
-          traceFailureCode = 'COST_LIMIT';
-          closeTraceStep({ ok: false, code: 'COST_LIMIT' });
-          return finish(costStopMessage, 'cost_limit');
-        }
-        if (!fullText || !fullText.trim()) {
-          if (!emptyOutputRecoveryAttempted) {
-            emptyOutputRecoveryAttempted = true;
-            messages.push({
-              role: 'user',
-              content: this._emptyOutputRecoveryNudge(mode),
-            });
-            this._persist(tabId);
-            if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: 'EMPTY_RESPONSE' });
-            continue;
-          }
-          const scheduledResume = await this._scheduleAutoProgressResume(tabId, onUpdate);
-          if (scheduledResume) {
-            messages.push({ role: 'assistant', content: scheduledResume.message });
-            this._persist(tabId);
-            return finish(scheduledResume.message, 'scheduled_resume');
-          }
-          const failMsg = emptyOutputFailureMessage(outputDiagnostics);
-          messages.push({ role: 'assistant', content: failMsg });
-          onUpdate('warning', { message: failMsg });
-          this._persist(tabId);
-          traceFailureCode = 'EMPTY_RESPONSE';
-          closeTraceStep({ ok: false, code: 'EMPTY_RESPONSE' });
-          return finish(failMsg, 'empty_output');
-        }
-        if (this._isActionMode(mode) && this._isCompressionPlaceholderResponse(fullText)) {
-          if (!compressionPlaceholderRecoveryAttempted) {
-            compressionPlaceholderRecoveryAttempted = true;
-            messages.push(this._withResponseItems({ role: 'assistant', content: fullText }, responseItems, reasoningContent, provider));
-            messages.push({
-              role: 'user',
-              content: '[System nudge: your previous response was a context-compression placeholder, not a real final answer or tool call. Continue the active browser task with tool calls. Do not output "[compressed]".]',
-            });
-            onUpdate('warning', { message: 'Model returned a compression placeholder; continuing.' });
-            this._persist(tabId);
-            continue;
-          }
-          const scheduledResume = await this._scheduleAutoProgressResume(tabId, onUpdate);
-          if (scheduledResume) {
-            messages.push({ role: 'assistant', content: scheduledResume.message });
-            this._persist(tabId);
-            return finish(scheduledResume.message, 'scheduled_resume');
-          }
-          const failMsg = '[Agent stopped because the model returned a context-compression placeholder instead of a tool call or real final answer, even after a recovery nudge.]';
-          messages.push({ role: 'assistant', content: failMsg });
-          onUpdate('warning', { message: failMsg });
-          this._persist(tabId);
-          return finish(failMsg, 'placeholder_output');
-        }
-        emptyOutputRecoveryAttempted = false;
-        compressionPlaceholderRecoveryAttempted = false;
-        const clarificationFinalDecision = this._isActionMode(mode)
-          ? this._clarificationAuthorizationPlainFinalDecision(tabId)
-          : null;
-        if (clarificationFinalDecision?.retry && steps < this.maxSteps) {
-          messages.push(this._withResponseItems({ role: 'assistant', content: fullText }, responseItems, reasoningContent, provider));
-          messages.push(this._appOwnedUserMessage(
-            clarificationFinalDecision.nudge,
-            'clarification_authorization',
-          ));
-          onUpdate('text', { content: '', replace: true });
-          onUpdate('warning', { message: 'Plain final completion blocked until the user answers the clarification explicitly.' });
-          await this._persistNow(tabId);
-          continue;
-        }
-        if (clarificationFinalDecision?.failure) {
-          messages.push({ role: 'assistant', content: clarificationFinalDecision.failure });
-          onUpdate('text', { content: clarificationFinalDecision.failure, replace: true });
-          onUpdate('warning', { message: 'Run stopped because explicit clarification authorization is still required.' });
-          onUpdate('run_status', {
-            status: clarificationFinalDecision.status,
-            message: clarificationFinalDecision.failure,
-          });
-          await this._persistNow(tabId);
-          return finish(clarificationFinalDecision.failure, clarificationFinalDecision.status);
-        }
-        const readFinalLimitation = this._readCompletenessLimitation(tabId);
-        if (readFinalLimitation) {
-          messages.push({ role: 'assistant', content: readFinalLimitation });
-          onUpdate('text', { content: readFinalLimitation, replace: true });
-          onUpdate('warning', { message: 'Ask mode could not verify that every Gmail message was expanded.' });
-          await this._persistNow(tabId);
-          return finish(readFinalLimitation, 'read_scope_limited');
-        }
-        // Preserve the progress ledger's purpose-built continuation before
-        // treating other plain terminal text as unverified.
-        const progressFinalBlock = this._plainFinalProgressBlock(tabId);
-        const completionFinalBlock = this._completionPlainFinalBlock(tabId);
-        const readFinalBlock = this._readCompletenessBlock(tabId);
-        const plainFinalBlocks = [progressFinalBlock, completionFinalBlock, readFinalBlock].filter(Boolean);
-        if (plainFinalBlocks.length) {
-          if (completionFinalBlock && completionPlainFinalRecoveryAttempted >= 2) {
-            const partial = this._completionPlainFinalPartial(tabId, fullText, {
-              progressBlocked: !!progressFinalBlock,
-              readBlocked: !!readFinalBlock,
-            });
-            messages.push({ role: 'assistant', content: partial });
-            onUpdate('text', { content: partial, replace: true });
-            onUpdate('warning', { message: 'Run stopped after a repeated unstructured completion response.' });
-            onUpdate('run_status', { status: 'partial', message: partial });
-            await this._persistNow(tabId);
-            return finish(partial, 'partial');
-          }
-          if (completionFinalBlock) completionPlainFinalRecoveryAttempted++;
-          if (completionFinalBlock && completionPlainFinalRecoveryAttempted >= 2 && steps >= this.maxSteps) {
-            const partial = this._completionPlainFinalPartial(tabId, fullText, {
-              progressBlocked: !!progressFinalBlock,
-              readBlocked: !!readFinalBlock,
-            });
-            messages.push({ role: 'assistant', content: partial });
-            onUpdate('text', { content: partial, replace: true });
-            onUpdate('warning', { message: 'Run stopped after a repeated unstructured completion response.' });
-            onUpdate('run_status', { status: 'partial', message: partial });
-            await this._persistNow(tabId);
-            return finish(partial, 'partial');
-          }
-          if (completionFinalBlock && !progressFinalBlock && !readFinalBlock && !this._richTextToolbarGuard.hasPending(tabId)) {
-            const completionState = this.completionInvariants.get(tabId);
-            if (completionState?.verificationDebt || completionState?.iframeFormVerificationDebt) {
-              forceCompletionVerificationTurn = true;
-              forceCompletionDoneAfterVerification = true;
-            } else {
-              forceCompletionDoneTurn = true;
+            const scheduledResume = await this._scheduleAutoProgressResume(tabId, onUpdate);
+            if (scheduledResume) {
+              messages.push({ role: 'assistant', content: scheduledResume.message });
+              this._persist(tabId);
+              return finish(scheduledResume.message, 'scheduled_resume');
             }
+            const failMsg = emptyOutputFailureMessage(outputDiagnostics);
+            messages.push({ role: 'assistant', content: failMsg });
+            onUpdate('warning', { message: failMsg });
+            this._persist(tabId);
+            traceFailureCode = 'EMPTY_RESPONSE';
+            closeTraceStep({ ok: false, code: 'EMPTY_RESPONSE' });
+            return finish(failMsg, 'empty_output');
           }
-          messages.push(this._withResponseItems({ role: 'assistant', content: fullText }, responseItems, reasoningContent, provider));
-          messages.push(this._appOwnedUserMessage(plainFinalBlocks.join('\n\n'), 'plain_final_block'));
-          if (completionFinalBlock || readFinalBlock) onUpdate('text', { content: '', replace: true });
-          onUpdate('warning', { message: readFinalBlock
-            ? 'Whole-thread answer blocked until every read page is covered.'
-            : completionFinalBlock
-              ? 'Runtime completion invariant requires an explicit done outcome.'
-              : 'Progress ledger has unresolved rows; continuing.' });
-          this._persist(tabId);
-          continue;
-        }
-        const planOnlyDecision = this._planOnlyTerminalDecision(tabId, fullText);
-        if (planOnlyDecision?.retry) {
-          messages.push(this._withResponseItems(
-            {
-              role: 'assistant',
-              content: planOnlyDecision.retryAssistantContent ?? fullText,
-            },
-            planOnlyDecision.retryAssistantContent ? null : responseItems,
-            planOnlyDecision.retryAssistantContent ? '' : reasoningContent,
-            provider,
-          ));
-          messages.push(this._appOwnedUserMessage(planOnlyDecision.nudge, 'plan_execution_block'));
-          // Streamed plan text already landed via text_delta. Replace it before
-          // the recovery turn so later deltas do not append onto the plan and
-          // the final done summary is not blocked by a non-empty bubble.
-          onUpdate('text', { content: '', replace: true });
-          onUpdate('warning', { message: 'Plan-only response was rejected; continuing into execution.' });
-          this._persist(tabId);
-          continue;
-        }
-        if (planOnlyDecision?.failure) {
-          messages.push({ role: 'assistant', content: planOnlyDecision.failure });
-          // Replace any rejected plan text already emitted as streaming deltas
-          // so the visible terminal content matches the failed run result.
-          onUpdate('text', { content: planOnlyDecision.failure, replace: true });
-          onUpdate('warning', { message: planOnlyDecision.failure });
-          this._persist(tabId);
-          return finish(planOnlyDecision.failure, planOnlyDecision.status || 'plan_only_output');
-        }
-        if (this._isClearlyIncompleteStandaloneAnswer(fullText, runOptions)) {
-          if (!standaloneIncompleteAnswerRecoveryAttempted) {
-            standaloneIncompleteAnswerRecoveryAttempted = true;
+          if (this._isActionMode(mode) && this._isCompressionPlaceholderResponse(fullText)) {
+            if (!compressionPlaceholderRecoveryAttempted) {
+              compressionPlaceholderRecoveryAttempted = true;
+              messages.push(this._withResponseItems({ role: 'assistant', content: fullText }, responseItems, reasoningContent, provider));
+              messages.push({
+                role: 'user',
+                content: '[System nudge: your previous response was a context-compression placeholder, not a real final answer or tool call. Continue the active browser task with tool calls. Do not output "[compressed]".]',
+              });
+              onUpdate('warning', { message: 'Model returned a compression placeholder; continuing.' });
+              this._persist(tabId);
+              continue;
+            }
+            const scheduledResume = await this._scheduleAutoProgressResume(tabId, onUpdate);
+            if (scheduledResume) {
+              messages.push({ role: 'assistant', content: scheduledResume.message });
+              this._persist(tabId);
+              return finish(scheduledResume.message, 'scheduled_resume');
+            }
+            const failMsg = '[Agent stopped because the model returned a context-compression placeholder instead of a tool call or real final answer, even after a recovery nudge.]';
+            messages.push({ role: 'assistant', content: failMsg });
+            onUpdate('warning', { message: failMsg });
+            this._persist(tabId);
+            return finish(failMsg, 'placeholder_output');
+          }
+          emptyOutputRecoveryAttempted = false;
+          compressionPlaceholderRecoveryAttempted = false;
+          const clarificationFinalDecision = this._isActionMode(mode)
+            ? this._clarificationAuthorizationPlainFinalDecision(tabId)
+            : null;
+          if (clarificationFinalDecision?.retry && steps < this.maxSteps) {
             messages.push(this._withResponseItems({ role: 'assistant', content: fullText }, responseItems, reasoningContent, provider));
             messages.push(this._appOwnedUserMessage(
-              this._standaloneIncompleteAnswerNudge(standaloneGroundingGap),
-              'standalone_answer_recovery',
+              clarificationFinalDecision.nudge,
+              'clarification_authorization',
             ));
             onUpdate('text', { content: '', replace: true });
-            onUpdate('warning', { message: 'The on-device response ended mid-sentence; retrying once.' });
+            onUpdate('warning', { message: 'Plain final completion blocked until the user answers the clarification explicitly.' });
+            await this._persistNow(tabId);
+            continue;
+          }
+          if (clarificationFinalDecision?.failure) {
+            messages.push({ role: 'assistant', content: clarificationFinalDecision.failure });
+            onUpdate('text', { content: clarificationFinalDecision.failure, replace: true });
+            onUpdate('warning', { message: 'Run stopped because explicit clarification authorization is still required.' });
+            onUpdate('run_status', {
+              status: clarificationFinalDecision.status,
+              message: clarificationFinalDecision.failure,
+            });
+            await this._persistNow(tabId);
+            return finish(clarificationFinalDecision.failure, clarificationFinalDecision.status);
+          }
+          const readFinalLimitation = this._readCompletenessLimitation(tabId);
+          if (readFinalLimitation) {
+            messages.push({ role: 'assistant', content: readFinalLimitation });
+            onUpdate('text', { content: readFinalLimitation, replace: true });
+            onUpdate('warning', { message: 'Ask mode could not verify that every Gmail message was expanded.' });
+            await this._persistNow(tabId);
+            return finish(readFinalLimitation, 'read_scope_limited');
+          }
+          // Preserve the progress ledger's purpose-built continuation before
+          // treating other plain terminal text as unverified.
+          const progressFinalBlock = this._plainFinalProgressBlock(tabId);
+          const completionFinalBlock = this._completionPlainFinalBlock(tabId);
+          const readFinalBlock = this._readCompletenessBlock(tabId);
+          const plainFinalBlocks = [progressFinalBlock, completionFinalBlock, readFinalBlock].filter(Boolean);
+          if (plainFinalBlocks.length) {
+            if (completionFinalBlock && completionPlainFinalRecoveryAttempted >= 2) {
+              const partial = this._completionPlainFinalPartial(tabId, fullText, {
+                progressBlocked: !!progressFinalBlock,
+                readBlocked: !!readFinalBlock,
+              });
+              messages.push({ role: 'assistant', content: partial });
+              onUpdate('text', { content: partial, replace: true });
+              onUpdate('warning', { message: 'Run stopped after a repeated unstructured completion response.' });
+              onUpdate('run_status', { status: 'partial', message: partial });
+              await this._persistNow(tabId);
+              return finish(partial, 'partial');
+            }
+            if (completionFinalBlock) completionPlainFinalRecoveryAttempted++;
+            if (completionFinalBlock && completionPlainFinalRecoveryAttempted >= 2 && steps >= this.maxSteps) {
+              const partial = this._completionPlainFinalPartial(tabId, fullText, {
+                progressBlocked: !!progressFinalBlock,
+                readBlocked: !!readFinalBlock,
+              });
+              messages.push({ role: 'assistant', content: partial });
+              onUpdate('text', { content: partial, replace: true });
+              onUpdate('warning', { message: 'Run stopped after a repeated unstructured completion response.' });
+              onUpdate('run_status', { status: 'partial', message: partial });
+              await this._persistNow(tabId);
+              return finish(partial, 'partial');
+            }
+            if (completionFinalBlock && !progressFinalBlock && !readFinalBlock && !this._richTextToolbarGuard.hasPending(tabId)) {
+              const completionState = this.completionInvariants.get(tabId);
+              if (completionState?.verificationDebt || completionState?.iframeFormVerificationDebt) {
+                forceCompletionVerificationTurn = true;
+                forceCompletionDoneAfterVerification = true;
+              } else {
+                forceCompletionDoneTurn = true;
+              }
+            }
+            messages.push(this._withResponseItems({ role: 'assistant', content: fullText }, responseItems, reasoningContent, provider));
+            messages.push(this._appOwnedUserMessage(plainFinalBlocks.join('\n\n'), 'plain_final_block'));
+            if (completionFinalBlock || readFinalBlock) onUpdate('text', { content: '', replace: true });
+            onUpdate('warning', {
+              message: readFinalBlock
+                ? 'Whole-thread answer blocked until every read page is covered.'
+                : completionFinalBlock
+                  ? 'Runtime completion invariant requires an explicit done outcome.'
+                  : 'Progress ledger has unresolved rows; continuing.'
+            });
             this._persist(tabId);
             continue;
           }
-          const incompleteFailure = 'The on-device model ended its response unexpectedly twice. Please try again.';
-          messages.push({ role: 'assistant', content: incompleteFailure });
-          onUpdate('text', { content: incompleteFailure, replace: true });
-          onUpdate('warning', { message: incompleteFailure });
-          this._persist(tabId);
-          traceFailureCode = 'EMPTY_RESPONSE';
-          closeTraceStep({ ok: false, code: 'EMPTY_RESPONSE' });
-          return finish(incompleteFailure, 'incomplete_output');
-        }
-        const repairedFullText = repairAssistantDisplayText(fullText);
-        if (repairedFullText !== fullText) {
-          fullText = repairedFullText;
-          // Streaming deltas have already displayed the malformed escapes.
-          // Replace the transient bubble once with the repaired terminal text.
-          onUpdate('text', { content: fullText, replace: true });
-        }
-        if (costStopMessage) {
-          onUpdate('text_delta', { content: `\n\n${costStopMessage}` });
-          fullText = `${fullText}\n\n${costStopMessage}`;
-        }
-        const attributedFullText = this._withStandaloneUnverifiedNotice(
-          this._withStandaloneWikipediaAttribution(
-            fullText,
-            standaloneWikipediaReferences,
-            runOptions,
-          ),
-          standaloneGroundingGap,
-          runOptions,
-        );
-        if (attributedFullText !== fullText) {
-          fullText = attributedFullText;
-          onUpdate('text', { content: fullText, replace: true });
-        }
-        messages.push(this._withResponseItems({ role: 'assistant', content: fullText }, responseItems, reasoningContent, provider));
-        this._persist(tabId);
-        closeTraceStep({ ok: true });
-        return finish(fullText);
-
-      } catch (e) {
-        const caughtMessage = formatErrorMessage(e);
-        const stepErrorCode = this._traceErrorCodeFor(e);
-        await closeTraceStep({ ok: false, code: stepErrorCode });
-        this._logDebug({ type: 'llm_stream_error', step: steps, error: caughtMessage });
-        if (this._isCostAllowanceError(e)) {
-          messages.push({ role: 'assistant', content: caughtMessage });
-          onUpdate('warning', { message: caughtMessage });
-          this._persist(tabId);
-          traceFailureCode = 'COST_LIMIT';
-          return finish(caughtMessage, 'cost_limit');
-        }
-        if (!streamEmittedOutput && !visionFallbackAttempted) {
-          const fallbackMessages = await this._visionFallbackMessages(tabId, currentStreamRequestMessages, costState, e);
-          if (fallbackMessages) {
-            visionFallbackAttempted = true;
-            pendingVisionFallbackMessages = fallbackMessages;
-            onUpdate('warning', {
-              code: 'vision_local_fallback_retry',
-              message: 'The active provider rejected the image; retrying once from the retained capture using a local LiquidAI description.',
-            });
-            if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: stepErrorCode });
+          const planOnlyDecision = this._planOnlyTerminalDecision(tabId, fullText);
+          if (planOnlyDecision?.retry) {
+            messages.push(this._withResponseItems(
+              {
+                role: 'assistant',
+                content: planOnlyDecision.retryAssistantContent ?? fullText,
+              },
+              planOnlyDecision.retryAssistantContent ? null : responseItems,
+              planOnlyDecision.retryAssistantContent ? '' : reasoningContent,
+              provider,
+            ));
+            messages.push(this._appOwnedUserMessage(planOnlyDecision.nudge, 'plan_execution_block'));
+            // Streamed plan text already landed via text_delta. Replace it before
+            // the recovery turn so later deltas do not append onto the plan and
+            // the final done summary is not blocked by a non-empty bubble.
+            onUpdate('text', { content: '', replace: true });
+            onUpdate('warning', { message: 'Plan-only response was rejected; continuing into execution.' });
+            this._persist(tabId);
             continue;
           }
-        }
-        if (this._isWebgpuGenerationBudgetError(e)
+          if (planOnlyDecision?.failure) {
+            messages.push({ role: 'assistant', content: planOnlyDecision.failure });
+            // Replace any rejected plan text already emitted as streaming deltas
+            // so the visible terminal content matches the failed run result.
+            onUpdate('text', { content: planOnlyDecision.failure, replace: true });
+            onUpdate('warning', { message: planOnlyDecision.failure });
+            this._persist(tabId);
+            return finish(planOnlyDecision.failure, planOnlyDecision.status || 'plan_only_output');
+          }
+          if (this._isClearlyIncompleteStandaloneAnswer(fullText, runOptions)) {
+            if (!standaloneIncompleteAnswerRecoveryAttempted) {
+              standaloneIncompleteAnswerRecoveryAttempted = true;
+              messages.push(this._withResponseItems({ role: 'assistant', content: fullText }, responseItems, reasoningContent, provider));
+              messages.push(this._appOwnedUserMessage(
+                this._standaloneIncompleteAnswerNudge(standaloneGroundingGap),
+                'standalone_answer_recovery',
+              ));
+              onUpdate('text', { content: '', replace: true });
+              onUpdate('warning', { message: 'The on-device response ended mid-sentence; retrying once.' });
+              this._persist(tabId);
+              continue;
+            }
+            const incompleteFailure = 'The on-device model ended its response unexpectedly twice. Please try again.';
+            messages.push({ role: 'assistant', content: incompleteFailure });
+            onUpdate('text', { content: incompleteFailure, replace: true });
+            onUpdate('warning', { message: incompleteFailure });
+            this._persist(tabId);
+            traceFailureCode = 'EMPTY_RESPONSE';
+            closeTraceStep({ ok: false, code: 'EMPTY_RESPONSE' });
+            return finish(incompleteFailure, 'incomplete_output');
+          }
+          const repairedFullText = repairAssistantDisplayText(fullText);
+          if (repairedFullText !== fullText) {
+            fullText = repairedFullText;
+            // Streaming deltas have already displayed the malformed escapes.
+            // Replace the transient bubble once with the repaired terminal text.
+            onUpdate('text', { content: fullText, replace: true });
+          }
+          if (costStopMessage) {
+            onUpdate('text_delta', { content: `\n\n${costStopMessage}` });
+            fullText = `${fullText}\n\n${costStopMessage}`;
+          }
+          const attributedFullText = this._withStandaloneUnverifiedNotice(
+            this._withStandaloneWikipediaAttribution(
+              fullText,
+              standaloneWikipediaReferences,
+              runOptions,
+            ),
+            standaloneGroundingGap,
+            runOptions,
+          );
+          if (attributedFullText !== fullText) {
+            fullText = attributedFullText;
+            onUpdate('text', { content: fullText, replace: true });
+          }
+          messages.push(this._withResponseItems({ role: 'assistant', content: fullText }, responseItems, reasoningContent, provider));
+          this._persist(tabId);
+          closeTraceStep({ ok: true });
+          return finish(fullText);
+
+        } catch (e) {
+          const caughtMessage = formatErrorMessage(e);
+          const stepErrorCode = this._traceErrorCodeFor(e);
+          await closeTraceStep({ ok: false, code: stepErrorCode });
+          this._logDebug({ type: 'llm_stream_error', step: steps, error: caughtMessage });
+          if (this._isCostAllowanceError(e)) {
+            messages.push({ role: 'assistant', content: caughtMessage });
+            onUpdate('warning', { message: caughtMessage });
+            this._persist(tabId);
+            traceFailureCode = 'COST_LIMIT';
+            return finish(caughtMessage, 'cost_limit');
+          }
+          if (!streamEmittedOutput && !visionFallbackAttempted) {
+            const fallbackMessages = await this._visionFallbackMessages(tabId, currentStreamRequestMessages, costState, e);
+            if (fallbackMessages) {
+              visionFallbackAttempted = true;
+              pendingVisionFallbackMessages = fallbackMessages;
+              onUpdate('warning', {
+                code: 'vision_local_fallback_retry',
+                message: 'The active provider rejected the image; retrying once from the retained capture using a local LiquidAI description.',
+              });
+              if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: stepErrorCode });
+              continue;
+            }
+          }
+          if (this._isWebgpuGenerationBudgetError(e)
             && this._isStandaloneWebgpuRun(runOptions)
             && !standaloneWebgpuBudgetRecoveryAttempted
             && this._compactStandaloneWebgpuRagPrompt(enriched)) {
-          standaloneWebgpuBudgetRecoveryAttempted = true;
-          onUpdate('warning', { message: 'The on-device model ran out of reasoning budget; retrying with a shorter prompt.' });
+            standaloneWebgpuBudgetRecoveryAttempted = true;
+            onUpdate('warning', { message: 'The on-device model ran out of reasoning budget; retrying with a shorter prompt.' });
+            this._persist(tabId);
+            if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: stepErrorCode });
+            continue;
+          }
+          // If context overflow, trim and retry
+          if (this._isContextOverflow(e.message)) {
+            onUpdate('thinking', { step: steps, note: 'Context too large, trimming...' });
+            emergencyTrimMessagesForRun();
+            this._persist(tabId);
+            if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: 'CONTEXT_WINDOW_EXCEEDED' });
+            continue; // retry the loop with trimmed context
+          }
+          onUpdate('error', { message: caughtMessage });
+          const errMsg = `Error: ${caughtMessage}`;
+          messages.push({ role: 'assistant', content: errMsg });
           this._persist(tabId);
-          if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: stepErrorCode });
-          continue;
+          traceFailureCode = stepErrorCode;
+          return finish(errMsg, 'error');
         }
-        // If context overflow, trim and retry
-        if (this._isContextOverflow(e.message)) {
-          onUpdate('thinking', { step: steps, note: 'Context too large, trimming...' });
-          emergencyTrimMessagesForRun();
-          this._persist(tabId);
-          if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: 'CONTEXT_WINDOW_EXCEEDED' });
-          continue; // retry the loop with trimmed context
-        }
-        onUpdate('error', { message: caughtMessage });
-        const errMsg = `Error: ${caughtMessage}`;
-        messages.push({ role: 'assistant', content: errMsg });
-        this._persist(tabId);
-        traceFailureCode = stepErrorCode;
-        return finish(errMsg, 'error');
       }
-    }
 
-    const fallback = this._buildStepLimitSummary(messages, steps);
-    if (!this._stepLimitRecoveryEligible(provider, runOptions)) {
-      messages.push({ role: 'assistant', content: fallback });
-      onUpdate('text', { content: fallback });
-      this._persist(tabId);
-      onUpdate('max_steps_reached', { steps: this.maxSteps });
-      return finish(fallback, 'max_steps');
-    }
-    const recovery = await this._recoverDeliveryCheckpointTurn(
-      tabId, messages, onUpdate, provider, costState, runId, steps,
-      fallback, runOptions, enriched, sourceBoundPriorMessages,
-      { phase: 'step_limit_recovery' },
-    );
-    // A Stop pressed during the handoff is the user's own terminal decision;
-    // re-arming Continue there would also relabel the cancellation as a
-    // step-limit error in the run journal.
-    if (recovery.status !== 'cancelled') onUpdate('max_steps_reached', { steps: this.maxSteps });
-    if (recovery.status === 'cancelled') return finish(recovery.content, 'cancelled');
-    // Keep the max_steps trace signal so Compass improvement traces still see
-    // the step-limit stop; finish() carries the delivered outcome to the UI
-    // while the trace close below re-asserts max_steps with handoffOutcome.
-    traceTurnEndExtra = { handoffOutcome: recovery.status };
-    const handoffResponse = finish(recovery.content, recovery.status);
-    _traceStatus = 'max_steps';
-    return handoffResponse;
+      const fallback = this._buildStepLimitSummary(messages, steps);
+      if (!this._stepLimitRecoveryEligible(provider, runOptions)) {
+        messages.push({ role: 'assistant', content: fallback });
+        onUpdate('text', { content: fallback });
+        this._persist(tabId);
+        onUpdate('max_steps_reached', { steps: this.maxSteps });
+        return finish(fallback, 'max_steps');
+      }
+      const recovery = await this._recoverDeliveryCheckpointTurn(
+        tabId, messages, onUpdate, provider, costState, runId, steps,
+        fallback, runOptions, enriched, sourceBoundPriorMessages,
+        { phase: 'step_limit_recovery' },
+      );
+      // A Stop pressed during the handoff is the user's own terminal decision;
+      // re-arming Continue there would also relabel the cancellation as a
+      // step-limit error in the run journal.
+      if (recovery.status !== 'cancelled') onUpdate('max_steps_reached', { steps: this.maxSteps });
+      if (recovery.status === 'cancelled') return finish(recovery.content, 'cancelled');
+      // Keep the max_steps trace signal so Compass improvement traces still see
+      // the step-limit stop; finish() carries the delivered outcome to the UI
+      // while the trace close below re-asserts max_steps with handoffOutcome.
+      traceTurnEndExtra = { handoffOutcome: recovery.status };
+      const handoffResponse = finish(recovery.content, recovery.status);
+      _traceStatus = 'max_steps';
+      return handoffResponse;
     } catch (error) {
       const message = formatErrorMessage(error);
       _traceStatus = 'error';
