@@ -264,16 +264,16 @@ function changeSettingsUiScale(action) {
   });
   // Keep the chain alive after a rejected write while still handing the
   // failure to this caller.
-  settingsUiScaleWriteQueue = write.catch(() => {});
+  settingsUiScaleWriteQueue = write.catch(() => { });
   return write;
 }
 
 loadUiScale(browser.storage.local).then(renderSettingsUiScale);
 if (settingsUiScaleDecrease) settingsUiScaleDecrease.disabled = true;
 if (settingsUiScaleIncrease) settingsUiScaleIncrease.disabled = true;
-settingsUiScaleDecrease?.addEventListener('click', () => changeSettingsUiScale('decrease').catch(() => {}));
-settingsUiScaleIncrease?.addEventListener('click', () => changeSettingsUiScale('increase').catch(() => {}));
-settingsUiScaleReset?.addEventListener('click', () => changeSettingsUiScale('reset').catch(() => {}));
+settingsUiScaleDecrease?.addEventListener('click', () => changeSettingsUiScale('decrease').catch(() => { }));
+settingsUiScaleIncrease?.addEventListener('click', () => changeSettingsUiScale('increase').catch(() => { }));
+settingsUiScaleReset?.addEventListener('click', () => changeSettingsUiScale('reset').catch(() => { }));
 browser.storage.onChanged.addListener((changes, area) => {
   if (area === 'local' && changes[UI_SCALE_STORAGE_KEY]) {
     renderSettingsUiScale(changes[UI_SCALE_STORAGE_KEY].newValue);
@@ -291,8 +291,8 @@ async function refreshUiScaleShortcuts() {
   settingsUiScaleShortcuts.textContent = t('st.display.ui_scale.shortcuts', { shortcuts: summary });
 }
 
-refreshUiScaleShortcuts().catch(() => {});
-window.addEventListener('focus', () => refreshUiScaleShortcuts().catch(() => {}));
+refreshUiScaleShortcuts().catch(() => { });
+window.addEventListener('focus', () => refreshUiScaleShortcuts().catch(() => { }));
 settingsUiScaleManageShortcuts?.addEventListener('click', async () => {
   if (browser.commands.openShortcutSettings) {
     await browser.commands.openShortcutSettings();
@@ -379,14 +379,14 @@ if (languageSelect) {
   languageSelect.addEventListener('change', async () => {
     await setLocale(languageSelect.value);
     renderSubtitle();
-    refreshUiScaleShortcuts().catch(() => {});
+    refreshUiScaleShortcuts().catch(() => { });
     filterGeneralSettings();
     renderProviders();
   });
   document.addEventListener('wb-locale-changed', () => {
     languageSelect.value = getLocale();
     renderSubtitle();
-    refreshUiScaleShortcuts().catch(() => {});
+    refreshUiScaleShortcuts().catch(() => { });
     filterGeneralSettings();
     if (providersContainer) renderProviders();
     renderSkills();
@@ -556,11 +556,11 @@ async function init() {
   // Migration: the old auth.webbrain.one sign-in stored a bearer token and
   // account info here. Billing is now device-GUID based and there is no sign-in
   // UI, so purge any stale credentials left over from that flow.
-  browser.storage.local.remove(['authToken', 'authEmail', 'authDefaultModel']).catch(() => {});
+  browser.storage.local.remove(['authToken', 'authEmail', 'authDefaultModel']).catch(() => { });
 
   // Load display settings
   const stored = await browser.storage.local.get(['verboseMode', 'selectionShortcutEnabled', AUTO_GROUP_TABS_KEY, 'helpImproveKavachWeb', 'screenshotFallback', 'maxAgentSteps', 'autoScreenshot', 'useSiteAdapters', 'researchEscalationEnabled', 'researchEscalationEngine', 'voiceInputEnabled', 'alwaysAllowApiMutations', 'apiMutationObserverEnabled', 'openaiAskStreamingEnabled', 'planBeforeActMode', 'planBeforeAct', 'planReviewMode', 'planReviewConfidenceThreshold', DOWNLOAD_DIRECTORY_STORAGE_KEY, 'notifySound', 'completionConfetti', 'completionFlashTab', 'tracingEnabled', 'losslessTrace', 'strictSecretMode', 'agentAllowLocalNetwork', 'scheduledTasksEnabled', 'scheduledRequireConsequentialConfirmation', 'providerFilter', 'requestTimeoutMs', 'clarifyTimeoutSec', 'clarifyTimeoutSemanticsV2', 'costAllowanceSessionUsd', 'costAllowanceTotalUsd', 'meteredProviderCostSpentUsd', 'screenshotRedaction', 'imageDetail', 'maxScreenshotsPerTurn', 'maxImageDimension']);
-  if (typeof stored.providerFilter === 'string' && ['all','active','local','cloud','router'].includes(stored.providerFilter)) {
+  if (typeof stored.providerFilter === 'string' && ['all', 'active', 'local', 'cloud', 'router'].includes(stored.providerFilter)) {
     providerFilter = stored.providerFilter;
   }
   verboseToggle.checked = stored.verboseMode || false;
@@ -598,7 +598,7 @@ async function init() {
         cSec = 1205;
         updates.clarifyTimeoutSec = 1205;
       }
-      browser.storage.local.set(updates).catch(() => {});
+      browser.storage.local.set(updates).catch(() => { });
     }
     clarifyTimeoutRange.value = cSec;
     clarifyTimeoutValueLabel.textContent = formatClarifyTimeoutLabel(cSec);
@@ -1142,27 +1142,27 @@ downloadDirectoryInput?.addEventListener('change', async () => {
   }
   downloadDirectoryInput.setCustomValidity('');
   downloadDirectoryInput.value = directory;
-  await browser.storage.local.set({ [DOWNLOAD_DIRECTORY_STORAGE_KEY]: directory }).catch(() => {});
+  await browser.storage.local.set({ [DOWNLOAD_DIRECTORY_STORAGE_KEY]: directory }).catch(() => { });
 });
 
 verboseToggle.addEventListener('change', async () => {
-  await browser.storage.local.set({ verboseMode: verboseToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ verboseMode: verboseToggle.checked }).catch(() => { });
 });
 
 selectionShortcutToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ selectionShortcutEnabled: selectionShortcutToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ selectionShortcutEnabled: selectionShortcutToggle.checked }).catch(() => { });
 });
 
 autoGroupTabsToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ [AUTO_GROUP_TABS_KEY]: autoGroupTabsToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ [AUTO_GROUP_TABS_KEY]: autoGroupTabsToggle.checked }).catch(() => { });
 });
 
 helpImproveToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ helpImproveKavachWeb: helpImproveToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ helpImproveKavachWeb: helpImproveToggle.checked }).catch(() => { });
 });
 
 screenshotToggle.addEventListener('change', async () => {
-  await browser.storage.local.set({ screenshotFallback: screenshotToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ screenshotFallback: screenshotToggle.checked }).catch(() => { });
 });
 
 maxStepsRange.addEventListener('input', () => {
@@ -1174,7 +1174,7 @@ maxStepsRange.addEventListener('change', async () => {
     maxAgentSteps: Number(maxStepsRange.value) === MAX_AGENT_STEPS_UNLIMITED_SENTINEL
       ? 0
       : parseInt(maxStepsRange.value, 10),
-  }).catch(() => {});
+  }).catch(() => { });
 });
 
 if (requestTimeoutRange) {
@@ -1183,7 +1183,7 @@ if (requestTimeoutRange) {
   });
   requestTimeoutRange.addEventListener('change', async () => {
     const sec = parseInt(requestTimeoutRange.value, 10);
-    await browser.storage.local.set({ requestTimeoutMs: sec * 1000 }).catch(() => {});
+    await browser.storage.local.set({ requestTimeoutMs: sec * 1000 }).catch(() => { });
   });
 }
 
@@ -1205,19 +1205,19 @@ if (clarifyTimeoutRange) {
   });
   clarifyTimeoutRange.addEventListener('change', async () => {
     const sec = Math.max(0, Math.min(1205, parseInt(clarifyTimeoutRange.value, 10) || 0));
-    await browser.storage.local.set({ clarifyTimeoutSec: sec, clarifyTimeoutSemanticsV2: true }).catch(() => {});
+    await browser.storage.local.set({ clarifyTimeoutSec: sec, clarifyTimeoutSemanticsV2: true }).catch(() => { });
   });
 }
 
 autoScreenshotSelect?.addEventListener('change', async () => {
-  await browser.storage.local.set({ autoScreenshot: autoScreenshotSelect.value }).catch(() => {});
+  await browser.storage.local.set({ autoScreenshot: autoScreenshotSelect.value }).catch(() => { });
 });
 
 imageDetailSelect?.addEventListener('change', async () => {
   const v = imageDetailSelect.value;
   const imageDetail = (v === 'high' || v === 'low' || v === 'auto') ? v : 'auto';
   imageDetailSelect.value = imageDetail;
-  await browser.storage.local.set({ imageDetail }).catch(() => {});
+  await browser.storage.local.set({ imageDetail }).catch(() => { });
 });
 
 maxScreenshotsSelect?.addEventListener('change', async () => {
@@ -1225,7 +1225,7 @@ maxScreenshotsSelect?.addEventListener('change', async () => {
   if (!Number.isFinite(n) || n < 0) n = 0;
   if (n > 5) n = 5;
   maxScreenshotsSelect.value = String(n);
-  await browser.storage.local.set({ maxScreenshotsPerTurn: n }).catch(() => {});
+  await browser.storage.local.set({ maxScreenshotsPerTurn: n }).catch(() => { });
 });
 
 maxImageDimensionSelect?.addEventListener('change', async () => {
@@ -1233,34 +1233,34 @@ maxImageDimensionSelect?.addEventListener('change', async () => {
   if (!Number.isFinite(n) || n <= 0) n = 1568;
   n = Math.max(1, Math.min(2048, n));
   maxImageDimensionSelect.value = String(n);
-  await browser.storage.local.set({ maxImageDimension: n }).catch(() => {});
+  await browser.storage.local.set({ maxImageDimension: n }).catch(() => { });
 });
 
 siteAdaptersToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ useSiteAdapters: siteAdaptersToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ useSiteAdapters: siteAdaptersToggle.checked }).catch(() => { });
 });
 
 researchEscalationToggle?.addEventListener('change', async () => {
   await browser.storage.local.set({
     researchEscalationEnabled: researchEscalationToggle.checked,
     researchEscalationEngine: 'chatgpt',
-  }).catch(() => {});
+  }).catch(() => { });
 });
 
 voiceInputToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ voiceInputEnabled: voiceInputToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ voiceInputEnabled: voiceInputToggle.checked }).catch(() => { });
 });
 
 apiMutationObserverToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ apiMutationObserverEnabled: apiMutationObserverToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ apiMutationObserverEnabled: apiMutationObserverToggle.checked }).catch(() => { });
 });
 
 alwaysAllowApiMutationsToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ alwaysAllowApiMutations: alwaysAllowApiMutationsToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ alwaysAllowApiMutations: alwaysAllowApiMutationsToggle.checked }).catch(() => { });
 });
 
 openAIAskStreamingToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ openaiAskStreamingEnabled: openAIAskStreamingToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ openaiAskStreamingEnabled: openAIAskStreamingToggle.checked }).catch(() => { });
 });
 
 if (planBeforeActModeSelect) {
@@ -1269,7 +1269,7 @@ if (planBeforeActModeSelect) {
     await browser.storage.local.set({
       planBeforeActMode: mode,
       planBeforeAct: mode !== 'off',
-    }).catch(() => {});
+    }).catch(() => { });
   });
 }
 
@@ -1277,7 +1277,7 @@ if (planReviewModeSelect) {
   planReviewModeSelect.addEventListener('change', async () => {
     const mode = PLAN_REVIEW_MODES.has(planReviewModeSelect.value) ? planReviewModeSelect.value : 'confidence';
     updatePlanReviewConfidenceUI();
-    await browser.storage.local.set({ planReviewMode: mode }).catch(() => {});
+    await browser.storage.local.set({ planReviewMode: mode }).catch(() => { });
   });
 }
 
@@ -1289,41 +1289,41 @@ if (planReviewConfidenceRange) {
     });
     planReviewConfidenceRange.value = threshold;
     updatePlanReviewConfidenceUI();
-    await browser.storage.local.set({ planReviewConfidenceThreshold: threshold }).catch(() => {});
+    await browser.storage.local.set({ planReviewConfidenceThreshold: threshold }).catch(() => { });
   });
 }
 
 notifySoundToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ notifySound: notifySoundToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ notifySound: notifySoundToggle.checked }).catch(() => { });
 });
 
 completionConfettiToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ completionConfetti: completionConfettiToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ completionConfetti: completionConfettiToggle.checked }).catch(() => { });
 });
 
 completionFlashTabToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ completionFlashTab: completionFlashTabToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ completionFlashTab: completionFlashTabToggle.checked }).catch(() => { });
 });
 
 tracingToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ tracingEnabled: tracingToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ tracingEnabled: tracingToggle.checked }).catch(() => { });
   if (losslessTracingToggle) {
     losslessTracingToggle.disabled = tracingToggle.checked !== true;
     if (!tracingToggle.checked) {
       losslessTracingToggle.checked = false;
-      await browser.storage.local.set({ losslessTrace: false }).catch(() => {});
+      await browser.storage.local.set({ losslessTrace: false }).catch(() => { });
     }
   }
 });
 
 losslessTracingToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ losslessTrace: losslessTracingToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ losslessTrace: losslessTracingToggle.checked }).catch(() => { });
 });
 
 costSessionLimitInput?.addEventListener('change', async () => {
   const value = normalizeCostAmount(costSessionLimitInput.value);
   costSessionLimitInput.value = value.toFixed(2);
-  await browser.storage.local.set({ costAllowanceSessionUsd: value }).catch(() => {});
+  await browser.storage.local.set({ costAllowanceSessionUsd: value }).catch(() => { });
 });
 
 costTotalLimitInput?.addEventListener('change', async () => {
@@ -1331,7 +1331,7 @@ costTotalLimitInput?.addEventListener('change', async () => {
   costTotalLimitInput.value = value.toFixed(2);
   const stored = await browser.storage.local.get(['meteredProviderCostSpentUsd']);
   renderCostAllowanceSpent(normalizeCostAmount(stored.meteredProviderCostSpentUsd, 0), value);
-  await browser.storage.local.set({ costAllowanceTotalUsd: value }).catch(() => {});
+  await browser.storage.local.set({ costAllowanceTotalUsd: value }).catch(() => { });
 });
 
 btnResetCostSpend?.addEventListener('click', async () => {
@@ -1340,19 +1340,19 @@ btnResetCostSpend?.addEventListener('click', async () => {
 });
 
 strictSecretToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ strictSecretMode: strictSecretToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ strictSecretMode: strictSecretToggle.checked }).catch(() => { });
 });
 
 allowLocalNetworkToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ agentAllowLocalNetwork: allowLocalNetworkToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ agentAllowLocalNetwork: allowLocalNetworkToggle.checked }).catch(() => { });
 });
 
 scheduledTasksToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ scheduledTasksEnabled: scheduledTasksToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ scheduledTasksEnabled: scheduledTasksToggle.checked }).catch(() => { });
 });
 
 scheduledConfirmToggle?.addEventListener('change', async () => {
-  await browser.storage.local.set({ scheduledRequireConsequentialConfirmation: scheduledConfirmToggle.checked }).catch(() => {});
+  await browser.storage.local.set({ scheduledRequireConsequentialConfirmation: scheduledConfirmToggle.checked }).catch(() => { });
 });
 
 // --- Vision Model ---
@@ -1568,7 +1568,7 @@ async function refreshProfileSyncState() { const state = await sendToBackground(
 async function reloadProfileSyncData() { const stored = await browser.storage.local.get(['profileEnabled', 'profileText', 'visionModel', 'transcriptionModel']); if (profileEnabledToggle) profileEnabledToggle.checked = !!stored.profileEnabled; if (profileTextArea) profileTextArea.value = stored.profileText || ''; const vision = stored.visionModel || {}; visionBaseUrlInput.value = vision.baseUrl || ''; visionApiKeyInput.value = vision.apiKey || ''; visionModelInput.value = vision.model || ''; const transcription = stored.transcriptionModel || {}; if (transcriptionBaseUrlInput) transcriptionBaseUrlInput.value = transcription.baseUrl || ''; if (transcriptionApiKeyInput) transcriptionApiKeyInput.value = transcription.apiKey || ''; if (transcriptionModelInput) transcriptionModelInput.value = transcription.model || ''; updateMultimodalDetectedProvider('vision'); updateMultimodalDetectedProvider('transcription'); await loadUserMemorySettings(); const res = await sendToBackground('get_providers'); providersData = res.providers; activeProviderId = res.active; renderProviders(); }
 async function requestProfileSyncDataConsent() { const permissions = await browser.permissions.getAll(); if (!Object.hasOwn(permissions, 'data_collection')) return window.confirm(t('st.sync.consent.legacy')); return browser.permissions.request({ data_collection: ['personallyIdentifyingInfo', 'authenticationInfo', 'personalCommunications', 'websiteContent', 'technicalAndInteraction'] }); }
 function profileSyncButtonRestore(button, pendingLabel) {
-  if (!button) return () => {};
+  if (!button) return () => { };
   const previousDisabled = button.disabled;
   const previousText = button.textContent;
   button.disabled = true;
@@ -1594,13 +1594,13 @@ async function profileSyncAction(action, data = {}, options = {}) {
 function checkedSyncPassword(requireConfirmation = false) { const password = profileSyncPassword?.value || ''; const confirmation = profileSyncConfirm?.value || ''; if (password.length < 12) throw new Error(t('st.sync.validation.password_length')); if (requireConfirmation && !confirmation) throw new Error(t('st.sync.validation.confirm_required')); if (confirmation && password !== confirmation) throw new Error(t('st.sync.validation.password_mismatch')); return password; }
 function promptConfirmedSyncPassword(label = t('st.sync.prompt.new_password')) { const password = window.prompt(t('st.sync.prompt.password', { label })); if (!password) return null; if (password.length < 12) throw new Error(t('st.sync.validation.password_length')); const confirmation = window.prompt(t('st.sync.prompt.confirm_password')); if (!confirmation) throw new Error(t('st.sync.validation.confirm_required')); if (password !== confirmation) throw new Error(t('st.sync.validation.password_mismatch')); return password; }
 btnProfileSyncAuth?.addEventListener('click', async () => { const email = (profileSyncEmail?.value || '').trim(); if (!email) return showProfileSyncResult(false, t('st.sync.validation.email_required')); try { profileSyncChallenge = await profileSyncAction('profile_sync_auth_start', { email }); showProfileSyncResult(true, t('st.sync.auth.check_email')); const poll = setInterval(async () => { if (!profileSyncChallenge) return clearInterval(poll); try { const result = await sendToBackground('profile_sync_auth_status', { challengeId: profileSyncChallenge.challenge_id, verifier: profileSyncChallenge.verifier }); if (result.token) { clearInterval(poll); profileSyncChallenge = null; showProfileSyncResult(true, t('st.sync.auth.success')); await refreshProfileSyncState(); } } catch (error) { clearInterval(poll); profileSyncChallenge = null; showProfileSyncResult(false, t('st.sync.error.generic', { error: error?.message || t('st.sync.error.unknown') })); } }, 3000); setTimeout(() => clearInterval(poll), 30 * 60 * 1000); } catch { } });
-btnProfileSyncEnable?.addEventListener('click', async () => { let password; try { password = checkedSyncPassword(true); if (!await requestProfileSyncDataConsent()) throw new Error(t('st.sync.consent.denied')); } catch (e) { showProfileSyncResult(false, e.message); return; } await profileSyncAction('profile_sync_unlock', { password, create: true }).catch(() => {}); });
-btnProfileSyncUnlock?.addEventListener('click', async () => { let password; try { password = checkedSyncPassword(); if (!await requestProfileSyncDataConsent()) throw new Error(t('st.sync.consent.denied')); } catch (e) { showProfileSyncResult(false, e.message); return; } await profileSyncAction('profile_sync_unlock', { password, create: false }).catch(() => {}); });
-btnProfileSyncNow?.addEventListener('click', () => profileSyncAction('profile_sync_now', {}, { button: btnProfileSyncNow, pending: t('st.sync.pending.syncing'), pendingLabel: t('st.sync.pending.syncing_short'), success: t('st.sync.result.current') }).catch(() => {}));
-btnProfileSyncLock?.addEventListener('click', () => profileSyncAction('profile_sync_lock').catch(() => {}));
-btnProfileSyncChange?.addEventListener('click', async () => { const oldPassword = window.prompt(t('st.sync.prompt.current_password')); if (!oldPassword) return; let newPassword; try { newPassword = promptConfirmedSyncPassword(); } catch (e) { showProfileSyncResult(false, e.message); return; } if (newPassword) await profileSyncAction('profile_sync_change_password', { oldPassword, newPassword }).catch(() => {}); });
-btnProfileSyncDisable?.addEventListener('click', () => { if (window.confirm(t('st.sync.confirm.disable'))) profileSyncAction('profile_sync_disable').catch(() => {}); });
-btnProfileSyncReset?.addEventListener('click', async () => { if (!window.confirm(t('st.sync.confirm.reset'))) return; let password; try { password = promptConfirmedSyncPassword(t('st.sync.prompt.replacement_password')); } catch (e) { showProfileSyncResult(false, e.message); return; } if (password) await profileSyncAction('profile_sync_reset', { password }).catch(() => {}); });
+btnProfileSyncEnable?.addEventListener('click', async () => { let password; try { password = checkedSyncPassword(true); if (!await requestProfileSyncDataConsent()) throw new Error(t('st.sync.consent.denied')); } catch (e) { showProfileSyncResult(false, e.message); return; } await profileSyncAction('profile_sync_unlock', { password, create: true }).catch(() => { }); });
+btnProfileSyncUnlock?.addEventListener('click', async () => { let password; try { password = checkedSyncPassword(); if (!await requestProfileSyncDataConsent()) throw new Error(t('st.sync.consent.denied')); } catch (e) { showProfileSyncResult(false, e.message); return; } await profileSyncAction('profile_sync_unlock', { password, create: false }).catch(() => { }); });
+btnProfileSyncNow?.addEventListener('click', () => profileSyncAction('profile_sync_now', {}, { button: btnProfileSyncNow, pending: t('st.sync.pending.syncing'), pendingLabel: t('st.sync.pending.syncing_short'), success: t('st.sync.result.current') }).catch(() => { }));
+btnProfileSyncLock?.addEventListener('click', () => profileSyncAction('profile_sync_lock').catch(() => { }));
+btnProfileSyncChange?.addEventListener('click', async () => { const oldPassword = window.prompt(t('st.sync.prompt.current_password')); if (!oldPassword) return; let newPassword; try { newPassword = promptConfirmedSyncPassword(); } catch (e) { showProfileSyncResult(false, e.message); return; } if (newPassword) await profileSyncAction('profile_sync_change_password', { oldPassword, newPassword }).catch(() => { }); });
+btnProfileSyncDisable?.addEventListener('click', () => { if (window.confirm(t('st.sync.confirm.disable'))) profileSyncAction('profile_sync_disable').catch(() => { }); });
+btnProfileSyncReset?.addEventListener('click', async () => { if (!window.confirm(t('st.sync.confirm.reset'))) return; let password; try { password = promptConfirmedSyncPassword(t('st.sync.prompt.replacement_password')); } catch (e) { showProfileSyncResult(false, e.message); return; } if (password) await profileSyncAction('profile_sync_reset', { password }).catch(() => { }); });
 refreshProfileSyncState();
 
 // Persisted to browser.storage.local in plaintext; the agent picks the
@@ -1616,7 +1616,7 @@ function flashProfileResult(className, text) {
 
 if (profileEnabledToggle) {
   profileEnabledToggle.addEventListener('change', async () => {
-    await browser.storage.local.set({ profileEnabled: profileEnabledToggle.checked }).catch(() => {});
+    await browser.storage.local.set({ profileEnabled: profileEnabledToggle.checked }).catch(() => { });
   });
 }
 
@@ -1720,19 +1720,19 @@ async function loadUserMemorySettings() {
 
 if (userMemoryEnabledToggle) {
   userMemoryEnabledToggle.addEventListener('change', async () => {
-    await browser.storage.local.set({ [USER_MEMORY_ENABLED_KEY]: userMemoryEnabledToggle.checked }).catch(() => {});
+    await browser.storage.local.set({ [USER_MEMORY_ENABLED_KEY]: userMemoryEnabledToggle.checked }).catch(() => { });
   });
 }
 
 if (userMemoryAutoToggle) {
   userMemoryAutoToggle.addEventListener('change', async () => {
-    await browser.storage.local.set({ [USER_MEMORY_AUTO_CAPTURE_KEY]: userMemoryAutoToggle.checked }).catch(() => {});
+    await browser.storage.local.set({ [USER_MEMORY_AUTO_CAPTURE_KEY]: userMemoryAutoToggle.checked }).catch(() => { });
   });
 }
 
 if (userMemoryFormToggle) {
   userMemoryFormToggle.addEventListener('change', async () => {
-    await browser.storage.local.set({ [USER_MEMORY_FORM_CAPTURE_KEY]: userMemoryFormToggle.checked }).catch(() => {});
+    await browser.storage.local.set({ [USER_MEMORY_FORM_CAPTURE_KEY]: userMemoryFormToggle.checked }).catch(() => { });
   });
 }
 
@@ -1743,7 +1743,7 @@ if (userMemoryMaxCharsInput) {
       ? USER_MEMORY_DEFAULT_MAX_PROMPT_CHARS
       : normalizeUserMemoryMaxPromptChars(rawMaxPromptChars);
     userMemoryMaxCharsInput.value = String(value);
-    await browser.storage.local.set({ [USER_MEMORY_MAX_PROMPT_CHARS_KEY]: value }).catch(() => {});
+    await browser.storage.local.set({ [USER_MEMORY_MAX_PROMPT_CHARS_KEY]: value }).catch(() => { });
   });
 }
 
@@ -2416,7 +2416,7 @@ function renderProviders() {
         { key: 'apiVersion', labelKey: 'st.provider.field.api_version', type: 'text', placeholder: '2024-10-21' },
         { key: 'supportsVision', labelKey: 'st.provider.field.supports_vision', type: 'checkbox' },
         ...COST_ESTIMATE_FIELDS,
-        ],
+      ],
     },
     aws_bedrock: {
       fields: [
@@ -2431,7 +2431,8 @@ function renderProviders() {
     openai: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'sk-...' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'gpt-5.6-terra',
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'gpt-5.6-terra',
           suggestions: [
             'gpt-5.6-terra',
             'gpt-5.6-sol',
@@ -2443,7 +2444,8 @@ function renderProviders() {
             'gpt-5.4-pro-2026-03-05',
             'gpt-5.4-mini-2026-03-17',
             'gpt-5.4-nano-2026-03-17',
-          ] },
+          ]
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://api.openai.com/v1' },
         ...OPENAI_COST_ESTIMATE_FIELDS,
       ],
@@ -2451,8 +2453,10 @@ function renderProviders() {
     openrouter: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'sk-or-...' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'openrouter/free',
-          suggestions: ['openrouter/free', 'qwen/qwen3.8-27b', 'moonshotai/kimi-k3', 'z-ai/glm-5.3', 'minimax/minimax-m3'] },
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'openrouter/free',
+          suggestions: ['openrouter/free', 'qwen/qwen3.8-27b', 'moonshotai/kimi-k3', 'z-ai/glm-5.3', 'minimax/minimax-m3']
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://openrouter.ai/api/v1' },
         PROMPT_TIER_FIELD,
       ],
@@ -2460,8 +2464,10 @@ function renderProviders() {
     huggingface: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'hf_...' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'moonshotai/Kimi-K3',
-          suggestions: ['moonshotai/Kimi-K3', 'zai-org/GLM-5.2', 'Qwen/Qwen3.8-2.4T-A95B', 'Qwen/Qwen3.6-27B'] },
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'moonshotai/Kimi-K3',
+          suggestions: ['moonshotai/Kimi-K3', 'zai-org/GLM-5.2', 'Qwen/Qwen3.8-2.4T-A95B', 'Qwen/Qwen3.6-27B']
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://router.huggingface.co/v1' },
         // Hugging Face's catalog is huge and open-ended — unlike curated
         // routers, model-name sniffing (openai.js supportsVision) can't
@@ -2474,14 +2480,16 @@ function renderProviders() {
     fireworks: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'fw_...' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'accounts/fireworks/models/kimi-k3',
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'accounts/fireworks/models/kimi-k3',
           suggestions: [
             'accounts/fireworks/models/kimi-k3',
             'accounts/fireworks/models/glm-5p2',
             'accounts/fireworks/models/minimax-m3',
             'accounts/fireworks/models/deepseek-v4-pro-0813',
             'accounts/fireworks/models/qwen3p8-2p4t-a95b',
-          ] },
+          ]
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://api.fireworks.ai/inference/v1' },
         PROMPT_TIER_FIELD,
       ],
@@ -2489,8 +2497,10 @@ function renderProviders() {
     anthropic: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'sk-ant-...' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'claude-opus-5',
-          suggestions: ['claude-fable-5', 'claude-opus-5', 'claude-sonnet-5', 'claude-haiku-4-5'] },
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'claude-opus-5',
+          suggestions: ['claude-fable-5', 'claude-opus-5', 'claude-sonnet-5', 'claude-haiku-4-5']
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://api.anthropic.com' },
         ...CACHE_AWARE_COST_ESTIMATE_FIELDS,
       ],
@@ -2498,8 +2508,10 @@ function renderProviders() {
     gemini: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'AIza...' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'gemini-3.1-pro',
-          suggestions: ['gemini-3.1-pro', 'gemini-3.7-flash', 'gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-3.1-flash-lite'] },
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'gemini-3.1-pro',
+          suggestions: ['gemini-3.1-pro', 'gemini-3.7-flash', 'gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-3.1-flash-lite']
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://generativelanguage.googleapis.com/v1beta/openai' },
         ...COST_ESTIMATE_FIELDS,
       ],
@@ -2509,8 +2521,10 @@ function renderProviders() {
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'API token' },
         { key: 'accountId', label: 'Cloudflare Account ID', type: 'text', placeholder: '0123456789abcdef0123456789abcdef' },
         { key: 'gatewayId', label: 'AI Gateway ID (optional; @cf defaults to default)', type: 'text', placeholder: 'my-gateway' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: '@cf/zai-org/glm-5.2',
-          suggestions: ['@cf/zai-org/glm-5.2', '@cf/qwen/qwen3-30b-a3b-fp8'] },
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: '@cf/zai-org/glm-5.2',
+          suggestions: ['@cf/zai-org/glm-5.2', '@cf/qwen/qwen3-30b-a3b-fp8']
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1' },
         ...COST_ESTIMATE_FIELDS,
       ],
@@ -2518,8 +2532,10 @@ function renderProviders() {
     mistral: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'API key' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'mistral-medium-3.5',
-          suggestions: ['mistral-medium-3.5', 'mistral-large-latest', 'mistral-small-4', 'codestral-latest'] },
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'mistral-medium-3.5',
+          suggestions: ['mistral-medium-3.5', 'mistral-large-latest', 'mistral-small-4', 'codestral-latest']
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://api.mistral.ai/v1' },
         ...COST_ESTIMATE_FIELDS,
       ],
@@ -2527,8 +2543,10 @@ function renderProviders() {
     deepseek: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'sk-...' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'deepseek-v4-flash',
-          suggestions: ['deepseek-v4-flash', 'deepseek-v4-pro', 'deepseek-v4-flash-vision-exp'] },
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'deepseek-v4-flash',
+          suggestions: ['deepseek-v4-flash', 'deepseek-v4-pro', 'deepseek-v4-flash-vision-exp']
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://api.deepseek.com' },
         ...COST_ESTIMATE_FIELDS,
       ],
@@ -2536,8 +2554,10 @@ function renderProviders() {
     xai: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'xai-...' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'grok-4.6',
-          suggestions: ['grok-4.6', 'grok-4.5', 'grok-4.3', 'grok-build-0.1'] },
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'grok-4.6',
+          suggestions: ['grok-4.6', 'grok-4.5', 'grok-4.3', 'grok-build-0.1']
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://api.x.ai/v1' },
         ...COST_ESTIMATE_FIELDS,
       ],
@@ -2545,8 +2565,10 @@ function renderProviders() {
     nvidia: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'nvapi-...' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'nvidia/nemotron-3-super-120b-a12b',
-          suggestions: ['nvidia/nemotron-3-super-120b-a12b', 'nvidia/nemotron-3-nano-30b-a3b', 'z-ai/glm-5.2', 'qwen/qwen3.5-397b-a17b', 'nvidia/llama-3.3-nemotron-super-49b-v1.5'] },
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'nvidia/nemotron-3-super-120b-a12b',
+          suggestions: ['nvidia/nemotron-3-super-120b-a12b', 'nvidia/nemotron-3-nano-30b-a3b', 'z-ai/glm-5.2', 'qwen/qwen3.5-397b-a17b', 'nvidia/llama-3.3-nemotron-super-49b-v1.5']
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://integrate.api.nvidia.com/v1' },
         ...COST_ESTIMATE_FIELDS,
       ],
@@ -2554,8 +2576,10 @@ function renderProviders() {
     minimax: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'API key' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'MiniMax-M3',
-          suggestions: ['MiniMax-M3', 'MiniMax-M2.7'] },
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'MiniMax-M3',
+          suggestions: ['MiniMax-M3', 'MiniMax-M2.7']
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://api.minimax.chat/v1' },
         ...COST_ESTIMATE_FIELDS,
       ],
@@ -2563,8 +2587,10 @@ function renderProviders() {
     kimi: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'sk-...' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'kimi-k3',
-          suggestions: ['kimi-k3', 'kimi-k2.7-code', 'kimi-k2.7-code-highspeed', 'kimi-k2.6'] },
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'kimi-k3',
+          suggestions: ['kimi-k3', 'kimi-k2.7-code', 'kimi-k2.7-code-highspeed', 'kimi-k2.6']
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://api.moonshot.ai/v1' },
         ...COST_ESTIMATE_FIELDS,
       ],
@@ -2572,8 +2598,10 @@ function renderProviders() {
     alibaba: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'sk-...' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'qwen3.8-max',
-          suggestions: ['qwen3.8-max', 'qwen3.7-max', 'qwen3.7-plus', 'qwen3.7-flash'] },
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'qwen3.8-max',
+          suggestions: ['qwen3.8-max', 'qwen3.7-max', 'qwen3.7-plus', 'qwen3.7-flash']
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://dashscope.aliyuncs.com/compatible-mode/v1' },
         ...COST_ESTIMATE_FIELDS,
       ],
@@ -2581,14 +2609,16 @@ function renderProviders() {
     together: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'tgp_...' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'moonshotai/Kimi-K3',
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'moonshotai/Kimi-K3',
           suggestions: [
             'moonshotai/Kimi-K3',
             'zai-org/GLM-5.2',
             'MiniMaxAI/MiniMax-M3',
             'Qwen/Qwen3.8-2.4T-A95B',
             'google/gemma-4-31B-it',
-          ] },
+          ]
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://api.together.xyz/v1' },
         ...COST_ESTIMATE_FIELDS,
       ],
@@ -2596,8 +2626,10 @@ function renderProviders() {
     groq: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'gsk_...' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'openai/gpt-oss-120b',
-          suggestions: ['openai/gpt-oss-120b', 'openai/gpt-oss-20b', 'qwen/qwen3.6-27b'] },
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'openai/gpt-oss-120b',
+          suggestions: ['openai/gpt-oss-120b', 'openai/gpt-oss-20b', 'qwen/qwen3.6-27b']
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://api.groq.com/openai/v1' },
         ...COST_ESTIMATE_FIELDS,
       ],
@@ -2605,8 +2637,10 @@ function renderProviders() {
     z_ai: {
       fields: [
         { key: 'apiKey', labelKey: 'st.provider.field.api_key', type: 'password', placeholder: 'API key' },
-        { key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'glm-5.3',
-          suggestions: ['glm-5.3', 'glm-5.2', 'glm-5.1', 'glm-5-turbo'] },
+        {
+          key: 'model', labelKey: 'st.provider.field.model', type: 'text', placeholder: 'glm-5.3',
+          suggestions: ['glm-5.3', 'glm-5.2', 'glm-5.1', 'glm-5-turbo']
+        },
         { key: 'baseUrl', labelKey: 'st.provider.field.api_base_url', type: 'text', placeholder: 'https://api.z.ai/api/paas/v4' },
         ...COST_ESTIMATE_FIELDS,
       ],
@@ -2727,7 +2761,7 @@ function renderProviders() {
             <label style="margin:0;cursor:pointer;">${escapeHtml(label)}</label>
           </div>
         `;
-        } else if (field.suggestions && field.key === 'model') {
+      } else if (field.suggestions && field.key === 'model') {
         const rawVal = config[field.key] || '';
         const isCustom = rawVal && !field.suggestions.includes(rawVal);
         const isBlankDuplicate = config.isDuplicate && !rawVal;
@@ -2858,8 +2892,8 @@ function renderProviders() {
         ${billingButton}
         ${!isSelected ? `<button class="btn-secondary btn-activate" data-provider="${id}">${escapeHtml(t('st.providers.select_for_chat'))}</button>` : ''}
         ${config.isDuplicate
-          ? `<button class="btn-secondary btn-remove-duplicate" data-provider="${id}">${escapeHtml(t('st.providers.remove_duplicate'))}</button>`
-          : `<button class="btn-secondary btn-duplicate" data-provider="${id}"${duplicateDisabledKey ? ` disabled title="${escapeHtml(t(duplicateDisabledKey))}"` : ''}>${escapeHtml(t('st.providers.duplicate'))}</button>`}
+        ? `<button class="btn-secondary btn-remove-duplicate" data-provider="${id}">${escapeHtml(t('st.providers.remove_duplicate'))}</button>`
+        : `<button class="btn-secondary btn-duplicate" data-provider="${id}"${duplicateDisabledKey ? ` disabled title="${escapeHtml(t(duplicateDisabledKey))}"` : ''}>${escapeHtml(t('st.providers.duplicate'))}</button>`}
       </div>
       <div class="test-result" id="test-${id}"></div>
     `;
@@ -2988,7 +3022,7 @@ function renderProviders() {
       syncInferredOpenRouterRoutingVariant(providerId, selectedModel);
       void saveProvider(providerId, { showFlash: false })
         .then(() => detectProviderContextWindowForModel(providerId, selectedModel))
-        .catch(() => {});
+        .catch(() => { });
       closeLoadedModelDialog(dialog);
     });
   });
@@ -3012,10 +3046,10 @@ function renderProviderFilterBar() {
     router: '<svg class="provider-filter-pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49"/><path d="M7.76 16.24a6 6 0 0 1 0-8.49"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 19.07a10 10 0 0 1 0-14.14"/></svg>',
   };
   const filters = [
-    { key: 'all',    labelKey: 'st.providers.filter.all' },
+    { key: 'all', labelKey: 'st.providers.filter.all' },
     { key: 'active', labelKey: 'st.providers.active' },
-    { key: 'local',  labelKey: 'st.providers.filter.local' },
-    { key: 'cloud',  labelKey: 'st.providers.filter.cloud' },
+    { key: 'local', labelKey: 'st.providers.filter.local' },
+    { key: 'cloud', labelKey: 'st.providers.filter.cloud' },
     { key: 'router', labelKey: 'st.providers.filter.router' },
   ];
   const filterCounts = Object.entries(providersData).reduce((counts, [id, config]) => {
@@ -3040,7 +3074,7 @@ function renderProviderFilterBar() {
       // to compare two providers).
       syncInputsIntoProvidersData();
       providerFilter = f.key;
-      await browser.storage.local.set({ providerFilter: f.key }).catch(() => {});
+      await browser.storage.local.set({ providerFilter: f.key }).catch(() => { });
       renderProviders();
     });
     pills.appendChild(btn);
@@ -3228,7 +3262,7 @@ const providerModelLoadSaveQueues = new Map();
 
 function queueProviderModelLoadSave(id, save) {
   const previous = providerModelLoadSaveQueues.get(id) || Promise.resolve();
-  const queued = previous.catch(() => {}).then(save);
+  const queued = previous.catch(() => { }).then(save);
   providerModelLoadSaveQueues.set(id, queued);
   const clear = () => {
     if (providerModelLoadSaveQueues.get(id) === queued) providerModelLoadSaveQueues.delete(id);
@@ -3494,7 +3528,7 @@ async function activateProvider(id) {
   if (requestId !== providerActivationRequestId || requestedActiveProviderId !== id) {
     const latestProviderId = requestedActiveProviderId;
     if (latestProviderId) {
-      sendToBackground('set_active_provider', { providerId: latestProviderId }).catch(() => {});
+      sendToBackground('set_active_provider', { providerId: latestProviderId }).catch(() => { });
     }
     return;
   }

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "npm run test:provider-limits && npm run test:toolbar-guard && npm run test:pdf-read && npm run test:pdf-selection && node test/run.js && node test/selection-scope-restoration.mjs && node scripts/benchmark-offline-relevance.mjs && npm run test:security",
-    "test:provider-limits": "node test/provider-model-limits.mjs",
+    "test:provider-limits": "node test/provider-model-limits.mjs && node test/token-rate-pacer.mjs",
     "test:security": "node test/security/injection-corpus.mjs",
     "test:toolbar-guard": "node test/rich-text-toolbar-guard.mjs",
     "test:pdf-read": "node test/pdf-read.mjs",

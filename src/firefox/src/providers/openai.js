@@ -204,7 +204,7 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
         ...(controller ? { signal: controller.signal } : {}),
       });
       if (response.ok) return { ok: true, retryable: false, status: response.status };
-      try { await response.text(); } catch {}
+      try { await response.text(); } catch { }
       return {
         ok: false,
         retryable: response.status === 408 || response.status === 429 || response.status >= 500,
@@ -806,7 +806,7 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
     }
     if (!res.ok) {
       let err = '';
-      try { err = (await res.text()).slice(0, 500); } catch {}
+      try { err = (await res.text()).slice(0, 500); } catch { }
       throw this._httpError(res.status, err, `${this.name} error ${res.status}`);
     }
     let data;
@@ -977,7 +977,7 @@ export class OpenAICompatibleProvider extends BaseLLMProvider {
 
     if (!res.ok) {
       let err = '';
-      try { err = (await res.text()).slice(0, 500); } catch {}
+      try { err = (await res.text()).slice(0, 500); } catch { }
       throw this._httpError(res.status, err, `${this.name} error ${res.status}`);
     }
 

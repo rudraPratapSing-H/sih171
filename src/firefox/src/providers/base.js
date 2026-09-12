@@ -225,10 +225,10 @@ export class BaseLLMProvider {
    * to 'mid' and everything else (e.g. OpenRouter) to 'full'.
    */
   get promptTier() {
-    if (this.config.category === 'cloud') return 'full';
     const t = this.config.promptTier;
     if (t === 'compact' || t === 'mid' || t === 'full') return t;
     if (this.config.useCompactPrompt) return 'compact';
+    if (this.config.category === 'cloud') return 'full';
     return this.config.category === 'local' ? 'mid' : 'full';
   }
 

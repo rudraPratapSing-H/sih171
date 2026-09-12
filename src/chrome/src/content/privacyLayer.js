@@ -1,5 +1,14 @@
+// Loaded from environment (.env) or extension storage; leave empty in repository
 const AICREDITS_API_KEY = "";
-const AICREDITS_BASE_URL = "";
+// If using an AICredits or OpenAI-compatible proxy (e.g., https://api.aicredits.com/v1 or https://openrouter.ai/api/v1)
+// If using Google Gemini directly: "https://generativelanguage.googleapis.com/v1beta/openai"
+const AICREDITS_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai";
+
+// Configured model: Gemini Flash Lite 3.1
+// Options depending on your provider:
+// - Direct Google Gemini: "gemini-3.1-flash-lite" (or "gemini-2.0-flash-lite")
+// - AICredits / OpenRouter: "google/gemini-2.0-flash-lite" or "gemini-3.1-flash-lite"
+const PRIVACY_MODEL = "gemini-3.1-flash-lite";
 
 window.sanitizeForDemo = async function sanitizeForDemo(originalContext) {
 
@@ -250,18 +259,42 @@ If no sensitive information is detected, return:
 ${originalContext}
 `;
 
+    let apiKey = (AICREDITS_API_KEY || "").trim();
+    let baseUrl = (AICREDITS_BASE_URL || "").trim().replace(/\/+$/, "");
+    let model = (PRIVACY_MODEL || "gemini-3.1-flash-lite").trim();
+
+    if (!apiKey && typeof chrome !== "undefined" && chrome.storage?.local) {
+        try {
+            const stored = await chrome.storage.local.get(["AICREDITS_API_KEY", "AICREDITS_BASE_URL", "PRIVACY_MODEL"]);
+            if (stored?.AICREDITS_API_KEY) apiKey = String(stored.AICREDITS_API_KEY).trim();
+            if (stored?.AICREDITS_BASE_URL) baseUrl = String(stored.AICREDITS_BASE_URL).trim().replace(/\/+$/, "");
+            if (stored?.PRIVACY_MODEL) model = String(stored.PRIVACY_MODEL).trim();
+        } catch { /* ignore storage error */ }
+    }
+
+    if (!baseUrl) {
+        throw new Error(
+            "[PrivacyLayer] AICREDITS_BASE_URL is not set. Please set AICREDITS_BASE_URL in .env or extension storage."
+        );
+    }
+    if (!apiKey) {
+        throw new Error(
+            "[PrivacyLayer] AICREDITS_API_KEY is not set. Please configure AICREDITS_API_KEY in .env or extension storage."
+        );
+    }
+
     const response = await fetch(
-        `${AICREDITS_BASE_URL}/chat/completions`,
+        `${baseUrl}/chat/completions`,
         {
             method: "POST",
 
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${AICREDITS_API_KEY}`
+                "Authorization": `Bearer ${apiKey}`
             },
 
             body: JSON.stringify({
-                model: "openai/gpt-4o-mini",
+                model: model,
 
                 temperature: 0,
 

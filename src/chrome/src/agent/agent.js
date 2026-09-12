@@ -7,6 +7,7 @@ import { handleDoneJson } from './cloud-output.js';
 import { applyReadPageWindow, fitReadPageWindowResult, isReadPageWindowResult } from './read-page-window.js';
 import { STANDARD_TOOL_RESULT_CHARS, createReadCompletenessState, isCommunicationThreadContext, normalizeReadScope, readCompletenessBlock, readCompletenessLimitation, readCompletenessMadeProgress, readWindowLimits, recordReadCompleteness, requirePlannerReadCompleteness, requiresCompleteThreadRead } from './read-completeness.js';
 import { LoopDetector } from './loop-detector.js';
+import { TokenRatePacer } from './token-rate-pacer.js';
 import { parseToolCallsFromText } from './tool-call-parser.js';
 import { IMAGE_BUDGET, estimateImageTokens, fitImageDimensions } from './image-budget.js';
 import { BROWSER_MUTATION_TOOLS, STATE_CHANGE_TOOLS as SHARED_STATE_CHANGE_TOOLS } from './mutation-tools.js';
@@ -623,6 +624,7 @@ export class Agent extends LoopDetector {
   constructor(providerManager) {
     super();
     this.providerManager = providerManager;
+    this.tokenRatePacer = new TokenRatePacer();
     this.conversations = new Map(); // tabId -> messages[]
     // tabId -> durable selected-text boundary. Follow-up turns and Continue
     // inherit this scope without exposing conversation history from before the
@@ -4200,12 +4202,31 @@ export class Agent extends LoopDetector {
     const before = await this._checkCostAllowance(provider, costState);
     if (before) throw this._costAllowanceError(before);
     this._throwIfAborted(options?.signal);
-    const result = await provider.chat(messages, requestContext
-      ? this._cloudGenerationOptions(provider, options, requestContext)
-      : options);
+
+    const estTokens = Math.max(1, Math.ceil(this._estimateContextChars(Array.isArray(messages) ? messages : []) / 4));
+    const onUpdate = options?.onUpdate || requestContext?.onUpdate;
+    const step = options?.step ?? requestContext?.step ?? null;
+    if (this.tokenRatePacer) {
+      await this.tokenRatePacer.pace(provider, estTokens, onUpdate, step, options?.signal);
+    }
+
+    let result;
+    try {
+      result = await provider.chat(messages, requestContext
+        ? this._cloudGenerationOptions(provider, options, requestContext)
+        : options);
+    } catch (err) {
+      if (this.tokenRatePacer) {
+        this.tokenRatePacer.cancelLast(provider);
+      }
+      throw err;
+    }
     this._throwIfAborted(options?.signal);
     if (result && typeof result.content === 'string') {
       result.content = Agent._stripReasoningTags(result.content);
+    }
+    if (this.tokenRatePacer) {
+      this.tokenRatePacer.record(provider, result?.usage?.prompt_tokens || estTokens);
     }
     const after = await this._recordCostUsage(provider, result?.usage, costState);
     if (after) result.costAllowanceMessage = after;
@@ -4323,6 +4344,9 @@ export class Agent extends LoopDetector {
     const recordUsage = async () => {
       if (usageRecorded) return null;
       usageRecorded = true;
+      if (this.tokenRatePacer) {
+        this.tokenRatePacer.record(provider, usage?.prompt_tokens || estTokens);
+      }
       return this._recordCostUsage(provider, usage, costState);
     };
     const estimateUsageIfMissing = (completed = false) => {
@@ -4351,6 +4375,13 @@ export class Agent extends LoopDetector {
       if (toolCall.function?.arguments) existing.function.arguments += toolCall.function.arguments;
       toolCalls.set(index, existing);
     };
+
+    const estTokens = Math.max(1, Math.ceil(this._estimateContextChars(Array.isArray(messages) ? messages : []) / 4));
+    const onUpdate = options?.onUpdate || requestContext?.onUpdate;
+    const step = options?.step ?? requestContext?.step ?? null;
+    if (this.tokenRatePacer) {
+      await this.tokenRatePacer.pace(provider, estTokens, onUpdate, step, options?.signal);
+    }
 
     try {
       for await (const chunk of provider.chatStream(messages, streamOptions)) {
@@ -4402,6 +4433,9 @@ export class Agent extends LoopDetector {
         throw error;
       }
     } catch (error) {
+      if (this.tokenRatePacer && !usageRecorded) {
+        this.tokenRatePacer.cancelLast(provider);
+      }
       // Incomplete Responses streams can still report billable usage. Record
       // that once before the caller either propagates or retries the failure.
       estimateUsageIfMissing(false);
@@ -26534,17 +26568,57 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
   }
 
   /**
+   * Check if an error represents a rate limit, quota exhaustion, or TPM/RPM ceiling.
+   * These are transient frequency limits, NOT prompt length context overflows.
+   */
+  _isRateLimitOrQuota(error) {
+    const msg = String(error?.message || error || '').toLowerCase();
+    const status = Number(error?.status || error?.httpStatus);
+    const code = String(error?.code || '').toLowerCase();
+    return status === 429
+      || code === '429'
+      || code === 'rate_limit_exceeded'
+      || code === 'resource_exhausted'
+      || /429|rate[_\s-]*limit|quota|too many requests|resource_exhausted|quota exceeded|tpm limit|rpm limit/i.test(`${code} ${msg}`);
+  }
+
+  /**
+   * Extract the retry delay in ms requested by the provider (e.g. "Please retry in 29.974281704s.").
+   */
+  _parseRateLimitRetryDelayMs(error, defaultMs = 3000, maxMs = 35000) {
+    const msg = String(error?.message || error || '');
+    const matchSec = msg.match(/(?:retry in|retry after|try again in|wait)\s+([\d.]+)\s*s(?:econds?)?/i);
+    if (matchSec && matchSec[1]) {
+      const sec = parseFloat(matchSec[1]);
+      if (Number.isFinite(sec) && sec > 0) {
+        return Math.min(Math.ceil(sec * 1000) + 1000, maxMs);
+      }
+    }
+    const matchMs = msg.match(/(?:retry in|retry after|try again in)\s+([\d.]+)\s*ms/i);
+    if (matchMs && matchMs[1]) {
+      const ms = parseFloat(matchMs[1]);
+      if (Number.isFinite(ms) && ms > 0) {
+        return Math.min(Math.ceil(ms) + 500, maxMs);
+      }
+    }
+    return defaultMs;
+  }
+
+  /**
    * Detect if an error is a context overflow from any provider.
+   * Rate limits and quotas are explicitly excluded.
    */
   _isContextOverflow(error) {
+    if (this._isRateLimitOrQuota(error)) return false;
     const msg = (error?.message || error || '').toLowerCase();
-    return msg.includes('context') ||
-      msg.includes('token') ||
-      msg.includes('exceed') ||
-      msg.includes('too long') ||
+    return msg.includes('context_length_exceeded') ||
+      msg.includes('exceed_context_size') ||
       msg.includes('maximum context') ||
-      msg.includes('context_length_exceeded') ||
-      msg.includes('exceed_context_size');
+      msg.includes('context_window_exceeded') ||
+      msg.includes('prompt is too long') ||
+      msg.includes('too many tokens') ||
+      (msg.includes('context') && (msg.includes('overflow') || msg.includes('too large') || msg.includes('window') || msg.includes('length') || msg.includes('limit'))) ||
+      (msg.includes('maximum') && msg.includes('tokens'));
   }
 
   /**
@@ -36454,8 +36528,14 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             }
             // Retry once after a short delay for transient errors (rate limits, network).
             this._logDebug({ type: 'llm_error_retrying', step: steps, error: e.message });
-            if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 2000, code: this._traceErrorCodeFor(e) });
-            await new Promise(r => setTimeout(r, 2000));
+            const isRateLimit = this._isRateLimitOrQuota(e);
+            const delayMs = isRateLimit ? this._parseRateLimitRetryDelayMs(e, 3000, 35000) : 2000;
+            const delaySec = Math.ceil(delayMs / 1000);
+            if (isRateLimit) {
+              onUpdate('thinking', { step: steps, note: `Rate limited by provider (${delaySec}s cooldown). Retrying automatically...` });
+            }
+            if (runId) await trace.recordLLMRetry(runId, steps, { delayMs, code: this._traceErrorCodeFor(e) });
+            await new Promise(r => setTimeout(r, delayMs));
             try {
               const useTools2 = provider.supportsTools && tools.length > 0;
               const chatOpts2 = {
@@ -36481,8 +36561,11 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
               traceFailureCode = this._traceErrorCodeFor(e2);
               _traceStatus = 'error';
               if (runId) trace.recordStepEnd(runId, steps, { ok: false, code: traceFailureCode });
-              onUpdate('error', { message: e2.message });
-              finalResponse = `Error communicating with LLM: ${e2.message}`;
+              const userNotice = this._isRateLimitOrQuota(e2)
+                ? `Rate limit or quota exceeded: ${e2.message}`
+                : `Error communicating with LLM: ${e2.message}`;
+              onUpdate('error', { message: userNotice });
+              finalResponse = userNotice;
               messages.push({ role: 'assistant', content: finalResponse });
               break;
             }
@@ -37929,6 +38012,15 @@ Rules: no prose intro, no conclusion, no "this screenshot shows...", no layout d
             onUpdate('warning', { message: 'The on-device model ran out of reasoning budget; retrying with a shorter prompt.' });
             this._persist(tabId);
             if (runId) await trace.recordLLMRetry(runId, steps, { delayMs: 0, code: stepErrorCode });
+            continue;
+          }
+          if (this._isRateLimitOrQuota(e)) {
+            const delayMs = this._parseRateLimitRetryDelayMs(e, 3000, 35000);
+            const delaySec = Math.ceil(delayMs / 1000);
+            onUpdate('thinking', { step: steps, note: `Rate limited by provider (${delaySec}s cooldown). Retrying automatically...` });
+            this._persist(tabId);
+            if (runId) await trace.recordLLMRetry(runId, steps, { delayMs, code: 'RATE_LIMIT' });
+            await new Promise(r => setTimeout(r, delayMs));
             continue;
           }
           // If context overflow, trim and retry
